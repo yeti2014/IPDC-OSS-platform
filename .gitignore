@@ -54,3 +54,7 @@ coverage/
 # OS files
 Thumbs.db
 Desktop.ini
+
+# Claude Code
+.claude/
+nul
