@@ -4,8 +4,9 @@ import { getAuth, connectAuthEmulator, setPersistence, browserLocalPersistence }
 import {
   getFirestore,
   connectFirestoreEmulator,
-  enableIndexedDbPersistence,
-  enableMultiTabIndexedDbPersistence,
+  initializeFirestore,
+  persistentLocalCache,
+  persistentMultipleTabManager,
   CACHE_SIZE_UNLIMITED
 } from 'firebase/firestore';
 import { getStorage, connectStorageEmulator } from 'firebase/storage';
@@ -47,7 +48,14 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize services
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+
+// Initialize Firestore with persistent cache
+export const db = initializeFirestore(app, {
+  localCache: persistentLocalCache({
+    tabManager: persistentMultipleTabManager()
+  })
+});
+
 export const storage = getStorage(app);
 
 // Initialize Analytics (only in production and if supported)
@@ -83,34 +91,9 @@ if (import.meta.env.DEV && import.meta.env.VITE_USE_FIREBASE_EMULATORS === 'true
   console.log('🔧 Firebase Emulators connected');
 }
 
-// Enable Firestore offline persistence with multi-tab support
-const enableOfflinePersistence = async () => {
-  try {
-    // Try multi-tab persistence first (allows multiple tabs to share the same cache)
-    await enableMultiTabIndexedDbPersistence(db);
-    console.log('✅ Firestore multi-tab offline persistence enabled');
-  } catch (err: any) {
-    if (err.code === 'failed-precondition') {
-      // Multiple tabs open, persistence can only be enabled in one tab at a time
-      console.warn('⚠️ Multiple tabs open. Firestore persistence can only be enabled in one tab.');
-      try {
-        // Fall back to single-tab persistence
-        await enableIndexedDbPersistence(db);
-        console.log('✅ Firestore single-tab offline persistence enabled');
-      } catch (error: any) {
-        console.error('❌ Failed to enable single-tab persistence:', error);
-      }
-    } else if (err.code === 'unimplemented') {
-      // The current browser doesn't support persistence
-      console.warn('⚠️ Browser does not support Firestore offline persistence');
-    } else {
-      console.error('❌ Failed to enable Firestore persistence:', err);
-    }
-  }
-};
-
-// Initialize offline persistence
-enableOfflinePersistence();
+// Firestore offline persistence is now automatically enabled via localCache configuration
+// The persistentLocalCache with persistentMultipleTabManager handles multi-tab sync automatically
+console.log('✅ Firestore multi-tab offline persistence enabled via localCache');
 
 console.log('✅ Firebase initialized successfully');
 console.log('📱 App Name:', import.meta.env.VITE_APP_NAME);

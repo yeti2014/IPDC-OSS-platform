@@ -14,7 +14,6 @@ import {
   Button,
   Box,
   Typography,
-  Grid,
   Chip,
   Divider,
   Stack,
@@ -23,6 +22,7 @@ import {
   CardContent,
   LinearProgress
 } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import {
   Close as CloseIcon,
   LocationOn as LocationIcon,
@@ -155,7 +155,7 @@ const ParkDetailsModal: React.FC<ParkDetailsModalProps> = ({ park, open, onClose
               Park Statistics
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Card variant="outlined">
                   <CardContent>
                     <Typography variant="caption" color="text.secondary">
@@ -167,7 +167,7 @@ const ParkDetailsModal: React.FC<ParkDetailsModalProps> = ({ park, open, onClose
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Card variant="outlined">
                   <CardContent>
                     <Typography variant="caption" color="text.secondary">
@@ -180,7 +180,7 @@ const ParkDetailsModal: React.FC<ParkDetailsModalProps> = ({ park, open, onClose
                 </Card>
               </Grid>
               {park.status === 'operational' && (
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <Card variant="outlined">
                     <CardContent>
                       <Typography variant="caption" color="text.secondary" gutterBottom>
@@ -214,7 +214,7 @@ const ParkDetailsModal: React.FC<ParkDetailsModalProps> = ({ park, open, onClose
               Infrastructure Capacity
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <PowerIcon color="primary" />
                   <Box>
@@ -227,7 +227,7 @@ const ParkDetailsModal: React.FC<ParkDetailsModalProps> = ({ park, open, onClose
                   </Box>
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <WaterIcon color="primary" />
                   <Box>
@@ -251,7 +251,7 @@ const ParkDetailsModal: React.FC<ParkDetailsModalProps> = ({ park, open, onClose
               Logistics & Connectivity
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <AirportIcon color="action" />
                   <Box>
@@ -264,7 +264,7 @@ const ParkDetailsModal: React.FC<ParkDetailsModalProps> = ({ park, open, onClose
                   </Box>
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <PortIcon color="action" />
                   <Box>
@@ -277,7 +277,7 @@ const ParkDetailsModal: React.FC<ParkDetailsModalProps> = ({ park, open, onClose
                   </Box>
                 </Box>
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   {park.hasCustomsOffice ? (
                     <>

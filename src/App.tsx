@@ -13,6 +13,7 @@ import { ParkManagement } from './pages/ParkManagement';
 import { OSSServices } from './pages/OSSServices';
 import { ComplaintManagementDashboard } from './pages/ComplaintManagementDashboard';
 import ParksMapPage from './pages/ParksMapPage';
+import { ParkRecommendation } from './components/tenant/ParkRecommendation';
 import { initIndexedDB } from './utils/indexedDB';
 import { setupAutoSync, registerBackgroundSync } from './services/offlineQueue';
 
@@ -95,6 +96,14 @@ function AppRoutes() {
         element={
           <PrivateRoute>
             <ParksMapPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/park-recommendations"
+        element={
+          <PrivateRoute>
+            <ParkRecommendation />
           </PrivateRoute>
         }
       />
