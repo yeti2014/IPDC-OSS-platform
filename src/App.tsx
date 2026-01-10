@@ -14,6 +14,7 @@ import { OSSServices } from './pages/OSSServices';
 import { ComplaintManagementDashboard } from './pages/ComplaintManagementDashboard';
 import ParksMapPage from './pages/ParksMapPage';
 import { ParkRecommendation } from './components/tenant/ParkRecommendation';
+import CreateRequestPage from './pages/CreateRequestPage';
 import { initIndexedDB } from './utils/indexedDB';
 import { setupAutoSync, registerBackgroundSync } from './services/offlineQueue';
 
@@ -104,6 +105,14 @@ function AppRoutes() {
         element={
           <PrivateRoute>
             <ParkRecommendation />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/create-request"
+        element={
+          <PrivateRoute>
+            <CreateRequestPage />
           </PrivateRoute>
         }
       />
