@@ -1,0 +1,34 @@
+{
+  "model_name": "Park Recommendation System",
+  "model_version": "1.0",
+  "algorithm": "LightGBM Ranker (LambdaRank)",
+  "adapted_from": "Alibaba ET Industrial Brain + Tencent WeCity",
+  "training_date": "2026-01-10T20:01:32.856700",
+  "data_source": "synthetic",
+  "performance": {
+    "ndcg_at_3": 0.9523640786878392,
+    "top3_accuracy": 94.375,
+    "total_test_groups": 160
+  },
+  "features": [
+    "industry_encoded",
+    "park_encoded",
+    "investment_usd",
+    "employee_count",
+    "land_needed_ha",
+    "power_requirement_kw",
+    "water_requirement_m3",
+    "export_oriented",
+    "preferred_region_encoded",
+    "budget_min_etb",
+    "budget_max_etb"
+  ],
+  "cold_start_approach": true,
+  "online_learning_enabled": true,
+  "retrain_trigger": "Every 50 new placements OR monthly",
+  "chinese_benchmark": {
+    "alibaba_et": 0.88,
+    "tencent_wecity": 0.85,
+    "our_model": 0.9523640786878392
+  }
+}

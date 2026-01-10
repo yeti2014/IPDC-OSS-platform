@@ -1,0 +1,13 @@
+[
+  "industry_encoded",
+  "park_encoded",
+  "investment_usd",
+  "employee_count",
+  "land_needed_ha",
+  "power_requirement_kw",
+  "water_requirement_m3",
+  "export_oriented",
+  "preferred_region_encoded",
+  "budget_min_etb",
+  "budget_max_etb"
+]

@@ -12,6 +12,7 @@ import { ZonesDashboard } from './pages/ZonesDashboard';
 import { ParkManagement } from './pages/ParkManagement';
 import { OSSServices } from './pages/OSSServices';
 import { ComplaintManagementDashboard } from './pages/ComplaintManagementDashboard';
+import ParksMapPage from './pages/ParksMapPage';
 import { initIndexedDB } from './utils/indexedDB';
 import { setupAutoSync, registerBackgroundSync } from './services/offlineQueue';
 
@@ -86,6 +87,14 @@ function AppRoutes() {
         element={
           <PrivateRoute>
             <ComplaintManagementDashboard />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/parks-map"
+        element={
+          <PrivateRoute>
+            <ParksMapPage />
           </PrivateRoute>
         }
       />

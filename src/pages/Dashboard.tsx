@@ -21,6 +21,7 @@ import {
   Logout as LogoutIcon,
   Dashboard as DashboardIcon,
   Business as BusinessIcon,
+  Map as MapIcon,
 } from '@mui/icons-material';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from '../config/firebase';
@@ -287,6 +288,15 @@ export const Dashboard = () => {
                   size="medium"
                 >
                   {t('nav.zones')}
+                </Button>
+                <Button
+                  variant="outlined"
+                  startIcon={<MapIcon />}
+                  onClick={() => window.location.href = '/parks-map'}
+                  size="medium"
+                  color="primary"
+                >
+                  Parks Map
                 </Button>
                 {userData?.role === 'tenant' && (
                   <>
