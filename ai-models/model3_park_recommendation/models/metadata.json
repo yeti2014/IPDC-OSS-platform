@@ -3,11 +3,11 @@
   "model_version": "1.0",
   "algorithm": "LightGBM Ranker (LambdaRank)",
   "adapted_from": "Alibaba ET Industrial Brain + Tencent WeCity",
-  "training_date": "2026-01-10T20:01:32.856700",
+  "training_date": "2026-01-10T20:16:15.815061",
   "data_source": "synthetic",
   "performance": {
-    "ndcg_at_3": 0.9523640786878392,
-    "top3_accuracy": 94.375,
+    "ndcg_at_3": 0.957170251973307,
+    "top3_accuracy": 95.625,
     "total_test_groups": 160
   },
   "features": [
@@ -29,6 +29,6 @@
   "chinese_benchmark": {
     "alibaba_et": 0.88,
     "tencent_wecity": 0.85,
-    "our_model": 0.9523640786878392
+    "our_model": 0.957170251973307
   }
 }
