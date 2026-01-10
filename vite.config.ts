@@ -15,13 +15,26 @@ export default defineConfig({
       },
       includeAssets: ['favicon.ico', 'robots.txt'],
       manifest: {
-        name: 'IPDC Digital Platform',
-        short_name: 'IPDC',
-        description: 'Ethiopian Industrial Parks One-Stop Service Platform',
+        name: 'IPDC-OSS Platform',
+        short_name: 'IPDC-OSS',
+        description: 'Ethiopian Industrial Parks Development Corporation - One-Stop Service Platform',
         theme_color: '#2563eb',
         background_color: '#ffffff',
         display: 'standalone',
-        icons: []
+        icons: [
+          {
+            src: 'ipdc-oss-icon.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: 'ipdc-oss-icon.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any'
+          }
+        ]
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],

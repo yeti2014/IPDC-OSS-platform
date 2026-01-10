@@ -53,10 +53,25 @@ export const Login = () => {
         }}
       >
         <Box sx={{ textAlign: 'center', mb: 4 }}>
+          <Box
+            component="img"
+            src="/ipdc-oss-icon.png"
+            alt="IPDC-OSS"
+            sx={{
+              height: 120,
+              width: 'auto',
+              mx: 'auto',
+              mb: 2,
+              display: 'block'
+            }}
+          />
           <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
-            IPDC Digital Platform
+            IPDC-OSS
           </Typography>
           <Typography variant="body1" color="text.secondary">
+            Industrial Parks Development Corporation - One-Stop Service
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
             Offline-First Service Request Management
           </Typography>
         </Box>

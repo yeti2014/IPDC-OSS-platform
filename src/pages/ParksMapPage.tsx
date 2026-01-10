@@ -14,12 +14,15 @@ import {
   Link,
   Paper,
   Alert,
-  AlertTitle
+  AlertTitle,
+  Button
 } from '@mui/material';
 import {
   Home as HomeIcon,
   Map as MapIcon,
-  Info as InfoIcon
+  Info as InfoIcon,
+  Dashboard as DashboardIcon,
+  ArrowBack as ArrowBackIcon
 } from '@mui/icons-material';
 import { Link as RouterLink } from 'react-router-dom';
 import ParksMap from '../components/map/ParksMap';
@@ -43,35 +46,57 @@ const ParksMapPage: React.FC = () => {
 
   return (
     <Container maxWidth="xl" sx={{ py: 3 }}>
-      {/* Breadcrumbs */}
-      <Breadcrumbs sx={{ mb: 2 }}>
-        <Link
+      {/* Breadcrumbs and Navigation */}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        <Breadcrumbs>
+          <Link
+            component={RouterLink}
+            to="/"
+            sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+            color="inherit"
+            underline="hover"
+          >
+            <HomeIcon fontSize="small" />
+            Home
+          </Link>
+          <Link
+            component={RouterLink}
+            to="/dashboard"
+            sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+            color="inherit"
+            underline="hover"
+          >
+            <DashboardIcon fontSize="small" />
+            Dashboard
+          </Link>
+          <Typography
+            color="text.primary"
+            sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+          >
+            <MapIcon fontSize="small" />
+            Industrial Parks Map
+          </Typography>
+        </Breadcrumbs>
+
+        <Button
           component={RouterLink}
-          to="/"
-          sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
-          color="inherit"
-          underline="hover"
+          to="/dashboard"
+          variant="outlined"
+          startIcon={<ArrowBackIcon />}
+          size="small"
         >
-          <HomeIcon fontSize="small" />
-          Home
-        </Link>
-        <Typography
-          color="text.primary"
-          sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
-        >
-          <MapIcon fontSize="small" />
-          Industrial Parks Map
-        </Typography>
-      </Breadcrumbs>
+          Back to Dashboard
+        </Button>
+      </Box>
 
       {/* Page Header */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Ethiopian IPDC Industrial Parks
+          Ethiopian IPDC-OSS Industrial Parks
         </Typography>
         <Typography variant="body1" color="text.secondary" paragraph>
           Interactive map of all 15 industrial parks managed by the Industrial Parks Development Corporation (IPDC).
-          Click on any park marker to view detailed information.
+          Click on any park marker to view detailed information and apply for services.
         </Typography>
       </Box>
 
