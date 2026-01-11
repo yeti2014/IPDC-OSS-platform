@@ -42,8 +42,6 @@ import AnnouncementBanner from '../components/common/AnnouncementBanner';
 import ParkRecommendation from '../components/tenant/ParkRecommendation';
 import TokenDashboard from '../components/tenant/TokenDashboard';
 import UserProfile from '../components/common/UserProfile';
-import AdvancedAnalytics from '../components/common/AdvancedAnalytics';
-import AdvancedSearch from '../components/common/AdvancedSearch';
 import FileComplaintDialog from '../components/tenant/FileComplaintDialog';
 import ServiceTierSelector from '../components/tenant/ServiceTierSelector';
 import TenantLifecycleTimeline from '../components/tenant/TenantLifecycleTimeline';
@@ -275,6 +273,16 @@ export const Dashboard = () => {
               }}
             />
 
+            {/* Section Header for New Service Requests */}
+            <Box sx={{ mb: 3, mt: 2 }}>
+              <Typography variant="h5" fontWeight="bold" gutterBottom>
+                Create New Service Request
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Select the type of service you need from the options below
+              </Typography>
+            </Box>
+
             {/* Two-Tier Service Selector */}
             <ServiceTierSelector
               onSelectTier={(tier) => {
@@ -285,6 +293,36 @@ export const Dashboard = () => {
                 }
               }}
             />
+
+            {/* Visual Divider */}
+            <Box
+              sx={{
+                my: 6,
+                borderBottom: '2px solid',
+                borderColor: 'divider',
+                position: 'relative',
+                '&::after': {
+                  content: '""',
+                  position: 'absolute',
+                  bottom: -2,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: 100,
+                  height: 2,
+                  bgcolor: 'primary.main',
+                }
+              }}
+            />
+
+            {/* Section Header for Existing Requests */}
+            <Box sx={{ mb: 3 }}>
+              <Typography variant="h5" fontWeight="bold" gutterBottom>
+                My Existing Service Requests
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Track and manage your submitted service requests
+              </Typography>
+            </Box>
           </>
         )}
 
@@ -303,10 +341,6 @@ export const Dashboard = () => {
                 </Box>
               </Box>
               <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                <AdvancedSearch
-                  requests={requests}
-                  onSelectRequest={handleViewRequest}
-                />
                 <Button
                   variant="outlined"
                   startIcon={<BusinessIcon />}
@@ -404,7 +438,6 @@ export const Dashboard = () => {
           <Tabs value={tabValue} onChange={(e, newValue) => setTabValue(newValue)}>
             <Tab label={t('requests.title')} />
             <Tab label="Basic Analytics" />
-            <Tab label="Advanced Analytics" />
             {userData?.role === 'tenant' && <Tab label={t('tokens.balance')} />}
             {userData?.role === 'tenant' && <Tab label="My Complaints" />}
           </Tabs>
@@ -447,8 +480,6 @@ export const Dashboard = () => {
         ) : tabValue === 1 ? (
           <RequestsChart requests={filteredRequests} />
         ) : tabValue === 2 ? (
-          <AdvancedAnalytics requests={requests} />
-        ) : tabValue === 3 ? (
           <TokenDashboard />
         ) : (
           // My Complaints Tab

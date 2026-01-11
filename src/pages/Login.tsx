@@ -48,70 +48,170 @@ export const Login = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box
-        sx={{
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          py: { xs: 2, sm: 3, md: 4 },
-          px: { xs: 2, sm: 3 }
-        }}
-      >
-        {/* IPDC-OSS Branding */}
-        <Box sx={{ textAlign: 'center', mb: { xs: 2, sm: 3 }, position: 'relative' }}>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        background: `linear-gradient(135deg, ${theme.palette.primary.main}15 0%, ${theme.palette.info.main}10 100%)`,
+        position: 'relative',
+        overflow: 'hidden',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: -50,
+          right: -50,
+          width: 300,
+          height: 300,
+          borderRadius: '50%',
+          background: `radial-gradient(circle, ${theme.palette.primary.main}20 0%, transparent 70%)`,
+        },
+        '&::after': {
+          content: '""',
+          position: 'absolute',
+          bottom: -100,
+          left: -100,
+          width: 400,
+          height: 400,
+          borderRadius: '50%',
+          background: `radial-gradient(circle, ${theme.palette.info.main}15 0%, transparent 70%)`,
+        }
+      }}
+    >
+      <Container maxWidth="lg">
+        <Box
+          sx={{
+            minHeight: '100vh',
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: { xs: 3, md: 6 },
+            py: { xs: 3, sm: 4, md: 6 },
+            px: { xs: 2, sm: 3 },
+            position: 'relative',
+            zIndex: 1
+          }}
+        >
+          {/* Left Panel - Branding & Value Proposition */}
           <Box
-            component="img"
-            src="/ipdc-oss-icon.png"
-            alt="IPDC-OSS"
             sx={{
-              height: { xs: 100, sm: 110, md: 120 },
-              width: 'auto',
-              mx: 'auto',
-              mb: { xs: 1.5, sm: 2 },
-              display: 'block'
+              flex: { xs: '0 0 auto', md: '1 1 50%' },
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: { xs: 'center', md: 'flex-start' },
+              textAlign: { xs: 'center', md: 'left' },
+              maxWidth: { md: 500 }
             }}
-          />
-          {/* Ethiopian Flag - Top Right Corner */}
+          >
+            {/* IPDC-OSS Branding */}
+            <Box sx={{ position: 'relative', mb: 3, display: 'inline-block' }}>
+              <Box
+                component="img"
+                src="/ipdc-oss-icon.png"
+                alt="IPDC-OSS"
+                sx={{
+                  height: { xs: 120, md: 140 },
+                  width: 'auto',
+                  mb: 2,
+                  filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))',
+                  display: 'block'
+                }}
+              />
+              {/* Ethiopian Flag - Top Right Corner Edge */}
+              <Box
+                component="img"
+                src="https://flagcdn.com/w80/et.png"
+                srcSet="https://flagcdn.com/w160/et.png 2x"
+                alt="Ethiopian Flag"
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                  width: { xs: 28, md: 32 },
+                  height: 'auto',
+                  borderRadius: '4px',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.25)',
+                  border: '1.5px solid white',
+                  zIndex: 10,
+                  transform: 'translate(25%, -25%)'
+                }}
+              />
+            </Box>
+
+            <Typography
+              variant={isMobile ? 'h5' : 'h4'}
+              fontWeight="bold"
+              gutterBottom
+              sx={{ color: 'primary.main' }}
+            >
+              Industrial Parks Development Corporation
+            </Typography>
+
+            <Typography
+              variant={isMobile ? 'body1' : 'h6'}
+              color="text.secondary"
+              gutterBottom
+              fontWeight="medium"
+            >
+              Digital One-Stop Service Platform
+            </Typography>
+
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ mt: 2, mb: 3, lineHeight: 1.7 }}
+            >
+              Streamlined service request management powered by AI. Access entry services and facility management through a unified platform.
+            </Typography>
+
+            {/* Ethiopian & Gregorian Calendar Display */}
+            <Box sx={{ mb: 3 }}>
+              <EthiopianDateDisplay variant="compact" />
+            </Box>
+
+            {/* Key Features - Chinese Smart Park Style */}
+            {!isMobile && !isTablet && (
+              <Box sx={{ mt: 2 }}>
+                <Typography variant="body2" fontWeight="bold" gutterBottom>
+                  Platform Features:
+                </Typography>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                  {[
+                    { icon: '🤖', text: 'AI-Powered Service Classification' },
+                    { icon: '🎫', text: 'Token-Based Facility Management' },
+                    { icon: '📱', text: 'Offline-First Architecture' },
+                    { icon: '🇪🇹', text: 'Ethiopian Calendar Integration' }
+                  ].map((feature, idx) => (
+                    <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Typography sx={{ fontSize: 20 }}>{feature.icon}</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {feature.text}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
+            )}
+          </Box>
+
+          {/* Right Panel - Login Form */}
           <Box
-            component="img"
-            src="https://flagcdn.com/w80/et.png"
-            srcSet="https://flagcdn.com/w160/et.png 2x"
-            alt="Ethiopian Flag"
             sx={{
-              position: 'absolute',
-              top: { xs: 5, sm: 8, md: 10 },
-              right: { xs: '10%', sm: '12%', md: '14%' },
-              width: { xs: 20, sm: 25, md: 30 },
-              height: 'auto',
-              borderRadius: 0.5,
-              boxShadow: '0 1px 4px rgba(0,0,0,0.2)',
-              zIndex: 10
+              flex: { xs: '0 0 auto', md: '1 1 50%' },
+              width: { xs: '100%', sm: 450, md: 480 },
+              maxWidth: '100%'
             }}
-          />
-          <Typography
-            variant={isMobile ? 'body2' : 'body1'}
-            color="text.secondary"
-            sx={{ px: 1 }}
           >
-            Industrial Parks Development Corporation - One-Stop Service
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ mt: 0.5, fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
-          >
-            Offline-First Service Request Management
-          </Typography>
-        </Box>
-
-        {/* Ethiopian & Gregorian Calendar Display */}
-        <Box sx={{ mb: { xs: 2, sm: 3 } }}>
-          <EthiopianDateDisplay variant="compact" />
-        </Box>
-
-        <Card>
+            <Card
+              elevation={8}
+              sx={{
+                borderRadius: 3,
+                overflow: 'hidden',
+                border: '1px solid',
+                borderColor: 'divider'
+              }}
+            >
           <CardContent sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
             <Typography
               variant={isMobile ? 'h6' : 'h5'}
@@ -227,8 +327,10 @@ export const Login = () => {
             </Box>
           </CardContent>
         </Card>
-      </Box>
-    </Container>
+          </Box>
+        </Box>
+      </Container>
+    </Box>
   );
 };
 
