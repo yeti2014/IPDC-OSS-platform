@@ -11,13 +11,13 @@ import {
   CardContent,
   CardActionArea,
   Typography,
-  Grid2,
   Chip,
   Stack,
   useTheme,
   useMediaQuery,
   alpha,
 } from '@mui/material';
+import Grid2 from '@mui/material/Grid2';
 import {
   Business as BusinessIcon,
   Build as BuildIcon,

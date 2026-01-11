@@ -6,7 +6,6 @@ import {
   Typography,
   Card,
   CardContent,
-  Grid2,
   Button,
   Alert,
   AlertTitle,
@@ -16,6 +15,7 @@ import {
   Chip,
   Stack,
 } from '@mui/material';
+import Grid2 from '@mui/material/Grid2';
 import {
   Add as AddIcon,
   Logout as LogoutIcon,
