@@ -1,0 +1,19 @@
+{
+  "feature_names": [
+    "age_days",
+    "age_years",
+    "days_since_maintenance",
+    "maintenance_count",
+    "maintenanceInterval",
+    "purchaseCost",
+    "currentValue",
+    "depreciationRate",
+    "failure_probability",
+    "maintenance_frequency",
+    "warranty_active",
+    "category_encoded",
+    "status_encoded",
+    "condition_encoded"
+  ],
+  "feature_count": 14
+}

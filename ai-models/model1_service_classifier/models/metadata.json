@@ -1,0 +1,32 @@
+{
+  "model_name": "IPDC Service Classifier",
+  "version": "1.0",
+  "training_date": "2026-01-10T00:25:03.101339",
+  "training_samples": 1000,
+  "service_types": [
+    "agreements",
+    "banking_services",
+    "business_license",
+    "commercial_registration",
+    "customs_clearance",
+    "customs_exemption",
+    "investment_permit",
+    "notarization",
+    "tin_issuance",
+    "trade_name_registration",
+    "work_permit"
+  ],
+  "priorities": [
+    "high",
+    "low",
+    "normal",
+    "urgent"
+  ],
+  "feature_dimensions": 516,
+  "metrics": {
+    "service_accuracy": 1.0,
+    "priority_accuracy": 0.4,
+    "time_mae": 2.628247519016266,
+    "time_r2": 0.5766768521117305
+  }
+}
