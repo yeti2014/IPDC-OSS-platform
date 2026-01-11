@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPDC PWA Icon Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2563eb;
+            margin-bottom: 20px;
+        }
+        .preview {
+            display: flex;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .preview-item {
+            text-align: center;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background-color: #1d4ed8;
+        }
+        .instructions {
+            background-color: #f0f9ff;
+            border-left: 4px solid #2563eb;
+            padding: 15px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IPDC Digital Platform - PWA Icon Generator</h1>
+
+        <div class="instructions">
+            <strong>Instructions:</strong>
+            <ol>
+                <li>Click the buttons below to download the icons</li>
+                <li>Save both files to the <code>public</code> folder of your project</li>
+                <li>The vite.config.ts will be updated automatically</li>
+            </ol>
+        </div>
+
+        <div class="preview">
+            <div class="preview-item">
+                <h3>192x192 Icon</h3>
+                <canvas id="icon192" width="192" height="192"></canvas>
+                <br>
+                <button onclick="downloadIcon('icon192', 'pwa-192x192.png')">Download 192x192</button>
+            </div>
+            <div class="preview-item">
+                <h3>512x512 Icon</h3>
+                <canvas id="icon512" width="512" height="512"></canvas>
+                <br>
+                <button onclick="downloadIcon('icon512', 'pwa-512x512.png')">Download 512x512</button>
+            </div>
+        </div>
+
+        <button onclick="downloadBoth()" style="background-color: #059669;">Download Both Icons</button>
+    </div>
+
+    <script>
+        function drawIcon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+
+            // Background gradient (Ethiopian flag inspired colors with blue)
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#2563eb');  // Blue
+            gradient.addColorStop(1, '#1e40af');  // Darker blue
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+
+            // Draw factory/industrial park icon
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const scale = size / 192;
+
+            ctx.fillStyle = '#ffffff';
+
+            // Building body
+            const buildingWidth = 60 * scale;
+            const buildingHeight = 80 * scale;
+            const buildingX = centerX - buildingWidth / 2;
+            const buildingY = centerY - buildingHeight / 2 + 10 * scale;
+
+            ctx.fillRect(buildingX, buildingY, buildingWidth, buildingHeight);
+
+            // Roof
+            ctx.beginPath();
+            ctx.moveTo(buildingX - 10 * scale, buildingY);
+            ctx.lineTo(centerX, buildingY - 20 * scale);
+            ctx.lineTo(buildingX + buildingWidth + 10 * scale, buildingY);
+            ctx.closePath();
+            ctx.fill();
+
+            // Windows
+            ctx.fillStyle = '#2563eb';
+            const windowSize = 12 * scale;
+            const windowGap = 8 * scale;
+            const startX = buildingX + 10 * scale;
+            const startY = buildingY + 15 * scale;
+
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 2; col++) {
+                    ctx.fillRect(
+                        startX + col * (windowSize + windowGap),
+                        startY + row * (windowSize + windowGap),
+                        windowSize,
+                        windowSize
+                    );
+                }
+            }
+
+            // Chimney/smokestack
+            ctx.fillStyle = '#ffffff';
+            const chimneyWidth = 15 * scale;
+            const chimneyHeight = 35 * scale;
+            const chimneyX = buildingX + buildingWidth + 5 * scale;
+            const chimneyY = buildingY - 10 * scale;
+
+            ctx.fillRect(chimneyX, chimneyY, chimneyWidth, chimneyHeight);
+
+            // Smoke effect
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            for (let i = 0; i < 3; i++) {
+                const radius = (5 + i * 3) * scale;
+                ctx.beginPath();
+                ctx.arc(
+                    chimneyX + chimneyWidth / 2 + i * 5 * scale,
+                    chimneyY - i * 8 * scale,
+                    radius,
+                    0,
+                    Math.PI * 2
+                );
+                ctx.fill();
+            }
+
+            // IPDC text
+            ctx.fillStyle = '#ffffff';
+            ctx.font = `bold ${24 * scale}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('IPDC', centerX, centerY + 60 * scale);
+        }
+
+        function downloadIcon(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function downloadBoth() {
+            downloadIcon('icon192', 'pwa-192x192.png');
+            setTimeout(() => {
+                downloadIcon('icon512', 'pwa-512x512.png');
+            }, 500);
+        }
+
+        // Draw icons on page load
+        drawIcon('icon192', 192);
+        drawIcon('icon512', 512);
+    </script>
+</body>
+</html>

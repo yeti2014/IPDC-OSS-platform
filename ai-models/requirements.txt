@@ -13,6 +13,9 @@ keras==2.15.0
 # XGBoost for classification
 xgboost==2.0.2
 
+# LightGBM for ranking (Model 3)
+lightgbm==4.1.0
+
 # NLP & Text Processing
 nltk==3.8.1
 spacy==3.7.2
