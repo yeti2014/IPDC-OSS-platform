@@ -108,7 +108,7 @@ export const Login = () => {
             <Box sx={{ position: 'relative', mb: 3, display: 'inline-block' }}>
               <Box
                 component="img"
-                src="/ipdc-oss-icon.png"
+                src="/download.png"
                 alt="IPDC-OSS"
                 sx={{
                   height: { xs: 120, md: 140 },
