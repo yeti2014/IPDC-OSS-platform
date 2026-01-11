@@ -105,36 +105,18 @@ export const Login = () => {
             }}
           >
             {/* IPDC-OSS Branding */}
-            <Box sx={{ position: 'relative', mb: 3, display: 'inline-block' }}>
+            <Box sx={{ position: 'relative', mb: 3, width: '100%', maxWidth: { xs: '90%', sm: 450, md: 520 } }}>
               <Box
                 component="img"
-                src="/Screenshot 2026-01-11 003633.png"
+                src="/AAAAAAAAAAAAAAAA.png"
                 alt="IPDC-OSS"
                 sx={{
-                  height: { xs: 180, md: 220 },
-                  width: 'auto',
+                  width: '100%',
+                  height: 'auto',
                   mb: 2,
                   filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))',
-                  display: 'block'
-                }}
-              />
-              {/* Ethiopian Flag - Top Right Corner Edge */}
-              <Box
-                component="img"
-                src="https://flagcdn.com/w80/et.png"
-                srcSet="https://flagcdn.com/w160/et.png 2x"
-                alt="Ethiopian Flag"
-                sx={{
-                  position: 'absolute',
-                  top: 0,
-                  right: 0,
-                  width: { xs: 28, md: 32 },
-                  height: 'auto',
-                  borderRadius: '4px',
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.25)',
-                  border: '1.5px solid white',
-                  zIndex: 10,
-                  transform: 'translate(25%, -25%)'
+                  display: 'block',
+                  objectFit: 'contain'
                 }}
               />
             </Box>
