@@ -13,7 +13,7 @@ import { ParkManagement } from './pages/ParkManagement';
 import { OSSServices } from './pages/OSSServices';
 import { ComplaintManagementDashboard } from './pages/ComplaintManagementDashboard';
 import ParksMapPage from './pages/ParksMapPage';
-import { ParkRecommendation } from './components/tenant/ParkRecommendation';
+import ParkRecommendationPage from './pages/ParkRecommendationPage';
 import CreateRequestPage from './pages/CreateRequestPage';
 import ServiceTierSelectionPage from './pages/ServiceTierSelectionPage';
 import EntryServicesPage from './pages/EntryServicesPage';
@@ -107,7 +107,7 @@ function AppRoutes() {
         path="/park-recommendations"
         element={
           <PrivateRoute>
-            <ParkRecommendation />
+            <ParkRecommendationPage />
           </PrivateRoute>
         }
       />

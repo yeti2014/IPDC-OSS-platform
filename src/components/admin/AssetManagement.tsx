@@ -23,7 +23,11 @@ import {
   Alert,
   Tab,
   Tabs,
-  Tooltip
+  Tooltip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -43,6 +47,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { AssetDialog } from './AssetDialog';
 import { MaintenanceDialog } from './MaintenanceDialog';
 import { MaintenanceCalendar } from './MaintenanceCalendar';
+import { PredictiveMaintenanceCard } from './PredictiveMaintenanceCard';
 
 export const AssetManagement = () => {
   const { userData } = useAuth();
@@ -56,6 +61,7 @@ export const AssetManagement = () => {
   // Dialog states
   const [assetDialogOpen, setAssetDialogOpen] = useState(false);
   const [maintenanceDialogOpen, setMaintenanceDialogOpen] = useState(false);
+  const [aiPredictionDialogOpen, setAiPredictionDialogOpen] = useState(false);
   const [editingAsset, setEditingAsset] = useState<Asset | null>(null);
 
   useEffect(() => {
@@ -377,6 +383,13 @@ export const AssetManagement = () => {
         onClose={handleMenuClose}
       >
         <MenuItem onClick={() => {
+          setAiPredictionDialogOpen(true);
+          handleMenuClose();
+        }}>
+          <TrendingUpIcon fontSize="small" sx={{ mr: 1 }} />
+          AI Maintenance Prediction
+        </MenuItem>
+        <MenuItem onClick={() => {
           setEditingAsset(selectedAsset);
           setAssetDialogOpen(true);
           handleMenuClose();
@@ -422,6 +435,31 @@ export const AssetManagement = () => {
           }}
           asset={selectedAsset}
         />
+      )}
+
+      {/* AI Prediction Dialog */}
+      {selectedAsset && (
+        <Dialog
+          open={aiPredictionDialogOpen}
+          onClose={() => setAiPredictionDialogOpen(false)}
+          maxWidth="md"
+          fullWidth
+        >
+          <DialogTitle>
+            <Box display="flex" alignItems="center" gap={1}>
+              <TrendingUpIcon color="primary" />
+              <Typography variant="h6" fontWeight="bold">
+                AI Maintenance Prediction - {selectedAsset.name}
+              </Typography>
+            </Box>
+          </DialogTitle>
+          <DialogContent>
+            <PredictiveMaintenanceCard asset={selectedAsset} />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setAiPredictionDialogOpen(false)}>Close</Button>
+          </DialogActions>
+        </Dialog>
       )}
     </Box>
   );
