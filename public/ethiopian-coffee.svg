@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Ethiopian Coffee Ceremony - Jebena (Traditional Coffee Pot) -->
+
+  <!-- Coffee beans scattered -->
+  <ellipse cx="40" cy="180" rx="4" ry="3" fill="#5D4037" opacity="0.8"/>
+  <ellipse cx="48" cy="185" rx="4" ry="3" fill="#5D4037" opacity="0.8"/>
+  <ellipse cx="35" cy="188" rx="4" ry="3" fill="#5D4037" opacity="0.8"/>
+  <ellipse cx="160" cy="180" rx="4" ry="3" fill="#5D4037" opacity="0.8"/>
+  <ellipse cx="168" cy="185" rx="4" ry="3" fill="#5D4037" opacity="0.8"/>
+  <ellipse cx="155" cy="188" rx="4" ry="3" fill="#5D4037" opacity="0.8"/>
+
+  <!-- Jebena (coffee pot) base -->
+  <ellipse cx="100" cy="160" rx="45" ry="12" fill="#3E2723" opacity="0.3"/>
+
+  <!-- Jebena body -->
+  <path d="M 70 160 Q 60 140 60 100 Q 60 60 100 50 Q 140 60 140 100 Q 140 140 130 160 Z"
+        fill="#8D6E63" stroke="#5D4037" stroke-width="2"/>
+
+  <!-- Jebena highlight -->
+  <path d="M 75 160 Q 70 140 70 100 Q 70 70 90 60"
+        fill="none" stroke="#BCAAA4" stroke-width="2" opacity="0.5"/>
+
+  <!-- Jebena neck -->
+  <rect x="95" y="35" width="10" height="20" rx="2" fill="#8D6E63" stroke="#5D4037" stroke-width="1.5"/>
+
+  <!-- Jebena spout -->
+  <path d="M 140 90 Q 160 85 170 80 L 175 85 Q 162 90 142 95 Z"
+        fill="#8D6E63" stroke="#5D4037" stroke-width="1.5"/>
+
+  <!-- Jebena handle -->
+  <path d="M 60 90 Q 40 100 40 120 Q 40 135 50 140"
+        fill="none" stroke="#5D4037" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 60 90 Q 40 100 40 120 Q 40 135 50 140"
+        fill="none" stroke="#8D6E63" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Woven basket decoration pattern -->
+  <pattern id="basketWeave" patternUnits="userSpaceOnUse" width="10" height="10">
+    <path d="M 0 5 L 10 5 M 5 0 L 5 10" stroke="#6D4C41" stroke-width="1.5" opacity="0.3"/>
+  </pattern>
+  <path d="M 70 160 Q 60 140 60 100 Q 60 60 100 50 Q 140 60 140 100 Q 140 140 130 160 Z"
+        fill="url(#basketWeave)" opacity="0.4"/>
+
+  <!-- Coffee cups (sini) -->
+  <!-- Cup 1 -->
+  <g transform="translate(60, 170)">
+    <ellipse cx="0" cy="0" rx="12" ry="4" fill="#3E2723" opacity="0.3"/>
+    <path d="M -10 0 L -8 -15 L 8 -15 L 10 0 Z" fill="#D7CCC8" stroke="#5D4037" stroke-width="1"/>
+    <rect x="-8" y="-16" width="16" height="2" rx="1" fill="#8D6E63"/>
+    <ellipse cx="0" cy="-15" rx="8" ry="3" fill="#3E2723"/>
+    <path d="M 10 -7 Q 16 -7 16 -3 Q 16 1 10 1" fill="none" stroke="#5D4037" stroke-width="1"/>
+  </g>
+
+  <!-- Cup 2 -->
+  <g transform="translate(100, 175)">
+    <ellipse cx="0" cy="0" rx="12" ry="4" fill="#3E2723" opacity="0.3"/>
+    <path d="M -10 0 L -8 -15 L 8 -15 L 10 0 Z" fill="#D7CCC8" stroke="#5D4037" stroke-width="1"/>
+    <rect x="-8" y="-16" width="16" height="2" rx="1" fill="#8D6E63"/>
+    <ellipse cx="0" cy="-15" rx="8" ry="3" fill="#3E2723"/>
+    <path d="M 10 -7 Q 16 -7 16 -3 Q 16 1 10 1" fill="none" stroke="#5D4037" stroke-width="1"/>
+  </g>
+
+  <!-- Cup 3 -->
+  <g transform="translate(140, 170)">
+    <ellipse cx="0" cy="0" rx="12" ry="4" fill="#3E2723" opacity="0.3"/>
+    <path d="M -10 0 L -8 -15 L 8 -15 L 10 0 Z" fill="#D7CCC8" stroke="#5D4037" stroke-width="1"/>
+    <rect x="-8" y="-16" width="16" height="2" rx="1" fill="#8D6E63"/>
+    <ellipse cx="0" cy="-15" rx="8" ry="3" fill="#3E2723"/>
+    <path d="M 10 -7 Q 16 -7 16 -3 Q 16 1 10 1" fill="none" stroke="#5D4037" stroke-width="1"/>
+  </g>
+
+  <!-- Steam from jebena -->
+  <g opacity="0.5">
+    <path d="M 100 30 Q 95 20 97 10" fill="none" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round">
+      <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 105 32 Q 110 22 108 12" fill="none" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round">
+      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="2.5s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 95 33 Q 90 23 92 13" fill="none" stroke="#BDBDBD" stroke-width="1.5" stroke-linecap="round">
+      <animate attributeName="opacity" values="0.4;0.6;0.4" dur="3s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- Incense smoke (optional cultural element) -->
+  <g opacity="0.4" transform="translate(30, 150)">
+    <path d="M 0 0 Q -5 -10 -3 -20" fill="none" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round">
+      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="3s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- Traditional grass/herb decoration -->
+  <g transform="translate(20, 195)">
+    <path d="M 0 0 L -2 -8 M 5 0 L 4 -10 M 10 0 L 9 -7 M 15 0 L 13 -9"
+          stroke="#4CAF50" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  </g>
+  <g transform="translate(165, 195)">
+    <path d="M 0 0 L -2 -8 M 5 0 L 4 -10 M 10 0 L 9 -7 M 15 0 L 13 -9"
+          stroke="#4CAF50" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  </g>
+</svg>

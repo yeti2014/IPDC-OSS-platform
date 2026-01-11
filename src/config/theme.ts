@@ -1,5 +1,15 @@
 import { createTheme } from '@mui/material/styles';
 
+// Extend MUI palette types to include lighter shades
+declare module '@mui/material/styles' {
+  interface PaletteColor {
+    lighter?: string;
+  }
+  interface SimplePaletteColorOptions {
+    lighter?: string;
+  }
+}
+
 // Status colors for service requests
 export const statusColors = {
   pending: {
@@ -57,11 +67,13 @@ export const theme = createTheme({
       main: '#059669',
       light: '#34d399',
       dark: '#047857',
+      lighter: '#d1fae5',
     },
     info: {
       main: '#2563eb',
       light: '#60a5fa',
       dark: '#1e40af',
+      lighter: '#dbeafe',
     },
     grey: {
       50: '#f9fafb',

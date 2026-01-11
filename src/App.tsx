@@ -15,6 +15,9 @@ import { ComplaintManagementDashboard } from './pages/ComplaintManagementDashboa
 import ParksMapPage from './pages/ParksMapPage';
 import { ParkRecommendation } from './components/tenant/ParkRecommendation';
 import CreateRequestPage from './pages/CreateRequestPage';
+import ServiceTierSelectionPage from './pages/ServiceTierSelectionPage';
+import EntryServicesPage from './pages/EntryServicesPage';
+import FacilityServicesPage from './pages/FacilityServicesPage';
 import { initIndexedDB } from './utils/indexedDB';
 import { setupAutoSync, registerBackgroundSync } from './services/offlineQueue';
 
@@ -113,6 +116,30 @@ function AppRoutes() {
         element={
           <PrivateRoute>
             <CreateRequestPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/services"
+        element={
+          <PrivateRoute>
+            <ServiceTierSelectionPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/services/entry"
+        element={
+          <PrivateRoute>
+            <EntryServicesPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/services/facility"
+        element={
+          <PrivateRoute>
+            <FacilityServicesPage />
           </PrivateRoute>
         }
       />

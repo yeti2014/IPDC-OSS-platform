@@ -13,13 +13,19 @@ import {
   Link,
   InputAdornment,
   IconButton,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { Visibility, VisibilityOff, Login as LoginIcon } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
+import { EthiopianDateDisplay } from '../components/EthiopianDateDisplay';
 
 export const Login = () => {
   const navigate = useNavigate();
   const { signIn } = useAuth();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -49,39 +55,78 @@ export const Login = () => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          py: 4,
+          py: { xs: 2, sm: 3, md: 4 },
+          px: { xs: 2, sm: 3 }
         }}
       >
-        <Box sx={{ textAlign: 'center', mb: 4 }}>
+        {/* IPDC-OSS Branding */}
+        <Box sx={{ textAlign: 'center', mb: { xs: 2, sm: 3 }, position: 'relative' }}>
           <Box
             component="img"
             src="/ipdc-oss-icon.png"
             alt="IPDC-OSS"
             sx={{
-              height: 120,
+              height: { xs: 100, sm: 110, md: 120 },
               width: 'auto',
               mx: 'auto',
-              mb: 2,
+              mb: { xs: 1.5, sm: 2 },
               display: 'block'
             }}
           />
-          <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
-            IPDC-OSS
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
+          {/* Ethiopian Flag - Top Right Corner */}
+          <Box
+            component="img"
+            src="https://flagcdn.com/w80/et.png"
+            srcSet="https://flagcdn.com/w160/et.png 2x"
+            alt="Ethiopian Flag"
+            sx={{
+              position: 'absolute',
+              top: { xs: 5, sm: 8, md: 10 },
+              right: { xs: '10%', sm: '12%', md: '14%' },
+              width: { xs: 20, sm: 25, md: 30 },
+              height: 'auto',
+              borderRadius: 0.5,
+              boxShadow: '0 1px 4px rgba(0,0,0,0.2)',
+              zIndex: 10
+            }}
+          />
+          <Typography
+            variant={isMobile ? 'body2' : 'body1'}
+            color="text.secondary"
+            sx={{ px: 1 }}
+          >
             Industrial Parks Development Corporation - One-Stop Service
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ mt: 0.5, fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
+          >
             Offline-First Service Request Management
           </Typography>
         </Box>
 
+        {/* Ethiopian & Gregorian Calendar Display */}
+        <Box sx={{ mb: { xs: 2, sm: 3 } }}>
+          <EthiopianDateDisplay variant="compact" />
+        </Box>
+
         <Card>
-          <CardContent sx={{ p: 4 }}>
-            <Typography variant="h5" gutterBottom fontWeight="bold" textAlign="center">
+          <CardContent sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
+            <Typography
+              variant={isMobile ? 'h6' : 'h5'}
+              gutterBottom
+              fontWeight="bold"
+              textAlign="center"
+            >
               Welcome Back
             </Typography>
-            <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ mb: 3 }}>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              textAlign="center"
+              sx={{ mb: { xs: 2, sm: 3 }, fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
+            >
               Sign in to manage your service requests
             </Typography>
 
@@ -130,7 +175,7 @@ export const Login = () => {
                 type="submit"
                 variant="contained"
                 fullWidth
-                size="large"
+                size={isMobile ? 'medium' : 'large'}
                 disabled={loading}
                 startIcon={<LoginIcon />}
                 sx={{ mb: 2 }}
@@ -148,14 +193,35 @@ export const Login = () => {
               </Box>
             </form>
 
-            <Box sx={{ mt: 3, p: 2, bgcolor: 'info.lighter', borderRadius: 1 }}>
-              <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+            <Box
+              sx={{
+                mt: { xs: 2, sm: 3 },
+                p: { xs: 1.5, sm: 2 },
+                bgcolor: 'info.lighter',
+                borderRadius: 1
+              }}
+            >
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                display="block"
+                gutterBottom
+                sx={{ fontSize: { xs: '0.7rem', sm: '0.75rem' } }}
+              >
                 <strong>Test Accounts:</strong>
               </Typography>
-              <Typography variant="caption" display="block">
+              <Typography
+                variant="caption"
+                display="block"
+                sx={{ fontSize: { xs: '0.65rem', sm: '0.75rem' } }}
+              >
                 📧 Admin: admin@ipdc.et / Test123!
               </Typography>
-              <Typography variant="caption" display="block">
+              <Typography
+                variant="caption"
+                display="block"
+                sx={{ fontSize: { xs: '0.65rem', sm: '0.75rem' } }}
+              >
                 📧 Tenant: tenant@company.com / Test123!
               </Typography>
             </Box>

@@ -6,7 +6,7 @@ import {
   Typography,
   Card,
   CardContent,
-  Grid,
+  Grid2,
   Button,
   Alert,
   AlertTitle,
@@ -45,12 +45,16 @@ import UserProfile from '../components/common/UserProfile';
 import AdvancedAnalytics from '../components/common/AdvancedAnalytics';
 import AdvancedSearch from '../components/common/AdvancedSearch';
 import FileComplaintDialog from '../components/tenant/FileComplaintDialog';
+import ServiceTierSelector from '../components/tenant/ServiceTierSelector';
+import TenantLifecycleTimeline from '../components/tenant/TenantLifecycleTimeline';
 import { useTranslation } from 'react-i18next';
 import { complaintService } from '../services/complaintService';
+import { useNavigate } from 'react-router-dom';
 
 export const Dashboard = () => {
   const { userData, logOut } = useAuth();
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { isMobile, isTablet } = useDeviceDetection();
   const { localRequests } = useOfflineStorage(userData?.uid, userData?.role);
 
@@ -257,9 +261,31 @@ export const Dashboard = () => {
         </Alert>
 
         {userData?.role === 'tenant' && (
-          <Box sx={{ mb: 4 }}>
-            <ParkRecommendation />
-          </Box>
+          <>
+            {/* Tenant Lifecycle Status Timeline */}
+            <TenantLifecycleTimeline
+              status={{
+                stage: 'active', // Simulated - in real app, fetch from user profile
+                completedServices: {
+                  investmentPermit: true,
+                  businessLicense: true,
+                  workPermit: true,
+                  taxRegistration: true,
+                },
+              }}
+            />
+
+            {/* Two-Tier Service Selector */}
+            <ServiceTierSelector
+              onSelectTier={(tier) => {
+                if (tier === 'entry') {
+                  navigate('/services/entry');
+                } else {
+                  navigate('/services/facility');
+                }
+              }}
+            />
+          </>
         )}
 
         <Card sx={{ mb: 4 }}>
@@ -323,8 +349,8 @@ export const Dashboard = () => {
           </CardContent>
         </Card>
 
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid item xs={6} sm={3}>
+        <Grid2 container spacing={3} sx={{ mb: 4 }}>
+          <Grid2 size={{ xs: 6, sm: 3 }}>
             <Card>
               <CardContent>
                 <Typography variant="h4" color="primary" gutterBottom>
@@ -335,8 +361,8 @@ export const Dashboard = () => {
                 </Typography>
               </CardContent>
             </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
+          </Grid2>
+          <Grid2 size={{ xs: 6, sm: 3 }}>
             <Card>
               <CardContent>
                 <Typography variant="h4" color="warning.main" gutterBottom>
@@ -347,8 +373,8 @@ export const Dashboard = () => {
                 </Typography>
               </CardContent>
             </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
+          </Grid2>
+          <Grid2 size={{ xs: 6, sm: 3 }}>
             <Card>
               <CardContent>
                 <Typography variant="h4" color="info.main" gutterBottom>
@@ -359,8 +385,8 @@ export const Dashboard = () => {
                 </Typography>
               </CardContent>
             </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
+          </Grid2>
+          <Grid2 size={{ xs: 6, sm: 3 }}>
             <Card>
               <CardContent>
                 <Typography variant="h4" color="success.main" gutterBottom>
@@ -371,8 +397,8 @@ export const Dashboard = () => {
                 </Typography>
               </CardContent>
             </Card>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
 
         <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
           <Tabs value={tabValue} onChange={(e, newValue) => setTabValue(newValue)}>

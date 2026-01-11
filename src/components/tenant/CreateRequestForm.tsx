@@ -1,5 +1,5 @@
 // src/components/tenant/CreateRequestForm.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -13,7 +13,14 @@ import {
   CircularProgress,
   Typography,
   Chip,
+  Paper,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Collapse,
 } from '@mui/material';
+import { CheckCircle, TrendingUp, Schedule, Lightbulb } from '@mui/icons-material';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -23,6 +30,7 @@ import { tokenService } from '../../services/tokenService';
 import { FileUpload } from '../common/FileUpload';
 import { UploadResult } from '../../services/fileUploadService';
 import { queueFirestoreOperation } from '../../services/offlineQueue';
+import { aiApiClient, ServiceClassificationResponse } from '../../services/aiApiService';
 
 interface CreateRequestFormProps {
   open: boolean;
@@ -30,14 +38,16 @@ interface CreateRequestFormProps {
   onSuccess: () => void;
 }
 
-const serviceTypes: { value: ServiceType; label: string; icon: string }[] = [
+// Tier 2: Facility Management Services (Token-Based)
+// For existing tenants already located in IPDC premises
+const facilityServices: { value: ServiceType; label: string; icon: string }[] = [
   { value: 'maintenance', label: 'Maintenance', icon: '🔧' },
   { value: 'utilities', label: 'Utilities', icon: '💡' },
   { value: 'security', label: 'Security', icon: '🔒' },
   { value: 'cleaning', label: 'Cleaning', icon: '🧹' },
   { value: 'it-support', label: 'IT Support', icon: '💻' },
   { value: 'waste-management', label: 'Waste Management', icon: '♻️' },
-  { value: 'other', label: 'Other', icon: '📋' },
+  { value: 'other', label: 'Other Facility Services', icon: '📋' },
 ];
 
 const priorities: { value: RequestPriority; label: string }[] = [
@@ -61,6 +71,11 @@ export const CreateRequestForm: React.FC<CreateRequestFormProps> = ({ open, onCl
     priority: 'medium' as RequestPriority,
     location: '',
   });
+
+  // AI Classification State
+  const [aiClassifying, setAiClassifying] = useState(false);
+  const [aiClassification, setAiClassification] = useState<ServiceClassificationResponse['data'] | null>(null);
+  const [showAiInsights, setShowAiInsights] = useState(false);
 
   // Load token balance and calculate cost
   useEffect(() => {
@@ -97,6 +112,57 @@ export const CreateRequestForm: React.FC<CreateRequestFormProps> = ({ open, onCl
       console.error('Error calculating cost:', error);
     }
   };
+
+  // AI Service Classification
+  const classifyService = useCallback(async () => {
+    // Only classify if we have both title and description
+    if (!formData.title.trim() || !formData.description.trim()) {
+      setAiClassification(null);
+      setShowAiInsights(false);
+      return;
+    }
+
+    // Don't classify if title is too short
+    if (formData.title.trim().length < 5 || formData.description.trim().length < 10) {
+      return;
+    }
+
+    setAiClassifying(true);
+
+    try {
+      const response = await aiApiClient.classifyService({
+        title: formData.title.trim(),
+        description: formData.description.trim(),
+      });
+
+      if (response.success) {
+        setAiClassification(response.data);
+        setShowAiInsights(true);
+
+        // Auto-update priority based on AI recommendation
+        setFormData(prev => ({
+          ...prev,
+          priority: response.data.priority
+        }));
+      }
+    } catch (error) {
+      console.error('AI classification error:', error);
+      // Silently fail - don't block the user
+    } finally {
+      setAiClassifying(false);
+    }
+  }, [formData.title, formData.description]);
+
+  // Trigger AI classification when title/description changes (with debounce)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (navigator.onLine) {
+        classifyService();
+      }
+    }, 1000); // Wait 1 second after user stops typing
+
+    return () => clearTimeout(timer);
+  }, [formData.title, formData.description, classifyService]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -319,15 +385,21 @@ export const CreateRequestForm: React.FC<CreateRequestFormProps> = ({ open, onCl
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogTitle>
-        Create New Service Request
-        {!navigator.onLine && (
-          <Chip
-            label="Offline Mode"
-            color="warning"
-            size="small"
-            sx={{ ml: 2 }}
-          />
-        )}
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Typography variant="h6" component="span">
+            Facility Management Service Request
+          </Typography>
+          {!navigator.onLine && (
+            <Chip
+              label="Offline Mode"
+              color="warning"
+              size="small"
+            />
+          )}
+        </Box>
+        <Typography variant="caption" color="text.secondary">
+          Tier 2: Token-based services for existing tenants in IPDC premises
+        </Typography>
       </DialogTitle>
       <form onSubmit={handleSubmit}>
         <DialogContent>
@@ -358,13 +430,14 @@ export const CreateRequestForm: React.FC<CreateRequestFormProps> = ({ open, onCl
 
             <TextField
               select
-              label="Service Type"
+              label="Facility Management Service (Tier 2)"
               value={formData.serviceType}
               onChange={handleChange('serviceType')}
               fullWidth
               required
+              helperText="Token-based services for existing tenants"
             >
-              {serviceTypes.map((type) => (
+              {facilityServices.map((type) => (
                 <MenuItem key={type.value} value={type.value}>
                   {type.icon} {type.label}
                 </MenuItem>
@@ -390,6 +463,86 @@ export const CreateRequestForm: React.FC<CreateRequestFormProps> = ({ open, onCl
               rows={4}
               placeholder="Provide detailed information about your request"
             />
+
+            {/* AI Classification Insights - Tier 1: Admin Services (Informational Only) */}
+            {aiClassifying && (
+              <Alert severity="info" icon={<CircularProgress size={20} />}>
+                AI analyzing request for administrative service classification...
+              </Alert>
+            )}
+
+            <Collapse in={showAiInsights && !!aiClassification}>
+              {aiClassification && (
+                <Paper
+                  elevation={2}
+                  sx={{
+                    p: 2,
+                    border: '2px solid',
+                    borderColor: 'info.main',
+                    bgcolor: 'info.lighter'
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                    <Lightbulb sx={{ color: 'info.main', mr: 1 }} />
+                    <Typography variant="subtitle1" fontWeight="bold" color="info.main">
+                      Tier 1: Admin Services Classification
+                    </Typography>
+                    <Chip
+                      label="Informational"
+                      size="small"
+                      color="info"
+                      variant="outlined"
+                      sx={{ ml: 'auto' }}
+                    />
+                  </Box>
+                  <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2 }}>
+                    AI-detected administrative service type for new tenant registration (not token-based)
+                  </Typography>
+
+                  <Box sx={{ display: 'flex', gap: 2, mb: 2, flexWrap: 'wrap' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <CheckCircle sx={{ color: 'success.main', fontSize: 20 }} />
+                      <Typography variant="body2">
+                        <strong>Service:</strong> {aiClassification.service_type_display}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <TrendingUp sx={{ color: 'warning.main', fontSize: 20 }} />
+                      <Typography variant="body2">
+                        <strong>Priority:</strong> {aiClassification.priority.toUpperCase()}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Schedule sx={{ color: 'info.main', fontSize: 20 }} />
+                      <Typography variant="body2">
+                        <strong>Est. Processing:</strong> {aiClassification.estimated_processing_days} days
+                      </Typography>
+                    </Box>
+                  </Box>
+
+                  {aiClassification.recommendations && aiClassification.recommendations.length > 0 && (
+                    <Box>
+                      <Typography variant="subtitle2" gutterBottom fontWeight="bold">
+                        Recommendations:
+                      </Typography>
+                      <List dense sx={{ bgcolor: 'background.paper', borderRadius: 1 }}>
+                        {aiClassification.recommendations.slice(0, 3).map((rec, idx) => (
+                          <ListItem key={idx}>
+                            <ListItemIcon sx={{ minWidth: 36 }}>
+                              <CheckCircle sx={{ color: 'success.main', fontSize: 18 }} />
+                            </ListItemIcon>
+                            <ListItemText
+                              primary={rec}
+                              primaryTypographyProps={{ variant: 'body2' }}
+                            />
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Box>
+                  )}
+                </Paper>
+              )}
+            </Collapse>
 
             <TextField
               select
