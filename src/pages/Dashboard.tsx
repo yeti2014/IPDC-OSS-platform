@@ -15,7 +15,7 @@ import {
   Chip,
   Stack,
 } from '@mui/material';
-import Grid2 from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import {
   Add as AddIcon,
   Logout as LogoutIcon,
@@ -349,8 +349,8 @@ export const Dashboard = () => {
           </CardContent>
         </Card>
 
-        <Grid2 container spacing={3} sx={{ mb: 4 }}>
-          <Grid2 size={{ xs: 6, sm: 3 }}>
+        <Grid container spacing={3} sx={{ mb: 4 }}>
+          <Grid size={{ xs: 6, sm: 3 }}>
             <Card>
               <CardContent>
                 <Typography variant="h4" color="primary" gutterBottom>
@@ -361,8 +361,8 @@ export const Dashboard = () => {
                 </Typography>
               </CardContent>
             </Card>
-          </Grid2>
-          <Grid2 size={{ xs: 6, sm: 3 }}>
+          </Grid>
+          <Grid size={{ xs: 6, sm: 3 }}>
             <Card>
               <CardContent>
                 <Typography variant="h4" color="warning.main" gutterBottom>
@@ -373,8 +373,8 @@ export const Dashboard = () => {
                 </Typography>
               </CardContent>
             </Card>
-          </Grid2>
-          <Grid2 size={{ xs: 6, sm: 3 }}>
+          </Grid>
+          <Grid size={{ xs: 6, sm: 3 }}>
             <Card>
               <CardContent>
                 <Typography variant="h4" color="info.main" gutterBottom>
@@ -385,8 +385,8 @@ export const Dashboard = () => {
                 </Typography>
               </CardContent>
             </Card>
-          </Grid2>
-          <Grid2 size={{ xs: 6, sm: 3 }}>
+          </Grid>
+          <Grid size={{ xs: 6, sm: 3 }}>
             <Card>
               <CardContent>
                 <Typography variant="h4" color="success.main" gutterBottom>
@@ -397,8 +397,8 @@ export const Dashboard = () => {
                 </Typography>
               </CardContent>
             </Card>
-          </Grid2>
-        </Grid2>
+          </Grid>
+        </Grid>
 
         <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
           <Tabs value={tabValue} onChange={(e, newValue) => setTabValue(newValue)}>

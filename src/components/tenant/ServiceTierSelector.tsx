@@ -17,7 +17,7 @@ import {
   useMediaQuery,
   alpha,
 } from '@mui/material';
-import Grid2 from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import {
   Business as BusinessIcon,
   Build as BuildIcon,
@@ -50,9 +50,9 @@ export const ServiceTierSelector: React.FC<ServiceTierSelectorProps> = ({ onSele
         Select Service Type
       </Typography>
 
-      <Grid2 container spacing={{ xs: 2, sm: 3, md: 4 }}>
+      <Grid container spacing={{ xs: 2, sm: 3, md: 4 }}>
         {/* Tier 1: Entry/Admin Services */}
-        <Grid2 size={{ xs: 12, md: 6 }}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Card
             elevation={4}
             sx={{
@@ -181,10 +181,10 @@ export const ServiceTierSelector: React.FC<ServiceTierSelectorProps> = ({ onSele
               </CardContent>
             </CardActionArea>
           </Card>
-        </Grid2>
+        </Grid>
 
         {/* Tier 2: Facility Management Services */}
-        <Grid2 size={{ xs: 12, md: 6 }}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Card
             elevation={4}
             sx={{
@@ -313,8 +313,8 @@ export const ServiceTierSelector: React.FC<ServiceTierSelectorProps> = ({ onSele
               </CardContent>
             </CardActionArea>
           </Card>
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     </Box>
   );
 };
