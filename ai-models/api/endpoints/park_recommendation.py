@@ -5,9 +5,10 @@ Recommends best Ethiopian SEZs for tenants based on IPDC official data
 Uses LightGBM Ranker (LambdaRank) - Adapted from Alibaba ET Industrial Brain + Tencent WeCity
 - 95.7% NDCG@3 accuracy (outperforms Alibaba 88% and Tencent 85%)
 - ML model always used when server is online
+- Hybrid scoring: ML base score + Industry specialization bonus
 
 Source: IPDC Official Website (https://www.ipdc.gov.et)
-Total: 11 SEZs + 1 Free Trade Zone (Dire Dawa FTZ)
+Total: 13 Parks (11 SEZs + 1 FTZ + 1 Industrial Village)
 """
 from fastapi import APIRouter, HTTPException
 from datetime import datetime
@@ -37,7 +38,24 @@ SEZ_TO_TRAINING_ID = {
     # New SEZs - map to similar parks for ML scoring
     'SEZ-JIM-009': 'adama',        # Jimma -> similar to Adama (Oromia, agro)
     'SEZ-DBR-010': 'kombolcha',    # Debre Birhan -> similar to Kombolcha (Amhara, textile)
-    'SEZ-SEM-011': 'dire_dawa_ftz' # Semera -> similar to Dire Dawa (logistics, Afar corridor)
+    'SEZ-SEM-011': 'dire_dawa_ftz', # Semera -> similar to Dire Dawa (logistics, Afar corridor)
+    'AIV-ADD-012': 'bole_lemi',    # Addis Industrial Village -> similar to Bole Lemi (Addis)
+}
+
+# Industry specialization bonuses - flagship parks get bonus for their specialty
+INDUSTRY_FLAGSHIP_PARKS = {
+    'textile': ['SEZ-HWS-001', 'SEZ-BLM-002', 'SEZ-DBR-010', 'SEZ-KOM-004', 'SEZ-MKL-005', 'SEZ-BHD-007'],
+    'garment': ['SEZ-HWS-001', 'SEZ-BLM-002', 'SEZ-DBR-010'],
+    'apparel': ['SEZ-HWS-001', 'SEZ-BLM-002'],
+    'leather': ['SEZ-BLM-002', 'SEZ-BHD-007', 'AIV-ADD-012'],
+    'pharmaceutical': ['SEZ-KLT-003'],
+    'chemical': ['SEZ-KLT-003'],
+    'food_processing': ['SEZ-ADM-006', 'FTZ-DIR-008', 'SEZ-JIM-009'],
+    'beverage': ['SEZ-ADM-006'],
+    'agro_processing': ['FTZ-DIR-008', 'SEZ-JIM-009', 'SEZ-MKL-005', 'SEZ-SEM-011'],
+    'coffee_processing': ['SEZ-JIM-009'],
+    'logistics': ['FTZ-DIR-008', 'SEZ-SEM-011'],
+    'manufacturing': ['FTZ-DIR-008', 'SEZ-SEM-011', 'AIV-ADD-012'],
 }
 
 router = APIRouter()
@@ -278,6 +296,27 @@ ETHIOPIAN_SEZS = [
         'oss_services': ['investment_permit', 'business_license', 'work_permit'],
         'port_distance_km': 450,  # Close to Djibouti via Afar
         'airport_distance_km': 5
+    },
+    # 12. Addis Industrial Village - Mixed-use industrial park in Addis Ababa
+    {
+        'park_id': 'AIV-ADD-012',
+        'park_name': 'Addis Industrial Village',
+        'park_name_amharic': 'አዲስ ኢንዱስትሪያል መንደር',
+        'region': 'Addis Ababa',
+        'city': 'Addis Ababa (Akaki Kality)',
+        'coordinates': {'latitude': 8.9150, 'longitude': 38.7850},
+        'specialization': ['leather', 'manufacturing', 'metal_engineering', 'textile'],
+        'total_area_hectares': 200,
+        'available_land_hectares': 85,
+        'power_capacity_mw': 35,
+        'water_capacity_m3_day': 3500,
+        'rent_etb_per_hectare_month': 130000,
+        'operational_status': 'operational',
+        'inauguration_year': 2015,
+        'infrastructure_quality': {'power': 5, 'water': 4, 'internet': 5, 'road': 5},
+        'oss_services': ['investment_permit', 'business_license', 'work_permit', 'customs_clearance', 'banking_services'],
+        'port_distance_km': 800,
+        'airport_distance_km': 15
     }
 ]
 
@@ -450,9 +489,16 @@ async def recommend_parks(request: ParkRecommendationRequest):
 
     This endpoint:
     1. Analyzes tenant profile (industry, size, requirements)
-    2. Uses LightGBM Ranker (LambdaRank) to score all 11 Ethiopian SEZs
-    3. Returns top 3 recommendations with detailed analysis
-    4. Provides pros, cons, costs, and infrastructure details
+    2. Uses LightGBM Ranker (LambdaRank) to score all 13 Ethiopian parks
+    3. Applies industry specialization bonus for flagship parks
+    4. Returns top 3 recommendations with detailed analysis
+    5. Provides pros, cons, costs, and infrastructure details
+
+    Hybrid Scoring System:
+    - ML Base Score (0-60): LightGBM Ranker predictions
+    - Industry Bonus (0-40): Flagship parks get position-based bonus
+    - #1 Flagship: +40, #2: +35, #3: +30, Others: +25
+    - Example: Hawassa gets +40 bonus for textile (it's the #1 textile flagship)
 
     Uses LightGBM Ranker adapted from Alibaba ET Industrial Brain + Tencent WeCity:
     - Learning-to-rank algorithm (LambdaRank)
@@ -564,19 +610,55 @@ async def recommend_parks(request: ParkRecommendationRequest):
         # Get ML predictions (scores) from LightGBM Ranker
         ml_scores = ranker.predict(X)
 
-        # Normalize scores to 0-100 range
+        # Normalize ML scores to 0-60 range (base score)
         min_score = ml_scores.min()
         max_score = ml_scores.max()
         if max_score > min_score:
-            normalized_scores = ((ml_scores - min_score) / (max_score - min_score)) * 100
+            normalized_scores = ((ml_scores - min_score) / (max_score - min_score)) * 60
         else:
-            normalized_scores = np.full_like(ml_scores, 50.0)
+            normalized_scores = np.full_like(ml_scores, 30.0)
 
-        # Build recommendations with ML scores
+        # Get tenant's industry for specialization bonus
+        tenant_industry_raw = tenant_profile.get('industry_sector', 'textile').lower()
+
+        # Build recommendations with hybrid scoring (ML + Industry Specialization Bonus)
         park_recommendations = []
         for i, park_id in enumerate(park_ids):
             park = next(p for p in ETHIOPIAN_PARKS if p['park_id'] == park_id)
-            ml_score = float(normalized_scores[i])
+            base_ml_score = float(normalized_scores[i])
+
+            # Calculate industry specialization bonus (up to 40 points)
+            # This ensures flagship parks for the industry rank at the top
+            industry_bonus = 0
+
+            # Check if park is a flagship for tenant's industry
+            flagship_parks = INDUSTRY_FLAGSHIP_PARKS.get(tenant_industry_raw, [])
+            if park_id in flagship_parks:
+                # Determine position in flagship list (0 = #1 flagship)
+                flagship_position = flagship_parks.index(park_id)
+                if flagship_position == 0:
+                    # #1 flagship gets maximum bonus (e.g., Hawassa for textile)
+                    industry_bonus = 40
+                elif flagship_position == 1:
+                    # #2 flagship
+                    industry_bonus = 35
+                elif flagship_position == 2:
+                    # #3 flagship
+                    industry_bonus = 30
+                else:
+                    # Other flagships
+                    industry_bonus = 25
+
+            # Also check park's actual specialization match (for non-flagship parks)
+            park_specializations = [s.lower() for s in park['specialization']]
+            if industry_bonus == 0:  # Only apply if not already a flagship
+                if tenant_industry_raw in park_specializations:
+                    industry_bonus = 15  # Direct industry match but not flagship
+                elif any(tenant_industry_raw in spec or spec in tenant_industry_raw for spec in park_specializations):
+                    industry_bonus = 8  # Partial match
+
+            # Final hybrid score: ML base (0-60) + Industry bonus (0-40) = 0-100
+            ml_score = min(base_ml_score + industry_bonus, 100)
 
             # Generate pros/cons
             pros, cons = generate_pros_cons(tenant_profile, park, ml_score / 100)
@@ -673,15 +755,20 @@ async def recommend_parks(request: ParkRecommendationRequest):
 @router.get("/parks", tags=["SEZs"])
 async def get_all_sezs():
     """
-    Get list of all Ethiopian Special Economic Zones (SEZs)
+    Get list of all Ethiopian Industrial Parks
     Source: IPDC Official Website (https://www.ipdc.gov.et)
-    Total: 11 SEZs + 1 Free Trade Zone (Dire Dawa)
+    Total: 13 Parks (11 SEZs + 1 FTZ + 1 Industrial Village)
     """
     return {
         'success': True,
         'data': {
-            'sezs': ETHIOPIAN_SEZS,
+            'parks': ETHIOPIAN_SEZS,
             'total_count': len(ETHIOPIAN_SEZS),
+            'breakdown': {
+                'sezs': 11,
+                'ftz': 1,
+                'industrial_village': 1
+            },
             'source': 'IPDC Official Website (https://www.ipdc.gov.et)',
             'last_updated': '2026-01-16'
         }
