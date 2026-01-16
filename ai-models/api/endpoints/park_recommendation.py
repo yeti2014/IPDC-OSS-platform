@@ -9,6 +9,7 @@ Uses LightGBM Ranker (LambdaRank) - Adapted from Alibaba ET Industrial Brain + T
 
 Source: IPDC Official Website (https://www.ipdc.gov.et)
 Total: 13 Parks (11 SEZs + 1 FTZ + 1 Industrial Village)
+Updated: 2026-01-17 - Fixed IPDC official categorizations
 """
 from fastapi import APIRouter, HTTPException
 from datetime import datetime
@@ -40,22 +41,35 @@ SEZ_TO_TRAINING_ID = {
     'SEZ-DBR-010': 'kombolcha',    # Debre Birhan -> similar to Kombolcha (Amhara, textile)
     'SEZ-SEM-011': 'dire_dawa_ftz', # Semera -> similar to Dire Dawa (logistics, Afar corridor)
     'AIV-ADD-012': 'bole_lemi',    # Addis Industrial Village -> similar to Bole Lemi (Addis)
+    'SEZ-ART-013': 'adama',        # Arerti -> similar to Adama (Oromia, manufacturing/agro)
 }
 
 # Industry specialization bonuses - flagship parks get bonus for their specialty
+# Source: IPDC Official Website Categories (2026)
+# APPAREL & TEXTILE: Hawassa, Bahir Dar, Kombolcha, Mekelle
+# PHARMACEUTICAL: Kilinto
+# MULTI-SECTORAL: Adama, Addis Industrial Village, Arerti, Bole Lemi, Debre Birhan, Dire Dawa, Jimma, Semera
 INDUSTRY_FLAGSHIP_PARKS = {
-    'textile': ['SEZ-HWS-001', 'SEZ-BLM-002', 'SEZ-DBR-010', 'SEZ-KOM-004', 'SEZ-MKL-005', 'SEZ-BHD-007'],
-    'garment': ['SEZ-HWS-001', 'SEZ-BLM-002', 'SEZ-DBR-010'],
-    'apparel': ['SEZ-HWS-001', 'SEZ-BLM-002'],
-    'leather': ['SEZ-BLM-002', 'SEZ-BHD-007', 'AIV-ADD-012'],
+    # APPAREL & TEXTILE category (per IPDC) - Hawassa is #1 flagship
+    'textile': ['SEZ-HWS-001', 'SEZ-BHD-007', 'SEZ-KOM-004', 'SEZ-MKL-005'],
+    'garment': ['SEZ-HWS-001', 'SEZ-BHD-007', 'SEZ-KOM-004', 'SEZ-MKL-005'],
+    'apparel': ['SEZ-HWS-001', 'SEZ-BHD-007', 'SEZ-KOM-004', 'SEZ-MKL-005'],
+
+    # PHARMACEUTICAL category (per IPDC)
     'pharmaceutical': ['SEZ-KLT-003'],
     'chemical': ['SEZ-KLT-003'],
+
+    # Leather - Bole Lemi is multi-sectoral but has leather focus, plus Bahir Dar and AIV
+    'leather': ['SEZ-BLM-002', 'SEZ-BHD-007', 'AIV-ADD-012'],
+
+    # MULTI-SECTORAL category specializations
     'food_processing': ['SEZ-ADM-006', 'FTZ-DIR-008', 'SEZ-JIM-009'],
     'beverage': ['SEZ-ADM-006'],
-    'agro_processing': ['FTZ-DIR-008', 'SEZ-JIM-009', 'SEZ-MKL-005', 'SEZ-SEM-011'],
+    'agro_processing': ['FTZ-DIR-008', 'SEZ-JIM-009', 'SEZ-MKL-005', 'SEZ-SEM-011', 'SEZ-ART-013'],
     'coffee_processing': ['SEZ-JIM-009'],
     'logistics': ['FTZ-DIR-008', 'SEZ-SEM-011'],
-    'manufacturing': ['FTZ-DIR-008', 'SEZ-SEM-011', 'AIV-ADD-012'],
+    'manufacturing': ['FTZ-DIR-008', 'SEZ-SEM-011', 'AIV-ADD-012', 'SEZ-ART-013'],
+    'metal_engineering': ['AIV-ADD-012', 'SEZ-ART-013'],
 }
 
 router = APIRouter()
@@ -87,7 +101,7 @@ ETHIOPIAN_SEZS = [
         'port_distance_km': 350,
         'airport_distance_km': 6
     },
-    # 2. Bole Lemi SEZ - First industrial park, Addis Ababa
+    # 2. Bole Lemi SEZ - Multi-sectoral park, Addis Ababa (per IPDC official)
     {
         'park_id': 'SEZ-BLM-002',
         'park_name': 'Bole Lemi Special Economic Zone I & II',
@@ -95,7 +109,7 @@ ETHIOPIAN_SEZS = [
         'region': 'Addis Ababa',
         'city': 'Addis Ababa',
         'coordinates': {'latitude': 8.9806, 'longitude': 38.7578},
-        'specialization': ['textile', 'garment', 'leather'],
+        'specialization': ['leather', 'manufacturing', 'multi_sectoral'],
         'total_area_hectares': 156,
         'available_land_hectares': 30,
         'power_capacity_mw': 30,
@@ -255,7 +269,7 @@ ETHIOPIAN_SEZS = [
         'port_distance_km': 1100,
         'airport_distance_km': 10
     },
-    # 10. Debre Birhan SEZ - Textile & Garment hub
+    # 10. Debre Birhan SEZ - Multi-sectoral park (per IPDC official)
     {
         'park_id': 'SEZ-DBR-010',
         'park_name': 'Debre Birhan Special Economic Zone',
@@ -263,7 +277,7 @@ ETHIOPIAN_SEZS = [
         'region': 'Amhara',
         'city': 'Debre Birhan',
         'coordinates': {'latitude': 9.6800, 'longitude': 39.5300},
-        'specialization': ['textile', 'garment'],
+        'specialization': ['manufacturing', 'multi_sectoral'],
         'total_area_hectares': 100,
         'available_land_hectares': 65,
         'power_capacity_mw': 22,
@@ -317,6 +331,27 @@ ETHIOPIAN_SEZS = [
         'oss_services': ['investment_permit', 'business_license', 'work_permit', 'customs_clearance', 'banking_services'],
         'port_distance_km': 800,
         'airport_distance_km': 15
+    },
+    # 13. Arerti SEZ - Multi-sectoral hub in Oromia
+    {
+        'park_id': 'SEZ-ART-013',
+        'park_name': 'Arerti Special Economic Zone',
+        'park_name_amharic': 'አረርቲ ልዩ ኢኮኖሚ ዞን',
+        'region': 'Oromia',
+        'city': 'Arerti',
+        'coordinates': {'latitude': 9.0200, 'longitude': 40.3400},
+        'specialization': ['manufacturing', 'agro_processing', 'metal_engineering'],
+        'total_area_hectares': 100,
+        'available_land_hectares': 70,
+        'power_capacity_mw': 25,
+        'water_capacity_m3_day': 2500,
+        'rent_etb_per_hectare_month': 70000,
+        'operational_status': 'operational',
+        'inauguration_year': 2021,
+        'infrastructure_quality': {'power': 4, 'water': 4, 'internet': 3, 'road': 4},
+        'oss_services': ['investment_permit', 'business_license', 'work_permit'],
+        'port_distance_km': 900,
+        'airport_distance_km': 150
     }
 ]
 
