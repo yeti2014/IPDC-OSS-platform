@@ -138,7 +138,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     await setDoc(doc(db, 'users', userCredential.user.uid), {
       email,
-      name,
+      displayName: name,
       role,
       createdAt: new Date(),
       updatedAt: new Date(),

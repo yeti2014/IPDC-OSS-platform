@@ -118,7 +118,7 @@ export const TenantManagement: React.FC = () => {
                   <TableRow key={user.id} hover>
                     <TableCell>
                       <Typography variant="body2" fontWeight="medium">
-                        {user.displayName}
+                        {user.displayName || (user as any).name || 'Unknown'}
                       </Typography>
                     </TableCell>
                     <TableCell>{user.email}</TableCell>

@@ -187,7 +187,6 @@ export const AdminDashboard = () => {
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
       <StatusBar />
       <OfflineBanner />
-      <AnnouncementBanner />
 
       <Container maxWidth="xl" sx={{ py: 4 }}>
         <Alert
@@ -333,10 +332,11 @@ export const AdminDashboard = () => {
             <Tab label={`${t('requests.pending')} (${requests.length})`} />
             <Tab label="Tenant Management" />
             <Tab label={t('assets.title')} />
+            <Tab label={t('nav.announcements')} />
           </Tabs>
         </Box>
 
-        {tabValue === 0 ? (
+        {tabValue === 0 && (
           loading ? (
             <Card>
               <CardContent>
@@ -424,10 +424,20 @@ export const AdminDashboard = () => {
               </Table>
             </TableContainer>
           )
-        ) : tabValue === 1 ? (
-          <TenantManagement />
-        ) : (
-          <AssetManagement />
+        )}
+
+        {tabValue === 1 && <TenantManagement />}
+
+        {tabValue === 2 && <AssetManagement />}
+
+        {tabValue === 3 && (
+          <Box>
+            <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <CampaignIcon />
+              {t('nav.announcements')}
+            </Typography>
+            <AnnouncementBanner />
+          </Box>
         )}
       </Container>
 

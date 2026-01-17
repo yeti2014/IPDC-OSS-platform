@@ -43,6 +43,10 @@ export interface IndustrialPark {
  * - APPAREL & TEXTILE: 4 parks (Hawassa, Bahir Dar, Kombolcha, Mekelle)
  * - PHARMACEUTICAL: 1 park (Kilinto)
  * - MULTI-SECTORAL: 8 parks (Bole Lemi, Adama, Dire Dawa, Jimma, Debre Birhan, Semera, Addis Industrial Village, Arerti)
+ *
+ * NOTE: Park names and locations are official from IPDC. However, operational data
+ * (sizes, power/water capacity, occupancy rates, available land) are ESTIMATES and
+ * should be verified with IPDC for accuracy before production use.
  */
 export const ethiopianIPDCParks: IndustrialPark[] = [
   {

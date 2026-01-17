@@ -28,6 +28,7 @@ import {
   Visibility as ViewIcon,
   Logout as LogoutIcon,
   Build as BuildIcon,
+  Campaign as CampaignIcon,
 } from '@mui/icons-material';
 import { collection, query, where, onSnapshot, updateDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
@@ -228,7 +229,6 @@ export const OperationsDashboard = () => {
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
       <StatusBar />
       <OfflineBanner />
-      <AnnouncementBanner />
 
       <Container maxWidth="xl" sx={{ py: 4 }}>
         <Alert
@@ -314,106 +314,119 @@ export const OperationsDashboard = () => {
             <Tab label={`${t('requests.inProgress')} (${inProgressRequests.length})`} />
             <Tab label={`My Tasks (${myTasks.length})`} />
             <Tab label={`Completed (${completedRequests.length})`} />
+            <Tab label={t('nav.announcements')} />
           </Tabs>
         </Box>
 
-        {loading ? (
-          <Card>
-            <CardContent>
-              <Typography textAlign="center" py={4}>
-                {t('common.loading')}
-              </Typography>
-            </CardContent>
-          </Card>
-        ) : displayRequests.length === 0 ? (
-          <Card>
-            <CardContent>
-              <Typography textAlign="center" py={4} color="text.secondary">
-                {tabValue === 0 && 'No approved requests'}
-                {tabValue === 1 && 'No requests in progress'}
-                {tabValue === 2 && 'No tasks assigned to you'}
-                {tabValue === 3 && 'No completed requests'}
-              </Typography>
-            </CardContent>
-          </Card>
-        ) : (
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow sx={{ bgcolor: 'primary.main' }}>
-                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Type</TableCell>
-                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Title</TableCell>
-                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Tenant</TableCell>
-                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Priority</TableCell>
-                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Location</TableCell>
-                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Status</TableCell>
-                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {displayRequests.map((request) => (
-                  <TableRow key={request.id} hover>
-                    <TableCell>{request.serviceType}</TableCell>
-                    <TableCell>
-                      <Typography variant="body2" fontWeight="medium">
-                        {request.title}
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        {formatDistanceToNow(request.createdAt, { addSuffix: true })}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>{request.tenantName}</TableCell>
-                    <TableCell>
-                      <Chip
-                        label={(request.priority || 'medium').toUpperCase()}
-                        color={getPriorityColor(request.priority || 'medium')}
-                        size="small"
-                      />
-                    </TableCell>
-                    <TableCell>{request.location || 'N/A'}</TableCell>
-                    <TableCell>
-                      <Chip
-                        label={(request.status || 'pending').replace('-', ' ').toUpperCase()}
-                        color={request.status === 'approved' ? 'warning' : request.status === 'completed' ? 'success' : 'info'}
-                        size="small"
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Box sx={{ display: 'flex', gap: 1 }}>
-                        <Tooltip title="View Details">
-                          <IconButton size="small" onClick={() => handleViewRequest(request)}>
-                            <ViewIcon />
-                          </IconButton>
-                        </Tooltip>
-                        {request.status === 'approved' && (
-                          <Tooltip title="Start Work">
-                            <IconButton
-                              size="small"
-                              color="primary"
-                              onClick={() => handleStartWork(request)}
-                            >
-                              <StartIcon />
-                            </IconButton>
-                          </Tooltip>
-                        )}
-                        {request.status === 'in-progress' && request.assignedTo === userData?.uid && (
-                          <Tooltip title="Mark Complete">
-                            <IconButton
-                              size="small"
-                              color="success"
-                              onClick={() => handleComplete(request)}
-                            >
-                              <CompleteIcon />
-                            </IconButton>
-                          </Tooltip>
-                        )}
-                      </Box>
-                    </TableCell>
+        {tabValue !== 4 && (
+          loading ? (
+            <Card>
+              <CardContent>
+                <Typography textAlign="center" py={4}>
+                  {t('common.loading')}
+                </Typography>
+              </CardContent>
+            </Card>
+          ) : displayRequests.length === 0 ? (
+            <Card>
+              <CardContent>
+                <Typography textAlign="center" py={4} color="text.secondary">
+                  {tabValue === 0 && 'No approved requests'}
+                  {tabValue === 1 && 'No requests in progress'}
+                  {tabValue === 2 && 'No tasks assigned to you'}
+                  {tabValue === 3 && 'No completed requests'}
+                </Typography>
+              </CardContent>
+            </Card>
+          ) : (
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow sx={{ bgcolor: 'primary.main' }}>
+                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Type</TableCell>
+                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Title</TableCell>
+                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Tenant</TableCell>
+                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Priority</TableCell>
+                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Location</TableCell>
+                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Status</TableCell>
+                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Actions</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {displayRequests.map((request) => (
+                    <TableRow key={request.id} hover>
+                      <TableCell>{request.serviceType}</TableCell>
+                      <TableCell>
+                        <Typography variant="body2" fontWeight="medium">
+                          {request.title}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          {formatDistanceToNow(request.createdAt, { addSuffix: true })}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>{request.tenantName}</TableCell>
+                      <TableCell>
+                        <Chip
+                          label={(request.priority || 'medium').toUpperCase()}
+                          color={getPriorityColor(request.priority || 'medium')}
+                          size="small"
+                        />
+                      </TableCell>
+                      <TableCell>{request.location || 'N/A'}</TableCell>
+                      <TableCell>
+                        <Chip
+                          label={(request.status || 'pending').replace('-', ' ').toUpperCase()}
+                          color={request.status === 'approved' ? 'warning' : request.status === 'completed' ? 'success' : 'info'}
+                          size="small"
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Box sx={{ display: 'flex', gap: 1 }}>
+                          <Tooltip title="View Details">
+                            <IconButton size="small" onClick={() => handleViewRequest(request)}>
+                              <ViewIcon />
+                            </IconButton>
+                          </Tooltip>
+                          {request.status === 'approved' && (
+                            <Tooltip title="Start Work">
+                              <IconButton
+                                size="small"
+                                color="primary"
+                                onClick={() => handleStartWork(request)}
+                              >
+                                <StartIcon />
+                              </IconButton>
+                            </Tooltip>
+                          )}
+                          {request.status === 'in-progress' && request.assignedTo === userData?.uid && (
+                            <Tooltip title="Mark Complete">
+                              <IconButton
+                                size="small"
+                                color="success"
+                                onClick={() => handleComplete(request)}
+                              >
+                                <CompleteIcon />
+                              </IconButton>
+                            </Tooltip>
+                          )}
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )
+        )}
+
+        {tabValue === 4 && (
+          <Box>
+            <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <CampaignIcon />
+              {t('nav.announcements')}
+            </Typography>
+            <AnnouncementBanner />
+          </Box>
         )}
       </Container>
 
