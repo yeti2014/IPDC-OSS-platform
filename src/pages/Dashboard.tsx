@@ -22,6 +22,7 @@ import {
   Dashboard as DashboardIcon,
   Business as BusinessIcon,
   Map as MapIcon,
+  Campaign,
 } from '@mui/icons-material';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from '../config/firebase';
@@ -134,9 +135,10 @@ export const Dashboard = () => {
     });
   }, [localRequests]);
 
-  // Load complaints when tab is active
+  // Load complaints when tab is active (adjust index for tenant vs non-tenant)
   useEffect(() => {
-    if (userData?.role === 'tenant' && tabValue === 4) {
+    const complaintsTabIndex = userData?.role === 'tenant' ? 3 : -1;
+    if (userData?.role === 'tenant' && tabValue === complaintsTabIndex) {
       loadComplaints();
     }
   }, [userData, tabValue]);
@@ -237,7 +239,6 @@ export const Dashboard = () => {
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
       <StatusBar />
       <OfflineBanner />
-      <AnnouncementBanner />
 
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Alert
@@ -294,35 +295,6 @@ export const Dashboard = () => {
               }}
             />
 
-            {/* Visual Divider */}
-            <Box
-              sx={{
-                my: 6,
-                borderBottom: '2px solid',
-                borderColor: 'divider',
-                position: 'relative',
-                '&::after': {
-                  content: '""',
-                  position: 'absolute',
-                  bottom: -2,
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  width: 100,
-                  height: 2,
-                  bgcolor: 'primary.main',
-                }
-              }}
-            />
-
-            {/* Section Header for Existing Requests */}
-            <Box sx={{ mb: 3 }}>
-              <Typography variant="h5" fontWeight="bold" gutterBottom>
-                My Existing Service Requests
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Track and manage your submitted service requests
-              </Typography>
-            </Box>
           </>
         )}
 
@@ -333,10 +305,10 @@ export const Dashboard = () => {
                 <DashboardIcon sx={{ fontSize: 40, color: 'primary.main' }} />
                 <Box>
                   <Typography variant="h4" fontWeight="bold">
-                    {t('dashboard.myRequests')}
+                    Dashboard
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {t('requests.title')}
+                    Track and manage your services
                   </Typography>
                 </Box>
               </Box>
@@ -436,10 +408,11 @@ export const Dashboard = () => {
 
         <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
           <Tabs value={tabValue} onChange={(e, newValue) => setTabValue(newValue)}>
-            <Tab label={t('requests.title')} />
+            <Tab label="Service Requests" />
             <Tab label="Basic Analytics" />
-            {userData?.role === 'tenant' && <Tab label={t('tokens.balance')} />}
+            {userData?.role === 'tenant' && <Tab label="Token Balance" />}
             {userData?.role === 'tenant' && <Tab label="My Complaints" />}
+            <Tab label="Announcements" />
           </Tabs>
         </Box>
 
@@ -560,6 +533,24 @@ export const Dashboard = () => {
               ))}
             </Stack>
           )
+        )}
+
+        {/* Announcements Tab */}
+        {tabValue === (userData?.role === 'tenant' ? 4 : 2) && (
+          <Box>
+            <Typography variant="h5" gutterBottom sx={{ mb: 3, fontWeight: 'bold' }}>
+              📢 Announcements
+            </Typography>
+            <AnnouncementBanner />
+            {/* Fallback if no announcements */}
+            <Box sx={{ mt: 2 }}>
+              <EmptyState
+                icon={<Campaign />}
+                title="No Active Announcements"
+                description="There are currently no announcements. Check back later for updates."
+              />
+            </Box>
+          </Box>
         )}
       </Container>
 

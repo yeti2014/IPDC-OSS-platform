@@ -51,8 +51,16 @@ export const NotificationBell: React.FC = () => {
   return (
     <>
       <IconButton color="inherit" onClick={handleClick}>
-        <Badge badgeContent={unreadCount} color="error">
-          <NotificationsIcon />
+        <Badge
+          badgeContent={unreadCount}
+          sx={{
+            '& .MuiBadge-badge': {
+              backgroundColor: '#FFC107',
+              color: '#000',
+            }
+          }}
+        >
+          <NotificationsIcon sx={{ color: unreadCount > 0 ? '#FFC107' : 'inherit' }} />
         </Badge>
       </IconButton>
 
