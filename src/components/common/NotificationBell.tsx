@@ -52,7 +52,7 @@ export const NotificationBell: React.FC = () => {
     <>
       <IconButton color="inherit" onClick={handleClick}>
         <Badge badgeContent={unreadCount} color="error">
-          <NotificationsIcon />
+          <NotificationsIcon sx={{ color: unreadCount > 0 ? '#fbbf24' : 'inherit' }} />
         </Badge>
       </IconButton>
 

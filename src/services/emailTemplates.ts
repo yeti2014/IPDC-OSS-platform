@@ -201,6 +201,14 @@ Thank you for using the IPDC Digital Platform!
         ${data.notes ? `<p><span class="label">Notes:</span> ${data.notes}</p>` : ''}
       </div>
 
+      ${(data as any).tokensCost ? `
+      <div class="info-box" style="background-color: #fff3e0; border-left: 4px solid #ff9800; margin-top: 20px;">
+        <p><strong>💰 Token Transaction</strong></p>
+        <p><span class="label">Tokens Deducted:</span> ${(data as any).tokensCost} tokens</p>
+        <p><span class="label">New Balance:</span> ${(data as any).newBalance} tokens</p>
+      </div>
+      ` : ''}
+
       <a href="${data.dashboardUrl}" class="button">View Request Details</a>
     `;
 
@@ -217,7 +225,11 @@ Status: ${data.oldStatus} → ${data.newStatus}
 Updated By: ${data.changedBy}
 ${data.notes ? `Notes: ${data.notes}` : ''}
 
-View Request: ${data.dashboardUrl}
+${(data as any).tokensCost ? `💰 Token Transaction:
+- Tokens Deducted: ${(data as any).tokensCost}
+- New Balance: ${(data as any).newBalance}
+
+` : ''}View Request: ${data.dashboardUrl}
     `.trim();
 
     return {

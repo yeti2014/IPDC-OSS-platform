@@ -56,6 +56,32 @@ class NotificationService {
   }
 
   /**
+   * Create in-app notification for notification bell
+   */
+  private async createInAppNotification(
+    userId: string,
+    title: string,
+    message: string,
+    type: 'info' | 'success' | 'warning' | 'error',
+    requestId?: string
+  ): Promise<void> {
+    try {
+      await addDoc(collection(db, 'notifications'), {
+        userId,
+        title,
+        message,
+        type,
+        read: false,
+        relatedRequestId: requestId,
+        createdAt: serverTimestamp()
+      });
+      console.log(`🔔 In-app notification created for user ${userId}`);
+    } catch (error) {
+      console.error('Error creating in-app notification:', error);
+    }
+  }
+
+  /**
    * Send an email notification
    */
   async sendNotification(
@@ -78,6 +104,22 @@ class NotificationService {
 
       // Get email template
       const template = emailTemplateService.getTemplate(type, templateData);
+
+      // Create IN-APP NOTIFICATION for notification bell
+      if (metadata?.userId) {
+        let notifType: 'info' | 'success' | 'warning' | 'error' = 'info';
+        if (type.includes('approved') || type.includes('completed')) notifType = 'success';
+        if (type.includes('rejected')) notifType = 'error';
+        if (type.includes('warning') || type.includes('low')) notifType = 'warning';
+
+        await this.createInAppNotification(
+          metadata.userId,
+          template.subject,
+          template.text.substring(0, 200), // First 200 chars for preview
+          notifType,
+          metadata.requestId
+        );
+      }
 
       // Create notification record
       const notificationData: Omit<EmailNotification, 'id'> = {
@@ -356,7 +398,8 @@ class NotificationService {
     oldStatus: string,
     newStatus: string,
     changedBy: string,
-    notes?: string
+    notes?: string,
+    tokenInfo?: { cost: number; newBalance: number }
   ): Promise<void> {
     const priority: NotificationPriority = newStatus === 'completed' ? 'high' : 'medium';
 
@@ -374,6 +417,12 @@ class NotificationService {
     // Only add notes if it's defined
     if (notes !== undefined) {
       templateData.notes = notes;
+    }
+
+    // Add token information for completed requests
+    if (tokenInfo) {
+      templateData.tokensCost = tokenInfo.cost;
+      templateData.newBalance = tokenInfo.newBalance;
     }
 
     await this.sendNotification(

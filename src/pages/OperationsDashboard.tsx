@@ -171,7 +171,7 @@ export const OperationsDashboard = () => {
 
       console.log(`✅ Tokens deducted: ${deductResult.cost} tokens. New balance: ${deductResult.newBalance}`);
 
-      // Notify tenant about completion
+      // Notify tenant about completion WITH TOKEN INFORMATION
       if (request.tenantId && request.tenantEmail && request.tenantName) {
         await notificationService.notifyRequestStatusChanged(
           request.tenantId,
@@ -181,7 +181,9 @@ export const OperationsDashboard = () => {
           request.title,
           'in-progress',
           'completed',
-          userData?.displayName || userData?.email || 'Operations Team'
+          userData?.displayName || userData?.email || 'Operations Team',
+          undefined, // notes
+          { cost: deductResult.cost, newBalance: deductResult.newBalance } // token info
         );
       }
 
