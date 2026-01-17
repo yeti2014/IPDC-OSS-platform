@@ -430,11 +430,8 @@ export const Dashboard = () => {
             </Grid>
 
             <RequestsFilter onFilterChange={setFilters} />
-          </>
-        )}
 
-        {tabValue === 1 ? (
-          <>
+            {/* Requests List - Now inside tabValue === 1 */}
             {loading ? (
               <RequestListSkeleton count={5} />
             ) : filteredRequests.length === 0 ? (
@@ -463,11 +460,20 @@ export const Dashboard = () => {
               />
             )}
           </>
-        ) : tabValue === 2 ? (
+        )}
+
+        {/* BASIC ANALYTICS TAB */}
+        {tabValue === 2 && (
           <RequestsChart requests={filteredRequests} />
-        ) : tabValue === 3 ? (
+        )}
+
+        {/* TOKEN BALANCE TAB */}
+        {tabValue === 3 && userData?.role === 'tenant' && (
           <TokenDashboard />
-        ) : tabValue === 4 ? (
+        )}
+
+        {/* MY COMPLAINTS TAB */}
+        {tabValue === 4 && userData?.role === 'tenant' && (
           // My Complaints Tab
           complaintsLoading ? (
             <Card>
