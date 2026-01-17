@@ -157,10 +157,12 @@ export const FacilityServicesPage: React.FC = () => {
     try {
       console.log('📝 Creating facility management request...');
 
-      // Upload attachments to Firebase Storage
+      // Upload attachments to Firebase Storage (with CORS error handling)
       const uploadedAttachments = [];
+      let uploadWarning = '';
+
       if (attachments.length > 0) {
-        console.log(`📎 Uploading ${attachments.length} file(s)...`);
+        console.log(`📎 Attempting to upload ${attachments.length} file(s)...`);
 
         for (const file of attachments) {
           try {
@@ -178,10 +180,51 @@ export const FacilityServicesPage: React.FC = () => {
             console.log(`✅ Uploaded: ${file.name}`);
           } catch (uploadError: any) {
             console.error(`❌ Failed to upload ${file.name}:`, uploadError);
-            // Continue with other files even if one fails
+
+            // Check if it's a CORS error
+            const isCorsError = uploadError.message?.includes('CORS') ||
+                               uploadError.code === 'storage/unauthorized' ||
+                               uploadError.message?.includes('blocked by CORS policy');
+
+            if (isCorsError) {
+              console.error('🚫 CORS ERROR: Firebase Storage is not configured for cross-origin requests');
+              console.error('📖 Please follow the setup guide in: FIREBASE_STORAGE_CORS_SETUP.md');
+              console.error('⚡ Quick fix: Run setup-firebase-storage.bat (Windows) in the project root');
+            }
+
+            // Store file metadata without URL (for CORS errors)
+            uploadedAttachments.push({
+              url: '',
+              fileName: file.name,
+              size: file.size,
+              type: file.type,
+              path: '',
+              uploadFailed: true,
+              error: isCorsError ? 'CORS_ERROR' : (uploadError.code || 'UPLOAD_ERROR')
+            });
           }
         }
-        console.log(`✅ Uploaded ${uploadedAttachments.length}/${attachments.length} file(s)`);
+
+        const successCount = uploadedAttachments.filter(a => !(a as any).uploadFailed).length;
+        const failCount = uploadedAttachments.filter(a => (a as any).uploadFailed).length;
+        const hasCorsError = uploadedAttachments.some(a => (a as any).error === 'CORS_ERROR');
+
+        if (failCount > 0) {
+          if (hasCorsError) {
+            uploadWarning = `\n\n⚠️ FIREBASE STORAGE CORS NOT CONFIGURED\n` +
+                          `${failCount} file(s) could not be uploaded.\n\n` +
+                          `TO FIX THIS:\n` +
+                          `1. Open: FIREBASE_STORAGE_CORS_SETUP.md\n` +
+                          `2. Run: setup-firebase-storage.bat\n` +
+                          `3. Restart dev server\n\n` +
+                          `File metadata has been saved with your request.`;
+          } else {
+            uploadWarning = `\n\nNote: ${failCount} file(s) could not be uploaded. File information has been saved with your request.`;
+          }
+          console.warn(`⚠️ ${failCount}/${attachments.length} files failed to upload`);
+        }
+
+        console.log(`✅ Successfully uploaded ${successCount}/${attachments.length} file(s)`);
       }
 
       // Create service request in Firestore
@@ -238,13 +281,16 @@ export const FacilityServicesPage: React.FC = () => {
         console.error('Admin notification failed (non-critical):', adminNotifError);
       }
 
+      const successfulUploads = uploadedAttachments.filter(a => !(a as any).uploadFailed).length;
+      const totalAttachments = uploadedAttachments.length;
+
       alert(
         `Facility Service Request Created!\n\n` +
         `Service: ${facilityServices.find(s => s.value === formData.serviceType)?.label}\n` +
         `Token Cost: ${estimatedCost} tokens (reserved)\n` +
-        `Attachments: ${uploadedAttachments.length} file(s)\n` +
+        `Attachments: ${successfulUploads}/${totalAttachments} file(s) uploaded\n` +
         `Current Balance: ${tokenBalance} tokens\n\n` +
-        `Your request has been submitted successfully and admin has been notified!`
+        `Your request has been submitted successfully and admin has been notified!${uploadWarning}`
       );
 
       navigate('/dashboard');

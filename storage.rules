@@ -1,0 +1,59 @@
+rules_version = '2';
+
+// Firebase Storage Security Rules for IPDC Digital Platform
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper function to check if user owns the resource
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Service request attachments
+    // Path: service-requests/{userId}/{fileName}
+    match /service-requests/{userId}/{fileName} {
+      // Allow read if authenticated
+      allow read: if isAuthenticated();
+
+      // Allow write only by the owner (tenant uploading their own files)
+      allow write: if isOwner(userId);
+
+      // Allow delete only by the owner
+      allow delete: if isOwner(userId);
+    }
+
+    // Profile pictures
+    // Path: profiles/{userId}/{fileName}
+    match /profiles/{userId}/{fileName} {
+      // Allow read if authenticated
+      allow read: if isAuthenticated();
+
+      // Allow write only by the owner
+      allow write: if isOwner(userId);
+
+      // Allow delete only by the owner
+      allow delete: if isOwner(userId);
+    }
+
+    // Announcements attachments (admin only)
+    // Path: announcements/{fileName}
+    match /announcements/{fileName} {
+      // Allow read if authenticated
+      allow read: if isAuthenticated();
+
+      // Allow write only by admin (you'll need to implement admin check)
+      // For now, allow authenticated users - update this based on your admin setup
+      allow write: if isAuthenticated();
+    }
+
+    // Default: Deny all other access
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
