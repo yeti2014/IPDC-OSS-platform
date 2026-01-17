@@ -237,7 +237,6 @@ export const Dashboard = () => {
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
       <StatusBar />
       <OfflineBanner />
-      <AnnouncementBanner />
 
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Alert

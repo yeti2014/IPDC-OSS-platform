@@ -48,6 +48,7 @@ import { AssetDialog } from './AssetDialog';
 import { MaintenanceDialog } from './MaintenanceDialog';
 import { MaintenanceCalendar } from './MaintenanceCalendar';
 import { PredictiveMaintenanceCard } from './PredictiveMaintenanceCard';
+import { seedDemoAssets } from '../../utils/seedAssets';
 
 export const AssetManagement = () => {
   const { userData } = useAuth();
@@ -98,6 +99,25 @@ export const AssetManagement = () => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleSeedDemoAssets = async () => {
+    if (!userData?.uid) return;
+
+    if (confirm('This will add 5 demo assets to the database. Continue?')) {
+      try {
+        setLoading(true);
+        await seedDemoAssets(userData.uid);
+        await loadAssets();
+        await loadStatistics();
+        alert('✅ Demo assets added successfully!');
+      } catch (error) {
+        console.error('Error seeding assets:', error);
+        alert('❌ Failed to seed demo assets. Check console for details.');
+      } finally {
+        setLoading(false);
+      }
+    }
   };
 
   const handleDeleteAsset = async () => {
@@ -161,16 +181,27 @@ export const AssetManagement = () => {
         <Typography variant="h4" fontWeight="bold">
           Asset Management
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={() => {
-            setEditingAsset(null);
-            setAssetDialogOpen(true);
-          }}
-        >
-          Add Asset
-        </Button>
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          {assets.length === 0 && (
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={handleSeedDemoAssets}
+            >
+              Seed Demo Assets
+            </Button>
+          )}
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={() => {
+              setEditingAsset(null);
+              setAssetDialogOpen(true);
+            }}
+          >
+            Add Asset
+          </Button>
+        </Box>
       </Box>
 
       {/* Statistics Cards */}
