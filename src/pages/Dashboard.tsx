@@ -325,6 +325,7 @@ export const Dashboard = () => {
         {/* Tabs Navigation */}
         <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
           <Tabs value={tabValue} onChange={(e, newValue) => setTabValue(newValue)}>
+            <Tab label="Parks Map" icon={<MapIcon />} iconPosition="start" />
             <Tab label="Service Requests" />
             <Tab label="Basic Analytics" />
             {userData?.role === 'tenant' && <Tab label="Token Balance" />}
@@ -333,8 +334,19 @@ export const Dashboard = () => {
           </Tabs>
         </Box>
 
-        {/* SERVICE REQUESTS TAB */}
+        {/* PARKS MAP TAB */}
         {tabValue === 0 && (
+          <Box sx={{ height: '600px', width: '100%' }}>
+            <iframe
+              src="/parks-map"
+              style={{ width: '100%', height: '100%', border: 'none', borderRadius: '8px' }}
+              title="Ethiopian Industrial Parks Map"
+            />
+          </Box>
+        )}
+
+        {/* SERVICE REQUESTS TAB */}
+        {tabValue === 1 && (
           <>
             <Card sx={{ mb: 4 }}>
               <CardContent>
@@ -421,7 +433,7 @@ export const Dashboard = () => {
           </>
         )}
 
-        {tabValue === 0 ? (
+        {tabValue === 1 ? (
           <>
             {loading ? (
               <RequestListSkeleton count={5} />
@@ -451,11 +463,11 @@ export const Dashboard = () => {
               />
             )}
           </>
-        ) : tabValue === 1 ? (
-          <RequestsChart requests={filteredRequests} />
         ) : tabValue === 2 ? (
+          <RequestsChart requests={filteredRequests} />
+        ) : tabValue === 3 ? (
           <TokenDashboard />
-        ) : (
+        ) : tabValue === 4 ? (
           // My Complaints Tab
           complaintsLoading ? (
             <Card>
@@ -537,7 +549,7 @@ export const Dashboard = () => {
         )}
 
         {/* Announcements Tab */}
-        {tabValue === (userData?.role === 'tenant' ? 4 : 2) && (
+        {tabValue === (userData?.role === 'tenant' ? 5 : 3) && (
           <Box>
             <Typography variant="h5" gutterBottom sx={{ mb: 3, fontWeight: 'bold' }}>
               📢 Announcements
