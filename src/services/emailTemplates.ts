@@ -236,6 +236,66 @@ This is an automated notification from the IPDC Digital Platform.
   }
 
   /**
+   * Admin Task Completed Notification Template
+   */
+  getAdminTaskCompletedTemplate(data: any): { html: string; text: string; subject: string } {
+    const content = `
+      <h2>✅ Task Completed by Operations</h2>
+      <p>Hello <strong>Admin</strong>,</p>
+      <p>A service request has been successfully completed by the Operations team.</p>
+
+      <div class="info-box" style="background-color: #e8f5e9; border-left: 4px solid #4caf50;">
+        <p><span class="label">Request:</span> ${data.requestTitle}</p>
+        <p><span class="label">Request ID:</span> ${data.requestId}</p>
+        <p><span class="label">Tenant:</span> <strong>${data.tenantName}</strong></p>
+        <p><span class="label">Completed By:</span> ${data.completedBy}</p>
+        <p><span class="label">Completed:</span> ${data.completedAt}</p>
+      </div>
+
+      <div class="info-box" style="background-color: #fff3e0; border-left: 4px solid #ff9800; margin-top: 16px;">
+        <p><strong>💰 Token Transaction</strong></p>
+        <p><span class="label">Tokens Deducted from Tenant:</span> <strong>${data.tokensCost} tokens</strong></p>
+      </div>
+
+      <p style="margin-top: 20px;">The tenant has been notified about the completion and token deduction.</p>
+
+      <a href="${data.dashboardUrl}" class="button" style="background-color: #4caf50;">View in Admin Dashboard</a>
+
+      <p style="color: #666; font-size: 14px; margin-top: 20px;">This is an automated notification from the IPDC Digital Platform.</p>
+    `;
+
+    const text = `
+✅ Task Completed by Operations
+
+Hello Admin,
+
+A service request has been successfully completed by the Operations team.
+
+Request Details:
+- Request: ${data.requestTitle}
+- Request ID: ${data.requestId}
+- Tenant: ${data.tenantName}
+- Completed By: ${data.completedBy}
+- Completed: ${data.completedAt}
+
+💰 Token Transaction:
+- Tokens Deducted from Tenant: ${data.tokensCost} tokens
+
+The tenant has been notified about the completion and token deduction.
+
+Admin Dashboard: ${data.dashboardUrl}
+
+This is an automated notification from the IPDC Digital Platform.
+    `.trim();
+
+    return {
+      html: this.getBaseTemplate(content),
+      text,
+      subject: `✅ Task Completed: ${data.requestTitle}`
+    };
+  }
+
+  /**
    * Request Status Changed Template
    */
   getRequestStatusChangedTemplate(data: RequestStatusChangedEmailData): { html: string; text: string; subject: string } {
@@ -409,6 +469,9 @@ Platform: ${data.platformUrl}
 
       case 'admin_new_request':
         return this.getAdminNewRequestTemplate(data);
+
+      case 'admin_task_completed':
+        return this.getAdminTaskCompletedTemplate(data);
 
       case 'request_status_changed':
       case 'request_completed':

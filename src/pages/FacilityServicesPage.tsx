@@ -38,8 +38,8 @@ import { tokenService } from '../services/tokenService';
 import { notificationService } from '../services/notificationService';
 import { ServiceType, RequestPriority } from '../types';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
-import { db } from '../config/firebase';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { db, storage } from '../config/firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const facilityServices: { value: ServiceType; label: string; icon: string }[] = [
   { value: 'maintenance', label: 'Maintenance', icon: '🔧' },
@@ -161,22 +161,27 @@ export const FacilityServicesPage: React.FC = () => {
       const uploadedAttachments = [];
       if (attachments.length > 0) {
         console.log(`📎 Uploading ${attachments.length} file(s)...`);
-        const storage = getStorage();
 
         for (const file of attachments) {
-          const storageRef = ref(storage, `service-requests/${userData.uid}/${Date.now()}-${file.name}`);
-          const snapshot = await uploadBytes(storageRef, file);
-          const downloadURL = await getDownloadURL(snapshot.ref);
+          try {
+            const storageRef = ref(storage, `service-requests/${userData.uid}/${Date.now()}-${file.name}`);
+            const snapshot = await uploadBytes(storageRef, file);
+            const downloadURL = await getDownloadURL(snapshot.ref);
 
-          uploadedAttachments.push({
-            url: downloadURL,
-            fileName: file.name,
-            size: file.size,
-            type: file.type,
-            path: snapshot.ref.fullPath
-          });
+            uploadedAttachments.push({
+              url: downloadURL,
+              fileName: file.name,
+              size: file.size,
+              type: file.type,
+              path: snapshot.ref.fullPath
+            });
+            console.log(`✅ Uploaded: ${file.name}`);
+          } catch (uploadError: any) {
+            console.error(`❌ Failed to upload ${file.name}:`, uploadError);
+            // Continue with other files even if one fails
+          }
         }
-        console.log(`✅ Uploaded ${uploadedAttachments.length} file(s)`);
+        console.log(`✅ Uploaded ${uploadedAttachments.length}/${attachments.length} file(s)`);
       }
 
       // Create service request in Firestore

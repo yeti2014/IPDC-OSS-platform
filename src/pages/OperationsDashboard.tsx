@@ -188,6 +188,20 @@ export const OperationsDashboard = () => {
         );
       }
 
+      // Notify Admin about task completion
+      try {
+        await notificationService.notifyAdminTaskCompleted(
+          request.tenantName,
+          request.id,
+          request.title,
+          userData?.displayName || userData?.email || 'Operations Team',
+          deductResult.cost
+        );
+        console.log('📧 Admin notified about task completion');
+      } catch (adminNotifError) {
+        console.error('Admin notification failed (non-critical):', adminNotifError);
+      }
+
       // Show success message
       alert(`✅ Request completed successfully!\n\nTokens deducted: ${deductResult.cost}\nTenant's new balance: ${deductResult.newBalance} tokens`);
     } catch (error) {

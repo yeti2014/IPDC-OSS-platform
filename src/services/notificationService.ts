@@ -418,6 +418,34 @@ class NotificationService {
     );
   }
 
+  /**
+   * Notify admin when operations completes a task
+   */
+  async notifyAdminTaskCompleted(
+    tenantName: string,
+    requestId: string,
+    requestTitle: string,
+    completedBy: string,
+    tokensCost: number
+  ): Promise<void> {
+    await this.sendNotification(
+      import.meta.env.VITE_ADMIN_EMAIL || 'admin@ipdc.gov.et',
+      'IPDC Admin',
+      'admin_task_completed',
+      {
+        tenantName,
+        requestTitle,
+        requestId,
+        completedBy,
+        tokensCost,
+        completedAt: new Date().toLocaleString(),
+        dashboardUrl: `${window.location.origin}/admin`
+      },
+      'medium',
+      { userId: 'admin', requestId }
+    );
+  }
+
   async notifyRequestStatusChanged(
     userId: string,
     userEmail: string,
