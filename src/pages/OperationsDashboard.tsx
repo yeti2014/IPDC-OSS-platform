@@ -41,7 +41,6 @@ import { tokenService } from '../services/tokenService';
 import { formatDistanceToNow } from 'date-fns';
 import AnnouncementBanner from '../components/common/AnnouncementBanner';
 import { useTranslation } from 'react-i18next';
-import { NotificationBell } from '../components/common/NotificationBell';
 
 export const OperationsDashboard = () => {
   const { userData, logOut } = useAuth();
@@ -251,17 +250,14 @@ export const OperationsDashboard = () => {
         <Alert
           severity="info"
           action={
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <NotificationBell />
-              <Button
-                color="inherit"
-                size="small"
-                startIcon={<LogoutIcon />}
-                onClick={handleLogout}
-              >
-                {t('nav.logout')}
-              </Button>
-            </Box>
+            <Button
+              color="inherit"
+              size="small"
+              startIcon={<LogoutIcon />}
+              onClick={handleLogout}
+            >
+              {t('nav.logout')}
+            </Button>
           }
           sx={{ mb: 4 }}
         >
