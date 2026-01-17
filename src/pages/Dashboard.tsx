@@ -48,6 +48,7 @@ import TenantLifecycleTimeline from '../components/tenant/TenantLifecycleTimelin
 import { useTranslation } from 'react-i18next';
 import { complaintService } from '../services/complaintService';
 import { useNavigate } from 'react-router-dom';
+import ParksMap from '../components/map/ParksMap';
 
 export const Dashboard = () => {
   const { userData, logOut } = useAuth();
@@ -310,11 +311,7 @@ export const Dashboard = () => {
         {/* PARKS MAP TAB */}
         {tabValue === 0 && (
           <Box sx={{ height: '600px', width: '100%' }}>
-            <iframe
-              src="/parks-map"
-              style={{ width: '100%', height: '100%', border: 'none', borderRadius: '8px' }}
-              title="Ethiopian Industrial Parks Map"
-            />
+            <ParksMap />
           </Box>
         )}
 
