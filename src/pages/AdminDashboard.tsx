@@ -124,6 +124,7 @@ export const AdminDashboard = () => {
         updatedAt: serverTimestamp(),
       });
 
+      // Notify tenant about approval
       await notificationService.notifyRequestStatusChanged(
         request.tenantId,
         request.tenantEmail,
@@ -134,6 +135,21 @@ export const AdminDashboard = () => {
         'approved',
         userData?.displayName || userData?.email || 'Admin'
       );
+
+      // Notify Operations team about new approved request
+      try {
+        await notificationService.notifyOperationsRequestApproved(
+          request.tenantName,
+          request.id,
+          request.title,
+          request.serviceType || 'Service Request',
+          request.priority || 'medium',
+          request.location || 'Not specified'
+        );
+        console.log('📧 Operations notified about approved request');
+      } catch (opsNotifError) {
+        console.error('Operations notification failed (non-critical):', opsNotifError);
+      }
     } catch (error) {
       console.error('Error approving request:', error);
     }

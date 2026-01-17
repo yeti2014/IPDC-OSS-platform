@@ -399,22 +399,13 @@ class NotificationService {
     serviceType: string,
     priority: string
   ): Promise<void> {
-    // Send in-app notification to admin (userId: 'admin' is a placeholder - adjust based on your admin setup)
-    await this.sendNotification(
-      import.meta.env.VITE_ADMIN_EMAIL || 'admin@ipdc.gov.et',
-      'IPDC Admin',
-      'admin_new_request',
-      {
-        tenantName,
-        requestTitle,
-        requestId,
-        serviceType,
-        priority,
-        createdAt: new Date().toLocaleString(),
-        dashboardUrl: `${window.location.origin}/admin`
-      },
-      'high',
-      { userId: 'admin', requestId }
+    // Create in-app notification for admin
+    await this.createInAppNotification(
+      'admin',
+      'New Service Request',
+      `${tenantName} submitted a new ${serviceType} request: ${requestTitle}`,
+      priority === 'urgent' || priority === 'high' ? 'warning' : 'info',
+      requestId
     );
   }
 
@@ -428,21 +419,34 @@ class NotificationService {
     completedBy: string,
     tokensCost: number
   ): Promise<void> {
-    await this.sendNotification(
-      import.meta.env.VITE_ADMIN_EMAIL || 'admin@ipdc.gov.et',
-      'IPDC Admin',
-      'admin_task_completed',
-      {
-        tenantName,
-        requestTitle,
-        requestId,
-        completedBy,
-        tokensCost,
-        completedAt: new Date().toLocaleString(),
-        dashboardUrl: `${window.location.origin}/admin`
-      },
-      'medium',
-      { userId: 'admin', requestId }
+    // Create in-app notification for admin
+    await this.createInAppNotification(
+      'admin',
+      'Task Completed',
+      `${completedBy} completed "${requestTitle}" for ${tenantName}. ${tokensCost} tokens deducted.`,
+      'success',
+      requestId
+    );
+  }
+
+  /**
+   * Notify operations team when admin approves a request
+   */
+  async notifyOperationsRequestApproved(
+    tenantName: string,
+    requestId: string,
+    requestTitle: string,
+    serviceType: string,
+    priority: string,
+    location: string
+  ): Promise<void> {
+    // Create in-app notification for operations team
+    await this.createInAppNotification(
+      'operations',
+      'New Approved Request',
+      `Admin approved ${serviceType} request from ${tenantName}: ${requestTitle}`,
+      priority === 'urgent' || priority === 'high' ? 'warning' : 'info',
+      requestId
     );
   }
 

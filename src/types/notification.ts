@@ -14,7 +14,12 @@ export type NotificationType =
   | 'token_allocated'
   | 'announcement'
   | 'maintenance_scheduled'
-  | 'system_alert';
+  | 'system_alert'
+  | 'admin_new_request'
+  | 'admin_task_completed'
+  | 'operations_new_assignment'
+  | 'complaint_resolved'
+  | 'complaint_rejected';
 
 export type NotificationPriority = 'low' | 'medium' | 'high' | 'urgent';
 
