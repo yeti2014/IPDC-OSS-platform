@@ -47,6 +47,7 @@ import CreateAnnouncementDialog from '../components/admin/CreateAnnouncementDial
 import AnnouncementBanner from '../components/common/AnnouncementBanner';
 import TenantManagement from '../components/admin/TenantManagement';
 import AssetManagement from '../components/admin/AssetManagement';
+import CreateStaffAccount from '../components/admin/CreateStaffAccount';
 import { useTranslation } from 'react-i18next';
 
 export const AdminDashboard = () => {
@@ -223,6 +224,7 @@ export const AdminDashboard = () => {
                 </Box>
               </Box>
               <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                <CreateStaffAccount />
                 <Button
                   variant="contained"
                   color="error"

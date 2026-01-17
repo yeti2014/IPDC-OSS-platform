@@ -69,18 +69,23 @@ class ModelLoader:
             print("Model 2 loaded successfully")
 
             # ==================== MODEL 3: PARK RECOMMENDATION ====================
-            print("Model 3: Park Recommendation (Rule-based - no file loading needed)")
+            print("Loading Model 3: Park Recommendation...")
+            model3_path = base_path / "model3_park_recommendation" / "models"
+
             self._models['model3'] = {
-                'type': 'rule_based',
-                'version': '1.0',
-                'status': 'ready'
+                'ranker': joblib.load(model3_path / "model_ranker.pkl"),
+                'label_encoder_industry': joblib.load(model3_path / "label_encoder_industry.pkl"),
+                'label_encoder_park': joblib.load(model3_path / "label_encoder_park.pkl"),
+                'label_encoder_region': joblib.load(model3_path / "label_encoder_region.pkl"),
+                'feature_names': json.load(open(model3_path / "feature_names.json", 'r')),
+                'metadata': json.load(open(model3_path / "metadata.json", 'r'))
             }
-            print("Model 3 ready (rule-based system)")
+            print("Model 3 loaded successfully")
 
             print("\nAll models loaded successfully!")
             print(f"Model 1 version: {self._models['model1']['metadata']['version']}")
             print(f"Model 2 version: {self._models['model2']['metadata']['version']}")
-            print(f"Model 3 version: {self._models['model3']['version']}\n")
+            print(f"Model 3 version: {self._models['model3']['metadata']['model_version']}\n")
 
         except Exception as e:
             print(f"Error loading models: {str(e)}")

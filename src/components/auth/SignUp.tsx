@@ -34,7 +34,7 @@ export const SignUp: React.FC = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    role: 'tenant' as UserRole,
+    role: 'tenant' as UserRole, // Locked to tenant only for public registration
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -147,19 +147,15 @@ export const SignUp: React.FC = () => {
             disabled={loading}
           />
 
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel>Role</InputLabel>
-            <Select
-              value={formData.role}
-              label="Role"
-              onChange={handleChange('role')}
-              disabled={loading}
-            >
-              <MenuItem value="tenant">Tenant (Company User)</MenuItem>
-              <MenuItem value="admin">Admin (IPDC Staff)</MenuItem>
-              <MenuItem value="operations">Operations (Maintenance Staff)</MenuItem>
-            </Select>
-          </FormControl>
+          {/* Role is locked to 'tenant' for public registration */}
+          {/* Admin and Operations accounts are created by super admin only */}
+          <Alert severity="info" sx={{ mt: 2, mb: 1 }}>
+            <Typography variant="body2">
+              <strong>Registering as Tenant (Company User)</strong>
+              <br />
+              Admin and Operations staff accounts are created by IPDC administrators only.
+            </Typography>
+          </Alert>
 
           <TextField
             fullWidth
