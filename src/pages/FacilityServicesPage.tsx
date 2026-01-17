@@ -29,6 +29,8 @@ import {
   Build as BuildIcon,
   Token as TokenIcon,
   Send as SendIcon,
+  AttachFile as AttachFileIcon,
+  Close as CloseIcon,
 } from '@mui/icons-material';
 import { StatusBar, OfflineBanner } from '../components/common/StatusBar';
 import { useAuth } from '../contexts/AuthContext';
@@ -70,6 +72,7 @@ export const FacilityServicesPage: React.FC = () => {
   const [estimatedCost, setEstimatedCost] = useState<number>(0);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [attachments, setAttachments] = useState<File[]>([]);
 
   // Load token balance
   useEffect(() => {
@@ -112,6 +115,17 @@ export const FacilityServicesPage: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files);
+      setAttachments((prev) => [...prev, ...newFiles]);
+    }
+  };
+
+  const handleRemoveFile = (index: number) => {
+    setAttachments((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -278,6 +292,72 @@ export const FacilityServicesPage: React.FC = () => {
                 fullWidth
                 placeholder="Building, floor, room number"
               />
+
+              {/* File Attachments */}
+              <Box>
+                <Typography variant="subtitle2" gutterBottom>
+                  Attachments (Optional)
+                </Typography>
+                <Button
+                  variant="outlined"
+                  component="label"
+                  startIcon={<AttachFileIcon />}
+                  fullWidth
+                  sx={{ mb: 2 }}
+                >
+                  Upload Files (Photos, Documents)
+                  <input
+                    type="file"
+                    hidden
+                    multiple
+                    accept="image/*,.pdf,.doc,.docx"
+                    onChange={handleFileChange}
+                  />
+                </Button>
+
+                {attachments.length > 0 && (
+                  <Stack spacing={1}>
+                    {attachments.map((file, index) => (
+                      <Paper
+                        key={index}
+                        elevation={0}
+                        sx={{
+                          p: 1.5,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          bgcolor: 'grey.50',
+                          border: '1px solid',
+                          borderColor: 'grey.300',
+                        }}
+                      >
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flex: 1, minWidth: 0 }}>
+                          <AttachFileIcon fontSize="small" color="action" />
+                          <Box sx={{ minWidth: 0, flex: 1 }}>
+                            <Typography
+                              variant="body2"
+                              noWrap
+                              sx={{ fontWeight: 500 }}
+                            >
+                              {file.name}
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              {(file.size / 1024).toFixed(1)} KB
+                            </Typography>
+                          </Box>
+                        </Box>
+                        <Button
+                          size="small"
+                          onClick={() => handleRemoveFile(index)}
+                          sx={{ minWidth: 'auto', p: 0.5 }}
+                        >
+                          <CloseIcon fontSize="small" />
+                        </Button>
+                      </Paper>
+                    ))}
+                  </Stack>
+                )}
+              </Box>
 
               {/* Token Cost Summary */}
               <Paper
