@@ -389,6 +389,35 @@ class NotificationService {
     );
   }
 
+  /**
+   * Notify admin about new service request from tenant
+   */
+  async notifyAdminNewRequest(
+    tenantName: string,
+    requestId: string,
+    requestTitle: string,
+    serviceType: string,
+    priority: string
+  ): Promise<void> {
+    // Send in-app notification to admin (userId: 'admin' is a placeholder - adjust based on your admin setup)
+    await this.sendNotification(
+      import.meta.env.VITE_ADMIN_EMAIL || 'admin@ipdc.gov.et',
+      'IPDC Admin',
+      'admin_new_request',
+      {
+        tenantName,
+        requestTitle,
+        requestId,
+        serviceType,
+        priority,
+        createdAt: new Date().toLocaleString(),
+        dashboardUrl: `${window.location.origin}/admin`
+      },
+      'high',
+      { userId: 'admin', requestId }
+    );
+  }
+
   async notifyRequestStatusChanged(
     userId: string,
     userEmail: string,

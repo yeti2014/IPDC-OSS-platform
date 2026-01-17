@@ -48,6 +48,7 @@ import AnnouncementBanner from '../components/common/AnnouncementBanner';
 import TenantManagement from '../components/admin/TenantManagement';
 import AssetManagement from '../components/admin/AssetManagement';
 import { useTranslation } from 'react-i18next';
+import { NotificationBell } from '../components/common/NotificationBell';
 
 export const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -192,14 +193,17 @@ export const AdminDashboard = () => {
         <Alert
           severity="info"
           action={
-            <Button
-              color="inherit"
-              size="small"
-              startIcon={<LogoutIcon />}
-              onClick={handleLogout}
-            >
-              {t('nav.logout')}
-            </Button>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <NotificationBell />
+              <Button
+                color="inherit"
+                size="small"
+                startIcon={<LogoutIcon />}
+                onClick={handleLogout}
+              >
+                {t('nav.logout')}
+              </Button>
+            </Box>
           }
           sx={{ mb: 4 }}
         >

@@ -170,6 +170,72 @@ Thank you for using the IPDC Digital Platform!
   }
 
   /**
+   * Admin New Request Notification Template
+   */
+  getAdminNewRequestTemplate(data: any): { html: string; text: string; subject: string } {
+    const priorityColors: Record<string, string> = {
+      low: '#4caf50',
+      medium: '#ff9800',
+      high: '#f44336',
+      urgent: '#d32f2f'
+    };
+
+    const priorityColor = priorityColors[data.priority?.toLowerCase()] || '#ff9800';
+
+    const content = `
+      <h2>🔔 New Service Request from Tenant</h2>
+      <p>Hello <strong>Admin</strong>,</p>
+      <p>A new service request has been submitted by a tenant and requires your attention.</p>
+
+      <div class="info-box" style="background-color: #fff3e0; border-left: 4px solid #ff9800;">
+        <p><span class="label">Tenant:</span> <strong>${data.tenantName}</strong></p>
+        <p><span class="label">Request ID:</span> ${data.requestId}</p>
+        <p><span class="label">Title:</span> ${data.requestTitle}</p>
+        <p><span class="label">Service Type:</span> ${data.serviceType}</p>
+        <p style="margin: 10px 0;">
+          <span class="label">Priority:</span>
+          <span style="display: inline-block; padding: 4px 12px; background-color: ${priorityColor}; color: white; border-radius: 12px; margin-left: 8px;">${data.priority?.toUpperCase()}</span>
+        </p>
+        <p><span class="label">Created:</span> ${data.createdAt}</p>
+      </div>
+
+      <p style="margin-top: 20px;">Please review and approve this request from the Admin Dashboard.</p>
+
+      <a href="${data.dashboardUrl}" class="button" style="background-color: #1976d2;">Review Request in Admin Dashboard</a>
+
+      <p style="color: #666; font-size: 14px; margin-top: 20px;">This is an automated notification from the IPDC Digital Platform.</p>
+    `;
+
+    const text = `
+🔔 New Service Request from Tenant
+
+Hello Admin,
+
+A new service request has been submitted by a tenant and requires your attention.
+
+Request Details:
+- Tenant: ${data.tenantName}
+- Request ID: ${data.requestId}
+- Title: ${data.requestTitle}
+- Service Type: ${data.serviceType}
+- Priority: ${data.priority?.toUpperCase()}
+- Created: ${data.createdAt}
+
+Please review and approve this request from the Admin Dashboard.
+
+Admin Dashboard: ${data.dashboardUrl}
+
+This is an automated notification from the IPDC Digital Platform.
+    `.trim();
+
+    return {
+      html: this.getBaseTemplate(content),
+      text,
+      subject: `🔔 New ${data.priority?.toUpperCase()} Priority Request: ${data.requestTitle}`
+    };
+  }
+
+  /**
    * Request Status Changed Template
    */
   getRequestStatusChangedTemplate(data: RequestStatusChangedEmailData): { html: string; text: string; subject: string } {
@@ -340,6 +406,9 @@ Platform: ${data.platformUrl}
     switch (type) {
       case 'request_created':
         return this.getRequestCreatedTemplate(data as RequestCreatedEmailData);
+
+      case 'admin_new_request':
+        return this.getAdminNewRequestTemplate(data);
 
       case 'request_status_changed':
       case 'request_completed':

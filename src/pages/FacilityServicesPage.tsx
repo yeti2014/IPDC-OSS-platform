@@ -35,7 +35,11 @@ import {
 import { StatusBar, OfflineBanner } from '../components/common/StatusBar';
 import { useAuth } from '../contexts/AuthContext';
 import { tokenService } from '../services/tokenService';
+import { notificationService } from '../services/notificationService';
 import { ServiceType, RequestPriority } from '../types';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { db } from '../config/firebase';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const facilityServices: { value: ServiceType; label: string; icon: string }[] = [
   { value: 'maintenance', label: 'Maintenance', icon: '🔧' },
@@ -131,6 +135,8 @@ export const FacilityServicesPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!userData) return;
+
     const errors: string[] = [];
     if (!formData.title.trim()) errors.push('Title is required');
     if (!formData.description.trim()) errors.push('Description is required');
@@ -149,20 +155,96 @@ export const FacilityServicesPage: React.FC = () => {
     setError('');
 
     try {
-      // Simulate submission (in real implementation, create service request in Firestore)
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      console.log('📝 Creating facility management request...');
+
+      // Upload attachments to Firebase Storage
+      const uploadedAttachments = [];
+      if (attachments.length > 0) {
+        console.log(`📎 Uploading ${attachments.length} file(s)...`);
+        const storage = getStorage();
+
+        for (const file of attachments) {
+          const storageRef = ref(storage, `service-requests/${userData.uid}/${Date.now()}-${file.name}`);
+          const snapshot = await uploadBytes(storageRef, file);
+          const downloadURL = await getDownloadURL(snapshot.ref);
+
+          uploadedAttachments.push({
+            url: downloadURL,
+            fileName: file.name,
+            size: file.size,
+            type: file.type,
+            path: snapshot.ref.fullPath
+          });
+        }
+        console.log(`✅ Uploaded ${uploadedAttachments.length} file(s)`);
+      }
+
+      // Create service request in Firestore
+      const requestData = {
+        tenantId: userData.uid,
+        tenantName: userData.displayName || userData.email,
+        tenantEmail: userData.email,
+        serviceType: formData.serviceType,
+        title: formData.title.trim(),
+        description: formData.description.trim(),
+        priority: formData.priority,
+        location: formData.location.trim(),
+        status: 'pending' as const,
+        tokenCost: estimatedCost,
+        tokensReserved: true,
+        tokensDeducted: false,
+        attachments: uploadedAttachments,
+        createdAt: Timestamp.now(),
+        updatedAt: Timestamp.now(),
+        notes: '',
+      };
+
+      console.log('📤 Sending to Firestore...');
+      const docRef = await addDoc(collection(db, 'serviceRequests'), requestData);
+      console.log('✅ Request created successfully:', docRef.id);
+
+      // Send notification to tenant (confirmation)
+      try {
+        await notificationService.notifyRequestCreated(
+          userData.uid,
+          userData.email || '',
+          userData.displayName || userData.email || 'User',
+          docRef.id,
+          formData.title,
+          formData.serviceType,
+          formData.priority
+        );
+        console.log('📧 Tenant notification sent');
+      } catch (emailError) {
+        console.error('Tenant notification failed (non-critical):', emailError);
+      }
+
+      // Send notification to Admin about new request
+      try {
+        await notificationService.notifyAdminNewRequest(
+          userData.displayName || userData.email || 'Tenant',
+          docRef.id,
+          formData.title,
+          facilityServices.find(s => s.value === formData.serviceType)?.label || formData.serviceType,
+          formData.priority
+        );
+        console.log('📧 Admin notification sent');
+      } catch (adminNotifError) {
+        console.error('Admin notification failed (non-critical):', adminNotifError);
+      }
 
       alert(
         `Facility Service Request Created!\n\n` +
         `Service: ${facilityServices.find(s => s.value === formData.serviceType)?.label}\n` +
         `Token Cost: ${estimatedCost} tokens (reserved)\n` +
-        `Current Balance: ${tokenBalance} tokens\n` +
-        `New Balance: ${tokenBalance - estimatedCost} tokens (after completion)\n\n` +
-        `Your request has been submitted successfully!`
+        `Attachments: ${uploadedAttachments.length} file(s)\n` +
+        `Current Balance: ${tokenBalance} tokens\n\n` +
+        `Your request has been submitted successfully and admin has been notified!`
       );
 
       navigate('/dashboard');
     } catch (err: any) {
+      console.error('❌ Error creating request:', err);
       setError(err.message || 'Failed to create request');
     } finally {
       setSubmitting(false);
