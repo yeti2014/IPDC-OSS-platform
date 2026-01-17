@@ -29,8 +29,6 @@ import {
   Build as BuildIcon,
   Token as TokenIcon,
   Send as SendIcon,
-  AttachFile as AttachFileIcon,
-  Close as CloseIcon,
 } from '@mui/icons-material';
 import { StatusBar, OfflineBanner } from '../components/common/StatusBar';
 import { useAuth } from '../contexts/AuthContext';
@@ -38,8 +36,9 @@ import { tokenService } from '../services/tokenService';
 import { notificationService } from '../services/notificationService';
 import { ServiceType, RequestPriority } from '../types';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
-import { db, storage } from '../config/firebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { db } from '../config/firebase';
+import { FileUpload } from '../components/common/FileUpload';
+import { UploadResult } from '../services/fileUploadService';
 
 const facilityServices: { value: ServiceType; label: string; icon: string }[] = [
   { value: 'maintenance', label: 'Maintenance', icon: '🔧' },
@@ -76,7 +75,7 @@ export const FacilityServicesPage: React.FC = () => {
   const [estimatedCost, setEstimatedCost] = useState<number>(0);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [attachments, setAttachments] = useState<File[]>([]);
+  const [uploadedFiles, setUploadedFiles] = useState<UploadResult[]>([]);
 
   // Load token balance
   useEffect(() => {
@@ -121,17 +120,6 @@ export const FacilityServicesPage: React.FC = () => {
     setFormData((prev) => ({ ...prev, [field]: e.target.value }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const newFiles = Array.from(e.target.files);
-      setAttachments((prev) => [...prev, ...newFiles]);
-    }
-  };
-
-  const handleRemoveFile = (index: number) => {
-    setAttachments((prev) => prev.filter((_, i) => i !== index));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -157,76 +145,6 @@ export const FacilityServicesPage: React.FC = () => {
     try {
       console.log('📝 Creating facility management request...');
 
-      // Upload attachments to Firebase Storage (with CORS error handling)
-      const uploadedAttachments = [];
-      let uploadWarning = '';
-
-      if (attachments.length > 0) {
-        console.log(`📎 Attempting to upload ${attachments.length} file(s)...`);
-
-        for (const file of attachments) {
-          try {
-            const storageRef = ref(storage, `service-requests/${userData.uid}/${Date.now()}-${file.name}`);
-            const snapshot = await uploadBytes(storageRef, file);
-            const downloadURL = await getDownloadURL(snapshot.ref);
-
-            uploadedAttachments.push({
-              url: downloadURL,
-              fileName: file.name,
-              size: file.size,
-              type: file.type,
-              path: snapshot.ref.fullPath
-            });
-            console.log(`✅ Uploaded: ${file.name}`);
-          } catch (uploadError: any) {
-            console.error(`❌ Failed to upload ${file.name}:`, uploadError);
-
-            // Check if it's a CORS error
-            const isCorsError = uploadError.message?.includes('CORS') ||
-                               uploadError.code === 'storage/unauthorized' ||
-                               uploadError.message?.includes('blocked by CORS policy');
-
-            if (isCorsError) {
-              console.error('🚫 CORS ERROR: Firebase Storage is not configured for cross-origin requests');
-              console.error('📖 Please follow the setup guide in: FIREBASE_STORAGE_CORS_SETUP.md');
-              console.error('⚡ Quick fix: Run setup-firebase-storage.bat (Windows) in the project root');
-            }
-
-            // Store file metadata without URL (for CORS errors)
-            uploadedAttachments.push({
-              url: '',
-              fileName: file.name,
-              size: file.size,
-              type: file.type,
-              path: '',
-              uploadFailed: true,
-              error: isCorsError ? 'CORS_ERROR' : (uploadError.code || 'UPLOAD_ERROR')
-            });
-          }
-        }
-
-        const successCount = uploadedAttachments.filter(a => !(a as any).uploadFailed).length;
-        const failCount = uploadedAttachments.filter(a => (a as any).uploadFailed).length;
-        const hasCorsError = uploadedAttachments.some(a => (a as any).error === 'CORS_ERROR');
-
-        if (failCount > 0) {
-          if (hasCorsError) {
-            uploadWarning = `\n\n⚠️ FIREBASE STORAGE CORS NOT CONFIGURED\n` +
-                          `${failCount} file(s) could not be uploaded.\n\n` +
-                          `TO FIX THIS:\n` +
-                          `1. Open: FIREBASE_STORAGE_CORS_SETUP.md\n` +
-                          `2. Run: setup-firebase-storage.bat\n` +
-                          `3. Restart dev server\n\n` +
-                          `File metadata has been saved with your request.`;
-          } else {
-            uploadWarning = `\n\nNote: ${failCount} file(s) could not be uploaded. File information has been saved with your request.`;
-          }
-          console.warn(`⚠️ ${failCount}/${attachments.length} files failed to upload`);
-        }
-
-        console.log(`✅ Successfully uploaded ${successCount}/${attachments.length} file(s)`);
-      }
-
       // Create service request in Firestore
       const requestData = {
         tenantId: userData.uid,
@@ -241,7 +159,13 @@ export const FacilityServicesPage: React.FC = () => {
         tokenCost: estimatedCost,
         tokensReserved: true,
         tokensDeducted: false,
-        attachments: uploadedAttachments,
+        attachments: uploadedFiles.map(f => ({
+          url: f.url,
+          fileName: f.fileName,
+          size: f.size,
+          type: f.type,
+          path: f.path
+        })),
         createdAt: Timestamp.now(),
         updatedAt: Timestamp.now(),
         notes: '',
@@ -281,16 +205,15 @@ export const FacilityServicesPage: React.FC = () => {
         console.error('Admin notification failed (non-critical):', adminNotifError);
       }
 
-      const successfulUploads = uploadedAttachments.filter(a => !(a as any).uploadFailed).length;
-      const totalAttachments = uploadedAttachments.length;
+      const totalAttachments = uploadedFiles.length;
 
       alert(
         `Facility Service Request Created!\n\n` +
         `Service: ${facilityServices.find(s => s.value === formData.serviceType)?.label}\n` +
         `Token Cost: ${estimatedCost} tokens (reserved)\n` +
-        `Attachments: ${successfulUploads}/${totalAttachments} file(s) uploaded\n` +
+        `Attachments: ${totalAttachments} file(s) uploaded\n` +
         `Current Balance: ${tokenBalance} tokens\n\n` +
-        `Your request has been submitted successfully and admin has been notified!${uploadWarning}`
+        `Your request has been submitted successfully and admin has been notified!`
       );
 
       navigate('/dashboard');
@@ -431,65 +354,17 @@ export const FacilityServicesPage: React.FC = () => {
                 <Typography variant="subtitle2" gutterBottom>
                   Attachments (Optional)
                 </Typography>
-                <Button
-                  variant="outlined"
-                  component="label"
-                  startIcon={<AttachFileIcon />}
-                  fullWidth
-                  sx={{ mb: 2 }}
-                >
-                  Upload Files (Photos, Documents)
-                  <input
-                    type="file"
-                    hidden
-                    multiple
-                    accept="image/*,.pdf,.doc,.docx"
-                    onChange={handleFileChange}
-                  />
-                </Button>
-
-                {attachments.length > 0 && (
-                  <Stack spacing={1}>
-                    {attachments.map((file, index) => (
-                      <Paper
-                        key={index}
-                        elevation={0}
-                        sx={{
-                          p: 1.5,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          bgcolor: 'grey.50',
-                          border: '1px solid',
-                          borderColor: 'grey.300',
-                        }}
-                      >
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flex: 1, minWidth: 0 }}>
-                          <AttachFileIcon fontSize="small" color="action" />
-                          <Box sx={{ minWidth: 0, flex: 1 }}>
-                            <Typography
-                              variant="body2"
-                              noWrap
-                              sx={{ fontWeight: 500 }}
-                            >
-                              {file.name}
-                            </Typography>
-                            <Typography variant="caption" color="text.secondary">
-                              {(file.size / 1024).toFixed(1)} KB
-                            </Typography>
-                          </Box>
-                        </Box>
-                        <Button
-                          size="small"
-                          onClick={() => handleRemoveFile(index)}
-                          sx={{ minWidth: 'auto', p: 0.5 }}
-                        >
-                          <CloseIcon fontSize="small" />
-                        </Button>
-                      </Paper>
-                    ))}
-                  </Stack>
-                )}
+                <FileUpload
+                  onFilesUploaded={(results) => {
+                    setUploadedFiles((prev) => [...prev, ...results]);
+                  }}
+                  maxFiles={5}
+                  storagePath={`service-requests/${userData?.uid}`}
+                  existingFiles={uploadedFiles}
+                  onFileRemoved={(file) => {
+                    setUploadedFiles((prev) => prev.filter((f) => f.path !== file.path));
+                  }}
+                />
               </Box>
 
               {/* Token Cost Summary */}
