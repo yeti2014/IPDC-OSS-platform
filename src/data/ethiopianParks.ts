@@ -60,7 +60,7 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
     powerCapacity: 50000,
     waterCapacity: 15000,
     hasCustomsOffice: true,
-    distanceToAirport: 275, // to Addis Ababa Bole
+    distanceToAirport: 6, // to Hawassa Airport
     distanceToPort: 912, // to Djibouti
     description: 'Ethiopia\'s flagship eco-industrial park, specializing in textile and garment manufacturing. Features modern infrastructure, on-site customs, and streamlined export processes.',
     establishedYear: 2016,
@@ -129,7 +129,7 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
     powerCapacity: 35000,
     waterCapacity: 9000,
     hasCustomsOffice: false,
-    distanceToAirport: 375,
+    distanceToAirport: 8, // to Dessie/Kombolcha Airport
     distanceToPort: 563,
     description: 'Strategic location on the Addis-Djibouti corridor. Focuses on textile and apparel with competitive labor costs.',
     establishedYear: 2017,
@@ -152,7 +152,7 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
     powerCapacity: 25000,
     waterCapacity: 7000,
     hasCustomsOffice: false,
-    distanceToAirport: 780,
+    distanceToAirport: 7, // to Mekelle Alula Aba Nega Airport
     distanceToPort: 420,
     description: 'Northern regional park under development. Strategic for northern corridor trade and agricultural processing.',
     establishedYear: 2020,
@@ -175,7 +175,7 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
     powerCapacity: 80000,
     waterCapacity: 20000,
     hasCustomsOffice: true,
-    distanceToAirport: 465,
+    distanceToAirport: 5, // to Dire Dawa Aba Tenna Dejazmach Yilma Airport
     distanceToPort: 351,
     description: 'Largest planned park with free trade zone status. Excellent location on Ethiopia-Djibouti railway for export-oriented manufacturing.',
     establishedYear: 2019,
@@ -221,7 +221,7 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
     powerCapacity: 20000,
     waterCapacity: 5000,
     hasCustomsOffice: false,
-    distanceToAirport: 350,
+    distanceToAirport: 5, // to Jimma Airport
     distanceToPort: 1238,
     description: 'Specialized park in Ethiopia\'s coffee-growing region. Focus on coffee processing and value addition for export.',
     establishedYear: 2021,
@@ -244,7 +244,7 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
     powerCapacity: 28000,
     waterCapacity: 7500,
     hasCustomsOffice: false,
-    distanceToAirport: 560,
+    distanceToAirport: 8, // to Bahir Dar Airport
     distanceToPort: 1448,
     description: 'Western regional park near Lake Tana. Focuses on textile, leather, and agricultural processing industries.',
     establishedYear: 2020,
@@ -290,7 +290,7 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
     powerCapacity: 30000,
     waterCapacity: 8000,
     hasCustomsOffice: true,
-    distanceToAirport: 600,
+    distanceToAirport: 10, // to Semera/Logia Airport
     distanceToPort: 320,
     description: 'Strategic location on Ethiopia-Djibouti corridor. Focus on logistics, warehousing, and export-oriented manufacturing. Closest IPDC park to Djibouti port.',
     establishedYear: 2022,

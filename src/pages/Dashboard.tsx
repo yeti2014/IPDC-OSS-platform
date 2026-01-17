@@ -49,6 +49,8 @@ import { useTranslation } from 'react-i18next';
 import { complaintService } from '../services/complaintService';
 import { useNavigate } from 'react-router-dom';
 import ParksMap from '../components/map/ParksMap';
+import ParkDetailsModal from '../components/map/ParkDetailsModal';
+import { IndustrialPark } from '../data/ethiopianParks';
 
 export const Dashboard = () => {
   const { userData, logOut } = useAuth();
@@ -75,6 +77,10 @@ export const Dashboard = () => {
   const [toast, setToast] = useState({ open: false, message: '', severity: 'success' as const });
   const [complaints, setComplaints] = useState<any[]>([]);
   const [complaintsLoading, setComplaintsLoading] = useState(false);
+
+  // Parks Map state
+  const [selectedPark, setSelectedPark] = useState<IndustrialPark | null>(null);
+  const [parkModalOpen, setParkModalOpen] = useState(false);
 
   // Load from Firestore
   useEffect(() => {
@@ -198,6 +204,16 @@ export const Dashboard = () => {
     setToast({ open: true, message, severity });
   };
 
+  const handleParkClick = (park: IndustrialPark) => {
+    setSelectedPark(park);
+    setParkModalOpen(true);
+  };
+
+  const handleParkModalClose = () => {
+    setParkModalOpen(false);
+    setTimeout(() => setSelectedPark(null), 300);
+  };
+
   // Apply filters
   const filteredRequests = requests.filter((request) => {
     if (filters.search) {
@@ -311,7 +327,7 @@ export const Dashboard = () => {
         {/* PARKS MAP TAB */}
         {tabValue === 0 && (
           <Box sx={{ height: '600px', width: '100%' }}>
-            <ParksMap />
+            <ParksMap onParkClick={handleParkClick} selectedPark={selectedPark} />
           </Box>
         )}
 
@@ -548,6 +564,12 @@ export const Dashboard = () => {
           onSuccess={handleComplaintSuccess}
         />
       )}
+
+      <ParkDetailsModal
+        park={selectedPark}
+        open={parkModalOpen}
+        onClose={handleParkModalClose}
+      />
 
       <Toast
         open={toast.open}
