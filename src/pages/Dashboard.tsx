@@ -292,31 +292,6 @@ export const Dashboard = () => {
                 }
               }}
             />
-
-            {/* Quick Actions */}
-            <Box sx={{ mb: 4, mt: 3 }}>
-              <Typography variant="h6" gutterBottom fontWeight="bold">
-                Quick Actions
-              </Typography>
-              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                <Button
-                  variant="outlined"
-                  startIcon={<MapIcon />}
-                  onClick={() => window.location.href = '/parks-map'}
-                  size="large"
-                >
-                  Parks Map
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="success"
-                  onClick={() => window.location.href = '/oss-services'}
-                  size="large"
-                >
-                  OSS Services
-                </Button>
-              </Box>
-            </Box>
           </>
         )}
 
