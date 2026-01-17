@@ -295,117 +295,34 @@ export const Dashboard = () => {
               }}
             />
 
-          </>
-        )}
-
-        <Card sx={{ mb: 4 }}>
-          <CardContent>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                <DashboardIcon sx={{ fontSize: 40, color: 'primary.main' }} />
-                <Box>
-                  <Typography variant="h4" fontWeight="bold">
-                    Dashboard
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Track and manage your services
-                  </Typography>
-                </Box>
-              </Box>
-              <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                <Button
-                  variant="outlined"
-                  startIcon={<BusinessIcon />}
-                  onClick={() => window.location.href = '/zones'}
-                  size="medium"
-                >
-                  {t('nav.zones')}
-                </Button>
+            {/* Quick Actions */}
+            <Box sx={{ mb: 4, mt: 3 }}>
+              <Typography variant="h6" gutterBottom fontWeight="bold">
+                Quick Actions
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                 <Button
                   variant="outlined"
                   startIcon={<MapIcon />}
                   onClick={() => window.location.href = '/parks-map'}
-                  size="medium"
-                  color="primary"
+                  size="large"
                 >
                   Parks Map
                 </Button>
-                {userData?.role === 'tenant' && (
-                  <>
-                    <Button
-                      variant="outlined"
-                      color="success"
-                      onClick={() => window.location.href = '/oss-services'}
-                      size="medium"
-                    >
-                      OSS Services
-                    </Button>
-                    <Button
-                      variant="contained"
-                      startIcon={<AddIcon />}
-                      onClick={() => setCreateDialogOpen(true)}
-                      size="medium"
-                    >
-                      {t('dashboard.createRequest')}
-                    </Button>
-                  </>
-                )}
+                <Button
+                  variant="outlined"
+                  color="success"
+                  onClick={() => window.location.href = '/oss-services'}
+                  size="large"
+                >
+                  OSS Services
+                </Button>
               </Box>
             </Box>
-          </CardContent>
-        </Card>
+          </>
+        )}
 
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid size={{ xs: 6, sm: 3 }}>
-            <Card>
-              <CardContent>
-                <Typography variant="h4" color="primary" gutterBottom>
-                  {stats.total}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {t('requests.title')}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid size={{ xs: 6, sm: 3 }}>
-            <Card>
-              <CardContent>
-                <Typography variant="h4" color="warning.main" gutterBottom>
-                  {stats.pending}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {t('requests.pending')}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid size={{ xs: 6, sm: 3 }}>
-            <Card>
-              <CardContent>
-                <Typography variant="h4" color="info.main" gutterBottom>
-                  {stats.inProgress}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {t('requests.inProgress')}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid size={{ xs: 6, sm: 3 }}>
-            <Card>
-              <CardContent>
-                <Typography variant="h4" color="success.main" gutterBottom>
-                  {stats.completed}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {t('requests.completed')}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-
+        {/* Tabs Navigation */}
         <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
           <Tabs value={tabValue} onChange={(e, newValue) => setTabValue(newValue)}>
             <Tab label="Service Requests" />
@@ -416,8 +333,92 @@ export const Dashboard = () => {
           </Tabs>
         </Box>
 
+        {/* SERVICE REQUESTS TAB */}
         {tabValue === 0 && (
-          <RequestsFilter onFilterChange={setFilters} />
+          <>
+            <Card sx={{ mb: 4 }}>
+              <CardContent>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <DashboardIcon sx={{ fontSize: 40, color: 'primary.main' }} />
+                    <Box>
+                      <Typography variant="h4" fontWeight="bold">
+                        My Service Requests
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Track and manage your submitted service requests
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                    {userData?.role === 'tenant' && (
+                      <Button
+                        variant="contained"
+                        startIcon={<AddIcon />}
+                        onClick={() => setCreateDialogOpen(true)}
+                        size="medium"
+                      >
+                        Create New Request
+                      </Button>
+                    )}
+                  </Box>
+                </Box>
+              </CardContent>
+            </Card>
+
+            <Grid container spacing={3} sx={{ mb: 4 }}>
+              <Grid size={{ xs: 6, sm: 3 }}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h4" color="primary" gutterBottom>
+                      {stats.total}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Service Requests
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid size={{ xs: 6, sm: 3 }}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h4" color="warning.main" gutterBottom>
+                      {stats.pending}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Pending
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid size={{ xs: 6, sm: 3 }}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h4" color="info.main" gutterBottom>
+                      {stats.inProgress}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      In Progress
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid size={{ xs: 6, sm: 3 }}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h4" color="success.main" gutterBottom>
+                      {stats.completed}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Completed
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
+
+            <RequestsFilter onFilterChange={setFilters} />
+          </>
         )}
 
         {tabValue === 0 ? (
