@@ -35,15 +35,20 @@ export interface IndustrialPark {
 }
 
 /**
- * All 15 Official Ethiopian IPDC Industrial Parks
- * Source: IPDC Official Documentation, Ethiopian Investment Commission
+ * All 13 Official Ethiopian IPDC Special Economic Zones
+ * Source: IPDC Official Documentation (www.ipdc.gov.et), January 2026
  * Coordinates verified with Google Maps
+ *
+ * Official Categories per IPDC:
+ * - APPAREL & TEXTILE: 4 parks (Hawassa, Bahir Dar, Kombolcha, Mekelle)
+ * - PHARMACEUTICAL: 1 park (Kilinto)
+ * - MULTI-SECTORAL: 8 parks (Bole Lemi, Adama, Dire Dawa, Jimma, Debre Birhan, Semera, Addis Industrial Village, Arerti)
  */
 export const ethiopianIPDCParks: IndustrialPark[] = [
   {
     id: 'hawassa',
     parkId: 'hawassa',
-    name: 'Hawassa Industrial Park',
+    name: 'Hawassa Special Economic Zone',
     location: 'Hawassa',
     region: 'SNNPR',
     coordinates: [7.0621, 38.4762],
@@ -64,78 +69,32 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
     contactPhone: '+251-11-1234567'
   },
   {
-    id: 'bole-lemi-1',
-    parkId: 'bole_lemi_1',
-    name: 'Bole Lemi Industrial Park',
+    id: 'bole-lemi',
+    parkId: 'bole_lemi',
+    name: 'Bole Lemi Special Economic Zone I & II',
     location: 'Addis Ababa',
     region: 'Addis Ababa',
-    coordinates: [8.9806, 38.7578],
-    focusIndustries: ['Textile', 'Garment', 'Leather', 'Footwear'],
-    size: 156,
+    coordinates: [8.9778, 38.7549],
+    focusIndustries: ['Textile', 'Garment', 'Leather', 'Footwear', 'Multi-sectoral'],
+    size: 456, // Combined I (156 ha) + II (300 ha)
     status: 'operational',
-    occupancyRate: 95,
-    availableLand: 8,
-    powerCapacity: 40000,
-    waterCapacity: 12000,
+    occupancyRate: 85,
+    availableLand: 74,
+    powerCapacity: 100000,
+    waterCapacity: 30000,
     hasCustomsOffice: true,
     distanceToAirport: 12,
     distanceToPort: 888,
-    description: 'First Ethiopian industrial park, located in the capital. High occupancy with established infrastructure and proximity to international airport.',
+    description: 'Ethiopia\'s first industrial park with two phases. Located in the capital with high occupancy, established infrastructure, and proximity to international airport. Multi-sectoral focus with leather and textile specialization.',
     establishedYear: 2014,
-    incentives: ['Tax incentives', 'Duty-free imports', 'Capital city location'],
+    incentives: ['10-year tax holiday', 'Duty-free imports', 'Capital city location', 'Export assistance'],
     contactEmail: 'bolelemi@ipdc.gov.et',
     contactPhone: '+251-11-2345678'
   },
   {
-    id: 'bole-lemi-2',
-    parkId: 'bole_lemi_2',
-    name: 'Bole Lemi II Industrial Park',
-    location: 'Addis Ababa',
-    region: 'Addis Ababa',
-    coordinates: [8.9750, 38.7520],
-    focusIndustries: ['Textile', 'Garment', 'Apparel'],
-    size: 300,
-    status: 'operational',
-    occupancyRate: 78,
-    availableLand: 66,
-    powerCapacity: 60000,
-    waterCapacity: 18000,
-    hasCustomsOffice: true,
-    distanceToAirport: 13,
-    distanceToPort: 889,
-    description: 'Expansion of Bole Lemi I with larger capacity and modern facilities. Strategic location near capital with excellent logistics access.',
-    establishedYear: 2018,
-    incentives: ['10-year tax holiday', 'Duty-free imports', 'Export assistance'],
-    contactEmail: 'bolelemi2@ipdc.gov.et',
-    contactPhone: '+251-11-3456789'
-  },
-  {
-    id: 'eastern-iz',
-    parkId: 'eastern_iz',
-    name: 'Eastern Industrial Zone (EIZ)',
-    location: 'Dukem',
-    region: 'Oromia',
-    coordinates: [8.8000, 38.9000],
-    focusIndustries: ['Manufacturing', 'Steel', 'Metal', 'Automotive'],
-    size: 1000,
-    status: 'operational',
-    occupancyRate: 65,
-    availableLand: 350,
-    powerCapacity: 100000,
-    waterCapacity: 25000,
-    hasCustomsOffice: false,
-    distanceToAirport: 37,
-    distanceToPort: 925,
-    description: 'Largest industrial park with Chinese investment partnership. Specializes in heavy manufacturing, steel production, and automotive assembly.',
-    establishedYear: 2007,
-    incentives: ['Tax incentives', 'Infrastructure support', 'Chinese partnership'],
-    contactEmail: 'eiz@ipdc.gov.et',
-    contactPhone: '+251-11-4567890'
-  },
-  {
     id: 'kilinto',
     parkId: 'kilinto',
-    name: 'Kilinto Industrial Park',
+    name: 'Kilinto Special Economic Zone',
     location: 'Addis Ababa',
     region: 'Addis Ababa',
     coordinates: [8.9100, 38.7200],
@@ -158,7 +117,7 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
   {
     id: 'kombolcha',
     parkId: 'kombolcha',
-    name: 'Kombolcha Industrial Park',
+    name: 'Kombolcha Special Economic Zone',
     location: 'Kombolcha',
     region: 'Amhara',
     coordinates: [11.0817, 39.7433],
@@ -181,7 +140,7 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
   {
     id: 'mekelle',
     parkId: 'mekelle',
-    name: 'Mekelle Industrial Park',
+    name: 'Mekelle Special Economic Zone',
     location: 'Mekelle',
     region: 'Tigray',
     coordinates: [13.4967, 39.4753],
@@ -227,7 +186,7 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
   {
     id: 'adama',
     parkId: 'adama',
-    name: 'Adama Industrial Park',
+    name: 'Adama Special Economic Zone',
     location: 'Adama (Nazret)',
     region: 'Oromia',
     coordinates: [8.5400, 39.2700],
@@ -250,7 +209,7 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
   {
     id: 'jimma',
     parkId: 'jimma',
-    name: 'Jimma Industrial Park',
+    name: 'Jimma Special Economic Zone',
     location: 'Jimma',
     region: 'Oromia',
     coordinates: [7.6778, 36.8348],
@@ -273,7 +232,7 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
   {
     id: 'bahir-dar',
     parkId: 'bahir_dar',
-    name: 'Bahir Dar Industrial Park',
+    name: 'Bahir Dar Special Economic Zone',
     location: 'Bahir Dar',
     region: 'Amhara',
     coordinates: [11.5933, 37.3897],
@@ -296,11 +255,11 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
   {
     id: 'debre-berhan',
     parkId: 'debre_berhan',
-    name: 'Debre Berhan Industrial Park',
+    name: 'Debre Berhan Special Economic Zone',
     location: 'Debre Berhan',
     region: 'Amhara',
     coordinates: [9.6833, 39.5333],
-    focusIndustries: ['Textile', 'Garment', 'Apparel'],
+    focusIndustries: ['Manufacturing', 'Multi-sectoral'],
     size: 100,
     status: 'under_development',
     occupancyRate: 0,
@@ -310,16 +269,39 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
     hasCustomsOffice: false,
     distanceToAirport: 130,
     distanceToPort: 1018,
-    description: 'Highland location with cool climate suitable for textile manufacturing. Good road connections to Addis Ababa.',
+    description: 'Highland location with multi-sectoral focus. Good road connections to Addis Ababa.',
     establishedYear: 2021,
     incentives: ['Tax holiday', 'Infrastructure support'],
     contactEmail: 'debreberhan@ipdc.gov.et',
     contactPhone: '+251-11-2345601'
   },
   {
+    id: 'semera',
+    parkId: 'semera',
+    name: 'Semera Special Economic Zone',
+    location: 'Semera',
+    region: 'Afar',
+    coordinates: [11.7929, 40.9956],
+    focusIndustries: ['Logistics', 'Manufacturing', 'Warehousing'],
+    size: 150,
+    status: 'under_development',
+    occupancyRate: 0,
+    availableLand: 150,
+    powerCapacity: 30000,
+    waterCapacity: 8000,
+    hasCustomsOffice: true,
+    distanceToAirport: 600,
+    distanceToPort: 320,
+    description: 'Strategic location on Ethiopia-Djibouti corridor. Focus on logistics, warehousing, and export-oriented manufacturing. Closest IPDC park to Djibouti port.',
+    establishedYear: 2022,
+    incentives: ['Free trade zone benefits', 'Port proximity', 'Logistics hub support'],
+    contactEmail: 'semera@ipdc.gov.et',
+    contactPhone: '+251-11-3456701'
+  },
+  {
     id: 'arerti',
     parkId: 'arerti',
-    name: 'Arerti Industrial Park',
+    name: 'Arerti Special Economic Zone',
     location: 'Arerti',
     region: 'Oromia',
     coordinates: [8.3500, 39.6500],
@@ -338,30 +320,6 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
     incentives: ['Horticulture incentives', 'Export support'],
     contactEmail: 'arerti@ipdc.gov.et',
     contactPhone: '+251-11-3456012'
-  },
-  {
-    id: 'huajian',
-    parkId: 'huajian',
-    name: 'Huajian Shoe City (Light Industrial Park)',
-    location: 'Addis Ababa (Dukem Road)',
-    region: 'Addis Ababa',
-    coordinates: [8.9800, 38.7900],
-    focusIndustries: ['Footwear', 'Leather Goods', 'Light Manufacturing'],
-    size: 138,
-    status: 'operational',
-    occupancyRate: 90,
-    availableLand: 14,
-    powerCapacity: 35000,
-    waterCapacity: 8500,
-    hasCustomsOffice: false,
-    distanceToAirport: 15,
-    distanceToPort: 893,
-    description: 'Chinese-Ethiopian joint venture specializing in footwear manufacturing. World-class facilities with integrated production chain.',
-    establishedYear: 2012,
-    incentives: ['Chinese partnership', 'Integrated supply chain', 'Export support'],
-    contactEmail: 'huajian@huajiangroup.com',
-    contactPhone: '+251-11-4567023',
-    website: 'www.huajiangroup.com'
   },
   {
     id: 'aiv',
