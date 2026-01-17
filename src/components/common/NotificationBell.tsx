@@ -22,7 +22,7 @@ import { formatDistanceToNow } from 'date-fns';
 
 export const NotificationBell: React.FC = () => {
   const { userData } = useAuth();
-  const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications(userData?.uid);
+  const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications(userData?.uid, userData?.role);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {

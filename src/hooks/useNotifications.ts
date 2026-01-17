@@ -1,19 +1,24 @@
 // src/hooks/useNotifications.ts
 import { useState, useEffect } from 'react';
-import { collection, query, where, onSnapshot, orderBy, updateDoc, doc } from 'firebase/firestore';
+import { collection, query, where, onSnapshot, orderBy, updateDoc, doc, or } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { Notification } from '../types';
 
-export const useNotifications = (userId?: string) => {
+export const useNotifications = (userId?: string, userRole?: string) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
     if (!userId) return;
 
+    // Query for notifications by userId OR by role
+    // This allows both personal notifications and role-based notifications
     const q = query(
       collection(db, 'notifications'),
-      where('userId', '==', userId),
+      or(
+        where('userId', '==', userId),
+        where('userRole', '==', userRole)
+      ),
       orderBy('createdAt', 'desc')
     );
 
@@ -27,13 +32,13 @@ export const useNotifications = (userId?: string) => {
           createdAt: data.createdAt?.toDate() || new Date(),
         } as Notification);
       });
-      
+
       setNotifications(notificationData);
       setUnreadCount(notificationData.filter(n => !n.read).length);
     });
 
     return () => unsubscribe();
-  }, [userId]);
+  }, [userId, userRole]);
 
   const markAsRead = async (notificationId: string) => {
     try {

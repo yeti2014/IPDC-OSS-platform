@@ -57,25 +57,37 @@ class NotificationService {
 
   /**
    * Create in-app notification for notification bell
+   * For role-based notifications (admin, operations), use userRole parameter
    */
   private async createInAppNotification(
     userId: string,
     title: string,
     message: string,
     type: 'info' | 'success' | 'warning' | 'error',
-    requestId?: string
+    requestId?: string,
+    userRole?: string
   ): Promise<void> {
     try {
-      await addDoc(collection(db, 'notifications'), {
-        userId,
+      const notificationData: any = {
         title,
         message,
         type,
         read: false,
         relatedRequestId: requestId,
         createdAt: serverTimestamp()
-      });
-      console.log(`🔔 In-app notification created for user ${userId}`);
+      };
+
+      // For role-based notifications (admin, operations), store userRole
+      // For personal notifications, store userId
+      if (userRole) {
+        notificationData.userRole = userRole;
+        console.log(`🔔 In-app notification created for role: ${userRole}`);
+      } else {
+        notificationData.userId = userId;
+        console.log(`🔔 In-app notification created for user: ${userId}`);
+      }
+
+      await addDoc(collection(db, 'notifications'), notificationData);
     } catch (error) {
       console.error('Error creating in-app notification:', error);
     }
@@ -399,13 +411,14 @@ class NotificationService {
     serviceType: string,
     priority: string
   ): Promise<void> {
-    // Create in-app notification for admin
+    // Create in-app notification for admin role
     await this.createInAppNotification(
-      'admin',
+      '', // userId not needed for role-based notification
       'New Service Request',
       `${tenantName} submitted a new ${serviceType} request: ${requestTitle}`,
       priority === 'urgent' || priority === 'high' ? 'warning' : 'info',
-      requestId
+      requestId,
+      'admin' // userRole
     );
   }
 
@@ -419,13 +432,14 @@ class NotificationService {
     completedBy: string,
     tokensCost: number
   ): Promise<void> {
-    // Create in-app notification for admin
+    // Create in-app notification for admin role
     await this.createInAppNotification(
-      'admin',
+      '', // userId not needed for role-based notification
       'Task Completed',
       `${completedBy} completed "${requestTitle}" for ${tenantName}. ${tokensCost} tokens deducted.`,
       'success',
-      requestId
+      requestId,
+      'admin' // userRole
     );
   }
 
@@ -440,13 +454,14 @@ class NotificationService {
     priority: string,
     location: string
   ): Promise<void> {
-    // Create in-app notification for operations team
+    // Create in-app notification for operations role
     await this.createInAppNotification(
-      'operations',
+      '', // userId not needed for role-based notification
       'New Approved Request',
       `Admin approved ${serviceType} request from ${tenantName}: ${requestTitle}`,
       priority === 'urgent' || priority === 'high' ? 'warning' : 'info',
-      requestId
+      requestId,
+      'operations' // userRole
     );
   }
 
