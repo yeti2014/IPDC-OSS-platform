@@ -301,7 +301,7 @@ export const ethiopianIPDCParks: IndustrialPark[] = [
   {
     id: 'arerti',
     parkId: 'arerti',
-    name: 'Arerti Special Economic Zone',
+    name: 'Arerti Industrial Park',
     location: 'Arerti',
     region: 'Oromia',
     coordinates: [8.3500, 39.6500],
