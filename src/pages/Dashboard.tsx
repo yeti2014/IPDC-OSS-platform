@@ -294,161 +294,142 @@ export const Dashboard = () => {
               }}
             />
 
-            {/* Visual Divider */}
-            <Box
-              sx={{
-                my: 6,
-                borderBottom: '2px solid',
-                borderColor: 'divider',
-                position: 'relative',
-                '&::after': {
-                  content: '""',
-                  position: 'absolute',
-                  bottom: -2,
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  width: 100,
-                  height: 2,
-                  bgcolor: 'primary.main',
-                }
-              }}
-            />
-
-            {/* Section Header for Existing Requests */}
-            <Box sx={{ mb: 3 }}>
-              <Typography variant="h5" fontWeight="bold" gutterBottom>
-                My Existing Service Requests
+            {/* Quick Actions */}
+            <Box sx={{ mb: 4, mt: 3 }}>
+              <Typography variant="h6" gutterBottom fontWeight="bold">
+                Quick Actions
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Track and manage your submitted service requests
-              </Typography>
-            </Box>
-          </>
-        )}
-
-        <Card sx={{ mb: 4 }}>
-          <CardContent>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                <DashboardIcon sx={{ fontSize: 40, color: 'primary.main' }} />
-                <Box>
-                  <Typography variant="h4" fontWeight="bold">
-                    {t('dashboard.myRequests')}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {t('requests.title')}
-                  </Typography>
-                </Box>
-              </Box>
-              <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                <Button
-                  variant="outlined"
-                  startIcon={<BusinessIcon />}
-                  onClick={() => window.location.href = '/zones'}
-                  size="medium"
-                >
-                  {t('nav.zones')}
-                </Button>
+              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                 <Button
                   variant="outlined"
                   startIcon={<MapIcon />}
                   onClick={() => window.location.href = '/parks-map'}
-                  size="medium"
-                  color="primary"
+                  size="large"
                 >
                   Parks Map
                 </Button>
-                {userData?.role === 'tenant' && (
-                  <>
-                    <Button
-                      variant="outlined"
-                      color="success"
-                      onClick={() => window.location.href = '/oss-services'}
-                      size="medium"
-                    >
-                      OSS Services
-                    </Button>
-                    <Button
-                      variant="contained"
-                      startIcon={<AddIcon />}
-                      onClick={() => setCreateDialogOpen(true)}
-                      size="medium"
-                    >
-                      {t('dashboard.createRequest')}
-                    </Button>
-                  </>
-                )}
+                <Button
+                  variant="outlined"
+                  color="success"
+                  onClick={() => window.location.href = '/oss-services'}
+                  size="large"
+                >
+                  OSS Services
+                </Button>
               </Box>
             </Box>
-          </CardContent>
-        </Card>
+          </>
+        )}
 
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid size={{ xs: 6, sm: 3 }}>
-            <Card>
-              <CardContent>
-                <Typography variant="h4" color="primary" gutterBottom>
-                  {stats.total}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {t('requests.title')}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid size={{ xs: 6, sm: 3 }}>
-            <Card>
-              <CardContent>
-                <Typography variant="h4" color="warning.main" gutterBottom>
-                  {stats.pending}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {t('requests.pending')}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid size={{ xs: 6, sm: 3 }}>
-            <Card>
-              <CardContent>
-                <Typography variant="h4" color="info.main" gutterBottom>
-                  {stats.inProgress}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {t('requests.inProgress')}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid size={{ xs: 6, sm: 3 }}>
-            <Card>
-              <CardContent>
-                <Typography variant="h4" color="success.main" gutterBottom>
-                  {stats.completed}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {t('requests.completed')}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-
+        {/* Tabs Navigation */}
         <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
           <Tabs value={tabValue} onChange={(e, newValue) => setTabValue(newValue)}>
-            <Tab label={t('requests.title')} />
+            <Tab label="Parks Map" icon={<MapIcon />} iconPosition="start" />
+            <Tab label="Service Requests" />
             <Tab label="Basic Analytics" />
-            {userData?.role === 'tenant' && <Tab label={t('tokens.balance')} />}
+            {userData?.role === 'tenant' && <Tab label="Token Balance" />}
             {userData?.role === 'tenant' && <Tab label="My Complaints" />}
+            <Tab label="Announcements" />
           </Tabs>
         </Box>
 
+        {/* PARKS MAP TAB */}
         {tabValue === 0 && (
-          <RequestsFilter onFilterChange={setFilters} />
+          <Box sx={{ height: '600px', width: '100%' }}>
+            <iframe
+              src="/parks-map"
+              style={{ width: '100%', height: '100%', border: 'none', borderRadius: '8px' }}
+              title="Ethiopian Industrial Parks Map"
+            />
+          </Box>
         )}
 
-        {tabValue === 0 ? (
+        {/* SERVICE REQUESTS TAB */}
+        {tabValue === 1 && (
           <>
+            <Card sx={{ mb: 4 }}>
+              <CardContent>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <DashboardIcon sx={{ fontSize: 40, color: 'primary.main' }} />
+                    <Box>
+                      <Typography variant="h4" fontWeight="bold">
+                        My Service Requests
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Track and manage your submitted service requests
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                    {userData?.role === 'tenant' && (
+                      <Button
+                        variant="contained"
+                        startIcon={<AddIcon />}
+                        onClick={() => setCreateDialogOpen(true)}
+                        size="medium"
+                      >
+                        Create New Request
+                      </Button>
+                    )}
+                  </Box>
+                </Box>
+              </CardContent>
+            </Card>
+
+            <Grid container spacing={3} sx={{ mb: 4 }}>
+              <Grid size={{ xs: 6, sm: 3 }}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h4" color="primary" gutterBottom>
+                      {stats.total}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Service Requests
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid size={{ xs: 6, sm: 3 }}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h4" color="warning.main" gutterBottom>
+                      {stats.pending}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Pending
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid size={{ xs: 6, sm: 3 }}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h4" color="info.main" gutterBottom>
+                      {stats.inProgress}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      In Progress
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid size={{ xs: 6, sm: 3 }}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h4" color="success.main" gutterBottom>
+                      {stats.completed}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Completed
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
+
+            <RequestsFilter onFilterChange={setFilters} />
+
             {loading ? (
               <RequestListSkeleton count={5} />
             ) : filteredRequests.length === 0 ? (
@@ -477,12 +458,20 @@ export const Dashboard = () => {
               />
             )}
           </>
-        ) : tabValue === 1 ? (
+        )}
+
+        {/* BASIC ANALYTICS TAB */}
+        {tabValue === 2 && (
           <RequestsChart requests={filteredRequests} />
-        ) : tabValue === 2 ? (
+        )}
+
+        {/* TOKEN BALANCE TAB */}
+        {tabValue === 3 && userData?.role === 'tenant' && (
           <TokenDashboard />
-        ) : (
-          // My Complaints Tab
+        )}
+
+        {/* MY COMPLAINTS TAB */}
+        {tabValue === 4 && userData?.role === 'tenant' && (
           complaintsLoading ? (
             <Card>
               <CardContent>
@@ -502,65 +491,51 @@ export const Dashboard = () => {
             <Stack spacing={2}>
               {complaints.map((complaint) => (
                 <Card key={complaint.id}>
-                    <CardContent>
-                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-                        <Box sx={{ flex: 1 }}>
-                          <Typography variant="h6" gutterBottom>
-                            {complaint.subject}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary" gutterBottom>
-                            Request: {complaint.requestTitle}
-                          </Typography>
-                          <Box sx={{ display: 'flex', gap: 1, my: 2 }}>
-                            <Chip
-                              label={complaint.status.replace('-', ' ').toUpperCase()}
-                              color={
-                                complaint.status === 'resolved' ? 'success' :
-                                complaint.status === 'rejected' ? 'error' :
-                                complaint.status === 'under-review' ? 'info' : 'warning'
-                              }
-                              size="small"
-                            />
-                            <Chip label={complaint.severity.toUpperCase()} size="small" />
-                            <Chip label={complaint.category.replace('-', ' ')} variant="outlined" size="small" />
-                          </Box>
-                          {complaint.resolutionAction && (
-                            <Alert severity={complaint.status === 'resolved' ? 'success' : 'info'} sx={{ mt: 2 }}>
-                              <Typography variant="body2" fontWeight="bold">
-                                Resolution: {complaint.resolutionAction.replace('-', ' ').toUpperCase()}
-                              </Typography>
-                              {complaint.resolutionNotes && (
-                                <Typography variant="caption" display="block" sx={{ mt: 1 }}>
-                                  {complaint.resolutionNotes}
-                                </Typography>
-                              )}
-                              {complaint.refundAmount > 0 && (
-                                <Typography variant="body2" sx={{ mt: 1 }}>
-                                  💰 Refund: {complaint.refundAmount} tokens
-                                </Typography>
-                              )}
-                            </Alert>
-                          )}
-                          {complaint.status === 'rejected' && complaint.adminResponse && (
-                            <Alert severity="warning" sx={{ mt: 2 }}>
-                              <Typography variant="body2" fontWeight="bold">Admin Response:</Typography>
-                              <Typography variant="caption" display="block" sx={{ mt: 1 }}>
-                                {complaint.adminResponse}
-                              </Typography>
-                            </Alert>
-                          )}
-                          <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 2 }}>
-                            Filed: {new Date(complaint.createdAt).toLocaleString()}
-                            {complaint.resolvedAt && ` • Resolved: ${new Date(complaint.resolvedAt).toLocaleString()}`}
-                          </Typography>
+                  <CardContent>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+                      <Box sx={{ flex: 1 }}>
+                        <Typography variant="h6" gutterBottom>
+                          {complaint.subject}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" gutterBottom>
+                          Request: {complaint.requestTitle}
+                        </Typography>
+                        <Box sx={{ display: 'flex', gap: 1, my: 2 }}>
+                          <Chip
+                            label={complaint.status.replace('-', ' ').toUpperCase()}
+                            color={
+                              complaint.status === 'resolved' ? 'success' :
+                              complaint.status === 'rejected' ? 'error' :
+                              complaint.status === 'under-review' ? 'info' : 'warning'
+                            }
+                            size="small"
+                          />
+                          <Chip label={complaint.severity.toUpperCase()} size="small" />
+                          <Chip label={complaint.category.replace('-', ' ')} variant="outlined" size="small" />
                         </Box>
+                        <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 2 }}>
+                          Filed: {new Date(complaint.createdAt).toLocaleString()}
+                          {complaint.resolvedAt && ` • Resolved: ${new Date(complaint.resolvedAt).toLocaleString()}`}
+                        </Typography>
                       </Box>
-                    </CardContent>
-                  </Card>
+                    </Box>
+                  </CardContent>
+                </Card>
               ))}
             </Stack>
           )
         )}
+
+        {/* ANNOUNCEMENTS TAB */}
+        {tabValue === (userData?.role === 'tenant' ? 5 : 3) && (
+          <Box>
+            <Typography variant="h5" gutterBottom sx={{ mb: 3, fontWeight: 'bold' }}>
+              📢 Announcements
+            </Typography>
+            <AnnouncementBanner />
+          </Box>
+        )}
+
       </Container>
 
       {userData?.role === 'tenant' && (
