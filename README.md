@@ -243,6 +243,16 @@ Academic project - Nankai University MSc Software Engineering
 - ✅ Digital token system
 - ✅ Lightweight offline-first frontend
 
+- NOTE: To Enhance the Platform ## AI Models & Recommendation System
+
+This project includes 3 trained models for tenant service classification,Asset maintenance Prediction and intelligent park recommendation
+(located in `/ai-models/`).
+
+### Running the Models Locally
+1. Install backend dependencies (, e.g., Python):
+   ```bash
+   pip install -r requirements.txt  
+
 ---
 
 **Built with ❤️ for Ethiopian Industrial Parks**
