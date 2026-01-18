@@ -22,6 +22,7 @@ import {
   Dashboard as DashboardIcon,
   Business as BusinessIcon,
   Map as MapIcon,
+  Campaign,
 } from '@mui/icons-material';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from '../config/firebase';
@@ -141,9 +142,10 @@ export const Dashboard = () => {
     });
   }, [localRequests]);
 
-  // Load complaints when tab is active
+  // Load complaints when tab is active (adjust index for tenant vs non-tenant)
   useEffect(() => {
-    if (userData?.role === 'tenant' && tabValue === 4) {
+    const complaintsTabIndex = userData?.role === 'tenant' ? 3 : -1;
+    if (userData?.role === 'tenant' && tabValue === complaintsTabIndex) {
       loadComplaints();
     }
   }, [userData, tabValue]);
