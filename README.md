@@ -14,7 +14,7 @@ An offline-first Progressive Web Application for managing tenant services, admin
 
 **Author:** Yeti  
 **Program:** MSc Software Engineering, Nankai University  
-**Timeline:** 13-17 weeks implementation
+**Timeline:** 10 weeks implementation
 
 ---
 
@@ -31,11 +31,11 @@ An offline-first Progressive Web Application for managing tenant services, admin
 ## ✨ Features
 
 ### Core Capabilities
-- ✅ **Offline-First Architecture** - Works without internet connection
-- ✅ **Progressive Web App (PWA)** - Installable on any device
+- ✅ **Offline-First Architecture** - Basic features Works without internet connection
+- ✅ **Progressive Web App (PWA)** - adjusted for different screen sizes
 - ✅ **Multi-Role Support** - Tenant, Admin, Operations
-- ✅ **Service Request Management** - Submit and track requests offline
-- ✅ **Token-Based Credit System** - Visa-style token management
+- ✅ **Service Request Management** - Submit requests offline and track will be synched when online 
+- ✅ **Token-Based Credit System** - Digital token management to proof the concept
 - ✅ **Real-time Status Indicators** - Online/Offline detection
 - ✅ **Device-Responsive Design** - Mobile, tablet, desktop
 - ✅ **Automatic Sync** - Queue actions and sync when online
@@ -192,7 +192,7 @@ See `STATUS_INDICATORS_GUIDE.md` for complete documentation.
 - Admin dashboard
 - SEZ recommendation matcher
 
-### Week 6-16: Advanced Features
+### Week 6-10: Advanced Features
 - Operations module
 - Announcements
 - Sync optimization
@@ -237,10 +237,10 @@ Academic project - Nankai University MSc Software Engineering
 ## 🎓 Thesis Information
 
 **Advisor Approved Approach:**
-- ✅ Intelligent rule-based SEZ matcher (NOT ML)
-- ✅ All Ethiopian SEZs for data collection
+- ✅ Intelligent SEZ matcher 
+- ✅ 13 Ethiopian SEZs for data collection
 - ✅ Bole Lemi & Hawassa for pilot testing
-- ✅ Enhanced Visa Credit token system
+- ✅ Digital token system
 - ✅ Lightweight offline-first frontend
 
 ---
