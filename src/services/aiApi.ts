@@ -8,7 +8,7 @@
  * - Model 3: Park Recommendation
  */
 
-const AI_API_BASE_URL = 'http://localhost:8000/api/v1';
+const AI_API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';  // Fallback for local dev
 
 // ==================== TYPE DEFINITIONS ====================
 
