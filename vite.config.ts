@@ -13,6 +13,14 @@ export default defineConfig({
         enabled: true, // Enable service worker in development for offline testing
         type: 'module'
       },
+      workbox: {
+  globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+  runtimeCaching: [{
+    urlPattern: /^https:\/\/ipdc-oss-platform\.onrender\.com\/.*/i,
+    handler: 'NetworkFirst',
+    options: { cacheName: 'api-cache' }
+  }]
+}
       includeAssets: ['favicon.ico', 'robots.txt'],
       manifest: {
         name: 'IPDC-OSS Platform',
@@ -21,6 +29,8 @@ export default defineConfig({
         theme_color: '#2563eb',
         background_color: '#ffffff',
         display: 'standalone',
+        start_url: '/',
+        scope: '/',
         icons: [
           {
             src: 'ipdc-oss-icon.png',
