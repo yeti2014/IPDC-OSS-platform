@@ -6,7 +6,9 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
-  updateProfile
+  updateProfile,
+  indexedDBLocalPersistence,  // Add this import
+  setPersistence  // Add this import
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../config/firebase';
@@ -51,34 +53,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
 
+  // NEW: Set Firebase auth persistence to IndexedDB (fixes mobile sign-in + offline)
+  useEffect(() => {
+    setPersistence(auth, indexedDBLocalPersistence)
+      .then(() => console.log('✅ Firebase auth persistence set to IndexedDB (mobile/offline safe)'))
+      .catch((error) => console.error('❌ Persistence error:', error));
+  }, []);
+
   // Initialize offline auth database
   useEffect(() => {
     initOfflineAuthDB();
-
     // Monitor online/offline status
     const handleOnline = () => setIsOffline(false);
     const handleOffline = () => setIsOffline(true);
-
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
-
     return () => {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
   }, []);
 
+  // Your signIn/signUp/logOut unchanged (great offline fallback!)
   const signIn = async (email: string, password: string) => {
     // If offline, try offline authentication
     if (isOffline) {
       console.log('🔒 Attempting offline authentication...');
-
       const isValidOffline = await verifyOfflineCredentials(email, password);
-
       if (isValidOffline) {
-        // Retrieve cached auth state
         const cachedAuth = await getCachedAuthState();
-
         if (cachedAuth) {
           setUserData({
             uid: cachedAuth.uid,
@@ -95,20 +98,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         throw new Error('Invalid offline credentials. Please check your email and password or connect to the internet.');
       }
     }
-
     // Online authentication
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
-      // Cache credentials for offline login
       await cacheCredentials(email, password);
       console.log('✅ Credentials cached for offline access');
     } catch (error: any) {
-      // If online auth fails but we have offline credentials, try offline mode
       if (error.code === 'auth/network-request-failed') {
         console.log('⚠️ Network error, falling back to offline authentication...');
         setIsOffline(true);
-
         const isValidOffline = await verifyOfflineCredentials(email, password);
         if (isValidOffline) {
           const cachedAuth = await getCachedAuthState();
@@ -132,10 +130,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (isOffline) {
       throw new Error('Signup requires an internet connection. Please connect to the internet and try again.');
     }
-
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(userCredential.user, { displayName: name });
-
     await setDoc(doc(db, 'users', userCredential.user.uid), {
       email,
       displayName: name,
@@ -143,19 +139,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       createdAt: new Date(),
       updatedAt: new Date(),
     });
-
-    // Cache credentials for offline login
     await cacheCredentials(email, password);
   };
 
   const logOut = async () => {
-    // Clear offline auth cache
     await clearCachedAuthState();
-
     if (!isOffline) {
       await signOut(auth);
     } else {
-      // Offline logout - just clear local state
       setCurrentUser(null);
       setUserData(null);
     }
@@ -164,7 +155,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
-
       if (user) {
         try {
           const userDoc = await getDoc(doc(db, 'users', user.uid));
@@ -177,14 +167,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               role: data.role as UserRole,
             };
             setUserData(userDataObj);
-
-            // Cache auth state for offline access
             await cacheAuthState(userDataObj);
           }
         } catch (error) {
           console.error('❌ Failed to fetch user data:', error);
-
-          // Try to load from cache if online fetch fails
           const cachedAuth = await getCachedAuthState();
           if (cachedAuth) {
             setUserData({
@@ -197,8 +183,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
         }
       } else {
-        // Not authenticated
-        // Check if we have offline auth state (for offline mode)
         if (isOffline) {
           const cachedAuth = await getCachedAuthState();
           if (cachedAuth) {
@@ -216,10 +200,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setUserData(null);
         }
       }
-
       setLoading(false);
     });
-
     return unsubscribe;
   }, [isOffline]);
 
