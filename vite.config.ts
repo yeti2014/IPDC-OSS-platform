@@ -13,15 +13,7 @@ export default defineConfig({
         enabled: true, // Enable service worker in development for offline testing
         type: 'module'
       },
-      workbox: {
-  globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-  runtimeCaching: [{
-    urlPattern: /^https:\/\/ipdc-oss-platform\.onrender\.com\/.*/i,
-    handler: 'NetworkFirst',
-    options: { cacheName: 'api-cache' }
-  }]
-}
-      includeAssets: ['favicon.ico', 'robots.txt'],
+      includeAssets: ['favicon.ico', 'robots.txt'], // Moved here (was causing syntax error)
       manifest: {
         name: 'IPDC-OSS Platform',
         short_name: 'IPDC-OSS',
@@ -73,6 +65,11 @@ export default defineConfig({
                 maxAgeSeconds: 60 * 60 * 24 * 7 // 1 week
               }
             }
+          },
+          {
+            urlPattern: /^https:\/\/ipdc-oss-platform\.onrender\.com\/.*/i,
+            handler: 'NetworkFirst',
+            options: { cacheName: 'api-cache' }
           }
         ]
       }
