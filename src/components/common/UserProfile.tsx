@@ -122,9 +122,20 @@ export const UserProfile: React.FC<UserProfileProps> = ({ open, onClose }) => {
 
       // Upload avatar if changed
       if (avatarFile) {
-        const storageRef = ref(storage, `avatars/${user.uid}/${Date.now()}_${avatarFile.name}`);
-        await uploadBytes(storageRef, avatarFile);
-        photoURL = await getDownloadURL(storageRef);
+        const useBase64 = import.meta.env.VITE_USE_BASE64_STORAGE !== 'false';
+        if (useBase64) {
+          // Base64 mode: convert to data URL
+          photoURL = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = () => reject(new Error('Failed to read avatar file'));
+            reader.readAsDataURL(avatarFile);
+          });
+        } else {
+          const storageRef = ref(storage, `avatars/${user.uid}/${Date.now()}_${avatarFile.name}`);
+          await uploadBytes(storageRef, avatarFile);
+          photoURL = await getDownloadURL(storageRef);
+        }
       }
 
       // Update Firebase Auth profile

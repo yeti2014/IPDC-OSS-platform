@@ -61,11 +61,11 @@ class FileUploadService {
     const fileName = `${timestamp}_${sanitizedName}`;
     const fullPath = `${path}/${fileName}`;
 
-    // Check if we should use Base64 storage (demo mode)
-    const useBase64 = import.meta.env.VITE_USE_BASE64_STORAGE === 'true';
+    // Use Base64 storage unless explicitly set to 'false' (Firebase Storage requires Blaze plan)
+    const useBase64 = import.meta.env.VITE_USE_BASE64_STORAGE !== 'false';
 
     if (useBase64) {
-      console.log('📦 Demo mode enabled: Using Base64 storage');
+      console.log('📦 Using Base64 storage (Firebase Storage requires Blaze plan)');
 
       // Simulate progress for better UX
       if (onProgress) {
