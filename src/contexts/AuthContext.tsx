@@ -54,16 +54,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
 
-  // CRITICAL MOBILE FIX: Set Firebase auth persistence to IndexedDB on mobile/offline
-  // This bypasses cookie blocks in Safari/Chrome mobile and enables true offline auth
-  useEffect(() => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const persistence = isMobile ? indexedDBLocalPersistence : browserLocalPersistence;
-
-    setPersistence(auth, persistence)
-      .then(() => console.log(`✅ Firebase auth persistence set to ${isMobile ? 'IndexedDB (mobile/offline safe)' : 'localStorage'}`))
-      .catch((error) => console.error('❌ Failed to set Firebase persistence:', error));
-  }, []);
+  const [persistenceReady, setPersistenceReady] = useState(false);
 
   // Initialize offline auth database + online/offline listener
   useEffect(() => {
@@ -76,6 +67,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
+  }, []);
+
+  // Set Firebase auth persistence BEFORE listening for auth state
+  useEffect(() => {
+    const initPersistence = async () => {
+      try {
+        await setPersistence(auth, indexedDBLocalPersistence);
+        console.log('✅ Firebase auth persistence set to IndexedDB');
+      } catch {
+        try {
+          await setPersistence(auth, browserLocalPersistence);
+          console.log('✅ Firebase auth persistence set to localStorage (fallback)');
+        } catch (error) {
+          console.error('❌ Failed to set Firebase persistence:', error);
+        }
+      }
+      setPersistenceReady(true);
+    };
+    initPersistence();
   }, []);
 
   const signIn = async (email: string, password: string) => {
@@ -103,7 +113,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // Online authentication
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       // Cache credentials for offline login
       await cacheCredentials(email, password);
       console.log('✅ Credentials cached for offline access');
@@ -160,7 +170,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  // Only start listening for auth state AFTER persistence is configured
   useEffect(() => {
+    if (!persistenceReady) return;
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
       if (user) {
@@ -175,12 +188,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               role: data.role as UserRole,
             };
             setUserData(userDataObj);
-            // Cache auth state for offline access
             await cacheAuthState(userDataObj);
           }
         } catch (error) {
           console.error('❌ Failed to fetch user data:', error);
-          // Try to load from cache if online fetch fails
           const cachedAuth = await getCachedAuthState();
           if (cachedAuth) {
             setUserData({
@@ -193,8 +204,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
         }
       } else {
-        // Not authenticated
-        // Check if we have offline auth state (for offline mode)
         if (isOffline) {
           const cachedAuth = await getCachedAuthState();
           if (cachedAuth) {
@@ -215,7 +224,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setLoading(false);
     });
     return unsubscribe;
-  }, [isOffline]);
+  }, [isOffline, persistenceReady]);
 
   const value = { currentUser, userData, loading, isOffline, signIn, signUp, logOut };
 
