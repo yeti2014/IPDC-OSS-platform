@@ -10,10 +10,10 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: {
-        enabled: true, // Enable service worker in development for offline testing
+        enabled: true,
         type: 'module'
       },
-      includeAssets: ['favicon.ico', 'robots.txt'], // Moved here (was causing syntax error)
+      includeAssets: ['favicon.ico', 'robots.txt'],
       manifest: {
         name: 'IPDC-OSS Platform',
         short_name: 'IPDC-OSS',
@@ -40,6 +40,11 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        cleanupOutdatedCaches: true,
+        skipWaiting: true,
+        clientsClaim: true,
+        navigateFallback: '/index.html',
+        navigateFallbackAllowlist: [/^(?!\/__).*/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -48,7 +53,7 @@ export default defineConfig({
               cacheName: 'google-fonts-cache',
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+                maxAgeSeconds: 60 * 60 * 24 * 365
               },
               cacheableResponse: {
                 statuses: [0, 200]
@@ -62,7 +67,7 @@ export default defineConfig({
               cacheName: 'firebase-storage-cache',
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 7 // 1 week
+                maxAgeSeconds: 60 * 60 * 24 * 7
               }
             }
           },

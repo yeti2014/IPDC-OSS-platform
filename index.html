@@ -24,6 +24,22 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // Clean up old custom service worker that causes stale cache on mobile
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          registrations.forEach(function(reg) {
+            if (reg.active && reg.active.scriptURL.includes('service-worker.js')) {
+              reg.unregister().then(function() {
+                caches.keys().then(function(names) {
+                  names.filter(function(n) { return n.startsWith('ipdc-'); }).forEach(function(n) { caches.delete(n); });
+                });
+              });
+            }
+          });
+        });
+      }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

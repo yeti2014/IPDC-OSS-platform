@@ -18,7 +18,7 @@ import ServiceTierSelectionPage from './pages/ServiceTierSelectionPage';
 import EntryServicesPage from './pages/EntryServicesPage';
 import FacilityServicesPage from './pages/FacilityServicesPage';
 import { initIndexedDB } from './utils/indexedDB';
-import { setupAutoSync, registerBackgroundSync } from './services/offlineQueue';
+import { setupAutoSync } from './services/offlineQueue';
 
 const theme = createTheme({
   palette: {
@@ -144,48 +144,15 @@ function AppRoutes() {
 
 function App() {
   useEffect(() => {
-    // Initialize offline functionality on app startup
+    // Initialize offline data support on app startup
+    // Note: Service worker is managed by VitePWA plugin (auto-registered)
     const initializeOfflineSupport = async () => {
       try {
-        // Initialize IndexedDB
         await initIndexedDB();
         console.log('✅ IndexedDB initialized');
 
-        // Setup auto-sync
         setupAutoSync();
         console.log('✅ Auto-sync configured');
-
-        // Register service worker
-        if ('serviceWorker' in navigator) {
-          try {
-            const registration = await navigator.serviceWorker.register(
-              '/service-worker.js',
-              { scope: '/' }
-            );
-
-            console.log('✅ Service Worker registered:', registration.scope);
-
-            // Handle service worker updates
-            registration.addEventListener('updatefound', () => {
-              const newWorker = registration.installing;
-              if (newWorker) {
-                newWorker.addEventListener('statechange', () => {
-                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                    // New service worker available, show update notification
-                    console.log('🔄 New version available! Please refresh.');
-                  }
-                });
-              }
-            });
-
-            // Register background sync if supported
-            await registerBackgroundSync();
-          } catch (error) {
-            console.error('❌ Service Worker registration failed:', error);
-          }
-        } else {
-          console.warn('⚠️ Service Workers not supported in this browser');
-        }
       } catch (error) {
         console.error('❌ Failed to initialize offline support:', error);
       }
