@@ -1,7 +1,79 @@
 // src/utils/seedAssets.ts
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, getDocs, updateDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { Asset, AssetCategory, AssetStatus, AssetCondition } from '../types/asset';
+
+/**
+ * Park name to parkId mapping
+ */
+const PARK_NAME_TO_ID: Record<string, string> = {
+  'Hawassa Industrial Park': 'hawassa',
+  'Bole Lemi Industrial Park': 'bole_lemi',
+  'Kilinto Industrial Park': 'kilinto',
+  'Kombolcha Industrial Park': 'kombolcha',
+  'Mekelle Industrial Park': 'mekelle',
+  'Dire Dawa Industrial Park': 'dire_dawa',
+  'Adama Industrial Park': 'adama',
+  'Jimma Industrial Park': 'jimma',
+  'Bahir Dar Industrial Park': 'bahir_dar',
+  'Debre Berhan Industrial Park': 'debre_berhan',
+  'Semera Industrial Park': 'semera',
+  'Arerti Industrial Park': 'arerti',
+  'Addis Industrial Village': 'aiv',
+};
+
+/**
+ * Migrate existing Firestore assets to add missing parkId field
+ * based on their parkName. This fixes assets seeded before parkId was added.
+ */
+export async function migrateAssetsParkId(): Promise<{ updated: number; skipped: number; errors: number }> {
+  const result = { updated: 0, skipped: 0, errors: 0 };
+
+  try {
+    const snapshot = await getDocs(collection(db, 'assets'));
+
+    for (const docSnap of snapshot.docs) {
+      const data = docSnap.data();
+
+      // Skip if parkId already exists
+      if (data.parkId) {
+        result.skipped++;
+        continue;
+      }
+
+      // Determine parkId from parkName
+      const parkId = data.parkName ? PARK_NAME_TO_ID[data.parkName] : null;
+
+      if (parkId) {
+        try {
+          await updateDoc(doc(db, 'assets', docSnap.id), { parkId });
+          result.updated++;
+          console.log(`✅ Migrated: ${data.name} → parkId: ${parkId}`);
+        } catch (err) {
+          result.errors++;
+          console.error(`❌ Failed to migrate: ${data.name}`, err);
+        }
+      } else {
+        // Default to 'hawassa' if parkName is unknown
+        try {
+          await updateDoc(doc(db, 'assets', docSnap.id), { parkId: 'hawassa' });
+          result.updated++;
+          console.log(`⚠️ Migrated with default: ${data.name} → parkId: hawassa`);
+        } catch (err) {
+          result.errors++;
+          console.error(`❌ Failed to migrate: ${data.name}`, err);
+        }
+      }
+    }
+
+    console.log(`🎉 Migration complete: ${result.updated} updated, ${result.skipped} skipped, ${result.errors} errors`);
+  } catch (error) {
+    console.error('❌ Migration failed:', error);
+    throw error;
+  }
+
+  return result;
+}
 
 /**
  * Seed demo assets for testing AI Maintenance Prediction

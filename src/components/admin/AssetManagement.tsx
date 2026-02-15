@@ -48,7 +48,7 @@ import { AssetDialog } from './AssetDialog';
 import { MaintenanceDialog } from './MaintenanceDialog';
 import { MaintenanceCalendar } from './MaintenanceCalendar';
 import { PredictiveMaintenanceCard } from './PredictiveMaintenanceCard';
-import { seedDemoAssets } from '../../utils/seedAssets';
+import { seedDemoAssets, migrateAssetsParkId } from '../../utils/seedAssets';
 
 export const AssetManagement = () => {
   const { userData } = useAuth();
@@ -114,6 +114,23 @@ export const AssetManagement = () => {
       } catch (error) {
         console.error('Error seeding assets:', error);
         alert('❌ Failed to seed demo assets. Check console for details.');
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  const handleMigrateAssets = async () => {
+    if (confirm('This will add missing parkId to existing assets in Firestore. Continue?')) {
+      try {
+        setLoading(true);
+        const result = await migrateAssetsParkId();
+        await loadAssets();
+        await loadStatistics();
+        alert(`Migration complete: ${result.updated} updated, ${result.skipped} already had parkId, ${result.errors} errors`);
+      } catch (error) {
+        console.error('Error migrating assets:', error);
+        alert('Failed to migrate assets. Check console for details.');
       } finally {
         setLoading(false);
       }
@@ -189,6 +206,15 @@ export const AssetManagement = () => {
               onClick={handleSeedDemoAssets}
             >
               Seed Demo Assets
+            </Button>
+          )}
+          {assets.length > 0 && assets.some(a => !a.parkId) && (
+            <Button
+              variant="outlined"
+              color="warning"
+              onClick={handleMigrateAssets}
+            >
+              Fix Missing Park IDs
             </Button>
           )}
           <Button
