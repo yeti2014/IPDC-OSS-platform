@@ -255,4 +255,4 @@ This project includes 3 trained models for tenant service classification,Asset m
 
 ---
 
-**Built with ❤️ for Ethiopian Industrial Parks**
+**Built with ❤️ for Ethiopian Industrial Parks (IPDC)**
