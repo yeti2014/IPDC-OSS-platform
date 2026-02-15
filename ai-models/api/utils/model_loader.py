@@ -29,12 +29,12 @@ class ModelLoader:
         return base_path
 
     def _load_all_models(self):
-        """Load all trained models"""
+        """Load all trained models (fault-tolerant: each model loads independently)"""
         print("Loading IPDC-OSS AI Models...")
         base_path = self._get_base_path()
 
+        # ==================== MODEL 1: SERVICE CLASSIFIER ====================
         try:
-            # ==================== MODEL 1: SERVICE CLASSIFIER ====================
             print("Loading Model 1: Service Classifier...")
             model1_path = base_path / "model1_service_classifier" / "models"
 
@@ -49,8 +49,11 @@ class ModelLoader:
                 'metadata': json.load(open(model1_path / "metadata.json", 'r'))
             }
             print("Model 1 loaded successfully")
+        except Exception as e:
+            print(f"WARNING: Model 1 (Service Classifier) failed to load: {e}")
 
-            # ==================== MODEL 2: PREDICTIVE MAINTENANCE ====================
+        # ==================== MODEL 2: PREDICTIVE MAINTENANCE ====================
+        try:
             print("Loading Model 2: Predictive Maintenance...")
             model2_path = base_path / "model2_predictive_maintenance" / "models"
 
@@ -67,8 +70,12 @@ class ModelLoader:
                 'metadata': json.load(open(model2_path / "metadata.json", 'r'))
             }
             print("Model 2 loaded successfully")
+        except Exception as e:
+            print(f"WARNING: Model 2 (Predictive Maintenance) failed to load: {e}")
+            print("  Model 2 endpoints will return fallback responses.")
 
-            # ==================== MODEL 3: PARK RECOMMENDATION ====================
+        # ==================== MODEL 3: PARK RECOMMENDATION ====================
+        try:
             print("Loading Model 3: Park Recommendation...")
             model3_path = base_path / "model3_park_recommendation" / "models"
 
@@ -81,20 +88,31 @@ class ModelLoader:
                 'metadata': json.load(open(model3_path / "metadata.json", 'r'))
             }
             print("Model 3 loaded successfully")
-
-            print("\nAll models loaded successfully!")
-            print(f"Model 1 version: {self._models['model1']['metadata']['version']}")
-            print(f"Model 2 version: {self._models['model2']['metadata']['version']}")
-            print(f"Model 3 version: {self._models['model3']['metadata']['model_version']}\n")
-
         except Exception as e:
-            print(f"Error loading models: {str(e)}")
-            raise
+            print(f"WARNING: Model 3 (Park Recommendation) failed to load: {e}")
+            print("  Model 3 endpoints will return fallback responses.")
+
+        # Summary
+        loaded = list(self._models.keys())
+        print(f"\nModels loaded: {loaded} ({len(loaded)}/3)")
+        if 'model1' in self._models:
+            print(f"  Model 1 version: {self._models['model1']['metadata'].get('version', 'unknown')}")
+        if 'model2' in self._models:
+            print(f"  Model 2 version: {self._models['model2']['metadata'].get('version', 'unknown')}")
+        if 'model3' in self._models:
+            print(f"  Model 3 version: {self._models['model3']['metadata'].get('model_version', 'unknown')}")
+
+        if not loaded:
+            raise RuntimeError("FATAL: No models could be loaded. Server cannot start.")
 
     def get_model(self, model_name: str) -> Dict[str, Any]:
         """Get a specific model by name"""
         if model_name not in self._models:
-            raise ValueError(f"Model '{model_name}' not found. Available models: {list(self._models.keys())}")
+            available = list(self._models.keys())
+            raise ValueError(
+                f"Model '{model_name}' is not available (failed to load due to compatibility issues). "
+                f"Loaded models: {available}"
+            )
         return self._models[model_name]
 
     def get_all_models(self) -> Dict[str, Any]:
