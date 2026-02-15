@@ -13,7 +13,6 @@ import { ParkManagement } from './pages/ParkManagement';
 import { OSSServices } from './pages/OSSServices';
 import { ComplaintManagementDashboard } from './pages/ComplaintManagementDashboard';
 import ParksMapPage from './pages/ParksMapPage';
-import ParkRecommendationPage from './pages/ParkRecommendationPage';
 import CreateRequestPage from './pages/CreateRequestPage';
 import ServiceTierSelectionPage from './pages/ServiceTierSelectionPage';
 import EntryServicesPage from './pages/EntryServicesPage';
@@ -103,14 +102,8 @@ function AppRoutes() {
           </PrivateRoute>
         }
       />
-      <Route
-        path="/park-recommendations"
-        element={
-          <PrivateRoute>
-            <ParkRecommendationPage />
-          </PrivateRoute>
-        }
-      />
+      {/* Park Recommendation is now inside Entry Services (/services/entry) - redirect old URL */}
+      <Route path="/park-recommendations" element={<Navigate to="/services/entry" />} />
       <Route
         path="/create-request"
         element={
