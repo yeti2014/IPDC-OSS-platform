@@ -178,21 +178,23 @@ class AssetService {
    */
   async getAssetsByPark(parkId: string): Promise<Asset[]> {
     try {
-      let q;
-      if (parkId === 'all') {
-        // Simple query without orderBy to avoid requiring a Firestore composite index
-        q = query(collection(db, this.assetsCollection));
-      } else {
-        q = query(
-          collection(db, this.assetsCollection),
-          where('parkId', '==', parkId)
-        );
+      // Always fetch all assets to avoid Firestore composite index requirements
+      const snapshot = await getDocs(collection(db, this.assetsCollection));
+      let assets = snapshot.docs.map(doc => this.convertToAsset(doc));
+
+      // Filter client-side if a specific park is requested
+      if (parkId !== 'all') {
+        assets = assets.filter(a => a.parkId === parkId);
       }
 
-      const snapshot = await getDocs(q);
-      const assets = snapshot.docs.map(doc => this.convertToAsset(doc));
-      // Sort client-side by createdAt descending
-      return assets.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+      // Sort client-side by createdAt descending (safe null check)
+      assets.sort((a, b) => {
+        const timeA = a.createdAt ? a.createdAt.getTime() : 0;
+        const timeB = b.createdAt ? b.createdAt.getTime() : 0;
+        return timeB - timeA;
+      });
+
+      return assets;
     } catch (error) {
       console.error('Error getting assets by park:', error);
       return [];
