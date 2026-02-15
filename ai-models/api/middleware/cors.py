@@ -19,6 +19,8 @@ def setup_cors(app):
         "http://127.0.0.1:5174",
         "http://127.0.0.1:5175",
         "http://127.0.0.1:3000",
+        "https://ipdc-oss-platform.vercel.app",  # Vercel production
+        "https://ipdc-oss-platform-*.vercel.app",  # Vercel preview deployments
     ]
 
     app.add_middleware(
