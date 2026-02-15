@@ -23,6 +23,8 @@ from sklearn.metrics import (
 import joblib
 import json
 from datetime import datetime, timedelta
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings

@@ -20,6 +20,8 @@ import lightgbm as lgb
 import joblib
 import json
 from datetime import datetime
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
