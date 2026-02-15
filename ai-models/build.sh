@@ -16,7 +16,6 @@ echo ""
 echo "[1/3] Installing Python dependencies..."
 pip install --upgrade pip
 pip install -r requirements_api.txt
-pip install matplotlib seaborn  # needed for training visualizations
 
 # Step 2: Retrain Model 1 (Service Classifier) with diverse data
 echo ""
@@ -27,17 +26,21 @@ python train.py
 cd ..
 echo "  Model 1 retrained successfully!"
 
-# Step 3: Verify models are loadable
+# Step 3: Verify Model 1 is loadable (Models 2 & 3 verified at server startup)
 echo ""
-echo "[3/3] Verifying all models..."
+echo "[3/3] Verifying Model 1..."
 python -c "
-from api.utils.model_loader import ModelLoader
-loader = ModelLoader()
-models = loader.get_all_models()
-print(f'  Loaded {len(models)} models successfully')
-for name in models:
-    print(f'    - {name}: OK')
-print('  All models verified!')
+import joblib, json
+from pathlib import Path
+
+model_path = Path('model1_service_classifier/models')
+classifier = joblib.load(model_path / 'model_category.pkl')
+vectorizer = joblib.load(model_path / 'vectorizer.pkl')
+metadata = json.load(open(model_path / 'metadata.json'))
+print(f'  Model 1 v{metadata.get(\"version\", \"1.0\")} loaded OK')
+print(f'  Service types: {len(metadata.get(\"service_types\", []))}')
+print(f'  Training samples: {metadata.get(\"training_samples\", \"unknown\")}')
+print('  Model 1 verified!')
 "
 
 echo ""
