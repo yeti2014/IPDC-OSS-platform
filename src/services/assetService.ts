@@ -180,20 +180,19 @@ class AssetService {
     try {
       let q;
       if (parkId === 'all') {
-        q = query(
-          collection(db, this.assetsCollection),
-          orderBy('createdAt', 'desc')
-        );
+        // Simple query without orderBy to avoid requiring a Firestore composite index
+        q = query(collection(db, this.assetsCollection));
       } else {
         q = query(
           collection(db, this.assetsCollection),
-          where('parkId', '==', parkId),
-          orderBy('createdAt', 'desc')
+          where('parkId', '==', parkId)
         );
       }
 
       const snapshot = await getDocs(q);
-      return snapshot.docs.map(doc => this.convertToAsset(doc));
+      const assets = snapshot.docs.map(doc => this.convertToAsset(doc));
+      // Sort client-side by createdAt descending
+      return assets.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
     } catch (error) {
       console.error('Error getting assets by park:', error);
       return [];
@@ -207,12 +206,12 @@ class AssetService {
     try {
       const q = query(
         collection(db, this.assetsCollection),
-        where('category', '==', category),
-        orderBy('createdAt', 'desc')
+        where('category', '==', category)
       );
 
       const snapshot = await getDocs(q);
-      return snapshot.docs.map(doc => this.convertToAsset(doc));
+      const assets = snapshot.docs.map(doc => this.convertToAsset(doc));
+      return assets.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
     } catch (error) {
       console.error('Error getting assets by category:', error);
       return [];
