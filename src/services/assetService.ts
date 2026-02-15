@@ -178,11 +178,19 @@ class AssetService {
    */
   async getAssetsByPark(parkId: string): Promise<Asset[]> {
     try {
-      const q = query(
-        collection(db, this.assetsCollection),
-        where('parkId', '==', parkId),
-        orderBy('createdAt', 'desc')
-      );
+      let q;
+      if (parkId === 'all') {
+        q = query(
+          collection(db, this.assetsCollection),
+          orderBy('createdAt', 'desc')
+        );
+      } else {
+        q = query(
+          collection(db, this.assetsCollection),
+          where('parkId', '==', parkId),
+          orderBy('createdAt', 'desc')
+        );
+      }
 
       const snapshot = await getDocs(q);
       return snapshot.docs.map(doc => this.convertToAsset(doc));
