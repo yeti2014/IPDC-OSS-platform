@@ -23,6 +23,8 @@ import xgboost as xgb
 import joblib
 import json
 from datetime import datetime
+import matplotlib
+matplotlib.use('Agg')  # Non-interactive backend for server environments
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -78,10 +80,10 @@ class Config:
         'random_state': 42
     }
 
-    # TF-IDF parameters
-    TFIDF_MAX_FEATURES = 1000
+    # TF-IDF parameters (tuned for 2200+ diverse records)
+    TFIDF_MAX_FEATURES = 1500
     TFIDF_MIN_DF = 2
-    TFIDF_MAX_DF = 0.95
+    TFIDF_MAX_DF = 0.90
 
 config = Config()
 
@@ -492,13 +494,18 @@ def save_models(models, vectorizer, scaler, le_service, le_priority, results, da
     # Save metadata
     metadata = {
         'model_name': 'IPDC Smart Service Classifier',
-        'model_version': '1.0.0',
+        'version': '2.0',
+        'model_version': '2.0',
         'inspiration': 'Alibaba ET Industrial Brain + Tencent WeCity',
         'trained_date': datetime.now().isoformat(),
+        'training_samples': len(le_service.classes_) * 200,
         'data_source': data_source,
         'service_types': list(le_service.classes_),
+        'priorities': list(le_priority.classes_),
         'priority_levels': list(le_priority.classes_),
+        'feature_dimensions': config.TFIDF_MAX_FEATURES + 4,
         'num_features': config.TFIDF_MAX_FEATURES + 4,  # TF-IDF + metadata
+        'metrics': results.get('category', {}),
         'performance': results,
         'hyperparameters': {
             'category': config.XGB_CATEGORY_PARAMS,
