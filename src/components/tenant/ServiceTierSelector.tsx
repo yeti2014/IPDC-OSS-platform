@@ -153,6 +153,10 @@ export const ServiceTierSelector: React.FC<ServiceTierSelectorProps> = ({ onSele
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                       <AIIcon sx={{ fontSize: 16, color: 'info.main' }} />
+                      <Typography variant="caption">AI park recommendation</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <AIIcon sx={{ fontSize: 16, color: 'info.main' }} />
                       <Typography variant="caption">Processing time estimates</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
