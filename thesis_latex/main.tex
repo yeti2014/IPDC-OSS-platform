@@ -13,7 +13,12 @@
 \usepackage{pifont}
 
 % --- Hyperlinks ---
-\usepackage[unicode,bookmarksnumbered]{hyperref}
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage[bookmarksnumbered]{hyperref}
+\else
+  \usepackage[unicode,bookmarksnumbered]{hyperref}
+\fi
 
 % --- NKThesis Package (English mode) ---
 \usepackage[emptydoublepage,English]{NKThesis}
