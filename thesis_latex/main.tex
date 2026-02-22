@@ -75,6 +75,52 @@
 \newcommand{\tbf}[1]{\textbf{#1}}
 
 % ============================================================
+% Hyperref TOC-link patches (no NKThesis template files modified)
+% \phantomsection sets the correct anchor for starred chapters
+% ============================================================
+\makeatletter
+% 1. Patch \@schapter so all \chapter*{} entries (List of Figures,
+%    List of Tables, Abbreviations, References, Acknowledgements,
+%    Resume) get a correct hyperref anchor before \addcontentsline.
+\def\@schapter#1{%
+  \if@twocolumn
+    \@topnewpage[\@makeschapterhead{#1}]%
+  \else
+    \@makeschapterhead{#1}%
+    \@afterheading
+    \@nobreakfalse
+  \fi
+  \if@tocline
+    \phantomsection
+    \addcontentsline{toc}{chapter}{\protect\numberline{#1}{}}%
+  \fi
+  \markboth{#1}{#1}}
+% 2. Patch \zhaiyao (Chinese abstract) — add \phantomsection
+%    after \clearpage but before \addcontentsline.
+\def\zhaiyao{%
+  \clearpage
+  \phantomsection
+  \vspace*{24pt}
+  \centerline{\zihaoxiaoer\rmfamily\bfseries\jiacu 摘要}
+  \addcontentsline{toc}{chapter}{\protect\numberline{摘要}{}}
+  \markboth{摘要}{摘要}
+  \vspace*{18pt}
+  \fontsize{12}{20}\selectfont}
+\let\endzhaiyao\relax
+% 3. Patch \abstract (English abstract) — same treatment.
+\def\abstract{%
+  \clearpage
+  \phantomsection
+  \vspace*{24pt}
+  \centerline{\zihaoxiaoer\usefont{OT1}{phv}{bx}{n}Abstract}
+  \addcontentsline{toc}{chapter}{\protect\numberline{Abstract}{}}
+  \markboth{Abstract}{Abstract}
+  \vspace*{18pt}
+  \fontsize{12}{20}\selectfont}
+\let\endabstract\relax
+\makeatother
+
+% ============================================================
 \begin{document}
 \raggedbottom
 \sloppy
