@@ -58,6 +58,11 @@
   numberstyle=\tiny,
   tabsize=2
 }
+% Patch: make listings captions compatible with NKThesis \@makecaption[type]{num}{text}
+\makeatletter
+\let\NKT@orig@makecaption\@makecaption
+\renewcommand{\@makecaption}[2]{\NKT@orig@makecaption[figure]{#1}{#2}}
+\makeatother
 
 % --- Misc ---
 \usepackage{xcolor}
