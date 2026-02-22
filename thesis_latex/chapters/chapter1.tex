@@ -37,7 +37,7 @@ Progressive Web Application (PWA) technology provides the technical foundation f
 
 Cloud platforms have also evolved to support offline-first designs. Google's Firebase, and specifically its Firestore database, offers built-in offline persistence: data is automatically cached on the device and synchronized when the network returns \citep{GoogleFirebase2024}. This greatly reduces the engineering effort needed for offline-first applications while still providing enterprise-grade services like authentication, real-time sync, and cloud functions. Firebase's free tier (50,000 daily reads, 20,000 daily writes, 1GB storage) covers prototype development and initial deployment comfortably, making it well-suited for thesis research and pilot use.
 
-Bringing together Chinese smart park design thinking, offline-first PWA architecture, and Firebase backend services creates an opportunity to build digital solutions that actually work in connectivity-constrained environments. This research explores that combination by developing an offline-first digital one-stop-shop platform for Ethiopian IPDC, showing how advanced digital governance models can be made to work where infrastructure is limited.
+Bringing together Chinese smart park design thinking, offline-first PWA architecture, and Firebase backend services creates an opportunity to build digital solutions that actually work in connectivity-constrained environments. This research explores that combination by developing an offline-first digital one-stop service platform for Ethiopian IPDC, showing how advanced digital governance models can be made to work where infrastructure is limited.
 
 \section{Statement of the Problem}
 
@@ -59,11 +59,11 @@ While going digital is an obvious solution direction, conventional cloud-based p
 
 Existing research offers limited guidance for this specific challenge. The Chinese smart park literature describes sophisticated digital governance systems but assumes reliable connectivity \citep{Yang2023, Wang2022}. The offline-first and PWA literature demonstrates techniques for handling connectivity issues but mostly addresses simple citizen services rather than complex industrial workflows \citep{Cherukuri2024, Muawwal2024}. E-government research in developing countries recognizes connectivity as a challenge but provides few practical solutions for industrial settings \citep{Denbu2019, Lessa2019}.
 
-This research fills the gap by building an offline-first digital one-stop-shop that brings Chinese smart park principles to the Ethiopian context. The central research question is: \textit{How can Chinese smart park digital governance models be systematically adapted using offline-first PWA architecture to deliver reliable digital services in connectivity-constrained Ethiopian industrial parks?}
+This research fills the gap by building an offline-first digital one-stop service that brings Chinese smart park principles to the Ethiopian context. The central research question is: \textit{How can Chinese smart park digital governance models be systematically adapted using offline-first PWA architecture to deliver reliable digital services in connectivity-constrained Ethiopian industrial parks?}
 
 \section{Motivations}
 
-Several converging factors motivate the development of an offline-first digital one-stop-shop for Ethiopian industrial parks. The main reasons for undertaking this study are as follows:
+Several converging factors motivate the development of an offline-first digital one-stop service for Ethiopian industrial parks. The main reasons for undertaking this study are as follows:
 
 \begin{itemize}
 \item \textbf{Operational Efficiency and Service Delivery:} Ethiopian industrial parks currently depend on paper-based systems that create bottlenecks in service delivery, approvals, and communication. Tenants spend too much time dealing with manual processes, which cuts into their productivity. A digital platform that brings these services together in one interface---and keeps working even when the internet goes down---would substantially reduce administrative burden and improve the tenant experience.
@@ -99,7 +99,7 @@ This question addresses the practical design challenge of deciding which feature
 
 \subsection{General Objective}
 
-The overall objective of this research is to design, develop, and evaluate an offline-first digital one-stop-shop Progressive Web Application (PWA) for the Ethiopian Industrial Parks Development Corporation (IPDC) by systematically adapting Chinese smart park digital governance models using Firebase backend services for connectivity-constrained environments.
+The overall objective of this research is to design, develop, and evaluate an offline-first digital one-stop service Progressive Web Application (PWA) for the Ethiopian Industrial Parks Development Corporation (IPDC) by systematically adapting Chinese smart park digital governance models using Firebase backend services for connectivity-constrained environments.
 
 \subsection{Specific Objectives}
 
@@ -249,7 +249,7 @@ The following definitions clarify how key terms are used throughout this researc
 
 \textbf{Progressive Web Application (PWA):} A web application that uses modern technologies---service workers, web app manifests, and caching APIs---to deliver app-like experiences with offline capabilities, push notifications, and home screen installation. PWAs work in web browsers on both desktop and mobile devices.
 
-\textbf{One-Stop-Shop (OSS):} A service delivery model that brings multiple services together into a single access point, so users do not have to visit multiple channels or locations.
+\textbf{One-Stop Service (OSS):} A service delivery model that brings multiple services together into a single access point, so users do not have to visit multiple channels or locations.
 
 \textbf{Digital Service Token:} An internal unit of value used within the platform to track service fees. Tokens are assigned to tenant accounts by administrators and deducted when services are requested, providing fee transparency without requiring external payment gateway integration.
 

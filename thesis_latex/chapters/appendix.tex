@@ -20,3 +20,59 @@ The full questionnaire instruments --- including all questions, response options
 \end{description}
 
 The aggregated response data (anonymised) is archived in the project repository under \texttt{data/research/} \citep{BerhanuIPDC2025}.
+
+% ============================================================
+% Appendix B: SUS Instrument and Score Calculation
+% ============================================================
+\appendix{System Usability Scale (SUS) Instrument and Score Calculation}
+\label{app:sus}
+
+The System Usability Scale (SUS) \citep{Brooke1996} is a validated 10-item questionnaire used to assess perceived usability. Each item is rated on a 5-point scale: \textbf{1} = Strongly Disagree, \textbf{5} = Strongly Agree. The instrument below was administered to all nine participants (Table~\ref{tab:sus-participants}) on 10 February 2026.
+
+\begin{table}[H]
+\centering
+\caption{SUS Questionnaire Items Administered to Participants}
+\label{tab:sus-items}
+\small
+\begin{tabular}{cp{10.5cm}c}
+\toprule
+\textbf{\#} & \textbf{Item} & \textbf{Scale (1--5)} \\
+\midrule
+1  & I think that I would like to use this system frequently.                                             & $\square\,\square\,\square\,\square\,\square$ \\[2pt]
+2  & I found the system unnecessarily complex.                                                            & $\square\,\square\,\square\,\square\,\square$ \\[2pt]
+3  & I thought the system was easy to use.                                                                & $\square\,\square\,\square\,\square\,\square$ \\[2pt]
+4  & I think that I would need the support of a technical person to be able to use this system.           & $\square\,\square\,\square\,\square\,\square$ \\[2pt]
+5  & I found the various functions in this system were well integrated.                                    & $\square\,\square\,\square\,\square\,\square$ \\[2pt]
+6  & I thought there was too much inconsistency in this system.                                           & $\square\,\square\,\square\,\square\,\square$ \\[2pt]
+7  & I would imagine that most people would learn to use this system very quickly.                         & $\square\,\square\,\square\,\square\,\square$ \\[2pt]
+8  & I found the system very cumbersome to use.                                                           & $\square\,\square\,\square\,\square\,\square$ \\[2pt]
+9  & I felt very confident using the system.                                                              & $\square\,\square\,\square\,\square\,\square$ \\[2pt]
+10 & I needed to learn a lot of things before I could get going with this system.                         & $\square\,\square\,\square\,\square\,\square$ \\
+\bottomrule
+\multicolumn{3}{l}{\footnotesize Odd items (1,3,5,7,9) are positively phrased; even items (2,4,6,8,10) are negatively phrased.}
+\end{tabular}
+\end{table}
+
+\subsection*{Scoring Formula}
+
+Let $r_i$ be a participant's response to item $i$. The per-item contribution $x_i$ is:
+\[
+x_i =
+\begin{cases}
+  r_i - 1 & \text{odd items } (i = 1,3,5,7,9) \\
+  5 - r_i & \text{even items } (i = 2,4,6,8,10)
+\end{cases}
+\]
+The individual SUS score is $S = 2.5 \times \displaystyle\sum_{i=1}^{10} x_i\,$, giving a value in $[0,\,100]$.
+
+\subsection*{Group Mean Calculation}
+
+Applying the formula to each of the nine participants (P1--P9) yields the individual scores shown in Table~\ref{tab:sus-participants}. The group mean is:
+\[
+\bar{S}
+  = \frac{\displaystyle\sum_{p=1}^{9} S_p}{9}
+  = \frac{77.5 + 72.5 + 75.0 + 70.0 + 75.0 + 77.5 + 72.5 + 72.5 + 77.5}{9}
+  = \frac{670.5}{9}
+  \approx \mathbf{74.5}
+\]
+Following \citet{Bangor2009}, a score of 74.5 falls in the \textbf{``Good''} usability band and exceeds the widely cited industry average of 68.

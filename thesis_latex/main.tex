@@ -33,7 +33,9 @@
 \hypersetup{colorlinks=true,
             pdfborder=0 0 1,
             citecolor=black,
-            linkcolor=black}
+            linkcolor=black,
+            urlcolor=black,
+            filecolor=black}
 
 % --- Graphics and Figures ---
 \usepackage{tikz}
@@ -59,9 +61,21 @@
   tabsize=2
 }
 % Patch: make listings captions compatible with NKThesis \@makecaption[type]{num}{text}
+% NKThesis uses TeX delimited syntax: \long\def\@makecaption[#1]#2#3
+% listings calls \@makecaption{num}{text} without the [type] delimiter.
+% \@ifnextchar[ detects which form is used and routes accordingly.
 \makeatletter
 \let\NKT@orig@makecaption\@makecaption
-\renewcommand{\@makecaption}[2]{\NKT@orig@makecaption[figure]{#1}{#2}}
+\def\@makecaption{%
+  \@ifnextchar[%
+    {\NKT@orig@makecaption}%
+    {\NKT@lst@makecaption}%
+}
+\long\def\NKT@lst@makecaption#1#2{%
+  % listings calls without [type]; use [figure] — the only safe default since
+  % NKThesis only defines \belowcaptionskip@figure and \belowcaptionskip@table
+  \NKT@orig@makecaption[figure]{#1}{#2}%
+}
 \makeatother
 
 % --- Misc ---
@@ -127,12 +141,11 @@
 
 % --- Thesis Metadata (auto-generates: Cover + Declaration + Authorization) ---
 \NKTsetup{%
-  论文题目(中文) = 面向埃塞俄比亚工业园区发展公司的离线优先数字一站式服务平台,
-  副标题        = ——将中国智慧园区模式本地化应用于网络受限环境,
-  论文题目(英文) = {Offline-First Digital One-Stop-Shop for Ethiopian
-  Industrial Parks Development Corporation (IPDC):
-  Localizing China Smart Park Model for
-  Connectivity-Constrained Environments},
+  论文题目(中文) = 弥合数字鸿沟：面向埃塞俄比亚工业园区的离线优先数字一站式服务,
+  副标题        = ——本地化自中国智慧园区模式,
+  论文题目(英文) = {Bridging the Digital Divide: An Offline-First Digital
+  One-Stop Service Localized from China's Smart Park Model
+  for Ethiopia's Industrial Parks},
   论文作者       = Kebede Yetnayet Berhanu,
   学号           = 2120246030,
   指导教师       = 张海宁,
