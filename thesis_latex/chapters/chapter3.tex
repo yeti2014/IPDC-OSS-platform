@@ -3,7 +3,7 @@
 
 \section{Introduction}
 
-This chapter explains how the offline-first digital one-stop service platform for Ethiopian IPDC was designed, developed, and evaluated. Design Science Research provides the overarching paradigm, with agile-inspired iterative development used to build the prototype. The discussion covers the research design, data collection methods, technology selection reasoning, the development approach, and the evaluation framework.
+Research methodology is worth explaining carefully here, because the choices made were deliberate rather than default. DSR is well established for IT artifact research, but combining it with questionnaire-based requirements gathering and agile-inspired iterative development required thinking through how the pieces fit together. This chapter covers that process: the research design, data collection methods, technology selection rationale, development approach, and evaluation framework.
 
 \section{Research Paradigm: Design Science Research}
 
@@ -183,7 +183,7 @@ PDF Generation & jsPDF + AutoTable & Client-side PDF generation for invoices and
 
 \textbf{Dexie.js} complements Firebase's offline capabilities by providing a local database under the application's direct control. It handles operations that require explicit offline queuing, such as service requests submitted while internet access is unavailable. Together, Firestore's transparent cache and Dexie's explicit queue form a dual-layer offline storage architecture.
 
-\textbf{Workbox} was selected for service worker management because it provides well-tested implementations of standard caching strategies (CacheFirst, NetworkFirst, StaleWhileRevalidate) through a declarative configuration, reducing the risk of service worker bugs that could break offline functionality.
+\textbf{Workbox} handles service worker management. Writing service worker code manually is notoriously easy to get subtly wrong; Workbox provides declarative configuration for caching strategies (CacheFirst, NetworkFirst, StaleWhileRevalidate) that are already well-tested in production environments.
 
 \subsection{Development Tools and Environment}
 

@@ -3,7 +3,7 @@
 
 \section{Introduction}
 
-This chapter presents the requirements analysis, technology adaptation framework, and system architecture underlying the IPDC offline-first digital one-stop service platform. The analysis draws together stakeholder input, Chinese smart park reference models, and the realities of the Ethiopian operating environment to produce a design with functional depth and offline resilience. Every design decision traces back to a documented requirement or a contextual constraint.
+Getting from stakeholder pain points to a working system design is rarely a linear process. This chapter records what that process produced for the IPDC platform: the requirements that emerged from stakeholder analysis, the framework for adapting Chinese smart park patterns to the Ethiopian context, and the architecture that resulted. Not every decision was obvious at the time --- but all of them trace back to a documented constraint or a real operational need.
 
 \section{Requirements Analysis}
 
@@ -15,7 +15,7 @@ Organizational analysis of IPDC's structure, combined with insights from the sta
 
 \textbf{IPDC Administrative Staff} serve as the bridge between tenants and operational resources. Service coordinators, permit officers, and finance officers process requests, publish announcements, manage tenant accounts, and resolve complaints. Workflow efficiency and dependable record-keeping matter most to this group.
 
-\textbf{Operations Personnel} carry out the physical work that service requests require. Facility managers and maintenance coordinators receive task assignments, report on progress, and manage park assets. Because they often work in areas with poor connectivity, mobile access to their task queues is essential.
+\textbf{Operations Personnel} are the ones doing the physical work once a request is approved. A maintenance coordinator might receive a task assignment, find they cannot access the system from a remote corner of the park, and need to pick it back up an hour later. That specific scenario --- task received, connectivity lost, work continues --- is exactly what the mobile offline task queue was built for.
 
 \textbf{IPDC Management} needs a high-level view of operational performance without involvement in day-to-day platform use. Directors and planning officers rely on aggregated data about service volumes, resolution times, and resource utilization to inform decisions.
 
@@ -101,7 +101,7 @@ An examination of WeChat Work and DingTalk platforms revealed several feature ca
 
 \subsection{Adaptation Dimensions}
 
-The adaptation framework is organized along four dimensions, each addressing a specific category of difference between the Chinese source context and the Ethiopian target context.
+Four dimensions structure the adaptation framework. The technological dimension carries the most weight --- the connectivity gap between Chinese and Ethiopian contexts is the primary constraint that reshapes everything else --- but organizational fit, cultural context, and economic realities each produce their own distinct adaptation requirements.
 
 \textbf{Technological Dimension:} Connectivity demands the most fundamental adaptation. Chinese platforms assume persistent high-speed internet; the Ethiopian version replaces this with an offline-first architecture. Dependencies on Chinese ecosystem platforms (WeChat, Alipay, Alibaba Cloud) are replaced by globally accessible alternatives (Firebase, web standards).
 
@@ -293,7 +293,7 @@ Three machine learning models are served through a FastAPI backend as REST endpo
 
 \begin{enumerate}
 \item \textbf{Service Classifier} (\texttt{/classify-service}): Accepts a request title and description; returns a predicted service type, priority level, estimated processing time in days, confidence score, and contextual recommendations.
-\item \textbf{Predictive Maintenance} (\texttt{/predict-maintenance}): Accepts asset attributes (age, condition, maintenance history); returns failure probability, risk level, estimated days until failure, and a recommended maintenance action.
+\item \textbf{Predictive Maintenance} (\texttt{/predict-maintenance}): Takes asset attributes --- age, condition score, maintenance history --- and outputs a failure probability, risk level, estimated days until failure, and a recommended action. The output is designed to give operations teams something actionable rather than just a probability number.
 \item \textbf{Park Recommendation} (\texttt{/recommend-parks}): Accepts a tenant profile (industry sector, employee count, investment capital, infrastructure needs); returns ranked park recommendations with match scores, pros and cons, and cost estimates. Scoring weights are: industry alignment 30\%, capacity 25\%, infrastructure 20\%, cost 15\%, location 10\%.
 \end{enumerate}
 

@@ -3,7 +3,7 @@
 
 \section{Introduction}
 
-This chapter covers the implementation of the IPDC offline-first digital one-stop service prototype and the results of its evaluation. The implementation realizes the architecture described in Chapter~\ref{ch:analysis} as a working Progressive Web Application, comprising over 100 TypeScript source files, three trained machine learning models, and a comprehensive offline-first data management layer. Evaluation then puts the prototype through technical testing of offline functionality, performance measurement, cross-platform compatibility checks, and a structured usability assessment.
+This chapter is, in many ways, where the design decisions of the previous chapter either hold up or fall apart. What was built is a working Progressive Web Application comprising roughly 105 TypeScript source files, three trained machine learning models, and a dual-layer offline data management architecture. Whether it actually works as intended is the question the evaluation half of this chapter answers --- through offline functionality tests, performance measurement, cross-platform compatibility checks, and a structured usability assessment with nine real IPDC stakeholders.
 
 \section{Development Environment and Tools}
 
@@ -193,7 +193,7 @@ Three machine learning models are connected to the platform through a FastAPI ba
 
 \textbf{Model 1 --- Service Classifier:} Trained on labeled service request data, this model sorts incoming requests into eleven service categories and assigns priority levels. Because the endpoint returns a confidence score, the interface presents predictions as suggestions that users can accept or override.
 
-\textbf{Model 2 --- Predictive Maintenance:} Given asset attributes, this model produces a failure probability, risk level (low/medium/high), estimated days until failure, and a recommended maintenance action. Identifying assets approaching failure thresholds informs maintenance scheduling decisions.
+\textbf{Model 2 --- Predictive Maintenance:} This was the model stakeholders responded to most immediately during the usability evaluation --- the idea of warning operations staff before equipment fails, rather than after, resonated without any prompting. Given asset attributes, it produces a failure probability, risk level (low/medium/high), estimated days until failure, and a recommended maintenance action.
 
 \textbf{Model 3 --- Park Recommendation:} Built to help prospective tenants choose a suitable industrial park, this model evaluates a tenant profile against park characteristics using a weighted scoring algorithm. Five dimensions --- industry alignment (30\%), capacity and availability (25\%), infrastructure match (20\%), cost efficiency (15\%), and location preference (10\%) --- produce ranked recommendations with detailed justifications.
 
@@ -769,7 +769,7 @@ The System Usability Scale consists of ten Likert-scale items alternating betwee
 \bar{S} = \frac{77.5 + 72.5 + 75.0 + 70.0 + 75.0 + 77.5 + 72.5 + 72.5 + 77.5}{9} = \frac{670.5}{9} \approx \mathbf{74.5}
 \]
 
-Following the adjective rating scale established by \citet{Bangor2009}, a score of 74.5 falls in the \textbf{``Good''} range, exceeding the widely cited industry average of 68. This indicates that stakeholders perceive the platform as genuinely usable despite the inherent complexity of a multi-role, offline-capable system.
+On \citet{Bangor2009}'s adjective scale, 74.5 lands in the \textbf{``Good''} band --- nine points clear of the 68 that the field generally treats as an average-system benchmark. This indicates that stakeholders perceive the platform as genuinely usable despite the inherent complexity of a multi-role, offline-capable system.
 
 \subsubsection{Qualitative Feedback}
 

@@ -3,7 +3,7 @@
 
 \section{Introduction}
 
-This closing chapter brings together the research findings, articulates the study's contributions, and puts forward recommendations for future development. The discussion begins with a summary of key findings organized around the three research questions, then presents the design principles that emerged from the work. Theoretical, practical, and methodological contributions follow, alongside a candid assessment of the study's limitations. Concrete recommendations organized by implementation timeframe conclude the chapter.
+Looking back from the end of the research process, a few threads are worth pulling together explicitly. This chapter does that: summarizing findings against the three research questions, presenting the design principles that crystallized through the work, accounting for the contributions the research makes, being honest about what the prototype cannot yet do, and setting out recommendations for the path from proof-of-concept to production system.
 
 \section{Summary of Findings}
 
@@ -45,29 +45,29 @@ A mean SUS score of 74.5 from nine stakeholders is encouraging, though it is wor
 
 \section{Design Principles}
 
-Seven design principles emerged from the iterative design and evaluation process. These principles capture practical knowledge generated through this research and are intended to generalize beyond this specific project, offering guidance for similar offline-first platform efforts in connectivity-constrained environments.
+Seven design principles emerged from the iterative design and evaluation process --- not by theoretical deduction but by working through the constraints of the Ethiopian context and refining the design across multiple iterations. They are offered both as practical guidance for similar projects and as contributions to the design knowledge base for offline-first computing.
 
 \begin{enumerate}
 \item \textbf{Connectivity Independence as a First-Class Requirement.} Offline capability must be an architectural decision taken from the outset, not retrofitted later. The dual-layer storage architecture exists precisely because offline support was treated as a primary design constraint. Systems designed for reliable connectivity and later patched for offline use invariably have gaps; starting from the assumption of unreliable connectivity leads to more robust outcomes.
 
-\item \textbf{Layered Caching for Different Data Types.} Static application assets benefit from aggressive CacheFirst caching. Previously accessed dynamic data suits transparent database persistence. New data created while offline requires explicit queuing with conflict-aware synchronization. No single strategy adequately covers all three categories.
+\item \textbf{Layered Caching for Different Data Types.} A single caching strategy covers none of the bases well. Static assets want aggressive CacheFirst treatment. Dynamic data that has been accessed before fits transparent database persistence. Data created while offline needs an explicit queue. The temptation to find a unified solution is understandable --- there is no clean one.
 
 \item \textbf{Transparent Degradation over Binary States.} Users should not need to think about their connectivity state to work productively. The platform should handle connectivity transitions autonomously, providing visual indicators without demanding user action. Features should serve cached data gracefully rather than failing outright when fresh data is unavailable.
 
 \item \textbf{Adaptation over Transplantation in Technology Transfer.} Systematic adaptation through a structured framework consistently outperforms either wholesale adoption or starting from scratch when moving technology across contexts with different infrastructure, culture, or operational norms. The four-dimension framework (infrastructure, functional, cultural, operational) provides a practical structure for this process.
 
-\item \textbf{Authentication Must Span Connectivity States.} Standard token-based authentication requires server communication, creating a fundamental challenge for offline-first systems. Dual-mode authentication --- online verification paired with local credential caching for offline access --- maintains security while preserving usability across connectivity states.
+\item \textbf{Authentication Must Span Connectivity States.} This turned out to be the hardest single problem to solve satisfactorily. Standard token-based auth requires a server --- which is fine until the server is unreachable. The solution developed here (Firebase Auth when online, hashed local credential caching when not) is not architecturally elegant, but it works reliably and users do not notice the switch.
 
 \item \textbf{Progressive Feature Availability.} Not every feature needs to work offline. Deliberately deciding which capabilities are available offline (using frameworks like MoSCoW) concentrates development effort on the workflows that matter most to users during outages, while accepting that some features reasonably require connectivity.
 
-\item \textbf{Client-Side Intelligence for Offline Autonomy.} Incorporating AI capabilities (classification, prediction, recommendation) as client-accessible services extends platform usefulness during offline periods. When models can draw on locally cached data, users retain analytical capabilities even without server access, adding value in environments where connectivity is intermittent.
+\item \textbf{Client-Side Intelligence for Offline Autonomy.} When model inference depends entirely on a server call, it fails alongside every other network-dependent feature. Incorporating AI capabilities (classification, prediction, recommendation) as client-accessible services that draw on locally cached data extends usefulness during outages in ways that users notice --- and in connectivity-constrained environments, that matters more than it might seem.
 \end{enumerate}
 
 \section{Research Contributions}
 
 \subsection{Theoretical Contributions}
 
-Three theoretical contributions emerge at the intersection of information systems, digital governance, and ICT for development.
+This research sits at the intersection of information systems, digital governance, and ICT for development --- and produces three theoretical contributions from that position.
 
 First, the \textbf{China-to-Ethiopia Technology Adaptation Framework} extends technology transfer theory with a structured, multi-dimensional approach for adapting digital platform solutions across contexts that differ markedly in infrastructure and institutional capacity. While transfer frameworks exist in the literature, few address the specific challenge of adapting smart city and smart park technologies from highly connected economies to connectivity-constrained developing contexts. The four-dimension framework provides a replicable analytical structure for future adaptation efforts.
 
@@ -79,7 +79,7 @@ Third, the research contributes to \textbf{digital governance theory} by showing
 
 The \textbf{functional prototype} is the principal practical contribution --- a working offline-first PWA that proves the feasibility of digital service delivery in Ethiopian industrial parks. Covering core workflows (service requests, complaints, announcements, token management), it provides a tangible starting point for production system development.
 
-The \textbf{technology stack documentation} and implementation patterns supply a replicable blueprint for organizations building similar offline-first platforms. The combination of React, Firebase with offline persistence, Dexie.js for explicit queuing, and Workbox for service worker management amounts to a proven, cost-effective stack for this class of application.
+The \textbf{technology stack} and implementation patterns documented throughout this thesis supply a replicable blueprint for similar projects. The combination of React, Firebase offline persistence, Dexie.js for explicit queuing, and Workbox for service worker management is not the only possible stack --- but it proved effective, cost-efficient on the Firebase free tier, and maintainable for a solo researcher working within thesis constraints.
 
 The \textbf{AI model integration} for service classification, predictive maintenance, and park recommendation demonstrates how machine learning can be woven into administrative platforms to support data-driven decision-making. Though the current models rely on synthetic training data, they establish the architecture and integration patterns needed for production retraining on real operational data.
 
@@ -148,7 +148,7 @@ The adaptation framework also suggests that technology adoption policies should 
 
 \item \textbf{Add Reporting and Analytics.} Expand the administrative dashboard with comprehensive reporting covering service delivery KPIs, tenant satisfaction trends, maintenance prediction accuracy, and platform usage analytics.
 
-\item \textbf{Pilot Deployment.} Deploy the platform in a pilot program at one industrial park, starting with a subset of services and a willing group of tenant firms, to validate the offline-first architecture under actual operating conditions.
+\item \textbf{Pilot Deployment.} At some point the system needs to meet actual internet outages rather than simulated ones. A pilot at one park --- starting with a willing group of tenants and a subset of services --- would give real-world validation that no amount of controlled testing can replicate.
 \end{enumerate}
 
 \subsection{Long-Term Recommendations (12--24 Months)}
