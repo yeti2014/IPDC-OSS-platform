@@ -1,0 +1,376 @@
+\chapter{System Analysis and Design}
+\label{ch:analysis}
+
+\section{Introduction}
+
+This chapter lays out the requirements analysis, technology adaptation framework, and system architecture behind the IPDC offline-first digital one-stop-shop platform. The analysis brings together stakeholder input, Chinese smart park reference models, and the realities of the Ethiopian operating environment to arrive at a design that achieves functional depth without sacrificing offline resilience. Every design decision can be traced back to a documented requirement or a contextual constraint.
+
+\section{Requirements Analysis}
+
+\subsection{Stakeholder Identification and Analysis}
+
+Organizational analysis and field observation revealed four distinct stakeholder groups, each with its own role, priorities, and way of interacting with the platform.
+
+\textbf{Tenant Enterprises} are the main consumers of services. Their representatives---typically operations managers and administrative staff---submit service requests, follow up on progress, handle fee payments, and raise complaints when service quality is lacking. What matters most to tenants is speed, transparency, and the ability to keep working even when the internet goes down.
+
+\textbf{IPDC Administrative Staff} act as the bridge between tenants and operational resources. Service coordinators, permit officers, and finance officers are responsible for processing requests, publishing announcements, managing tenant accounts, and resolving complaints. Their chief concerns are workflow efficiency and dependable record-keeping.
+
+\textbf{Operations Personnel} carry out the physical work that service requests call for. Facility managers and maintenance coordinators receive task assignments, report on progress, and look after park assets. Because they often work in areas where connectivity is poor, mobile access to their task queues is essential.
+
+\textbf{IPDC Management} needs a bird's-eye view of operational performance without being involved in day-to-day platform use. Directors and planning officers rely on aggregated data about service volumes, resolution times, and resource utilization to make informed decisions.
+
+\subsection{Functional Requirements}
+
+Table~\ref{tab:func-req} summarizes the twelve functional requirement groups that emerged from stakeholder analysis and the mapping of Chinese smart park features.
+
+\begin{table}[H]
+\centering
+\caption{Functional Requirements Summary}
+\label{tab:func-req}
+\small
+\begin{tabular}{lp{3.5cm}p{7.5cm}}
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Description} \\
+\midrule
+FR1 & User Authentication & Email-based registration and login with role assignment (tenant, admin, operations); offline authentication fallback using cached credentials \\
+FR2 & Service Request Management & Submit, track, approve, and complete service requests across multiple categories with file attachments and priority levels \\
+FR3 & Digital Service Token System & Internal credit system for fee tracking with tiered accounts (basic, silver, gold, platinum), transaction history, and automated deductions \\
+FR4 & Announcement Management & Create, distribute, and display system announcements targeted to specific audiences with priority and expiration settings \\
+FR5 & Complaint Management & File complaints against completed services with evidence uploads, track resolution through defined workflows \\
+FR6 & Asset \& Maintenance Management & Register, categorize, and track park assets; schedule and record maintenance activities \\
+FR7 & AI-Powered Services & Automated service request classification, predictive equipment maintenance, and intelligent park recommendation for prospective tenants \\
+FR8 & Document Management & Upload, store, and retrieve documents associated with service requests and OSS applications \\
+FR9 & OSS Services & Digital interfaces for investment permits, business licenses, customs services, and banking coordination \\
+FR10 & Interactive Park Map & Geographic visualization of Ethiopian industrial parks with detail overlays \\
+FR11 & Billing \& Invoicing & Generate invoices, track payment transactions, and export PDF reports \\
+FR12 & Notifications & In-platform and email notifications for status changes and announcements \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Non-Functional Requirements}
+
+Table~\ref{tab:nonfunc-req} lays out the non-functional requirements that constrain and shape the system architecture.
+
+\begin{table}[H]
+\centering
+\caption{Non-Functional Requirements}
+\label{tab:nonfunc-req}
+\small
+\begin{tabular}{lp{3cm}p{8cm}}
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Specification} \\
+\midrule
+NFR1 & Offline-First Operation & All core workflows (FR1--FR5) must function without connectivity; data persists locally and synchronizes when online \\
+NFR2 & Cross-Platform Access & Single codebase accessible on desktop, tablet, and mobile via web browser; installable as PWA on mobile devices \\
+NFR3 & Response Time & Page transitions under 2 seconds; form submissions under 1 second in offline mode \\
+NFR4 & Sync Latency & Queued data synchronized within 30 seconds of connectivity restoration \\
+NFR5 & Security & Role-based access control; Firebase Authentication; credential hashing for offline cache \\
+NFR6 & Scalability & Architecture supports multiple industrial parks under a single deployment \\
+NFR7 & Accessibility & WCAG 2.1 Level AA compliance for core interfaces \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{MoSCoW Prioritization}
+
+The MoSCoW framework was used to prioritize requirements and guide iteration planning. Table~\ref{tab:moscow} shows the resulting prioritization, with offline availability serving as the main deciding factor.
+
+\begin{table}[H]
+\centering
+\caption{MoSCoW Feature Prioritization}
+\label{tab:moscow}
+\small
+\begin{tabular}{p{2.5cm}p{5cm}p{4cm}}
+\toprule
+\textbf{Priority} & \textbf{Features} & \textbf{Offline Requirement} \\
+\midrule
+Must Have & Authentication, service requests, token system, announcements, complaint management & Full offline capability \\
+Should Have & Asset management, notifications, billing, document management & Graceful degradation \\
+Could Have & AI services, interactive map, OSS services, PDF export & Online-preferred \\
+Won't Have (this phase) & External payment gateway, IoT integration, Amharic localization & Identified as future work \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{China-to-Ethiopia Technology Adaptation Framework}
+
+\subsection{Chinese Smart Park Feature Analysis}
+
+Examining WeChat Work and DingTalk platforms brought to light several feature categories commonly found in Chinese smart parks: enterprise messaging and group communication, workflow approval routing, service request submission and tracking, payment processing (through WeChat Pay or Alipay), document management, attendance and access control, video conferencing, and analytics dashboards.
+
+\subsection{Adaptation Dimensions}
+
+The adaptation framework is organized around four dimensions, each targeting a specific category of differences between the Chinese source context and the Ethiopian target context.
+
+\textbf{Technological Dimension:} Connectivity is where the biggest adaptation is needed. Chinese platforms take persistent high-speed internet for granted; the Ethiopian version replaces that assumption with an offline-first architecture. Dependencies on Chinese ecosystem platforms (WeChat, Alipay, Alibaba Cloud) give way to globally accessible alternatives (Firebase, web standards).
+
+\textbf{Organizational Dimension:} IPDC's organizational structure and service processes do not mirror those of Chinese park management. The adaptation translates Chinese workflow patterns into IPDC's three-role structure (tenant, admin, operations) and aligns approval workflows with the institution's existing hierarchies.
+
+\textbf{Cultural Dimension:} Interface design was adjusted to fit local expectations. An English-language interface serves the international business environment found in Ethiopian industrial parks, while Amharic localization has been earmarked as a future enhancement. The digital service token concept is an adaptation of Chinese integrated payment for a context where external payment gateway partnerships have not yet been established.
+
+\textbf{Economic Dimension:} Cost constraints shaped technology choices at every turn: PWA over native apps (eliminating app store fees and multi-platform development costs), Firebase's free tier over paid cloud services, and open-source tools across the entire stack.
+
+\subsection{Feature Mapping and Modification Matrix}
+
+Table~\ref{tab:adaptation-matrix} maps each Chinese smart park feature to its adapted counterpart in the IPDC platform.
+
+\begin{table}[H]
+\centering
+\caption{China-to-Ethiopia Feature Adaptation Matrix}
+\label{tab:adaptation-matrix}
+\small
+\begin{tabular}{p{3.5cm}p{3.5cm}p{5cm}}
+\toprule
+\textbf{Chinese Feature} & \textbf{IPDC Adaptation} & \textbf{Modification Rationale} \\
+\midrule
+WeChat Work messaging & Announcement system & Structured notifications replace real-time chat; works offline \\
+DingTalk approval workflows & Service request pipeline & Adapted to tenant$\rightarrow$admin$\rightarrow$operations flow \\
+WeChat Pay / Alipay & Digital service tokens & Internal system avoids external API dependency \\
+Native mobile apps & Progressive Web App & Single codebase, no app store, offline-capable \\
+Cloud-only architecture & Offline-first with Firebase & Dual-layer local storage + cloud sync \\
+Real-time IoT monitoring & Asset management module & Manual tracking as IoT infrastructure unavailable \\
+Chinese language UI & English interface & Primary business language; Amharic as future work \\
+Alibaba Cloud backend & Firebase (Google Cloud) & Global availability, built-in offline persistence \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Offline-First Adaptation Strategy}
+
+The offline-first adaptation represents the most architecturally consequential departure from the Chinese reference models. It is built on three guiding principles:
+
+\begin{enumerate}
+\item \textbf{Local-first data storage:} Every piece of data the user reads comes from local storage (the Firestore cache or IndexedDB), while network requests happen in the background to keep things synchronized.
+\item \textbf{Queue-based write operations:} When users create or modify data while offline, their operations are placed in an IndexedDB queue and executed against Firestore once connectivity is restored.
+\item \textbf{Transparent status communication:} The interface continuously shows connectivity status, synchronization state, and any pending operations, so that users always know exactly where their data stands.
+\end{enumerate}
+
+\section{System Architecture}
+
+\subsection{High-Level Architecture Overview}
+
+The platform is organized as a three-tier architecture adapted for offline-first operation. Figure~\ref{fig:architecture} provides an overview of the high-level structure.
+
+\begin{figure}[H]
+\centering
+\resizebox{0.95\textwidth}{!}{%
+\begin{tikzpicture}[
+  tier/.style={rectangle, draw, fill=blue!5, minimum width=14cm, minimum height=2.4cm, rounded corners=4pt},
+  component/.style={rectangle, draw, fill=white, text width=2.8cm, text centered, minimum height=0.9cm, font=\footnotesize, rounded corners=2pt},
+  arrow/.style={-{Stealth[length=2.5mm]}, thick},
+  label/.style={font=\footnotesize\bfseries, text=blue!70}
+]
+
+% Presentation Tier
+\node[tier, fill=green!5] (pres) at (0,4.5) {};
+\node[label] at (-6,5.4) {Presentation Tier};
+\node[component] at (-4.2,4.5) {React Components\\(41 components)};
+\node[component] at (0,4.5) {MUI Interface\\(Responsive)};
+\node[component] at (4.2,4.5) {Service Worker\\(Workbox)};
+
+% Service Tier
+\node[tier, fill=yellow!5] (serv) at (0,1.5) {};
+\node[label] at (-6,2.4) {Service Tier};
+\node[component] at (-4.2,1.5) {Firebase Auth\\+ Offline Auth};
+\node[component] at (0,1.5) {Firestore SDK\\+ Offline Cache};
+\node[component] at (4.2,1.5) {FastAPI\\(AI Models)};
+
+% Data Tier
+\node[tier, fill=red!5] (data) at (0,-1.5) {};
+\node[label] at (-6,-0.6) {Data Tier};
+\node[component] at (-4.2,-1.5) {Cloud Firestore\\(12 collections)};
+\node[component] at (0,-1.5) {Firebase Storage\\(Documents)};
+\node[component] at (4.2,-1.5) {IndexedDB / Dexie\\(Local queue)};
+
+\draw[arrow] (pres) -- (serv);
+\draw[arrow] (serv) -- (data);
+
+\end{tikzpicture}}
+\caption{High-Level System Architecture}
+\label{fig:architecture}
+\end{figure}
+
+The \textbf{Presentation Tier} is made up of 41 React components spread across six modules (admin, common, layout, map, operations, tenant) alongside 15 page-level components. Material-UI supplies the responsive design system, and Workbox takes care of service worker management for asset caching and offline navigation.
+
+The \textbf{Service Tier} sits between the user interface and persistent storage. Firebase Authentication handles online identity verification and is backed by an offline authentication module that checks cached credentials stored in IndexedDB. The Firestore SDK offers transparent offline caching, while a custom sync service manages the explicit operation queue. On a separate track, the FastAPI backend serves three AI models through REST endpoints.
+
+The \textbf{Data Tier} blends cloud and local storage. Cloud Firestore houses twelve collections that make up the complete data model. Firebase Storage holds uploaded documents and images. IndexedDB (through Dexie.js) maintains a local queue of pending operations along with cached service request data for offline access.
+
+\subsection{Offline-First Architecture Design}
+
+The offline-first architecture relies on a dual-layer storage strategy. Figure~\ref{fig:offline-flow} shows how data flows during a service request submission under both online and offline conditions.
+
+\begin{figure}[H]
+\centering
+\resizebox{0.85\textwidth}{!}{%
+\begin{tikzpicture}[
+  box/.style={rectangle, draw, fill=blue!8, text width=2.8cm, text centered, minimum height=1cm, rounded corners=3pt, font=\footnotesize},
+  decision/.style={diamond, draw, fill=yellow!15, text width=1.5cm, text centered, aspect=2, font=\footnotesize},
+  arrow/.style={-{Stealth[length=2.5mm]}, thick},
+]
+
+\node[box] (user) at (0,0) {User submits service request};
+\node[decision] (check) at (0,-2.5) {Online?};
+\node[box, fill=green!10] (direct) at (5,-2.5) {Write directly to Firestore};
+\node[box, fill=orange!10] (queue) at (-5,-2.5) {Save to IndexedDB\\+ Add to syncQueue};
+\node[box] (cache) at (-5,-5) {Firestore local cache updated};
+\node[decision] (reconnect) at (-5,-7.5) {Connectivity restored?};
+\node[box, fill=green!10] (sync) at (-5,-10) {SyncService processes queue $\rightarrow$ Firestore};
+
+\draw[arrow] (user) -- (check);
+\draw[arrow] (check) -- node[above]{\scriptsize Yes} (direct);
+\draw[arrow] (check) -- node[above]{\scriptsize No} (queue);
+\draw[arrow] (queue) -- (cache);
+\draw[arrow] (cache) -- (reconnect);
+\draw[arrow] (reconnect) -- node[left]{\scriptsize Yes} (sync);
+\draw[arrow] (reconnect.east) -- ++(2,0) |- node[near start, right]{\scriptsize No (wait)} (cache.east);
+
+\end{tikzpicture}}
+\caption{Offline-First Data Flow for Service Request Submission}
+\label{fig:offline-flow}
+\end{figure}
+
+\textbf{Layer 1 --- Firebase Firestore Persistent Cache:} With \texttt{persistentLocalCache()} and \texttt{persistentMultipleTabManager()} enabled, Firestore keeps a local copy of every document the user has previously accessed. When offline, read operations draw from this cache, giving users seamless access to existing records without any network connection.
+
+\textbf{Layer 2 --- Dexie.js IndexedDB Queue:} Write operations initiated while offline are stored in two IndexedDB tables managed by Dexie.js. The \texttt{serviceRequests} table holds the complete request data locally, while the \texttt{syncQueue} table records the metadata for each pending operation (type, collection, document ID, timestamp). Once the \texttt{useOnlineStatus} hook detects that connectivity has returned, the sync service works through the queue items and writes them to Firestore.
+
+\subsection{PWA Architecture}
+
+The PWA setup, managed through vite-plugin-pwa, uses three caching strategies:
+
+\begin{itemize}
+\item \textbf{Precaching:} JavaScript bundles, CSS stylesheets, HTML pages, icons, and image assets are all cached when the service worker is first installed, guaranteeing that the application shell loads even without network access.
+\item \textbf{CacheFirst} (Google Fonts): Font resources are served straight from cache with a one-year expiration, avoiding unnecessary repeat downloads.
+\item \textbf{NetworkFirst} (Firebase Storage, API endpoints): For dynamic content, the application tries the network first and falls back to cached versions during outages. Firebase Storage responses are cached for seven days.
+\end{itemize}
+
+The web app manifest declares the application as \texttt{"display": "standalone"}, which enables full-screen installation on mobile devices. It also specifies the application name (``IPDC-OSS Platform''), a theme color (\texttt{\#2563eb}), and icon assets at 192px and 512px resolutions.
+
+\subsection{Authentication Architecture}
+
+Authentication follows a dual-mode design so that users can still log in during connectivity disruptions. Figure~\ref{fig:auth-flow} walks through the authentication flow.
+
+\begin{figure}[H]
+\centering
+\resizebox{0.95\textwidth}{!}{%
+\begin{tikzpicture}[
+  box/.style={rectangle, draw, fill=blue!8, text width=3cm, text centered, minimum height=0.9cm, rounded corners=3pt, font=\footnotesize},
+  decision/.style={diamond, draw, fill=yellow!15, text width=1.5cm, text centered, aspect=2, font=\footnotesize},
+  arrow/.style={-{Stealth[length=2.5mm]}, thick},
+]
+
+\node[box] (login) at (0,0) {User enters credentials};
+\node[decision] (online) at (0,-2) {Online?};
+\node[box, fill=green!10] (firebase) at (5,-2) {Firebase Auth\\signIn()};
+\node[box] (cache) at (5,-4) {Cache credentials to IndexedDB};
+\node[box, fill=orange!10] (offline) at (-5,-2) {Verify against IndexedDB cache};
+\node[decision] (valid) at (-5,-4) {Valid?};
+\node[box, fill=green!10] (grant) at (0,-6) {Grant access\\(role-based routing)};
+\node[box, fill=red!10] (deny) at (-8.5,-4) {Deny access};
+
+\draw[arrow] (login) -- (online);
+\draw[arrow] (online) -- node[above]{\scriptsize Yes} (firebase);
+\draw[arrow] (firebase) -- (cache);
+\draw[arrow] (cache) |- (grant);
+\draw[arrow] (online) -- node[above]{\scriptsize No} (offline);
+\draw[arrow] (offline) -- (valid);
+\draw[arrow] (valid) |- node[near start, right]{\scriptsize Yes} (grant);
+\draw[arrow] (valid) -- node[above]{\scriptsize No} (deny);
+
+\end{tikzpicture}}
+\caption{Dual-Mode Authentication Flow}
+\label{fig:auth-flow}
+\end{figure}
+
+When the device is online, authentication goes through Firebase Auth using \texttt{signInWithEmailAndPassword()}. After a successful login, the user's credentials are hashed and stored in IndexedDB through the \texttt{cacheCredentials()} utility. When offline, the system pulls the cached credentials and checks the user's input against the stored hash. The \texttt{AuthContext} component orchestrates this dual-mode logic, automatically switching to offline authentication whenever it encounters network errors.
+
+Three user roles---\texttt{tenant}, \texttt{admin}, and \texttt{operations}---govern which dashboard a user sees and which features they can access, all managed through role-based conditional rendering in the React component tree.
+
+\subsection{AI Integration Architecture}
+
+Three machine learning models are served through a FastAPI backend, available as REST endpoints at \texttt{/api/v1/}:
+
+\begin{enumerate}
+\item \textbf{Service Classifier} (\texttt{/classify-service}): Takes a request title and description as input; returns a predicted service type, priority level, estimated processing time in days, confidence score, and contextual recommendations.
+\item \textbf{Predictive Maintenance} (\texttt{/predict-maintenance}): Takes asset attributes (age, condition, maintenance history) as input; returns failure probability, risk level, estimated days until failure, and a recommended maintenance action.
+\item \textbf{Park Recommendation} (\texttt{/recommend-parks}): Takes a tenant profile (industry sector, employee count, investment capital, infrastructure needs) as input; returns ranked park recommendations complete with match scores, pros and cons, and cost estimates. The scoring weights are: industry alignment 30\%, capacity 25\%, infrastructure 20\%, cost 15\%, location 10\%.
+\end{enumerate}
+
+AI features are built with graceful degradation in mind: when the FastAPI backend cannot be reached (a common occurrence during connectivity outages), the platform reverts to manual classification and simply disables recommendation features instead of blocking the core workflows.
+
+\section{Database Design}
+
+\subsection{Firestore Collections Schema}
+
+The Firestore database is organized into twelve collections. Table~\ref{tab:firestore-schema} documents the primary collections along with their key fields.
+
+\begin{table}[H]
+\centering
+\caption{Firestore Collections Schema}
+\label{tab:firestore-schema}
+\small
+\begin{tabular}{p{3cm}p{5cm}p{4cm}}
+\toprule
+\textbf{Collection} & \textbf{Key Fields} & \textbf{Purpose} \\
+\midrule
+users & uid, email, displayName, role, parkId, createdAt & User profiles and roles \\
+serviceRequests & id, tenantId, title, description, serviceType, priority, status, assignedTo & Core service workflow \\
+ossServiceRequests & id, tenantId, serviceCategory, documents[], status & OSS-specific requests \\
+announcements & id, title, content, targetAudience, priority, expiresAt, isActive & System announcements \\
+complaints & id, requestId, tenantId, category, evidence[], status, resolution & Complaint tracking \\
+tokenAccounts & tenantId, balance, tier, totalEarned, totalSpent & Token balances \\
+tokenTransactions & id, tenantId, type, amount, description, timestamp & Transaction ledger \\
+invoices & id, tenantId, lineItems[], total, status, pdfUrl & Billing records \\
+paymentTransactions & id, tenantId, amount, method, referenceNumber & Payment tracking \\
+assets & id, name, category, condition, purchaseCost, currentValue & Park asset inventory \\
+maintenanceRecords & id, assetId, type, scheduledDate, completedDate, cost & Maintenance history \\
+notifications & id, userId, title, message, read, createdAt & User notifications \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{IndexedDB Schema (Dexie.js)}
+
+The local IndexedDB database, named \texttt{IPDCDatabase}, holds two tables tailored for offline operations:
+
+\begin{itemize}
+\item \texttt{serviceRequests}: Stores complete request documents for offline access. Indexed on: \texttt{id}, \texttt{tenantId}, \texttt{status}, \texttt{priority}, \texttt{serviceType}, \texttt{createdAt}.
+\item \texttt{syncQueue}: Stores pending write operations with auto-incrementing IDs. Indexed on: \texttt{++id}, \texttt{type}, \texttt{collection}, \texttt{status}, \texttt{createdAt}.
+\end{itemize}
+
+The sync queue recognizes four status values: \texttt{pending} (waiting to be synced), \texttt{syncing} (currently being processed), \texttt{synced} (successfully written to Firestore), and \texttt{failed} (sync was attempted but did not succeed; the operation will be retried).
+
+\section{User Interface Design}
+
+\subsection{Design Principles}
+
+The interface follows Material Design guidelines as implemented through the MUI component library, enhanced with a custom theme. The primary color (\texttt{\#2563eb}, a professional blue) and secondary color (\texttt{\#059669}, a confident green) create a visual identity fitting for an institutional platform. Status-specific colors offer instant visual feedback: amber for pending, blue for approved, purple for in-progress, green for completed, and red for rejected.
+
+Responsive breakpoints at 600px and 960px ensure the platform works well across different device categories. The \texttt{useDeviceDetection} hook dynamically adjusts layout density and navigation patterns depending on the device being used.
+
+\subsection{Navigation and Role-Based Views}
+
+After authentication, the routing system directs each user to a dashboard matching their role:
+
+\begin{itemize}
+\item \textbf{Tenant Dashboard:} Service request submission, request tracking, token management, complaint filing, park recommendations.
+\item \textbf{Admin Dashboard:} Request management (across all tenants), announcement creation, tenant account management, complaint resolution, billing oversight, asset management.
+\item \textbf{Operations Dashboard:} Service fulfillment, maintenance scheduling, asset inspection, performance metrics.
+\end{itemize}
+
+\subsection{Status Indicators}
+
+The \texttt{StatusBar} component keeps users informed about the system state at all times, showing:
+\begin{itemize}
+\item Online/offline connectivity status with a color-coded indicator;
+\item Device type (desktop, tablet, or mobile);
+\item Number of pending sync operations;
+\item Timestamp of the last successful synchronization.
+\end{itemize}
+
+This level of transparency is vital for an offline-first system, where users need to know whether their actions have been synchronized with the server or are still waiting in a local queue.
+
+\section{Chapter Summary}
+
+This chapter presented the systematic analysis and design of the IPDC platform, identifying twelve functional and seven non-functional requirement groups across four stakeholder groups prioritized using MoSCoW. The China-to-Ethiopia Technology Adaptation Framework addresses four dimensions---technological, organizational, cultural, and economic---with the most consequential adaptation replacing persistent-connectivity assumptions with a dual-layer offline-first architecture pairing Firebase's transparent cache with Dexie.js operation queuing. The resulting three-tier architecture comprises 41 React components, Firebase and FastAPI services, and Firestore alongside IndexedDB, with dual-mode authentication and queue-based synchronization ensuring operation regardless of connectivity. The next chapter details how this architecture was turned into a working prototype and presents the evaluation results.

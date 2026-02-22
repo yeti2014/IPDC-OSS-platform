@@ -1,0 +1,39 @@
+% ============================================================
+% Abstracts - Chinese (摘要) + English (Abstract)
+% Using NKThesis custom environments
+% ============================================================
+
+% --- Chinese Abstract (摘要) ---
+\begin{zhaiyao}
+
+埃塞俄比亚工业园区发展公司（IPDC）管辖的多个工业园区目前仍依赖纸质行政流程，导致服务交付延迟、费用收缴效率低下，并引发利益相关方的不满。在中国，基于企业微信和钉钉构建的智慧园区平台已在数字化治理方面取得显著成效，但这些平台依赖稳定的互联网连接——而埃塞俄比亚工业园区无法保证这一条件，日均网络中断时间长达三至五小时。
+
+本研究旨在为IPDC设计、开发并评估一个离线优先的数字一站式服务平台，以渐进式网络应用程序（PWA）形式交付。研究采用设计科学研究方法论，将中国智慧园区模式适配到网络受限环境中。三个研究问题贯穿全文：（1）如何系统地将中国数字治理模式迁移到非洲环境；（2）如何架构一个支持复杂工业工作流的离线优先PWA；（3）在服务多个利益相关方群体的平台中，应以何种设计原则指导功能优先级决策。
+
+所开发的原型系统支持离线服务请求提交并在网络恢复后自动同步，提供基于角色的差异化界面，以及用于跟踪服务费用的数字令牌系统。由于采用PWA技术构建，该平台可通过单一代码库在桌面端和移动端浏览器上运行，无需开发独立的原生移动应用。Firebase Firestore作为后端服务，提供内置的离线数据持久化能力。系统还集成了三个机器学习模型：自动服务分类模型、预测性设备维护模型以及面向潜在租户的工业园区推荐模型。
+
+本研究做出四项贡献：（1）提出技术适配框架，指导数字治理模式在不同网络条件下的跨境迁移；（2）设计离线优先工业服务架构，扩展PWA能力以支持复杂工作流；（3）建立一套设计原则，用于确定离线使用场景下的功能优先级；（4）开发首个面向埃塞俄比亚工业园区的专用数字平台。这些成果为非洲及其他发展中地区在网络受限环境下的数字化转型提供了可复制的方法。
+
+\end{zhaiyao}
+
+\begin{guanjianci}
+离线优先架构，渐进式网络应用，数字一站式服务，智慧工业园区，设计科学研究，技术适配，埃塞俄比亚工业园区
+\end{guanjianci}
+
+
+% --- English Abstract ---
+\begin{abstract}
+
+The Ethiopian Industrial Parks Development Corporation (IPDC) oversees several industrial parks that still depend on paper-based administrative processes. This reliance leads to delays in service delivery, inefficient fee collection, and growing frustration among stakeholders. In China, smart park platforms built on WeChat Work and DingTalk have proven effective for digital governance, but they depend on stable internet access---something Ethiopian parks cannot guarantee, given daily connectivity disruptions lasting three to five hours.
+
+This research sets out to design, build, and evaluate an offline-first digital one-stop-shop for IPDC, delivered as a Progressive Web Application (PWA). Drawing on Design Science Research methodology, the study adapts Chinese smart park models for environments with limited connectivity. Three research questions guide the work: (1) how to systematically transfer Chinese digital governance models to African settings; (2) how to architect an offline-first PWA that handles complex industrial workflows; and (3) what design principles should govern feature prioritization in platforms serving multiple stakeholder groups.
+
+The resulting prototype supports offline service request submission with automatic synchronization once connectivity returns, role-based interfaces for different stakeholders, and a digital token system for tracking service fees. Because it is built as a PWA, the platform runs on both desktop and mobile browsers from a single codebase, eliminating the need for separate native mobile applications. Firebase Firestore serves as the backend, offering built-in offline data persistence. Three machine learning models are also integrated: one for automated service classification, another for predictive equipment maintenance, and a third for recommending suitable industrial parks to prospective tenants.
+
+The research makes four contributions: (1) a Technology Adaptation Framework that guides the transfer of digital governance models across different connectivity contexts; (2) an Offline-First Industrial Service Architecture that extends PWA capabilities to support complex workflows; (3) a set of Design Principles for deciding which features to prioritize for offline use; and (4) the first purpose-built digital platform tailored to Ethiopian industrial parks. These findings offer a replicable approach for digital transformation in connectivity-constrained settings throughout Africa and other developing regions.
+
+\end{abstract}
+
+\begin{keywords}
+Offline-First Architecture, Progressive Web Application, Digital One-Stop-Shop, Smart Industrial Park, Design Science Research, Technology Adaptation, Ethiopian Industrial Parks
+\end{keywords}

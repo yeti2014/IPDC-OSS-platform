@@ -1,0 +1,150 @@
+% ============================================================
+% IPDC Digital OSS Thesis - Main Document
+% Nankai University, College of Software
+% Kebede Yetnayet Berhanu - December 2025
+%
+% Based on NKU_thesis_graduate-2024 official template
+% Compile with: XeLaTeX [recommended] or PDFLaTeX
+% ============================================================
+\documentclass[12pt,openany]{book}
+
+% --- Mathematics ---
+\usepackage{amsmath,amssymb}
+\usepackage{pifont}
+
+% --- Hyperlinks ---
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage[bookmarksnumbered]{hyperref}
+\else
+  \usepackage[unicode,bookmarksnumbered]{hyperref}
+\fi
+
+% --- NKThesis Package (English mode) ---
+\usepackage[emptydoublepage,English]{NKThesis}
+
+% --- Bibliography (biblatex with NKThesis style, natbib compatibility) ---
+\usepackage[backend=bibtex8, defernumbers=true, sorting=nty, style=nkthesis, natbib=true]{biblatex}
+\addbibresource{references.bib}
+\DeclareBibliographyCategory{cited}
+\AtEveryCitekey{\addtocategory{cited}{\thefield{entrykey}}}
+
+% --- Hyperlink Colors ---
+\hypersetup{colorlinks=true,
+            pdfborder=0 0 1,
+            citecolor=black,
+            linkcolor=black}
+
+% --- Graphics and Figures ---
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, calc}
+\usepackage{float}
+\graphicspath{{figures/}}
+
+% --- Tables ---
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{tabularx}
+
+% --- Code Listings ---
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny,
+  tabsize=2
+}
+
+% --- Misc ---
+\usepackage{xcolor}
+\usepackage{pdfpages}
+
+% --- Allow line breaks in monospace text ---
+\usepackage[htt]{hyphenat}
+
+% --- Custom Commands ---
+\newcommand{\tbf}[1]{\textbf{#1}}
+
+% ============================================================
+\begin{document}
+\raggedbottom
+\sloppy
+
+% --- Thesis Metadata (auto-generates: Cover + Declaration + Authorization) ---
+\NKTsetup{%
+  论文题目(中文) = 面向埃塞俄比亚工业园区发展公司的离线优先数字一站式服务平台,
+  副标题        = ——将中国智慧园区模式本地化应用于网络受限环境,
+  论文题目(英文) = {Offline-First Digital One-Stop-Shop for Ethiopian
+  Industrial Parks Development Corporation (IPDC):
+  Localizing China Smart Park Model for
+  Connectivity-Constrained Environments},
+  论文作者       = Kebede Yetnayet Berhanu,
+  学号           = 2120246030,
+  指导教师       = 张海宁,
+  指导教师职称   = 教授,
+  申请学位       = 工学硕士,
+  培养单位       = 软件学院,
+  学科专业       = 软件工程,
+  研究方向       = 数字平台开发,
+  答辩委员会主席  = ,
+  评阅人       = ,
+  中图分类号     = TP311,
+  UDC            = ,
+  学校代码       = 10055,
+  密级           = 公开,
+  保密期限       = ,
+  审批表编号     = ,
+  批准日期       = ,
+  论文完成时间   = 二〇二五年十二月,
+  答辩日期       = ,
+  签字日期       = 2025\quad 年\quad 12 \quad 月\quad \quad 日,
+  论文类别       = 学历硕士,
+  院/系/所       = 软件学院,
+  专业           = 软件工程,
+  联系电话       = ,
+  Email          = ,
+  通讯地址(邮编) = 天津经济开发区宏达街23号南开大学泰达校区（300457）,
+  备注           =
+}
+
+% --- Abstract (Chinese + English) ---
+\input{chapters/abstract}
+
+% --- Table of Contents ---
+\tableofcontents
+
+% --- List of Figures ---
+\listoffigures
+
+% --- List of Tables ---
+\listoftables
+
+% --- Abbreviations ---
+\input{chapters/abbreviations}
+
+% --- Main Chapters ---
+\input{chapters/chapter1}
+\input{chapters/chapter2}
+\input{chapters/chapter3}
+\input{chapters/chapter4}
+\input{chapters/chapter5}
+\input{chapters/chapter6}
+
+% --- Appendices ---
+\appendix
+\input{chapters/appendix}
+
+% --- Bibliography ---
+\input{chapters/references}
+
+% --- Acknowledgements ---
+\input{chapters/acknowledgements}
+
+% --- Resume ---
+\input{chapters/resume}
+
+\end{document}
