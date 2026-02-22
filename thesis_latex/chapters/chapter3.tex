@@ -3,15 +3,15 @@
 
 \section{Introduction}
 
-This chapter describes how the offline-first digital one-stop service platform for Ethiopian IPDC was designed, developed, and evaluated. The methodology brings together Design Science Research as the overarching research paradigm with agile-inspired iterative development for building the prototype. The chapter covers the research design, data collection methods, the reasoning behind technology choices, the development approach, and the evaluation framework.
+This chapter explains how the offline-first digital one-stop service platform for Ethiopian IPDC was designed, developed, and evaluated. Design Science Research provides the overarching paradigm, with agile-inspired iterative development used to build the prototype. The discussion covers the research design, data collection methods, technology selection reasoning, the development approach, and the evaluation framework.
 
 \section{Research Paradigm: Design Science Research}
 
 \subsection{Justification of the DSR Approach}
 
-Design Science Research (DSR) was chosen as the guiding paradigm because of the nature of the research problem itself. IPDC faces a well-documented operational challenge---paper-based service delivery in an environment with unreliable connectivity---and no adequate solution exists. Behavioral methods like surveys or case studies could describe the problem in more detail, but they would not produce the practical artifact needed to actually address it. DSR, on the other hand, is geared toward creating and evaluating purposeful artifacts that solve identified problems while also contributing to the knowledge base \citep{Hevner2004}.
+Design Science Research (DSR) was selected as the guiding paradigm because of the nature of the problem itself. IPDC faces a well-documented operational challenge --- paper-based service delivery in an environment with unreliable connectivity --- and no adequate solution exists. Behavioral methods such as surveys or case studies could characterize the problem more precisely, but they would not produce the practical artifact needed to actually address it. DSR, by contrast, is oriented toward creating and evaluating purposeful artifacts that solve identified problems while simultaneously contributing to the knowledge base \citep{Hevner2004}.
 
-Three features of the research problem make it particularly well suited to DSR. First, the problem is practical and situated within a real organization: IPDC needs a working digital platform, not just a theoretical analysis. Second, the solution calls for creative design rather than routine technology deployment, since no existing system addresses offline-first industrial park governance in African settings. Third, the research aims to produce generalizable knowledge---design principles and an adaptation framework---alongside the specific artifact, which is what distinguishes DSR from ordinary software development \citep{Gregor2013}.
+Three features of the research problem make it particularly well suited to DSR. First, the problem is practical and situated within a real organization: IPDC needs a working digital platform, not just a theoretical analysis. Second, the solution demands creative design rather than routine technology deployment, since no existing system addresses offline-first industrial park governance in African settings. Third, the research aims to produce generalizable knowledge --- design principles and an adaptation framework --- alongside the specific artifact, which is precisely what distinguishes DSR from ordinary software development \citep{Gregor2013}.
 
 \subsection{DSRM Process Model Application}
 
@@ -51,21 +51,21 @@ The research follows the six-activity DSRM process model proposed by \citet{Peff
 
 \textbf{Activity 1 --- Problem Identification and Motivation} was carried out through a review of the scholarly literature (Chapter~\ref{ch:literature}) and an analysis of current IPDC service delivery processes. The convergence of documented service gaps \citep{Guteta2022, Guteta2023} with the connectivity constraints specific to Ethiopian infrastructure established the importance and urgency of the problem.
 
-\textbf{Activity 2 --- Define Objectives of a Solution} turned the identified problem into concrete design objectives. Through stakeholder requirement gathering and analysis of Chinese smart park reference models, the research defined the functional and non-functional requirements for the platform (detailed in Chapter~\ref{ch:analysis}).
+\textbf{Activity 2 --- Define Objectives of a Solution} translated the identified problem into concrete design objectives. Through stakeholder requirement gathering and analysis of Chinese smart park reference models, the research defined the functional and non-functional requirements for the platform (detailed in Chapter~\ref{ch:analysis}).
 
-\textbf{Activity 3 --- Design and Development} produced the core artifact: an offline-first PWA prototype built with React, Firebase, and Dexie.js. The architecture was designed to keep services running during connectivity disruptions while supporting workflows that involve multiple stakeholder groups.
+\textbf{Activity 3 --- Design and Development} produced the core artifact: an offline-first PWA prototype built with React, Firebase, and Dexie.js. The architecture was designed to keep services running during connectivity disruptions while supporting workflows involving multiple stakeholder groups.
 
 \textbf{Activity 4 --- Demonstration} showed the artifact in action through structured walkthroughs of tenant, administrator, and operations workflows, including scenarios that specifically test offline operation.
 
-\textbf{Activity 5 --- Evaluation} assessed the artifact through technical testing of offline functionality, synchronization accuracy, and cross-platform compatibility, along with a usability evaluation based on the System Usability Scale.
+\textbf{Activity 5 --- Evaluation} assessed the artifact through technical testing of offline functionality, synchronization accuracy, and cross-platform compatibility, alongside a usability evaluation using the System Usability Scale.
 
 \textbf{Activity 6 --- Communication} takes the form of this thesis, which presents the artifact, the reasoning behind its design, evaluation results, and the design principles that emerged from the work.
 
 \section{Research Design Overview}
 
-The overall research design combines qualitative and technical methods within the DSR framework. Qualitative methods---document analysis, platform analysis, and stakeholder requirements gathering---informed the understanding of the problem and shaped design objectives. Technical methods---iterative software development and systematic testing---produced and evaluated the artifact. This mixed approach is consistent with DSR practice, which uses whatever methods are needed to rigorously build and assess the artifact \citep{Hevner2004}.
+The overall research design combines qualitative and technical methods within the DSR framework. Qualitative methods --- document analysis, platform analysis, and stakeholder requirements gathering --- informed the understanding of the problem and shaped design objectives. Technical methods --- iterative software development and systematic testing --- produced and evaluated the artifact. This mixed approach is consistent with DSR practice, which draws on whatever methods are needed to rigorously build and assess the artifact \citep{Hevner2004}.
 
-The work unfolded in four overlapping phases:
+The work unfolded across four overlapping phases:
 
 \begin{enumerate}
 \item \textbf{Exploration Phase} (Months 1--3): Literature review, Chinese platform analysis, stakeholder requirement gathering, and problem formulation.
@@ -79,7 +79,7 @@ The work unfolded in four overlapping phases:
 
 \subsection{Stakeholder Requirements Questionnaire}
 
-Structured questionnaires were administered to representatives of the three main stakeholder groups: tenant firm representatives, IPDC administrative staff, and park operations personnel. The questionnaire was designed to capture:
+Structured questionnaires were administered to representatives of the three main stakeholder groups: tenant firm representatives, IPDC administrative staff, and park operations personnel. The instrument was designed to capture:
 
 \begin{itemize}
 \item Current service delivery workflows and their pain points;
@@ -89,7 +89,7 @@ Structured questionnaires were administered to representatives of the three main
 \item What stakeholders expect from a digital platform.
 \end{itemize}
 
-A total of \textbf{49 respondents} completed the questionnaire, exceeding the initial target of 45. Respondents were drawn from \textbf{eleven Special Economic Zones and industrial parks} across Ethiopia: Semera, Hawassa, Adama, Bole Lemi, Mekelle, Kilinto, Kombolcha, Bahir Dar, Debre Birhan, and Jimma SEZs, as well as Dire Dawa Free Trade Zone. This geographic spread ensures that the requirements capture the diversity of park contexts in terms of industry mix, infrastructure maturity, and location. Table~\ref{tab:survey-respondents} summarises the response breakdown by stakeholder group.
+A total of \textbf{49 respondents} completed the questionnaire, exceeding the initial target of 45. Respondents were drawn from \textbf{eleven Special Economic Zones and industrial parks} across Ethiopia: Semera, Hawassa, Adama, Bole Lemi, Mekelle, Kilinto, Kombolcha, Bahir Dar, Debre Birhan, and Jimma SEZs, as well as Dire Dawa Free Trade Zone. This geographic spread ensures that the requirements reflect the diversity of park contexts in terms of industry mix, infrastructure maturity, and location. Table~\ref{tab:survey-respondents} summarizes the breakdown by stakeholder group.
 
 \begin{table}[H]
 \centering
@@ -109,21 +109,21 @@ Park Operations Personnel   & 10 & 14 & 140\% \\
 \end{tabular}
 \end{table}
 
-The questionnaire used Likert-scale items for quantifiable measurement alongside open-ended questions to gather richer qualitative insights. Key findings that directly shaped the platform requirements include the following. On service delivery pain points, the overwhelming majority of tenants reported always needing to follow up on submitted requests, with long wait times, lack of status updates, and difficulty reaching the right person cited as the top three frustrations. Regarding connectivity, most respondents rated internet reliability at their park at 3 out of 5, with outage frequency ranging from ``sometimes (1--2 times per week)'' for field operations staff to ``sometimes (1--4 times per month)'' for administrative staff. On digital readiness, all ten features listed in the platform feature survey received average importance ratings above 4.0 out of 5; offline capability specifically was rated ``5 -- Very Important'' by nearly all respondents across all three groups. Language preference was overwhelmingly ``Both English and Amharic'', directly informing the i18n architecture described in Chapter~\ref{ch:analysis}. On platform adoption intent, only two respondents expressed uncertainty (``Maybe, depending on how easy it is''), while the remainder selected ``Yes, definitely''.
+The questionnaire combined Likert-scale items for quantifiable measurement with open-ended questions for richer qualitative insight. Several findings directly shaped the platform requirements. On service delivery pain points, the overwhelming majority of tenants reported always needing to follow up on submitted requests, with long wait times, lack of status updates, and difficulty reaching the right person as the top three frustrations. On connectivity, most respondents rated internet reliability at their park at 3 out of 5, with outage frequency ranging from ``sometimes (1--2 times per week)'' for field operations staff to ``sometimes (1--4 times per month)'' for administrative staff. On digital readiness, all ten features in the platform feature survey received average importance ratings above 4.0 out of 5; offline capability specifically was rated ``5 -- Very Important'' by nearly all respondents across all three groups. Language preference was overwhelmingly ``Both English and Amharic,'' directly informing the i18n architecture described in Chapter~\ref{ch:analysis}. On platform adoption intent, only two respondents expressed uncertainty, while the remainder selected ``Yes, definitely.''
 
 \subsection{Document Analysis}
 
-Existing IPDC documentation was reviewed to understand formal service processes, organizational structures, and regulatory requirements. The documents examined included service request forms, fee schedules, organizational charts, operational guidelines, and annual reports. This analysis fed into the functional requirements and helped ensure that the prototype aligns with established institutional processes.
+Existing IPDC documentation was reviewed to understand formal service processes, organizational structures, and regulatory requirements. Documents examined included service request forms, fee schedules, organizational charts, operational guidelines, and annual reports. This analysis fed into the functional requirements and helped ensure that the prototype aligns with established institutional processes.
 
 \subsection{Platform Analysis: WeChat Work and DingTalk}
 
-A systematic analysis of Chinese smart park platforms---primarily WeChat Work and DingTalk---was carried out to identify features, interaction patterns, and architectural approaches that could inform the IPDC platform design. The analysis drew on platform documentation, published research, and publicly available demonstrations. Features were categorized by their relevance and transferability to the Ethiopian context.
+A systematic analysis of Chinese smart park platforms --- primarily WeChat Work and DingTalk --- identified features, interaction patterns, and architectural approaches that could inform the IPDC platform design. The analysis drew on platform documentation, published research, and publicly available demonstrations, with features categorized by their relevance and transferability to the Ethiopian context.
 
-This platform analysis served two purposes: it established the source model for the technology adaptation framework, and it provided concrete design inspiration for specific features such as workflow automation, approval routing, and status tracking.
+This analysis served two purposes: it established the source model for the technology adaptation framework, and it provided concrete design inspiration for specific features such as workflow automation, approval routing, and status tracking.
 
 \subsection{Field Observations}
 
-Field visits to IPDC industrial parks gave firsthand insight into service delivery workflows, infrastructure conditions, and user behavior. Observations focused on:
+Field visits to IPDC industrial parks provided firsthand insight into service delivery workflows, infrastructure conditions, and user behavior. Observations focused on:
 
 \begin{itemize}
 \item How tenants physically interact with administrative offices for service delivery;
@@ -132,18 +132,18 @@ Field visits to IPDC industrial parks gave firsthand insight into service delive
 \item Environmental factors that affect technology use (heat, dust, noise in industrial settings).
 \end{itemize}
 
-These observations complemented the questionnaire findings by revealing tacit aspects of service delivery that stakeholders might not articulate on their own.
+These observations complemented the questionnaire findings by surfacing tacit aspects of service delivery that stakeholders might not articulate in a structured survey.
 
 \section{System Development Methodology}
 
 \subsection{Agile-Inspired Iterative Development}
 
-The prototype was developed using an agile-inspired iterative approach. Rather than following a rigid waterfall sequence, development proceeded through multiple iterations, each adding functionality and incorporating lessons from testing. This approach suits DSR well, since the artifact takes shape through an iterative process of design and evaluation \citep{Hevner2004}.
+The prototype was developed using an agile-inspired iterative approach. Rather than following a rigid waterfall sequence, development proceeded through multiple iterations, each adding functionality and incorporating lessons from testing. This suits DSR well, since the artifact takes shape through an iterative cycle of design and evaluation \citep{Hevner2004}.
 
-Each iteration followed a build--test--refine cycle:
+Each iteration followed a build-test-refine cycle:
 \begin{enumerate}
 \item \textbf{Build:} Implement a set of features drawn from prioritized requirements.
-\item \textbf{Test:} Check that everything works, with special attention to offline behavior and cross-platform compatibility.
+\item \textbf{Test:} Verify correct operation, with particular attention to offline behavior and cross-platform compatibility.
 \item \textbf{Refine:} Fix issues and adjust the design based on what testing revealed.
 \end{enumerate}
 
@@ -151,7 +151,7 @@ Iterations were organized around functional modules: authentication and user man
 
 \subsection{Technology Selection Rationale}
 
-Technology choices were guided by three criteria: compatibility with offline-first architectural requirements, maturity and community support for long-term viability, and cost-effectiveness for a thesis research prototype. Table~\ref{tab:tech-stack} summarizes the technologies chosen and the reasoning behind each one.
+Technology choices were guided by three criteria: compatibility with offline-first architectural requirements, maturity and community support for long-term viability, and cost-effectiveness for a thesis research prototype. Table~\ref{tab:tech-stack} summarizes the technologies selected and the reasoning behind each.
 
 \begin{table}[H]
 \centering
@@ -177,44 +177,44 @@ PDF Generation & jsPDF + AutoTable & Client-side PDF generation for invoices and
 \end{tabular}
 \end{table}
 
-\textbf{React and TypeScript} were chosen as the frontend foundation because React's component model supports the modular architecture a multi-stakeholder platform needs, and TypeScript catches type errors at compile time---important for a complex application with eight separate type definition files.
+\textbf{React and TypeScript} were chosen as the frontend foundation because React's component model supports the modular architecture a multi-stakeholder platform requires, and TypeScript catches type errors at compile time --- important for a complex application with eight separate type definition files.
 
-\textbf{Firebase} was preferred over alternatives like Supabase or a custom Node.js backend mainly because of its built-in offline persistence. When Firestore is configured with \texttt{persistentLocalCache()}, it automatically keeps a local copy of accessed data and handles synchronization in both directions. This drastically reduces the engineering effort needed for offline-first behavior compared to building custom synchronization logic from scratch.
+\textbf{Firebase} was preferred over alternatives such as Supabase or a custom Node.js backend primarily because of its built-in offline persistence. When Firestore is configured with \texttt{persistentLocalCache()}, it automatically maintains a local copy of accessed data and handles bidirectional synchronization. This drastically reduces the engineering effort required for offline-first behavior compared to building custom synchronization logic from scratch.
 
-\textbf{Dexie.js} complements Firebase's offline capabilities by providing a local database under the application's direct control. It handles operations that need explicit offline queuing, such as service requests submitted while the internet is down. Together, Firestore's transparent cache and Dexie's explicit queue form a dual-layer offline storage architecture.
+\textbf{Dexie.js} complements Firebase's offline capabilities by providing a local database under the application's direct control. It handles operations that require explicit offline queuing, such as service requests submitted while internet access is unavailable. Together, Firestore's transparent cache and Dexie's explicit queue form a dual-layer offline storage architecture.
 
-\textbf{Workbox} was picked for service worker management because it provides well-tested implementations of standard caching strategies (CacheFirst, NetworkFirst, StaleWhileRevalidate) through a declarative configuration. This reduces the risk of service worker bugs that could break offline functionality.
+\textbf{Workbox} was selected for service worker management because it provides well-tested implementations of standard caching strategies (CacheFirst, NetworkFirst, StaleWhileRevalidate) through a declarative configuration, reducing the risk of service worker bugs that could break offline functionality.
 
 \subsection{Development Tools and Environment}
 
-Development used Visual Studio Code as the primary IDE, with Vite's development server providing hot module replacement for fast iteration. Firebase emulators handled local testing of authentication and Firestore operations without using up cloud resources. The AI model backend was built in Python with FastAPI, and models were trained using scikit-learn and XGBoost on structured datasets representing IPDC operational scenarios.
+Development used Visual Studio Code as the primary IDE, with Vite's development server providing hot module replacement for fast iteration. Firebase emulators handled local testing of authentication and Firestore operations without consuming cloud resources. The AI model backend was built in Python with FastAPI, and models were trained using scikit-learn and XGBoost on structured datasets representing IPDC operational scenarios.
 
-Version control was managed through Git, with the repository hosted for backup and collaboration. The production build pipeline uses Vite with manual chunk splitting to keep bundle sizes efficient---vendor libraries (React, ReactDOM), the UI framework (Material-UI), and Firebase SDKs are separated into distinct chunks for better caching.
+Version control was managed through Git. The production build pipeline uses Vite with manual chunk splitting to keep bundle sizes manageable --- vendor libraries (React, ReactDOM), the UI framework (Material-UI), and Firebase SDKs are separated into distinct chunks for better caching.
 
 \section{Evaluation Framework}
 
-The prototype evaluation brings together technical assessment and usability evaluation, reflecting the dual nature of what DSR aims to achieve: the artifact needs to both work correctly and be genuinely useful to the people it is built for \citep{Hevner2004}. The evaluation design follows the Framework for Evaluation in Design Science Research (FEDS) proposed by \citet{Venable2016}, which recommends combining formative and summative evaluation strategies.
+The prototype evaluation combines technical assessment with usability evaluation, reflecting the dual nature of what DSR aims to achieve: the artifact must both function correctly and be genuinely useful to the people it serves \citep{Hevner2004}. The evaluation design follows the Framework for Evaluation in Design Science Research (FEDS) proposed by \citet{Venable2016}, which recommends pairing formative and summative evaluation strategies.
 
 \subsection{Technical Evaluation}
 
-Technical evaluation checks whether the prototype meets its design specifications, paying special attention to offline-first capabilities. The evaluation covers four dimensions:
+Technical evaluation checks whether the prototype meets its design specifications, with particular emphasis on offline-first capabilities across four dimensions:
 
 \begin{enumerate}
 \item \textbf{Offline Functionality:} Each core feature is systematically tested under simulated offline conditions to confirm that users can complete critical workflows without connectivity.
-\item \textbf{Synchronization Accuracy:} Data that was created or changed while offline is verified to synchronize correctly with Firestore once connectivity returns, with no data loss or corruption.
-\item \textbf{Performance:} Key metrics are measured, including initial load time, cached load time, response time during offline operation, and how long synchronization takes.
+\item \textbf{Synchronization Accuracy:} Data created or modified offline is verified to synchronize correctly with Firestore once connectivity returns, with no data loss or corruption.
+\item \textbf{Performance:} Key metrics are measured, including initial load time, cached load time, response time during offline operation, and synchronization duration.
 \item \textbf{Cross-Platform Compatibility:} The prototype is tested on desktop browsers (Chrome, Firefox), mobile browsers (Chrome for Android, Safari for iOS), and as an installed PWA.
 \end{enumerate}
 
 \subsection{Usability Evaluation}
 
-Usability is assessed using the System Usability Scale (SUS), a widely used instrument for measuring perceived system usability \citep{Nielsen1993, Brooke1996}. SUS produces a single score between 0 and 100 based on ten Likert-scale items; scores above 68 are generally considered above average. \citet{Lewis2018} provide a thorough review of the SUS instrument's validity and reliability over three decades of use, confirming its suitability for evaluating novel systems.
+Usability is assessed using the System Usability Scale (SUS), a widely validated instrument for measuring perceived system usability \citep{Nielsen1993, Brooke1996}. SUS produces a single score between 0 and 100 from ten Likert-scale items; scores above 68 are generally considered above average. \citet{Lewis2018} confirm the instrument's reliability across three decades of application, making it well suited for evaluating novel systems.
 
-The evaluation involves representative stakeholders from each user group (tenants, administrators, operations personnel) who work through structured task scenarios on the prototype and then fill out the SUS questionnaire. Qualitative feedback is also gathered through follow-up questions about specific aspects of the interface and the offline experience.
+Representative stakeholders from each user group (tenants, administrators, operations personnel) worked through structured task scenarios on the prototype before completing the SUS questionnaire. Qualitative feedback was also gathered through follow-up questions about specific interface aspects and the offline experience.
 
 \subsection{DSR Guidelines Compliance}
 
-As a methodological quality check, the research evaluates its own compliance with Hevner's seven DSR guidelines. Table~\ref{tab:eval-criteria} maps evaluation criteria to the guidelines and specifies what evidence is required.
+As a methodological quality check, the research evaluates its own compliance with Hevner's seven DSR guidelines. Table~\ref{tab:eval-criteria} maps evaluation criteria to the guidelines and specifies the evidence required for each.
 
 \begin{table}[H]
 \centering
@@ -238,10 +238,10 @@ As a methodological quality check, the research evaluates its own compliance wit
 
 \section{Ethical Considerations}
 
-The research adheres to ethical principles in several ways. Stakeholder participation in requirement gathering and usability evaluation was voluntary, and participants were told about the purpose of the research and their right to withdraw at any point. No personally identifiable data from real IPDC tenants or staff was used in the prototype; all demonstration data is synthetic. The authentication system stores credentials securely through Firebase Authentication, and offline credential caching uses hashing rather than plaintext storage.
+The research adheres to ethical principles throughout. Participation in requirements gathering and usability evaluation was voluntary, and participants were informed of the research purpose and their right to withdraw at any point. No personally identifiable data from real IPDC tenants or staff was used in the prototype; all demonstration data is synthetic. The authentication system stores credentials securely through Firebase Authentication, and offline credential caching uses hashing rather than plaintext storage.
 
-The research also considers the ethical implications of introducing technology into an organizational context. The platform is designed to support and enhance human roles, not replace them---administrative staff remain at the center of service delivery, with the platform giving them better tools rather than automating them out of the picture.
+The platform is also designed with organizational ethics in mind. Administrative staff remain at the center of service delivery --- the platform gives them better tools rather than automating them out of the picture.
 
 \section{Chapter Summary}
 
-This chapter laid out the research methodology, with Design Science Research as the overarching paradigm and the DSRM process model organizing the work into six activities from problem identification through to communication. Data collection drew on stakeholder questionnaires, document analysis, Chinese platform analysis, and field observations, while development followed agile-inspired iterations with technology choices driven by offline-first requirements. The evaluation framework combines technical assessment of offline functionality, synchronization, and performance with SUS usability evaluation and Hevner's DSR guidelines compliance. The next chapter presents the system analysis and design, covering stakeholder requirements, the China-to-Ethiopia adaptation framework, and the resulting system architecture.
+This chapter laid out the research methodology, with Design Science Research as the overarching paradigm and the DSRM process model organizing the work into six activities from problem identification through to communication. Data collection drew on stakeholder questionnaires (49 respondents across eleven parks), document analysis, Chinese platform analysis, and field observations, while development followed agile-inspired iterations with technology choices driven by offline-first requirements. The evaluation framework combines technical assessment of offline functionality, synchronization, and performance with SUS usability evaluation and DSR guidelines compliance review. The next chapter presents the system analysis and design, covering stakeholder requirements, the China-to-Ethiopia adaptation framework, and the resulting system architecture.

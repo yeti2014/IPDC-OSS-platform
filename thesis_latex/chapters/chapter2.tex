@@ -3,231 +3,183 @@
 
 \section{Introduction}
 
-This chapter reviews the scholarly literature and technical documentation that are relevant to building an offline-first digital one-stop service platform for Ethiopian industrial parks. The review brings together knowledge from several domains: Chinese smart park digital ecosystems, which serve as the conceptual model for adaptation; the Belt and Road Initiative, which provides context for China-Africa technology transfer; digital governance and e-government research in developing countries; offline-first architecture and Progressive Web Application technologies; ICT for Development (ICT4D) literature dealing with connectivity constraints; technology adaptation frameworks; the Ethiopian industrial parks context; and Design Science Research methodology.
+Building an offline-first digital one-stop service for Ethiopian industrial parks draws on knowledge from several distinct but interconnected fields. This chapter surveys the relevant scholarly literature and technical documentation, covering: Chinese smart park digital ecosystems, which supply the conceptual model for adaptation; the Belt and Road Initiative, which frames the China-Africa technology transfer context; digital governance and e-government research in developing countries; offline-first architecture and Progressive Web Application technologies; ICT for Development (ICT4D) literature on connectivity constraints; technology adaptation frameworks; the Ethiopian industrial parks context; and Design Science Research methodology.
 
-The chapter closes with a gap analysis that positions this research within the existing body of knowledge and spells out its novel contributions.
+A gap analysis at the end positions this research within the existing body of knowledge and identifies its specific novel contributions.
 
 \section{Chinese Smart Park Digital Ecosystems}
 
 \subsection{Evolution of Smart Industrial Parks in China}
 
-China's approach to industrial park development has changed considerably over the past four decades, moving from basic manufacturing zones to sophisticated smart ecosystems \citep{Yu2020, Zeng2021, Chen2022}. \citet{Yang2025} identify three distinct phases in this evolution: an establishment phase (1980s--1990s) focused on drawing in foreign investment through tax incentives and basic infrastructure; an optimization phase (2000s--2010s) centered on industrial clustering and value chain integration; and the current smart phase (2015--present), marked by comprehensive digital transformation.
+Over four decades, China's approach to industrial park development has shifted considerably --- from basic manufacturing zones to sophisticated digital ecosystems \citep{Yu2020, Zeng2021, Chen2022}. \citet{Yang2025} identify three distinct phases: an establishment phase (1980s--1990s) focused on attracting foreign investment through tax incentives and basic infrastructure; an optimization phase (2000s--2010s) centered on industrial clustering and value chain integration; and the current smart phase (2015--present), defined by comprehensive digital transformation.
 
-The smart park concept in China goes beyond technology infrastructure; it represents a fundamental rethinking of how industrial parks relate to tenant enterprises, government agencies, and the wider economy. \citet{Huang2023} characterize this as a shift from ``space provider'' to ``service ecosystem,'' where parks actively support business operations through integrated digital platforms.
+What makes this evolution significant is not merely the technology involved but the underlying shift in how parks conceive their role. \citet{Huang2023} describe a movement from ``space provider'' to ``service ecosystem,'' where parks actively support tenant operations through integrated digital platforms rather than simply offering physical infrastructure.
 
-Chinese smart parks typically combine several technology layers: IoT sensor networks for environmental monitoring and facility management; digital platforms for administrative services and communication; data analytics for operational optimization; and connections to national e-government systems \citep{Wang2022}. This layered structure lets parks offer comprehensive digital services while remaining flexible in how they are implemented.
+Technologically, Chinese smart parks typically layer IoT sensor networks for environmental monitoring, digital platforms for administrative services and communication, data analytics for operational optimization, and links to national e-government systems \citep{Wang2022}. This layered architecture allows parks to offer comprehensive digital services while remaining adaptable in implementation.
 
 \subsection{Digital One-Stop Service Platforms}
 
-The digital one-stop service (OSS) model is a defining feature of Chinese smart park implementations. Building on broader e-government reforms that emphasize service consolidation, smart parks have created integrated platforms through which tenants can access multiple services via a single digital interface \citep{Yang2023}.
+The digital one-stop service (OSS) model stands as a defining feature of Chinese smart park implementations. Drawing on broader e-government reforms that emphasize service consolidation, parks have created integrated platforms through which tenants can access multiple services via a single digital interface \citep{Yang2023}.
 
-\citet{Schreieck2022} examine the platform strategies that Chinese industrial parks use, identifying three common approaches: developing proprietary platforms, adopting commercial enterprise platforms (WeChat Work, DingTalk), and hybrid models that combine aspects of both. Their findings show that parks using commercial platforms benefit from established user familiarity, mature feature sets, and ongoing platform maintenance, while proprietary platforms offer greater room for customization.
+\citet{Schreieck2022} examine platform strategies in Chinese industrial parks and identify three common approaches: proprietary platform development, adoption of commercial enterprise platforms (WeChat Work, DingTalk), and hybrid models combining aspects of both. Parks using commercial platforms benefit from established user familiarity and mature feature sets; proprietary platforms, meanwhile, offer greater customization.
 
-WeChat Work (known internationally as WeCom) has become a dominant platform for smart park digital services. \citet{Tencent2024} report that over 5.5 million enterprises were using WeChat Work as of 2021, with industrial parks making up a notable user segment. The platform offers enterprise messaging, workflow automation, approval routing, contact management, and integration with the broader WeChat ecosystem, including payment services.
-
-DingTalk, built by Alibaba, provides similar functionality with particular strengths in workflow management and Alibaba Cloud integration. \citet{Alibaba2024} document features such as schedule management, collaborative document editing, OA approval workflows, attendance tracking, and video conferencing that supports up to 1,000 participants. Its low-code development tools allow rapid customization for specific park needs.
+WeChat Work (internationally known as WeCom) has emerged as a dominant vehicle for smart park digital services. As of 2021, \citet{Tencent2024} report over 5.5 million enterprise users, with industrial parks forming a notable segment. The platform provides enterprise messaging, workflow automation, approval routing, and integration with the broader WeChat ecosystem --- including payment services. DingTalk, Alibaba's alternative, offers comparable functionality with particular strengths in workflow management and cloud integration. \citet{Alibaba2024} document features such as OA approval workflows, collaborative document editing, attendance tracking, and video conferencing for up to 1,000 participants, with low-code tools enabling rapid customization.
 
 \subsection{Park Innovation Management Framework}
 
-\citet{Yang2025} put forward the Park Innovation Management (PIM) framework as a way to understand digital transformation in Chinese industrial parks. The framework identifies five interconnected dimensions: institutional innovation (governance structures and policies), technological innovation (digital infrastructure and platforms), service innovation (new models of service delivery), ecosystem innovation (stakeholder relationships and value networks), and spatial innovation (bridging the physical and digital).
+\citet{Yang2025} propose the Park Innovation Management (PIM) framework as a lens for understanding digital transformation in Chinese industrial parks. Five interconnected dimensions structure the framework: institutional innovation (governance structures and policies), technological innovation (digital infrastructure and platforms), service innovation (new service delivery models), ecosystem innovation (stakeholder relationships and value networks), and spatial innovation (bridging the physical and digital).
 
-The PIM framework matters for this research because it offers a structured way to think about which elements of Chinese smart park models can travel to other contexts. It suggests that successful technology transfer requires attending to all five dimensions, not just replicating the technology.
+For this research, the PIM framework offers a structured way to assess which elements of Chinese smart park models can realistically travel to other contexts. Crucially, it makes clear that successful technology transfer requires attending to all five dimensions --- not just replicating the technology itself.
 
 \subsection{Suzhou Industrial Park Case Study}
 
-Suzhou Industrial Park (SIP), launched in 1994 as a China-Singapore collaboration, is one of the most advanced smart park implementations in operation. The park's ``Marvelous City of SIP'' mobile application serves as a comprehensive one-stop service platform, available in both English and Chinese \citep{PRNewswire2024}.
+Suzhou Industrial Park (SIP), launched in 1994 as a China-Singapore collaboration, represents one of the most mature smart park implementations in operation. Its ``Marvelous City of SIP'' mobile application functions as a comprehensive one-stop service platform, available in both English and Chinese \citep{PRNewswire2024}.
 
-The SIP platform covers business registration, permit applications, utility services, provident fund queries, facility booking, and cultural services. It illustrates the integration of administrative services with lifestyle amenities---a reflection of the broader Chinese smart city philosophy that treats industrial parks as full ecosystems rather than purely manufacturing zones.
-
-Looking at the SIP case reveals several transferable ideas: consolidating services through a single access point, designing for mobile first in line with user habits, linking payment processing to service delivery, and providing transparent tracking for administrative processes. At the same time, the case highlights dependencies on Chinese-specific infrastructure, including reliable connectivity and deep integration with WeChat and Alipay.
+Services covered include business registration, permit applications, utility management, provident fund queries, facility booking, and cultural amenities --- reflecting the broader Chinese smart city philosophy that treats industrial parks as full living-and-working ecosystems rather than purely manufacturing zones. Several design principles emerge from the SIP case that travel well: a single access point for all services, mobile-first design aligned with user habits, payment processing integrated into service workflows, and transparent request tracking. At the same time, the case underscores real dependencies on Chinese-specific infrastructure, particularly reliable connectivity and deep integration with WeChat and Alipay.
 
 \section{Belt and Road Initiative and Digital Silk Road}
 
 \subsection{China-Africa Technology Transfer Context}
 
-The Belt and Road Initiative (BRI), launched in 2013, has established extensive frameworks for infrastructure development and technology transfer between China and partner countries. The Digital Silk Road (DSR), formally announced in 2015, extends these frameworks specifically to digital infrastructure, e-commerce, and smart city technologies \citep{ElKadi2024}.
+Launched in 2013, the Belt and Road Initiative (BRI) established extensive frameworks for infrastructure development and technology transfer between China and partner countries. The Digital Silk Road (DSR), formally announced in 2015, extended these frameworks specifically to digital infrastructure, e-commerce, and smart city technologies \citep{ElKadi2024}.
 
-\citet{deKluiver2024} look at the implications of BRI and DSR for digital development in Africa, pointing to both opportunities and challenges. On the opportunity side, there is access to Chinese technology, financing for digital infrastructure, and models for digital governance. The challenges include concerns about technological dependency, data sovereignty, and whether Chinese models are truly appropriate for African contexts.
-
-Ethiopian industrial parks occupy an important position in China-Africa BRI relationships, reflecting broader patterns of Chinese special economic zone investment across the continent \citep{Brautigam2011}. Several parks were built with Chinese money, Chinese companies make up a large share of tenants, and ongoing technical relationships connect Ethiopian park managers with their Chinese counterparts \citep{Negesa2022}. This context creates both practical pathways and a conceptual rationale for exploring how Chinese digital models might be adapted.
+\citet{deKluiver2024} examine BRI and DSR implications for African digital development, pointing to real opportunities --- access to Chinese technology, financing for digital infrastructure, and working models for digital governance --- alongside concerns about technological dependency, data sovereignty, and contextual fit. Ethiopian industrial parks sit squarely within these China-Africa BRI relationships. Several parks were built with Chinese capital, Chinese companies make up a substantial share of tenants, and ongoing technical ties connect Ethiopian and Chinese park managers \citep{Negesa2022, Brautigam2011}. These linkages create both practical pathways and a conceptual rationale for exploring how Chinese digital governance models might be adapted.
 
 \subsection{Technology Adaptation in South-South Transfer}
 
-The literature on South-South technology transfer stresses that successful transfer demands active adaptation, not passive copying. \citet{Chen2018} argue that receiving countries need to build ``absorptive capacity''---the ability to recognize, take in, and apply external knowledge---while also adapting technologies to fit local realities.
-
-\citet{Hensengerth2018} focus specifically on China-Africa technology transfer in the infrastructure sector. They find that successful projects involve substantial localization: training local staff, adjusting technologies to work with local materials and conditions, and maintaining ongoing technical support. Their research suggests that digital technology transfer faces similar demands, with the added complexity of local digital ecosystems and connectivity infrastructure.
+South-South technology transfer literature consistently emphasizes that successful transfer demands active adaptation, not passive copying. \citet{Chen2018} argue that receiving countries must develop ``absorptive capacity'' --- the ability to recognize, assimilate, and apply external knowledge --- while adapting technologies to local realities. \citet{Hensengerth2018}, examining China-Africa infrastructure transfers, find that projects which localize training, adjust technologies to local conditions, and maintain ongoing support tend to succeed. Digital technology transfer faces similar demands, compounded by the additional complexity of local digital ecosystems and connectivity infrastructure.
 
 \section{Digital Governance in Developing Countries}
 
 \subsection{E-Government Evolution and Models}
 
-E-government research has moved through several conceptual phases, from early emphasis on automating services to the current focus on digital transformation and platform governance. \citet{Layne2001} propose a four-stage model progressing from cataloguing, through transaction and vertical integration, to horizontal integration. \citet{Wimmer2002} add a European perspective on one-stop government, stressing service integration across administrative boundaries. \citet{Bannister2015} trace these shifts, noting a move from technology-centric to citizen-centric thinking, from isolated systems to integrated platforms, and from a narrow efficiency focus to broader governance goals.
+E-government scholarship has evolved considerably since its early focus on automating services. \citet{Layne2001} proposed a four-stage progression --- cataloguing, transaction, vertical integration, horizontal integration --- that shaped early visions of government digitalization. \citet{Wimmer2002} added a European perspective stressing cross-boundary service integration, while \citet{Bannister2015} trace subsequent shifts toward citizen-centric thinking, integrated platforms, and governance goals broader than efficiency alone.
 
-The United Nations E-Government Survey offers a framework for comparing e-government development across countries. The 2022 survey places Ethiopia in the ``middle'' category on the E-Government Development Index (EGDI), noting improvements in online service availability while flagging challenges in telecommunications infrastructure and human capital \citep{UN2022}.
+At the international level, the United Nations E-Government Survey provides comparative benchmarks. The 2022 survey places Ethiopia in the ``middle'' category on the E-Government Development Index, acknowledging improvements in online service availability while noting persistent challenges in telecommunications infrastructure and human capital \citep{UN2022}.
 
 \subsection{E-Government in Ethiopia}
 
-Ethiopian e-government efforts have expanded significantly since the Ministry of Innovation and Technology was established. \citet{Lessa2019} look at e-government service implementation in Ethiopia, identifying infrastructure constraints as a key barrier while acknowledging progress in mobile-based service delivery.
+Ethiopian e-government efforts have expanded meaningfully since the establishment of the Ministry of Innovation and Technology. \citet{Lessa2019} examine service implementation in Ethiopia, identifying infrastructure constraints as a central barrier while noting progress in mobile-based delivery. \citet{Denbu2019} focus specifically on implementation challenges in public organizations, finding that connectivity issues, limited digital literacy, and organizational resistance are the dominant obstacles --- and recommending mobile-first, offline-capable approaches as practical workarounds.
 
-\citet{Denbu2019} specifically analyze the challenges Ethiopian public organizations face in implementing e-government, finding that connectivity issues, limited digital literacy, and organizational resistance are major obstacles. They recommend mobile-first approaches and offline-capable systems as strategies for working around infrastructure limitations.
-
-Ethiopia's Digital Strategy 2025 lays out national priorities for digital transformation, including expanding digital infrastructure, building digital skills, and digitizing government services. Industrial parks are singled out as priority zones for digital infrastructure investment, creating a natural alignment between national strategy and the objectives of this research.
+Nationally, Ethiopia's Digital Strategy 2025 identifies expanding digital infrastructure, building digital skills, and digitizing government services as core priorities. Industrial parks are explicitly designated as priority zones for digital infrastructure investment, creating direct alignment with the objectives of this research.
 
 \subsection{One-Stop Service Delivery Models}
 
-The one-stop service (OSS) concept has been widely adopted in e-government implementations around the world. \citet{Askim2011} examine OSS implementations across several countries, pointing to common features: service consolidation, reduced administrative burden for users, and better coordination between agencies.
+One-stop service (OSS) has been widely adopted across e-government implementations worldwide. \citet{Askim2011} document common features across national implementations: service consolidation, reduced administrative burden, and improved inter-agency coordination. In developing countries, \citet{Bhatnagar2014} find measurable efficiency gains and higher user satisfaction from OSS implementations in South Asia, alongside persistent difficulties in inter-agency coordination and system integration.
 
-Research on OSS in developing countries highlights both potential benefits and practical challenges. \citet{Bhatnagar2014} study OSS implementations in South Asia, finding meaningful improvements in efficiency and user satisfaction alongside difficulties with inter-agency coordination and system integration.
-
-In industrial park settings specifically, the OSS model tackles the fragmentation of traditional service delivery. Instead of requiring tenants to deal with multiple departments for different services, an OSS platform gives them unified access through a single interface with coordinated processing behind the scenes.
+In industrial park settings, the OSS model directly addresses the fragmentation that characterizes traditional service delivery. Rather than requiring tenants to navigate multiple departments for different services, a unified platform handles everything through a single interface --- with coordination managed behind the scenes.
 
 \section{Offline-First Architecture and PWA Technologies}
 
 \subsection{Local-First Software Principles}
 
-The local-first software paradigm, laid out comprehensively by \citet{Kleppmann2019}, challenges some basic assumptions about how software should be built. Conventional web applications treat the server as the authoritative source of data, with clients holding temporary caches that must be checked against the server. Local-first software turns this around: locally stored data is treated as authoritative, and the network is used opportunistically for synchronization.
+\citet{Kleppmann2019} lay out the local-first software paradigm as a deliberate challenge to conventional web application design. Where standard applications treat the server as the authoritative data source, local-first software makes locally stored data authoritative and uses the network opportunistically for synchronization rather than as a prerequisite for operation.
 
-\citet{Kleppmann2019} describe seven ideals for local-first software: (1) no spinners---work happens locally without waiting for the network; (2) your work is not trapped on one device; (3) the network is optional; (4) seamless collaboration with colleagues; (5) the long view---data stays accessible even if service providers disappear; (6) security and privacy by default; and (7) you keep ultimate ownership and control of your data.
-
-These principles are especially relevant where connectivity cannot be taken for granted. By designing systems that work fully offline, local-first approaches ensure people can get their work done regardless of network conditions.
+Seven ideals frame the paradigm \citep{Kleppmann2019}: work happens locally without waiting for the network; data is not trapped on a single device; the network is optional; collaboration with colleagues is seamless; data remains accessible over the long term even if service providers disappear; security and privacy are defaults; and users retain ultimate ownership of their data. In environments where connectivity cannot be taken for granted, these principles have direct practical value --- people can get their work done regardless of network conditions.
 
 \subsection{Progressive Web Application Technologies}
 
-Progressive Web Applications are a collection of technologies and design patterns that let web applications deliver app-like experiences while keeping the reach and accessibility of the web \citep{AterPWA2017, Majchrzak2018}. \citet{Tandel2018} document how PWAs have reshaped modern web development, showing measurable gains in user engagement and retention over traditional web applications. PWAs offer several key capabilities: they can be installed to home screens, they work offline, and they follow progressive enhancement principles---functioning on any browser while providing richer features on supporting ones.
+Progressive Web Applications combine a set of technologies and design patterns that allow web applications to deliver app-like experiences while preserving the reach and accessibility of the web \citep{AterPWA2017, Majchrzak2018}. \citet{Tandel2018} document measurable gains in user engagement and retention over traditional web applications, attributing these to three key capabilities: home screen installation, offline operation, and progressive enhancement --- functioning on any browser while offering richer features where supported.
 
-Technically, PWAs rest on three pillars: service workers, web app manifests, and modern caching APIs. Service workers are JavaScript files that run in their own thread, enabling background processing, request interception, and caching strategies. Web app manifests supply the metadata needed for installation and customization. Caching APIs---particularly the Cache API and IndexedDB---provide persistent client-side storage for both application assets and data.
+Technically, PWAs rest on three pillars. Service workers are JavaScript files that run in a separate thread, enabling background processing, request interception, and caching. Web app manifests supply the metadata needed for installation and customization. Caching APIs --- particularly the Cache API and IndexedDB --- provide persistent client-side storage for assets and data alike.
 
-\citet{BiornHansen2017} compare PWAs with native mobile applications across dimensions including performance, capability, development cost, and user experience. They find that PWAs deliver comparable experiences for many application types while being significantly more efficient to develop and deploy across platforms. The research notes that PWAs are particularly well suited when offline capability matters and when reaching users on multiple platforms is a priority.
+\citet{BiornHansen2017} compare PWAs with native mobile applications across performance, capability, development cost, and user experience, finding that PWAs deliver comparable results for many application types at significantly lower development and deployment costs. The advantage is especially pronounced when offline capability and multi-platform reach are priorities.
 
 \subsection{Service Workers and Caching Strategies}
 
-Service workers enable the sophisticated caching strategies that offline-first applications depend on \citep{Gaunt2020}. Google's Workbox library provides a set of production-ready modules for managing service workers, making it easier to implement common caching patterns \citep{Workbox2024}. \citet{ArchibaldJake2023} provide a thorough catalog of these patterns in the ``Offline Cookbook,'' while \citet{AhnAllen2020} document several key approaches: cache-first (serve from cache, fall back to network), network-first (try the network, fall back to cache), stale-while-revalidate (serve from cache immediately while updating in the background), and cache-only or network-only strategies for specific resource types.
+Service workers enable the caching strategies that offline-first applications depend on \citep{Gaunt2020}. Google's Workbox library provides production-ready modules for managing service worker logic, simplifying the implementation of common patterns \citep{Workbox2024}. \citet{ArchibaldJake2023} catalog these patterns extensively in the ``Offline Cookbook,'' while \citet{AhnAllen2020} describe the principal approaches: cache-first (serve from cache, fall back to network), network-first (try network, fall back to cache), stale-while-revalidate (serve immediately from cache while updating in the background), and cache-only or network-only strategies for specific resource types.
 
-For offline-first applications, cache-first is generally the preferred strategy for application assets and previously loaded data, since it guarantees immediate availability regardless of network conditions. Stale-while-revalidate works well for data that changes periodically, providing instant responsiveness while keeping things eventually consistent.
-
-Background synchronization, made possible through the Background Sync API, lets PWAs defer actions until the network is available. This is essential for offline-first applications that need to send data to servers---actions are queued locally and executed automatically once connectivity returns.
+For offline-first applications, cache-first is generally preferred for assets and previously loaded data, since it guarantees availability regardless of connectivity. Stale-while-revalidate suits data that changes periodically, balancing instant responsiveness with eventual consistency. Background synchronization, enabled through the Background Sync API, lets PWAs defer network operations until connectivity returns --- essential for queueing data submissions created while offline.
 
 \subsection{IndexedDB and Client-Side Data Persistence}
 
-IndexedDB provides a low-level API for storing substantial amounts of structured data on the client side. Unlike localStorage, which only handles string key-value pairs and is typically capped at 5--10MB, IndexedDB supports complex data structures, indexing, and storage limits that usually reach hundreds of megabytes or more \citep{MDN2024}.
-
-In offline-first applications, IndexedDB acts as the local database for application data. Pending changes are stored there and synchronized with the server when connectivity returns. Libraries like Dexie.js \citep{Dexie2024} offer higher-level abstractions over the IndexedDB API, making common operations simpler and code more maintainable. \citet{Nicoara2018} provide detailed guidance on offline-first web development patterns using these client-side storage technologies.
+IndexedDB provides a low-level API for storing substantial amounts of structured data on the client. Unlike localStorage --- limited to string key-value pairs and typically capped at 5--10\,MB --- IndexedDB supports complex data structures, indexing, and storage limits that typically reach hundreds of megabytes \citep{MDN2024}. In offline-first applications, it serves as the local database: pending changes accumulate there and synchronize with the server when connectivity resumes. Libraries such as Dexie.js \citep{Dexie2024} abstract over the raw IndexedDB API, simplifying common operations and improving code maintainability. \citet{Nicoara2018} offer detailed guidance on offline-first development patterns using these technologies.
 
 \subsection{Firebase Offline Persistence}
 
-Google's Firebase platform includes built-in offline persistence through its Firestore database. When offline persistence is turned on, Firestore automatically caches data locally and synchronizes changes once the network comes back \citep{GoogleFirebase2024}. This greatly simplifies offline-first development because the synchronization logic is handled at the platform level.
-
-Firestore resolves conflicts with a last-write-wins strategy at the document level. For applications that need more sophisticated conflict handling, custom logic can be built using Cloud Functions triggered by database changes.
-
-Firebase is also practical for thesis research and prototype development thanks to its generous free tier, which provides enough capacity for development, testing, and pilot deployment at no cost.
+Google's Firebase platform provides built-in offline persistence through Firestore. When enabled, Firestore automatically caches data locally and synchronizes changes once the network is available again \citep{GoogleFirebase2024}, offloading most synchronization logic to the platform rather than requiring application-level implementation. Conflicts are resolved using a last-write-wins strategy at the document level; more complex resolution can be implemented via Cloud Functions triggered by database changes. Firebase's generous free tier also makes it practical for thesis research and prototype deployment.
 
 \section{ICT4D and Connectivity Constraints}
 
 \subsection{ICT for Development Frameworks}
 
-Information and Communication Technologies for Development (ICT4D) research investigates how digital technologies can contribute to development outcomes in resource-constrained settings \citep{Avgerou2010, Walsham2017}. The field has produced extensive theoretical work on the relationship between technology and development \citep{Zheng2018}, with scholars arguing that ICT4D poses a grand challenge for the information systems discipline \citep{Sahay2017}. \citet{Sein2019} present a holistic view of the theoretical foundations for ICT4D research, bringing together multiple theoretical perspectives. \citet{Heeks2018} offer a comprehensive framework, tracing the field's evolution from ICT4D 1.0 (technology transfer from developed countries) through ICT4D 2.0 (participatory approaches emphasizing local adaptation) to the emerging ICT4D 3.0 (digital development that recognizes technologies as embedded within broader development processes).
-
-A consistent theme in the ICT4D literature is that successful technology interventions must be adapted to local contexts, not transplanted wholesale from other settings. \citet{Toyama2015} argues that the development impact of technology depends critically on ``amplifying'' existing human and institutional capacities---technology on its own cannot bridge fundamental capacity gaps.
+Information and Communication Technologies for Development (ICT4D) research examines how digital technologies can advance development in resource-constrained settings \citep{Avgerou2010, Walsham2017}. The field has generated substantial theoretical work on the technology-development relationship \citep{Zheng2018, Sahay2017}, with \citet{Sein2019} providing a holistic account of its theoretical foundations. \citet{Heeks2018} traces the field's trajectory from ICT4D 1.0 --- technology transfer from developed countries --- through ICT4D 2.0 (participatory, locally adapted approaches) to ICT4D 3.0, which situates technologies within broader development processes. A consistent finding runs through this literature: successful technology interventions must be adapted to local contexts. \citet{Toyama2015} frames this in terms of amplification --- technology magnifies existing human and institutional capacities, but cannot substitute for them.
 
 \subsection{Connectivity Challenges in Developing Regions}
 
-Connectivity infrastructure in developing regions often differs fundamentally from the assumptions baked into technologies designed for well-connected environments. \citet{ChenNath2016} document connectivity patterns in developing regions, finding that intermittent access---periods of availability interspersed with outages---is the norm, and that connection quality varies widely.
-
-Research on ``delay-tolerant networking'' and ``intermittent connectivity'' offers technical frameworks for dealing with these challenges. \citet{Fall2003} introduce delay-tolerant networking for environments where continuous end-to-end connectivity cannot be assumed. Although originally targeting extreme scenarios like interplanetary networks and disaster response, the underlying principles apply to everyday connectivity challenges in developing regions.
+Connectivity infrastructure in developing regions often diverges fundamentally from the assumptions embedded in technologies designed for reliably connected environments. \citet{ChenNath2016} document that intermittent access --- periods of availability interspersed with outages and variable quality --- is the norm, not the exception. Delay-tolerant networking research offers relevant technical frameworks. \citet{Fall2003} introduced delay-tolerant networking for scenarios where continuous end-to-end connectivity cannot be assumed; though originally targeting extreme settings like disaster response and interplanetary networks, the underlying principles apply directly to everyday connectivity challenges in developing regions.
 
 \subsection{Mobile-First and Offline-First in Development Contexts}
 
-The rapid spread of mobile devices in developing regions has fueled interest in mobile-first design. \citet{Donner2015} study mobile technology adoption in developing countries, finding that mobile devices often serve as the primary---sometimes the only---computing devices people use.
+The rapid spread of mobile devices in developing regions has driven sustained interest in mobile-first design. \citet{Donner2015} find that mobile devices frequently serve as people's primary --- and sometimes only --- computing platform. Offline-first design extends this mobile-first orientation to address connectivity limitations more directly. \citet{Muawwal2024} demonstrate that offline-first application design meaningfully improves both service accessibility and user satisfaction in government service contexts with limited connectivity.
 
-Building on mobile-first thinking, offline-first design has emerged as a response to connectivity limitations. \citet{Muawwal2024} look at offline-first application development for government services in connectivity-constrained contexts, concluding that offline-first design meaningfully improves both service accessibility and user satisfaction.
-
-\citet{Cherukuri2024} provide practical implementation guidance for offline-first PWAs, covering data synchronization patterns, conflict resolution, and user experience design for offline scenarios. Their work stresses the importance of giving users clear feedback about connectivity status and synchronization state.
+\citet{Cherukuri2024} provide practical implementation guidance for offline-first PWAs, covering synchronization patterns, conflict resolution, and UX design for offline scenarios. A key recommendation: give users clear, continuous feedback about connectivity status and synchronization state.
 
 \section{Technology Adaptation Frameworks}
 
 \subsection{Technology Transfer Theory}
 
-Technology transfer theory provides frameworks for understanding how technologies move between contexts and what makes transfers succeed or fail. Classical models focus on transfers from developed to developing countries, emphasizing absorptive capacity, technological complexity, and institutional environment \citep{Rogers2003}.
-
-More recent work recognizes the active role of technology recipients in shaping what they receive. \citet{Edgerton2007} pushes back against the idea that technology adoption is passive reception, highlighting instead the creative adaptation that happens as technologies are put to use in new settings.
+Technology transfer theory explains how technologies move between contexts and what determines success or failure. Classical models focus on transfers from developed to developing countries, emphasizing absorptive capacity, technological complexity, and institutional environment \citep{Rogers2003}. More recent thinking recognizes the agency of technology recipients. \citet{Edgerton2007} argues against the idea of adoption as passive reception, highlighting instead the creative adaptation that invariably occurs as technologies are deployed in new settings.
 
 \subsection{Appropriate Technology Theory}
 
-Appropriate Technology Theory, which traces back to \citet{Schumacher1973}, holds that technologies should suit the contexts where they will be used. The theory challenges the assumption that advanced technologies from industrialized nations are universally applicable, arguing instead for solutions matched to local conditions---available resources, skills, and institutional capacities.
-
-\citet{Toyama2015} brings appropriate technology thinking into the digital age, contending that digital technologies must be assessed not only for what they can do technically but for how well they fit with local human and institutional realities. This perspective supports the approach taken in this research: adapting Chinese smart park models rather than trying to replicate them directly.
+Rooted in \citet{Schumacher1973}, Appropriate Technology Theory holds that technologies should suit the contexts in which they are used. The theory challenges the assumption that advanced technologies from industrialized nations are universally applicable, arguing instead for solutions calibrated to local conditions --- available resources, skill levels, and institutional capacities. \citet{Toyama2015} extends this perspective to the digital age: digital technologies must be assessed not only for their technical capabilities but for how well they fit local human and institutional realities. This reasoning directly supports the adaptation approach taken in this research --- adapting Chinese smart park models rather than replicating them directly.
 
 \subsection{Platform Adaptation Strategies}
 
-Research on digital platform adaptation offers frameworks for understanding how platforms can be modified for different settings. \citet{Schreieck2022} analyze platform adaptation strategies along dimensions such as feature modification, integration adaptation, and ecosystem repositioning.
-
-For this research, the relevant adaptation strategy involves changing the architectural assumptions of Chinese platforms (persistent connectivity, integration with Chinese payment systems) while keeping core functionality intact (service consolidation, workflow automation, status tracking). This represents a substantial adaptation that requires both technical reworking and conceptual reframing.
+Research on digital platform adaptation offers frameworks for understanding how platforms can be reshaped for different settings. \citet{Schreieck2022} analyze adaptation strategies along dimensions including feature modification, integration adaptation, and ecosystem repositioning. The adaptation required here is substantial: changing the architectural assumptions of Chinese platforms (persistent connectivity, integration with Chinese payment systems) while preserving core functionality (service consolidation, workflow automation, status tracking). This is not superficial customization but a fundamental reworking of technical foundations alongside conceptual reframing.
 
 \section{Ethiopian Industrial Parks Context}
 
 \subsection{Industrial Parks Development Corporation (IPDC)}
 
-The Industrial Parks Development Corporation (IPDC) was established in 2014 as a public enterprise charged with developing, managing, and operating industrial parks across Ethiopia. IPDC is central to Ethiopia's industrial policy, which aims to shift the country from an agricultural economy toward manufacturing \citep{Oqubay2018, Guteta2024}. \citet{Gebreeyesus2019} trace the evolution of Ethiopian industrial policy, placing industrial parks within a larger strategy of structural economic transformation.
+Established in 2014 as a public enterprise, the Industrial Parks Development Corporation (IPDC) is responsible for developing, managing, and operating industrial parks across Ethiopia. IPDC sits at the center of Ethiopia's industrial policy, which aims to shift the economy from agriculture toward manufacturing \citep{Oqubay2018, Guteta2024}. \citet{Gebreeyesus2019} traces this evolution, situating industrial parks within a broader strategy of structural economic transformation.
 
-IPDC's portfolio includes Bole Lemi Industrial Park (the first to become operational, in 2014), Eastern Industrial Zone (developed with Chinese partners), Hawassa Industrial Park (the flagship eco-industrial park), and several other parks at various stages of development. These parks host both Ethiopian and international manufacturers, with a notable presence of Chinese, Turkish, Indian, and other foreign firms \citep{Tesfaw2023}.
+IPDC's portfolio includes Bole Lemi Industrial Park (the first to become operational, in 2014), Eastern Industrial Zone (developed with Chinese partners), Hawassa Industrial Park (the flagship eco-industrial facility), and several parks at various development stages. These parks host both Ethiopian and international manufacturers, with a notable presence of Chinese, Turkish, and Indian firms \citep{Tesfaw2023}.
 
 \subsection{Current Service Delivery Challenges}
 
-Research on Ethiopian industrial parks reveals significant service delivery problems that weigh on tenant satisfaction and operational performance. \citet{Guteta2022} identify several service dimensions where parks fall short of tenant expectations, including administrative responsiveness, infrastructure reliability, and communication.
+Research consistently documents service delivery problems that weigh on tenant satisfaction and operational performance in Ethiopian industrial parks. \citet{Guteta2022} identify shortfalls in administrative responsiveness, infrastructure reliability, and communication. \citet{Guteta2023} apply the SERVQUAL framework and find gaps between tenant expectations and perceived service quality across every measured dimension, recommending investment in digital systems to improve tracking, communication, and responsiveness.
 
-\citet{Guteta2023} apply the SERVQUAL framework to service quality in Ethiopian industrial parks and find gaps between what tenants expect and what they perceive across every measured dimension. Their recommendation: invest in digital systems to improve service tracking, communication, and responsiveness.
-
-On the ground, administrative processes in these parks still run mainly on paper. Filing a service request means visiting an office in person. Approvals move through manual document routing. Tracking a request depends on informal follow-up. The result is delays, lack of transparency, and frustration for tenants who are used to digital services elsewhere.
+On the ground, administrative processes still run primarily on paper. A service request requires a physical office visit. Approvals move through manual document routing. Tracking a request depends on informal follow-up. The result --- delays, opacity, and frustration for tenants accustomed to digital services elsewhere --- is well documented and largely unaddressed.
 
 \subsection{Infrastructure and Connectivity Context}
 
-Ethiopian telecommunications infrastructure has grown substantially in recent years, with mobile penetration surpassing 50\% and internet usage climbing quickly. But connectivity remains unreliable, especially outside major cities. Industrial parks, despite their strategic importance, are not immune to regular disruptions.
+Ethiopian telecommunications infrastructure has grown substantially in recent years, with mobile penetration surpassing 50\% and internet usage rising quickly. Connectivity remains unreliable outside major cities, however, and industrial parks --- despite their strategic importance --- are not insulated from regular disruptions. Field observations and stakeholder consultations point to three to five hours of daily internet disruption in Ethiopian parks, with complete outages occurring two to three times monthly. This profile is fundamentally incompatible with cloud-dependent systems that treat network availability as a given.
 
-Field observations and stakeholder consultations point to three to five hours of daily internet disruption in Ethiopian industrial parks, with complete outages two to three times a month. This connectivity profile is fundamentally at odds with cloud-dependent digital systems that assume the network is always available.
-
-The Ethiopian government has made telecommunications investment a priority, including expanding fiber optic networks and 4G coverage. But infrastructure improvements take time, and any near-term digital solution has to work within current constraints rather than banking on future availability.
+Government investment in telecommunications --- fiber optic expansion, 4G coverage --- is underway, but infrastructure improvements take time. Any near-term digital solution must work within current constraints rather than banking on connectivity improvements that have yet to materialize.
 
 \subsection{China-Ethiopia Industrial Park Relationships}
 
-The relationship between China and Ethiopia in industrial park development spans investment, construction, tenancy, and technical cooperation \citep{Oqubay2019}. \citet{Negesa2022} document the extent of Chinese involvement in building and financing Ethiopian parks.
-
-Chinese companies make up a sizable share of tenants in Ethiopian parks, especially in textiles and garments. This Chinese presence means park stakeholders are already familiar with Chinese business practices and may be open to digital systems inspired by Chinese models.
-
-Technical cooperation ties between Ethiopian and Chinese park managers also exist, providing channels for knowledge transfer and technical support. These relationships create practical routes for exploring adaptation of Chinese digital governance models---while also underscoring how much adaptation is needed to suit Ethiopian conditions.
+China-Ethiopia ties in industrial park development span investment, construction, tenancy, and technical cooperation \citep{Oqubay2019}. \citet{Negesa2022} document the scale of Chinese involvement in financing and building Ethiopian parks. Chinese companies form a substantial share of tenants --- particularly in textiles and garments --- meaning park stakeholders already have direct familiarity with Chinese business practices and may be receptive to digital systems informed by Chinese models. Technical cooperation channels between Ethiopian and Chinese park managers provide further routes for knowledge transfer, while also sharpening attention to how much genuine adaptation is needed to suit Ethiopian conditions.
 
 \section{Design Science Research Methodology}
 
 \subsection{DSR Paradigm and Principles}
 
-Design Science Research (DSR) is a research paradigm focused on creating and evaluating artifacts that solve identified problems. Unlike behavioral research, which aims to understand and explain phenomena, DSR aims to expand human and organizational capabilities by producing new and innovative artifacts \citep{Hevner2004}.
+Design Science Research (DSR) is a research paradigm centered on creating and evaluating artifacts that solve identified problems. Where behavioral research aims to understand and explain phenomena, DSR aims to expand human and organizational capabilities through purposefully designed artifacts \citep{Hevner2004}.
 
-\citet{Hevner2004} set out seven guidelines for DSR: (1) design as an artifact---DSR must produce a viable artifact; (2) problem relevance---the artifact must tackle an important business problem; (3) design evaluation---the artifact's utility, quality, and efficacy must be rigorously shown; (4) research contributions---DSR must deliver clear contributions to knowledge; (5) research rigor---construction and evaluation must use rigorous methods; (6) design as a search process---building an effective artifact means using available means to reach desired ends; and (7) communication---results must be shared with both technical and management audiences.
+\citet{Hevner2004} establish seven guidelines: (1) DSR must produce a viable artifact; (2) the artifact must address an important practical problem; (3) its utility, quality, and efficacy must be rigorously demonstrated; (4) the research must deliver clear knowledge contributions; (5) construction and evaluation must apply rigorous methods; (6) effective artifact development involves searching available means toward desired ends; and (7) results must be communicated to both technical and management audiences.
 
 \subsection{DSRM Process Model}
 
-\citet{Peffers2007} propose a Design Science Research Methodology (DSRM) process model that gives structured guidance for carrying out DSR projects. It identifies six activities: (1) problem identification and motivation; (2) defining objectives for a solution; (3) design and development; (4) demonstration; (5) evaluation; and (6) communication.
+\citet{Peffers2007} propose a Design Science Research Methodology (DSRM) process model providing structured guidance for DSR projects. Six activities organize the process: (1) problem identification and motivation; (2) defining solution objectives; (3) design and development; (4) demonstration; (5) evaluation; and (6) communication. The process is not strictly linear --- researchers may enter at different points and iterate between activities --- but the model ensures that all essential DSR activities receive attention.
 
-The DSRM process is not strictly linear---researchers may enter at different points and iterate between activities as needed. But the model ensures that all the essential DSR activities get addressed.
-
-In this research, the DSRM model structures the entire investigation: problem identification draws on the literature review and stakeholder analysis; objectives are set based on identified problems and requirements; design and development produce the offline-first platform; demonstration shows how the artifact works; evaluation assesses its effectiveness; and communication happens through this thesis and potential publications.
+In this research, the DSRM structure organizes the entire investigation: problem identification draws on the literature review and stakeholder analysis; objectives are derived from identified problems; design and development produce the offline-first platform; demonstration shows how the artifact functions; evaluation assesses effectiveness; and communication occurs through this thesis and potential publications.
 
 \subsection{DSR Artifact Types}
 
-DSR artifacts come in several forms. \citet{March1995} identify four types: constructs (vocabulary and symbols), models (abstractions and representations), methods (algorithms and practices), and instantiations (implemented systems). \citet{Hevner2004} add ``better theories'' as a fifth type.
-
-This research produces multiple artifact types: an instantiation (the offline-first platform prototype), a method (the adaptation framework for transferring digital governance models to connectivity-constrained settings), and constructs (the design principles for offline-first industrial platforms). Producing several artifact types strengthens the research contribution by offering both practical tools and generalizable knowledge.
+\citet{March1995} identify four DSR artifact types: constructs (vocabulary and symbols), models (abstractions and representations), methods (algorithms and practices), and instantiations (implemented systems). \citet{Hevner2004} add ``better theories'' as a fifth. This research produces multiple artifact types: an instantiation (the offline-first platform prototype), a method (the adaptation framework for transferring digital governance models to connectivity-constrained settings), and constructs (the design principles for offline-first industrial platforms). Producing several artifact types strengthens the overall contribution by combining practical tools with generalizable knowledge.
 
 \subsection{DSR in Information Systems}
 
-DSR has become a well-established paradigm in Information Systems, recognized alongside behavioral research as a valid way to create knowledge. \citet{Gregor2013} make the case for design theory as a distinct form of knowledge, arguing that knowing ``how to do something'' is just as valuable as knowing ``how things are.''
-
-DSR fits particularly well when existing solutions fall short of addressing a practical problem. That is precisely the situation here: Chinese smart park platforms and offline-first technologies exist separately, but nothing brings them together to address the specific challenge of adapting digital park governance for connectivity-constrained industrial settings.
+DSR has become an established paradigm in Information Systems, recognized alongside behavioral research as a valid mode of knowledge creation. \citet{Gregor2013} makes the case for design theory as a distinct form of knowledge, arguing that knowing ``how to do something'' is epistemically as valuable as knowing ``how things are.'' DSR fits especially well when existing solutions fall demonstrably short of addressing a practical problem --- precisely the situation here, where Chinese smart park platforms and offline-first technologies exist independently but nothing combines them to address the specific challenge of adapting digital park governance for connectivity-constrained settings.
 
 \section{Related Works and Comparative Analysis}
 
 \subsection{Smart Park Implementations}
 
-Several research efforts have looked at smart park implementations in various settings. Table~\ref{tab:related-smart-park} summarizes the most relevant works and how they relate to this research.
+Several research efforts have examined smart park implementations in various settings. Table~\ref{tab:related-smart-park} summarizes the most relevant works and their relationship to this research.
 
 \begin{table}[H]
 \centering
@@ -248,7 +200,7 @@ Grosse-Bley \& Kostka (2021) & Big data in smart cities & Shenzhen, China & Does
 
 \subsection{Offline-First and PWA Applications}
 
-Research on offline-first and PWA applications in developing country contexts offers useful technical guidance while also revealing gaps that this research aims to fill. Table~\ref{tab:related-pwa} summarizes the relevant PWA studies.
+Research on offline-first and PWA applications in developing country contexts offers useful technical guidance while revealing gaps this research aims to fill. Table~\ref{tab:related-pwa} summarizes the relevant PWA studies.
 
 \begin{table}[H]
 \centering
@@ -268,23 +220,23 @@ Ahn \& Allen (2020) & PWA capabilities & General web apps & Not developing count
 
 \subsection{E-Government in Ethiopian Context}
 
-Research on Ethiopian e-government provides important background while making clear the gap in industrial park-specific solutions. \citet{Lessa2019} and \citet{Denbu2019} document e-government challenges in Ethiopia but do not address industrial park service delivery as such. This research extends Ethiopian e-government work into the industrial park domain while tackling the connectivity constraints that hold back conventional e-government approaches.
+Ethiopian e-government research provides important context while making clear the absence of industrial park-specific digital solutions. \citet{Lessa2019} and \citet{Denbu2019} document broader e-government challenges in Ethiopia without addressing industrial park service delivery. This research extends that body of work into the industrial park domain, tackling the connectivity constraints that hold back conventional e-government approaches.
 
 \section{Research Gap Analysis}
 
 \subsection{Identified Gaps}
 
-The literature review brings to light several notable gaps that this research addresses:
+The literature review surfaces four significant gaps that this research addresses:
 
-\textbf{Gap 1: No Adaptation Framework for Chinese Smart Park Models.} Chinese smart park implementations are well documented, but no systematic framework exists for adapting them to connectivity-constrained environments. The literature assumes smart park platforms need persistent connectivity, leaving a gap in how to transfer smart park concepts to settings like Ethiopian industrial parks.
+\textbf{Gap 1: No Adaptation Framework for Chinese Smart Park Models.} Chinese smart park implementations are well documented, but no systematic framework exists for adapting them to connectivity-constrained environments. The literature uniformly assumes persistent connectivity, leaving no guidance for contexts like Ethiopian industrial parks.
 
-\textbf{Gap 2: Limited Offline-First Research for Complex Industrial Workflows.} Offline-first and PWA research has shown technical feasibility for relatively straightforward applications. But the complex multi-stakeholder workflows that characterize industrial park service delivery have not been addressed. There is no guidance on building offline-first approval processes, cross-stakeholder status tracking, or coordination mechanisms for industrial settings.
+\textbf{Gap 2: Limited Offline-First Research for Complex Industrial Workflows.} Offline-first and PWA research has demonstrated technical feasibility for relatively simple applications. The complex multi-stakeholder workflows characteristic of industrial park service delivery --- cross-departmental approvals, status tracking, coordinated notifications --- remain unaddressed. No guidance exists for building offline-first systems around such workflows.
 
-\textbf{Gap 3: No Purpose-Built Digital Solution for Ethiopian Industrial Parks.} Despite well-documented service delivery problems in Ethiopian parks, no research has produced digital solutions designed specifically for this context. Ethiopian e-government research does not cover industrial parks, and industrial park research does not account for Ethiopian connectivity constraints.
+\textbf{Gap 3: No Purpose-Built Digital Solution for Ethiopian Industrial Parks.} Despite well-documented service delivery problems, no research has produced digital solutions designed specifically for Ethiopian park contexts. Ethiopian e-government work does not extend to industrial parks; industrial park research does not account for Ethiopian connectivity constraints.
 
-\textbf{Gap 4: No Design Principles for Offline-First Industrial Platforms.} While general offline-first design patterns exist, specific guidance for industrial service platforms is missing. Questions about which features to prioritize for offline availability, how to synchronize multi-stakeholder workflows, and how to design user experiences for connectivity-constrained industrial users remain open.
+\textbf{Gap 4: No Design Principles for Offline-First Industrial Platforms.} General offline-first design patterns exist, but specific guidance for industrial service platforms is absent. Which features to prioritize for offline availability, how to synchronize multi-stakeholder workflows, how to design user experiences for connectivity-constrained industrial users --- these questions remain open.
 
-Table~\ref{tab:gap-matrix} presents a gap matrix showing how existing literature addresses---or fails to address---the key dimensions of this research.
+Table~\ref{tab:gap-matrix} presents a gap matrix mapping how existing literature addresses --- or fails to address --- the key dimensions of this research.
 
 \begin{table}[H]
 \centering
@@ -305,25 +257,25 @@ ICT4D & $\times$ & Partial & Partial & $\times$ \\
 
 \subsection{Research Contribution Positioning}
 
-This research contributes to knowledge by addressing these gaps through the development of:
+This research addresses the identified gaps through four contributions:
 
 \begin{enumerate}
-\item \textbf{Technology Adaptation Framework:} A systematic methodology for adapting Chinese smart park digital governance models for connectivity-constrained African industrial parks, offering both conceptual guidance and practical tools that similar projects can use.
+\item \textbf{Technology Adaptation Framework:} A systematic methodology for adapting Chinese smart park digital governance models to connectivity-constrained African industrial parks, offering both conceptual guidance and practical tools for similar projects.
 
-\item \textbf{Offline-First Industrial Architecture:} An architectural approach that extends offline-first PWA research to complex multi-stakeholder industrial service workflows, showing that it can be done and documenting the implementation patterns involved.
+\item \textbf{Offline-First Industrial Architecture:} An architectural approach that extends offline-first PWA research to complex multi-stakeholder industrial workflows, demonstrating feasibility and documenting the implementation patterns involved.
 
-\item \textbf{Ethiopian Industrial Park Solution:} The first purpose-built digital one-stop service for Ethiopian industrial parks, designed to address documented service delivery challenges while working within connectivity constraints.
+\item \textbf{Ethiopian Industrial Park Solution:} The first purpose-built digital one-stop service for Ethiopian industrial parks, designed to address documented service delivery challenges within existing connectivity constraints.
 
-\item \textbf{Design Principles:} A set of generalizable design principles for offline-first industrial service platforms, drawn from the development experience and evaluation findings.
+\item \textbf{Design Principles:} A set of generalizable design principles for offline-first industrial service platforms, derived from development experience and evaluation findings.
 \end{enumerate}
 
 \subsection{Theoretical Contribution}
 
-Beyond its practical artifacts, the research contributes to theory in several ways. First, it extends technology transfer theory by examining how digital platforms can be adapted between contexts that differ in infrastructure assumptions. Second, it advances appropriate technology theory by showing how sophisticated digital governance concepts can be reshaped for resource-constrained environments through careful architectural choices. Third, it adds to offline-first design knowledge by applying and extending existing patterns within complex industrial workflows.
+Beyond practical artifacts, the research advances theory in three ways. First, it extends technology transfer theory by examining how digital platforms can be adapted between contexts that differ fundamentally in infrastructure assumptions. Second, it advances appropriate technology theory by showing how sophisticated digital governance concepts can be reshaped for resource-constrained environments through deliberate architectural choices. Third, it contributes to offline-first design knowledge by applying and extending established patterns within complex industrial workflow contexts.
 
 \section{Conceptual Framework}
 
-Based on the literature review, Figure~\ref{fig:conceptual-framework} presents the conceptual framework that guides this research. The framework weaves together elements from Chinese smart park models, offline-first architecture principles, and technology adaptation theory to guide the development of an appropriate solution for Ethiopian industrial parks.
+Based on the literature review, Figure~\ref{fig:conceptual-framework} presents the conceptual framework guiding this research. The framework brings together elements from Chinese smart park models, offline-first architecture principles, and technology adaptation theory to guide the development of an appropriate solution for Ethiopian industrial parks.
 
 \begin{figure}[H]
 \centering
@@ -350,8 +302,8 @@ Based on the literature review, Figure~\ref{fig:conceptual-framework} presents t
 \label{fig:conceptual-framework}
 \end{figure}
 
-The framework illustrates how Chinese smart park models supply the conceptual basis for digital governance features, which are then filtered through a technology adaptation framework that accounts for Ethiopian context requirements. Offline-first architectural principles are woven into the adaptation process to handle connectivity constraints. The outcome is an IPDC Digital OSS Platform that combines smart park functionality with architecture suited to the Ethiopian context.
+Chinese smart park models supply the conceptual foundation for digital governance features, which are then filtered through a technology adaptation framework that accounts for Ethiopian context requirements. Offline-first architectural principles are embedded throughout this adaptation to manage connectivity constraints. The result is an IPDC Digital OSS Platform that combines smart park functionality with an architecture suited to the Ethiopian setting.
 
 \section{Chapter Summary}
 
-This chapter reviewed the literature across Chinese smart park ecosystems (WeChat Work, DingTalk, Suzhou Industrial Park), the Belt and Road Initiative as the backdrop for China-Africa technology transfer, digital governance and e-government challenges in Ethiopia, offline-first architecture and PWA technologies (service workers, caching, IndexedDB, Firebase), ICT4D frameworks, technology adaptation principles, and Design Science Research methodology. The gap analysis identified four significant gaps---no adaptation framework for Chinese smart park models, limited offline-first research for complex industrial workflows, no purpose-built digital solution for Ethiopian industrial parks, and no design principles for offline-first industrial platforms---all of which this research addresses. The next chapter presents the research methodology, detailing the DSR approach, data collection methods, system development methodology, and evaluation framework.
+This chapter reviewed the literature across Chinese smart park ecosystems (WeChat Work, DingTalk, Suzhou Industrial Park), the Belt and Road Initiative as the backdrop for China-Africa technology transfer, digital governance and e-government challenges in Ethiopia, offline-first architecture and PWA technologies (service workers, caching, IndexedDB, Firebase), ICT4D frameworks, technology adaptation principles, and Design Science Research methodology. The gap analysis identified four significant gaps --- no adaptation framework for Chinese smart park models, limited offline-first research for complex industrial workflows, no purpose-built digital solution for Ethiopian industrial parks, and no design principles for offline-first industrial platforms --- all of which this research addresses. The next chapter presents the research methodology, detailing the DSR approach, data collection methods, system development methodology, and evaluation framework.

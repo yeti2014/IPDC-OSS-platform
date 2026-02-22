@@ -3,17 +3,17 @@
 
 \section{Introduction}
 
-This chapter covers the implementation of the IPDC offline-first digital one-stop service prototype and the results of its evaluation. The implementation turns the architecture described in Chapter~\ref{ch:analysis} into a working Progressive Web Application made up of over 100 TypeScript source files, three trained machine learning models, and a thorough offline-first data management layer. The evaluation then puts the prototype through its paces with technical testing of offline functionality, performance measurement, cross-platform compatibility checks, and a usability assessment.
+This chapter covers the implementation of the IPDC offline-first digital one-stop service prototype and the results of its evaluation. The implementation realizes the architecture described in Chapter~\ref{ch:analysis} as a working Progressive Web Application, comprising over 100 TypeScript source files, three trained machine learning models, and a comprehensive offline-first data management layer. Evaluation then puts the prototype through technical testing of offline functionality, performance measurement, cross-platform compatibility checks, and a structured usability assessment.
 
 \section{Development Environment and Tools}
 
 \subsection{Development Setup}
 
-The development environment was built around Visual Studio Code as the primary IDE, Node.js (v18+) as the JavaScript runtime, React 19.2.1 \citep{React2024} as the frontend framework, and the Vite development server for hot module replacement at \texttt{localhost:5173}. Firebase emulators were used during development to test authentication and Firestore operations locally, avoiding unnecessary consumption of cloud quotas. The AI model backend was developed separately in a Python environment using FastAPI, with models available at \texttt{localhost:8000}.
+The development environment centered on Visual Studio Code as the primary IDE, Node.js (v18+) as the JavaScript runtime, React 19.2.1 \citep{React2024} as the frontend framework, and the Vite development server for hot module replacement at \texttt{localhost:5173}. Firebase emulators handled local testing of authentication and Firestore operations, avoiding unnecessary consumption of cloud quotas. The AI model backend was developed separately in a Python environment using FastAPI, with models available at \texttt{localhost:8000}.
 
 \subsection{Project Structure}
 
-The project is organized in a modular directory structure grouped by concern. Application source code lives in the \texttt{src/} directory, while the machine learning components and their API server reside in \texttt{ai-models/}. Table~\ref{tab:project-structure} provides an overview of the directory layout and component counts.
+The project follows a modular directory structure organized by concern. Application source code lives in \texttt{src/}, while machine learning components and the API server reside in \texttt{ai-models/}. Table~\ref{tab:project-structure} provides an overview of the directory layout and component counts.
 
 \begin{table}[H]
 \centering
@@ -47,22 +47,22 @@ ai-models/ & Three ML models + FastAPI backend & 12 \\
 
 \subsection{Build and Deployment Configuration}
 
-The Vite build configuration uses manual chunk splitting to improve caching behavior. Three vendor chunks are carved out: \texttt{vendor} (React and ReactDOM), \texttt{mui} (Material-UI components), and \texttt{firebase} (Firebase SDKs). Keeping these separate means that updates to application code do not force browsers to re-download cached vendor libraries---a particularly worthwhile optimization where connectivity is limited.
+The Vite build configuration uses manual chunk splitting to improve caching behavior. Three vendor chunks are separated: \texttt{vendor} (React and ReactDOM), \texttt{mui} (Material-UI components), and \texttt{firebase} (Firebase SDKs). Keeping these distinct means application code updates do not force browsers to re-download cached vendor libraries --- a particularly worthwhile optimization where connectivity is limited.
 
-The vite-plugin-pwa takes care of generating the service worker and web app manifest automatically from the configuration in \texttt{vite.config.ts}. The deployed platform can be accessed at the following URLs:
+The vite-plugin-pwa generates the service worker and web app manifest automatically from the configuration in \texttt{vite.config.ts}. The deployed platform is accessible at the following URLs:
 
 \begin{itemize}
-  \item \textbf{Frontend Application:} \url{https://ipdc-oss-platform.vercel.app/} --- deployed on Vercel, providing HTTPS, global CDN distribution, and automatic SSL certificate management.
-  \item \textbf{AI Backend API:} \url{https://ipdc-oss-platform.onrender.com/api/docs} --- deployed on Render, hosting the FastAPI server with the three trained ML models. The interactive API documentation (Swagger UI) is available at this URL, while model endpoints are served under the \texttt{/api/v1/} prefix (e.g., \texttt{/api/v1/classify-service}, \texttt{/api/v1/predict-maintenance}, \texttt{/api/v1/recommend-parks}).
+  \item \textbf{Frontend Application:} \url{https://ipdc-oss-platform.vercel.app/} --- deployed on Vercel with HTTPS, global CDN distribution, and automatic SSL certificate management.
+  \item \textbf{AI Backend API:} \url{https://ipdc-oss-platform.onrender.com/api/docs} --- deployed on Render, hosting the FastAPI server with the three trained ML models. Interactive API documentation (Swagger UI) is available at this URL; model endpoints are served under the \texttt{/api/v1/} prefix (e.g., \texttt{/api/v1/classify-service}, \texttt{/api/v1/predict-maintenance}, \texttt{/api/v1/recommend-parks}).
 \end{itemize}
 
 \section{Key Feature Implementation}
 
 \subsection{Offline-First Architecture Implementation}
 
-The offline-first architecture is brought to life through three cooperating subsystems: Firebase Firestore's transparent cache, the Dexie.js local database, and a custom synchronization service.
+The offline-first architecture is realized through three cooperating subsystems: Firebase Firestore's transparent cache, the Dexie.js local database, and a custom synchronization service.
 
-\textbf{Firebase Offline Persistence} is switched on in the Firebase configuration module (\texttt{src/config/firebase.ts}) with two function calls during initialization:
+\textbf{Firebase Offline Persistence} is activated in the Firebase configuration module (\texttt{src/config/firebase.ts}) during initialization:
 
 \begin{lstlisting}[language=Java, caption={Firebase Offline Persistence Configuration}, label={lst:firebase-config}]
 initializeFirestore(app, {
@@ -72,9 +72,9 @@ initializeFirestore(app, {
 });
 \end{lstlisting}
 
-This tells Firestore to maintain a persistent local cache of all documents the user has accessed, keeping the cache intact across browser sessions and coordinating access when multiple tabs are open. When the network is unavailable, reads are served from this cache, and writes are internally queued by Firestore for synchronization later.
+This instructs Firestore to maintain a persistent local cache of all documents the user has accessed, keeping it intact across browser sessions and coordinating access when multiple tabs are open. When the network is unavailable, reads are served from this cache and writes are internally queued for later synchronization.
 
-\textbf{Dexie.js Local Database} extends Firestore's cache with explicit offline data management. The database schema, defined in \texttt{src/db/schema.ts}, sets up two indexed tables:
+\textbf{Dexie.js Local Database} extends Firestore's cache with explicit offline data management. The schema, defined in \texttt{src/db/schema.ts}, sets up two indexed tables:
 
 \begin{lstlisting}[language=Java, caption={Dexie.js Database Schema}, label={lst:dexie-schema}]
 const db = new Dexie('IPDCDatabase');
@@ -86,11 +86,11 @@ db.version(1).stores({
 });
 \end{lstlisting}
 
-\textbf{The Sync Service} (\texttt{src/services/offline/syncService.ts}) picks up sync queue items once connectivity is detected. It walks through pending items, converts local JavaScript \texttt{Date} objects to Firestore \texttt{Timestamp} objects, writes to the appropriate Firestore collection, and marks each queue item with an updated status. A built-in retry mechanism handles transient failures so that queued data is never lost.
+\textbf{The Sync Service} (\texttt{src/services/offline/syncService.ts}) picks up queued items once connectivity is detected. It iterates through pending entries, converts local JavaScript \texttt{Date} objects to Firestore \texttt{Timestamp} objects, writes to the appropriate collection, and marks each item with an updated status. A built-in retry mechanism handles transient failures so no queued data is lost.
 
 \subsection{Authentication with Offline Fallback}
 
-The authentication system puts into practice the dual-mode design outlined in Chapter~\ref{ch:analysis}. The \texttt{AuthContext} (\texttt{src/contexts/AuthContext.tsx}) wraps the entire application and keeps track of authentication state. When the user signs in online, credentials are verified through Firebase Auth and then cached locally:
+The authentication system implements the dual-mode design outlined in Chapter~\ref{ch:analysis}. The \texttt{AuthContext} (\texttt{src/contexts/AuthContext.tsx}) wraps the entire application and manages authentication state. When signing in online, credentials are verified through Firebase Auth and cached locally:
 
 \begin{lstlisting}[language=Java, caption={Credential Caching After Online Authentication}, label={lst:auth-cache}]
 // After successful Firebase Auth sign-in:
@@ -103,7 +103,7 @@ await cacheAuthState({
 });
 \end{lstlisting}
 
-If the sign-in attempt fails because of a network error, the context seamlessly falls back to offline verification:
+If the sign-in attempt fails because of a network error, the context automatically falls back to offline verification:
 
 \begin{lstlisting}[language=Java, caption={Offline Authentication Fallback}, label={lst:auth-offline}]
 // Network error detected during sign-in:
@@ -114,7 +114,7 @@ if (isValid) {
 }
 \end{lstlisting}
 
-This means that any user who has previously logged in while online can continue using the platform during connectivity outages. Figure~\ref{fig:auth-interfaces} shows the sign-in and tenant registration interfaces.
+Any user who has previously authenticated while online can therefore continue using the platform during connectivity outages. Figure~\ref{fig:auth-interfaces} shows the sign-in and tenant registration interfaces.
 
 \begin{figure}[H]
 \centering
@@ -133,9 +133,9 @@ This means that any user who has previously logged in while online can continue 
 
 \subsection{Service Request Management}
 
-Service request management forms the backbone of the platform. The \texttt{CreateRequestForm} component (\texttt{src/components/tenant/}) relies on React Hook Form for state management and Zod for schema validation. Requests can be categorized across multiple service types (maintenance, IT support, security, cleaning, waste management, and others), assigned one of four priority levels, given free-text descriptions, and accompanied by file attachments uploaded through the \texttt{FileUpload} component to Firebase Storage.
+Service request management forms the backbone of the platform. The \texttt{CreateRequestForm} component (\texttt{src/components/tenant/}) uses React Hook Form for state management and Zod for schema validation. Requests can be categorized across multiple service types (maintenance, IT support, security, cleaning, waste management, and others), assigned one of four priority levels, given free-text descriptions, and accompanied by file attachments uploaded through the \texttt{FileUpload} component to Firebase Storage.
 
-Each request follows a defined status progression: \texttt{pending} $\rightarrow$ \texttt{approved} $\rightarrow$ \texttt{in-progress} $\rightarrow$ \texttt{completed}. Administrators also have the option to \texttt{reject} a request along with a reason. Every status transition triggers a notification and updates the request record in Firestore (or in the local queue when offline). Figure~\ref{fig:tenant-workflow} shows the tenant dashboard with active requests and token status, alongside the service request creation form.
+Each request follows a defined status progression: \texttt{pending} $\rightarrow$ \texttt{approved} $\rightarrow$ \texttt{in-progress} $\rightarrow$ \texttt{completed}. Administrators may also \texttt{reject} a request with a stated reason. Every status transition triggers a notification and updates the record in Firestore --- or in the local queue when offline. Figure~\ref{fig:tenant-workflow} shows the tenant dashboard alongside the service request creation form.
 
 \begin{figure}[H]
 \centering
@@ -154,11 +154,11 @@ Each request follows a defined status progression: \texttt{pending} $\rightarrow
 
 \subsection{Digital Service Token System}
 
-The token system offers an internal way to track fees without needing to integrate an external payment gateway. Its implementation spans the \texttt{TokenDashboard} component and the \texttt{billingService} module.
+The token system provides an internal mechanism for tracking service fees without requiring an external payment gateway. Its implementation spans the \texttt{TokenDashboard} component and the \texttt{billingService} module.
 
-\textbf{Token Tiers} are designed to reward engagement: basic (0--499 tokens, 0\% discount), silver (500--1,499 tokens, 5\% discount), gold (1,500--4,999 tokens, 10\% discount), and platinum (5,000+ tokens, 20\% discount). Higher tiers also come with increased monthly request limits and access to priority support.
+\textbf{Token Tiers} reward engagement: basic (0--499 tokens, 0\% discount), silver (500--1,499 tokens, 5\% discount), gold (1,500--4,999 tokens, 10\% discount), and platinum (5,000+ tokens, 20\% discount). Higher tiers also unlock increased monthly request limits and priority support access.
 
-\textbf{Service Costs} depend on both service type and priority level. Table~\ref{tab:token-costs} shows the pricing matrix.
+\textbf{Service Costs} vary by both service type and priority level. Table~\ref{tab:token-costs} shows the pricing matrix.
 
 \begin{table}[H]
 \centering
@@ -178,7 +178,7 @@ Waste Management & 35 & 60 & 85 & 110 \\
 \end{tabular}
 \end{table}
 
-A complete audit trail is maintained through seven transaction types: \texttt{initial\_allocation}, \texttt{service\_request} (deduction), \texttt{service\_completion}, \texttt{refund}, \texttt{bonus}, \texttt{penalty}, and \texttt{purchase}. Administrators credit tokens to tenant accounts after confirming that external payments (cash, bank transfer) have been received. Figure~\ref{fig:token-dashboard} shows the token dashboard interface.
+A complete audit trail is maintained across seven transaction types: \texttt{initial\_allocation}, \texttt{service\_request} (deduction), \texttt{service\_completion}, \texttt{refund}, \texttt{bonus}, \texttt{penalty}, and \texttt{purchase}. Administrators credit tokens to tenant accounts after confirming that external payments (cash, bank transfer) have been received. Figure~\ref{fig:token-dashboard} shows the token dashboard interface.
 
 \begin{figure}[H]
 \centering
@@ -189,15 +189,15 @@ A complete audit trail is maintained through seven transaction types: \texttt{in
 
 \subsection{AI Model Integration}
 
-Three machine learning models are connected to the platform through a FastAPI backend. The frontend AI service module (\texttt{src/services/aiService.ts}) exposes typed interfaces for each model endpoint, complete with error handling and timeout management.
+Three machine learning models are connected to the platform through a FastAPI backend. The frontend AI service module (\texttt{src/services/aiService.ts}) exposes typed interfaces for each model endpoint, with error handling and timeout management built in.
 
-\textbf{Model 1 --- Service Classifier:} Trained on labeled service request data, this model sorts incoming requests into eleven service categories and assigns priority levels. Because the classification endpoint returns a confidence score, the interface can present predictions as suggestions that users are free to accept or override.
+\textbf{Model 1 --- Service Classifier:} Trained on labeled service request data, this model sorts incoming requests into eleven service categories and assigns priority levels. Because the endpoint returns a confidence score, the interface presents predictions as suggestions that users can accept or override.
 
-\textbf{Model 2 --- Predictive Maintenance:} This model takes in asset attributes and produces a failure probability, risk level (low/medium/high), estimated days until failure, and a recommended maintenance action. By identifying assets that are approaching failure thresholds, it helps inform maintenance scheduling decisions.
+\textbf{Model 2 --- Predictive Maintenance:} Given asset attributes, this model produces a failure probability, risk level (low/medium/high), estimated days until failure, and a recommended maintenance action. Identifying assets approaching failure thresholds informs maintenance scheduling decisions.
 
-\textbf{Model 3 --- Park Recommendation:} Built to help prospective tenants choose a suitable industrial park, this model evaluates a tenant profile against park characteristics using a weighted scoring algorithm. Five dimensions---industry alignment (30\%), capacity and availability (25\%), infrastructure match (20\%), cost efficiency (15\%), and location preference (10\%)---feed into ranked recommendations that come with detailed justifications.
+\textbf{Model 3 --- Park Recommendation:} Built to help prospective tenants choose a suitable industrial park, this model evaluates a tenant profile against park characteristics using a weighted scoring algorithm. Five dimensions --- industry alignment (30\%), capacity and availability (25\%), infrastructure match (20\%), cost efficiency (15\%), and location preference (10\%) --- produce ranked recommendations with detailed justifications.
 
-All three models are designed with graceful degradation: if the API cannot be reached, the interface simply disables AI features without disrupting the core service request and management workflows. Figure~\ref{fig:ai-interfaces} shows the service classifier and park recommendation interfaces, while Figure~\ref{fig:predictive-views} presents the predictive maintenance module.
+All three models degrade gracefully: if the API is unreachable, the interface disables AI features without disrupting core service request and management workflows. Figure~\ref{fig:ai-interfaces} shows the service classifier and park recommendation interfaces; Figure~\ref{fig:predictive-views} presents the predictive maintenance module.
 
 \begin{figure}[H]
 \centering
@@ -231,7 +231,7 @@ All three models are designed with graceful degradation: if the API cannot be re
 
 \subsection{Complaint Management System}
 
-The complaint management module gives tenants a way to raise issues with completed service requests. Nine complaint categories are available: service quality, incomplete work, delays, unprofessional conduct, billing dispute, facility issue, safety concern, communication gap, and other. Each complaint can include evidence uploads (images, documents, videos) and follows a resolution workflow: \texttt{pending} $\rightarrow$ \texttt{under-review} $\rightarrow$ \texttt{resolved} or \texttt{rejected}. Resolution actions range from full or partial token refund to service rework and compensation. A 48-hour SLA target is tracked for complaint resolution. Figure~\ref{fig:communication-interfaces} shows the complaint management and announcement interfaces.
+The complaint management module gives tenants a structured channel for raising issues with completed service requests. Nine complaint categories are available: service quality, incomplete work, delays, unprofessional conduct, billing dispute, facility issue, safety concern, communication gap, and other. Each complaint supports evidence uploads (images, documents, videos) and follows a resolution workflow: \texttt{pending} $\rightarrow$ \texttt{under-review} $\rightarrow$ \texttt{resolved} or \texttt{rejected}. Resolution actions range from full or partial token refund to service rework and compensation, with a 48-hour SLA target tracked for each complaint. Figure~\ref{fig:communication-interfaces} shows the complaint management and announcement interfaces.
 
 \begin{figure}[H]
 \centering
@@ -250,11 +250,11 @@ The complaint management module gives tenants a way to raise issues with complet
 
 \subsection{Announcement System}
 
-The announcement module lets administrators create and distribute notices aimed at specific audience groups (all users, tenants only, operations only, or admin only). Each announcement carries a priority level, an optional expiration date, and an active/inactive toggle. The \texttt{AnnouncementBanner} component displays active announcements prominently across the interface, as shown in Figure~\ref{fig:communication-interfaces}.
+The announcement module lets administrators create and distribute notices targeted at specific audience groups (all users, tenants only, operations only, or admin only). Each announcement carries a priority level, an optional expiration date, and an active/inactive toggle. The \texttt{AnnouncementBanner} component displays active announcements prominently across the interface, as shown in Figure~\ref{fig:communication-interfaces}.
 
 \subsection{Interactive Park Map}
 
-The park map module draws on Leaflet and React-Leaflet to render an interactive geographic visualization of Ethiopian industrial parks. Clicking a park marker opens a \texttt{ParkDetailsModal} that displays location details, available infrastructure, operational status, and tenant composition. Park coordinate data is stored in a static data file within the application, so the map remains available during offline operation. Figure~\ref{fig:parks-map} shows the interactive map interface.
+The park map module uses Leaflet and React-Leaflet to render an interactive geographic visualization of Ethiopian industrial parks. Clicking a marker opens a \texttt{ParkDetailsModal} displaying location details, available infrastructure, operational status, and tenant composition. Park coordinate data is stored in a static file within the application, so the map remains available during offline operation. Figure~\ref{fig:parks-map} shows the interface.
 
 \begin{figure}[H]
 \centering
@@ -265,7 +265,7 @@ The park map module draws on Leaflet and React-Leaflet to render an interactive 
 
 \subsection{Administrative Dashboard}
 
-The admin dashboard (\texttt{src/pages/AdminDashboard.tsx}) serves as the central management interface. From here, administrators can view all service requests across the system, manage tenant accounts, create announcements, resolve complaints, oversee token and billing records, and manage park assets. Tabbed navigation organizes these functions, while summary statistics and charts (powered by Recharts) provide at-a-glance operational visibility, as shown in Figure~\ref{fig:management-dashboards}. Park operators have their own dedicated dashboard for handling day-to-day service operations within their assigned park, also illustrated in Figure~\ref{fig:management-dashboards}.
+The admin dashboard (\texttt{src/pages/AdminDashboard.tsx}) is the central management interface. From here, administrators can view all service requests across the system, manage tenant accounts, create announcements, resolve complaints, oversee token and billing records, and manage park assets. Tabbed navigation organizes these functions; summary statistics and charts (powered by Recharts) provide at-a-glance operational visibility. Park operators have a dedicated dashboard for day-to-day service operations within their assigned park. Both are shown in Figure~\ref{fig:management-dashboards}.
 
 \begin{figure}[H]
 \centering
@@ -285,7 +285,7 @@ The admin dashboard (\texttt{src/pages/AdminDashboard.tsx}) serves as the centra
 \section{AI Model Training and Evaluation}
 \label{sec:ai-training}
 
-This section documents how the three machine learning models integrated into the IPDC platform were trained, what their data looks like, how they are structured, and how well they perform. All models were trained on synthetic datasets crafted to reflect realistic IPDC operational patterns, with architectures adapted from leading Chinese smart city systems---Alibaba ET Industrial Brain, Tencent WeCity, and Huawei FusionPlant.
+This section documents how the three machine learning models were trained, what their data looks like, how they are structured, and how well they perform. All models were trained on synthetic datasets designed to reflect realistic IPDC operational patterns, with architectures informed by leading Chinese smart city systems --- Alibaba ET Industrial Brain, Tencent WeCity, and Huawei FusionPlant.
 
 \subsection{Training Data}
 
@@ -317,7 +317,7 @@ The service requests dataset includes text fields (title, description) processed
 
 \subsubsection{Architecture}
 
-The service classifier is an XGBoost ensemble made up of three specialized sub-models. Text features are extracted using TF-IDF vectorization with a 1,500-term vocabulary (unigrams and bigrams, minimum document frequency of 2, maximum document frequency of 0.90). Four metadata features---hour of day, day of week, text length, and word count---are scaled with StandardScaler and concatenated with the TF-IDF vectors, yielding 1,504 input features per request.
+The service classifier is an XGBoost ensemble comprising three specialized sub-models. Text features are extracted using TF-IDF vectorization with a 1,500-term vocabulary (unigrams and bigrams, minimum document frequency of 2, maximum document frequency of 0.90). Four metadata features --- hour of day, day of week, text length, and word count --- are scaled with StandardScaler and concatenated with the TF-IDF vectors, yielding 1,504 input features per request.
 
 \begin{table}[H]
 \centering
@@ -356,9 +356,9 @@ Average Confidence Score & 0.95 & --- \\
 \textsuperscript{a} Alibaba ET Industrial Brain benchmark on similar classification tasks.
 \end{table}
 
-The training data was divided into 70\% training (1,386 samples), 15\% validation (297 samples), and 15\% test (297 samples).
+The training data was split into 70\% training (1,386 samples), 15\% validation (297 samples), and 15\% test (297 samples).
 
-The category classifier reaches perfect accuracy on the synthetic test set, which reflects the clearly distinct vocabulary patterns across the eleven IPDC service types. The priority predictor's moderate accuracy (40\%) comes as no surprise, since priority assignment involves subjective human judgment that textual features alone cannot fully capture. The time estimator achieves a mean absolute error of 2.63 days, offering tenants useful estimates for planning purposes. Figure~\ref{fig:model1-eval} presents the confusion matrix for service type classification and the scatter plot of predicted versus actual processing days.
+The category classifier reaches perfect accuracy on the synthetic test set, reflecting the clearly distinct vocabulary patterns across IPDC's eleven service types. The priority predictor's moderate accuracy (40\%) is expected: priority assignment involves subjective human judgment that textual features alone cannot fully capture. The time estimator achieves a mean absolute error of 2.63 days, offering tenants useful estimates for planning. Figure~\ref{fig:model1-eval} presents the confusion matrix for service type classification and the scatter plot of predicted versus actual processing days.
 
 \begin{figure}[H]
 \centering
@@ -379,14 +379,14 @@ The category classifier reaches perfect accuracy on the synthetic test set, whic
 
 \subsubsection{Architecture}
 
-The predictive maintenance system combines two algorithms in a dual-algorithm ensemble: Random Forest for classification and Gradient Boosting for regression. Fourteen engineered features are derived from raw asset attributes, including age in days, days since last maintenance, cumulative maintenance count, operating hours, historical failure count, sensor readings (temperature, vibration level), and a composite condition score computed as:
+The predictive maintenance system combines two algorithms in a dual-algorithm ensemble: Random Forest for classification and Gradient Boosting for regression. Fourteen engineered features are derived from raw asset attributes, including age in days, days since last maintenance, cumulative maintenance count, operating hours, historical failure count, sensor readings (temperature, vibration level), and a composite condition score:
 
 \begin{equation}
 \text{Condition Score} = \frac{\text{age\_months}}{120} \times 30 + \frac{\text{days\_since\_maint}}{365} \times 30 + \text{failures} \times 10 + \frac{\text{hours}}{20000} \times 10
 \label{eq:condition-score}
 \end{equation}
 
-Categorical features (asset category, status, condition level) are encoded with LabelEncoder, and all features are normalized using StandardScaler.
+Categorical features (asset category, status, condition level) are encoded with LabelEncoder; all features are normalized using StandardScaler.
 
 \begin{table}[H]
 \centering
@@ -424,9 +424,9 @@ Risk Classification Accuracy & 99\% & --- \\
 \textsuperscript{a} Huawei FusionPlant IoT predictive maintenance benchmark.
 \end{table}
 
-The training data was divided into 70\% training (350 samples), 15\% validation (75 samples), and 15\% test (75 samples).
+The training data was split into 70\% training (350 samples), 15\% validation (75 samples), and 15\% test (75 samples).
 
-The near-perfect regression performance ($R^{2} = 0.9989$) reflects the tight relationship between the engineered features and failure timing in the synthetic dataset. The risk classifier reaches 99\% accuracy across low, medium, and high risk levels. Figure~\ref{fig:model2-eval} shows the risk classification confusion matrix and the scatter plot of predicted versus actual days to failure, while Figure~\ref{fig:feature-importance-maintenance} displays the feature importance ranking.
+The near-perfect regression performance ($R^{2} = 0.9989$) reflects the tight relationship between the engineered features and failure timing in the synthetic dataset. The risk classifier reaches 99\% accuracy across low, medium, and high risk levels. Figure~\ref{fig:model2-eval} shows the risk classification confusion matrix and the scatter plot of predicted versus actual days to failure; Figure~\ref{fig:feature-importance-maintenance} displays the feature importance ranking.
 
 \begin{figure}[H]
 \centering
@@ -499,9 +499,9 @@ Test Groups Evaluated & 160 tenants & --- \\
 \textsuperscript{a} Alibaba ET Industrial Brain (NDCG@3: 0.88) and Tencent WeCity (NDCG@3: 0.85) on comparable park/zone placement tasks.
 \end{table}
 
-The data was split by tenant: 80\% for training (640 tenants $\times$ 13 parks = 8,320 pairs) and 20\% for testing (160 tenants $\times$ 13 parks = 2,080 pairs).
+Data was split by tenant: 80\% for training (640 tenants $\times$ 13 parks = 8,320 pairs) and 20\% for testing (160 tenants $\times$ 13 parks = 2,080 pairs).
 
-An NDCG@3 score of 0.9572 means the model correctly places the most suitable park within its top three recommendations for over 95\% of test tenants. This result surpasses both the Alibaba ET and Tencent WeCity benchmarks on comparable placement tasks, confirming the effectiveness of the LambdaRank approach for Ethiopian industrial park recommendation. Figure~\ref{fig:feature-importance-park} shows the feature importance ranking.
+An NDCG@3 of 0.9572 means the model correctly places the most suitable park within its top three recommendations for over 95\% of test tenants --- surpassing both the Alibaba ET and Tencent WeCity benchmarks on comparable placement tasks. Figure~\ref{fig:feature-importance-park} shows the feature importance ranking.
 
 \begin{figure}[H]
 \centering
@@ -512,7 +512,7 @@ An NDCG@3 score of 0.9572 means the model correctly places the most suitable par
 
 \subsection{Comparative Benchmark Summary}
 
-Table~\ref{tab:benchmark-comparison} brings together a side-by-side comparison of all three IPDC models against their Chinese smart city counterparts.
+Table~\ref{tab:benchmark-comparison} presents a side-by-side comparison of all three IPDC models against their Chinese smart city counterparts.
 
 \begin{table}[H]
 \centering
@@ -530,13 +530,13 @@ Park Recommender & LightGBM Rank & NDCG@3 & Alibaba/Tencent: 0.85--0.88 & 0.9572
 \end{tabular}
 \end{table}
 
-All three models meet or exceed the performance figures reported for their Chinese reference implementations. Two important caveats apply to this comparison. First, the IPDC models were trained and evaluated on \emph{synthetic} datasets generated to reflect realistic IPDC operational patterns (see Section~\ref{sec:ai-training}), whereas the Chinese reference systems are production deployments trained on years of real operational data. Near-perfect scores on a self-generated synthetic dataset are expected and do not imply equivalent performance on real-world data; the results should therefore be interpreted as establishing an architectural baseline rather than a claim of superiority over mature deployed systems. Second, the Chinese benchmark figures (Alibaba ET Industrial Brain: 85--92\%; Huawei FusionPlant: 80--88\%; Tencent WeCity NDCG@3: 0.85) represent values cited in the published literature for comparable classification and ranking tasks and are used here as indicative reference points. All source code, training scripts, and model artefacts are available in the project repository \citep{BerhanuIPDC2025} so that results can be independently reproduced and re-evaluated once real IPDC operational data become available. The models are built for online learning, with Model 3 configured to retrain automatically after every 50 new tenant placements or on a monthly schedule.
+All three models meet or exceed the figures reported for their Chinese reference implementations. Two important caveats apply. First, the IPDC models were trained and evaluated on \emph{synthetic} datasets designed to reflect realistic IPDC operational patterns (see Section~\ref{sec:ai-training}), whereas the Chinese reference systems are production deployments trained on years of real operational data. Near-perfect scores on a self-generated synthetic dataset are expected and should be interpreted as establishing an architectural baseline rather than a claim of superiority over mature deployed systems. Second, the Chinese benchmark figures (Alibaba ET Industrial Brain: 85--92\%; Huawei FusionPlant: 80--88\%; Tencent WeCity NDCG@3: 0.85) represent values cited in the published literature for comparable tasks and are used here as indicative reference points. All source code, training scripts, and model artefacts are available in the project repository \citep{BerhanuIPDC2025} for independent reproduction and re-evaluation once real IPDC operational data become available. The models are designed for online learning, with Model 3 configured to retrain automatically after every 50 new tenant placements or on a monthly schedule.
 
 \section{PWA Implementation Details}
 
-The PWA is set up through the \texttt{VitePWA} plugin in \texttt{vite.config.ts}. The service worker runs in \texttt{autoUpdate} mode with \texttt{skipWaiting} and \texttt{clientsClaim} enabled, so new versions take effect immediately across all open tabs. Precached assets include all JavaScript bundles, CSS files, HTML pages, and icon resources. An offline fallback page (\texttt{public/offline.html}) displays a user-friendly message if the service worker cannot serve a requested navigation route.
+The PWA is configured through the \texttt{VitePWA} plugin in \texttt{vite.config.ts}. The service worker runs in \texttt{autoUpdate} mode with \texttt{skipWaiting} and \texttt{clientsClaim} enabled, so new versions take effect immediately across all open tabs. Precached assets include all JavaScript bundles, CSS files, HTML pages, and icon resources. An offline fallback page (\texttt{public/offline.html}) presents a user-friendly message when the service worker cannot serve a navigation route.
 
-The manifest sets the application to standalone display mode, enabling full-screen operation when installed on mobile devices. Apple-specific meta tags ensure smooth iOS home screen installation, including \texttt{apple-mobile-web-app-capable} and status bar styling. Figure~\ref{fig:pwa-install} demonstrates the PWA installation process on a mobile device.
+The manifest sets the display mode to standalone, enabling full-screen operation when installed on mobile devices. Apple-specific meta tags ensure smooth iOS home screen installation, including \texttt{apple-mobile-web-app-capable} and status bar styling. Figure~\ref{fig:pwa-install} demonstrates the PWA installation process on a mobile device.
 
 \begin{figure}[H]
 \centering
@@ -560,7 +560,7 @@ The manifest sets the application to standalone display mode, enabling full-scre
 
 \section{Responsive Design Across Devices}
 
-The platform achieves a fully responsive layout using Material-UI's breakpoint system. Navigation, dashboard layout, and content areas all adjust automatically based on screen size. On desktop screens ($\geq$960px), the platform shows a full sidebar navigation with expanded labels. On tablet screens (600--959px), the sidebar collapses to icon-only mode. On mobile screens ($<$600px), the sidebar gives way to a bottom navigation bar and a hamburger menu optimized for touch interaction. The device type indicator in the top-right corner of the status bar dynamically reflects the current device context. Figure~\ref{fig:responsive-views} offers a side-by-side comparison of the desktop and mobile layouts.
+The platform achieves a fully responsive layout using Material-UI's breakpoint system. Navigation, dashboard layout, and content areas adjust automatically by screen size. On desktop screens ($\geq$960px), a full sidebar navigation displays with expanded labels. On tablet screens (600--959px), the sidebar collapses to icon-only mode. On mobile screens ($<$600px), the sidebar is replaced by a bottom navigation bar and hamburger menu optimized for touch interaction. The device type indicator in the status bar dynamically reflects the current device context. Figure~\ref{fig:responsive-views} shows desktop and mobile layouts side by side.
 
 \begin{figure}[H]
 \centering
@@ -575,15 +575,15 @@ The platform achieves a fully responsive layout using Material-UI's breakpoint s
 
 \subsection{Tenant Workflow}
 
-A typical tenant workflow unfolds as follows: the tenant logs in (whether online or offline), views their dashboard showing active requests and token balance, creates a new service request by picking a category and priority and attaching relevant documents, monitors the request status as it moves through approval and fulfillment, and files a complaint if the completed service falls short of expectations.
+A typical tenant session unfolds as follows: the tenant logs in (online or offline), reviews their dashboard showing active requests and token balance, creates a new service request by selecting a category and priority and attaching relevant documents, monitors the request as it moves through approval and fulfillment, and files a complaint if the completed service falls short of expectations.
 
 \subsection{Admin Workflow}
 
-The administrator workflow revolves around processing incoming requests: reviewing submissions, approving or rejecting them with feedback, assigning approved requests to operations personnel, creating announcements for park-wide communication, managing tenant accounts and token allocations, and resolving complaints with the appropriate actions.
+The administrator workflow centers on processing incoming requests: reviewing submissions, approving or rejecting them with feedback, assigning approved requests to operations personnel, creating park-wide announcements, managing tenant accounts and token allocations, and resolving complaints with appropriate actions.
 
 \subsection{Offline Operation Demonstration}
 
-The offline workflow showcases the platform's core value proposition. With network connectivity turned off (simulated through browser DevTools or physical disconnection): the user logs in using cached credentials; browses previously loaded data from the Firestore cache; submits a new service request, which gets saved to IndexedDB and queued for sync; and the \texttt{StatusBar} displays ``Offline'' status along with a ``1 pending sync'' indicator. When connectivity comes back: the sync service automatically processes the queue; the request shows up in Firestore and becomes visible to administrators; and the \texttt{StatusBar} updates to ``Online'' with ``0 pending sync''. Figure~\ref{fig:offline-online} captures both states.
+The offline workflow showcases the platform's core value proposition. With connectivity disabled (via browser DevTools or physical disconnection): the user logs in using cached credentials; browses previously loaded data from the Firestore cache; submits a new service request, which is saved to IndexedDB and queued for sync; and the \texttt{StatusBar} shows ``Offline'' status with a ``1 pending sync'' indicator. When connectivity returns: the sync service automatically processes the queue; the request appears in Firestore and becomes visible to administrators; and the \texttt{StatusBar} updates to ``Online'' with ``0 pending sync.'' Figure~\ref{fig:offline-online} captures both states.
 
 \begin{figure}[H]
 \centering
@@ -647,7 +647,7 @@ All nine test scenarios passed, confirming that the offline-first architecture k
 
 \subsubsection{Performance Metrics}
 
-Performance was measured using the Chrome DevTools Performance panel and Lighthouse audits. Table~\ref{tab:performance} summarizes the key findings.
+Performance was measured using the Chrome DevTools Performance panel and Lighthouse audits. Table~\ref{tab:performance} summarizes the findings.
 
 \begin{table}[H]
 \centering
@@ -675,7 +675,7 @@ Lighthouse SEO score & 92/100 & $>$85 \\
 \textsuperscript{a} Lighthouse scores measured on 22 February 2026 at 13:41 GMT+8 using Lighthouse 12.0.0 on Chromium 127.0.0.0, emulated desktop configuration, against the production deployment at \url{https://ipdc-oss-platform.vercel.app/}. Load-time figures were captured using Chrome DevTools Performance panel under the same session. Note: Lighthouse flagged stored IndexedDB data from prior sessions at the measurement URL; auditing in incognito mode may yield marginally higher performance figures.
 \end{table}
 
-Every metric meets or exceeds its target threshold. It is worth noting that offline operations are considerably faster than their online equivalents because they bypass network latency entirely, writing data straight to IndexedDB. The Lighthouse audit results appear in Figure~\ref{fig:lighthouse}.
+Every metric meets or exceeds its target. Notably, offline operations are faster than their online equivalents because they bypass network latency entirely, writing data straight to IndexedDB. Lighthouse audit results appear in Figure~\ref{fig:lighthouse}.
 
 \begin{figure}[H]
 \centering
@@ -694,7 +694,7 @@ Every metric meets or exceeds its target threshold. It is worth noting that offl
 
 \subsubsection{Cross-Platform Compatibility}
 
-The prototype was tested on four browser configurations covering the two browsers most widely used by IPDC staff and tenants: Google Chrome and Opera (both Chromium-based). Testing was conducted on both desktop and mobile (Android) environments on 22 February 2026. Table~\ref{tab:cross-platform} presents the compatibility results.
+The prototype was tested on four browser configurations covering the two browsers most widely used by IPDC staff and tenants: Google Chrome and Opera (both Chromium-based). Testing was conducted on desktop and mobile (Android) environments on 22 February 2026. Table~\ref{tab:cross-platform} presents the results.
 
 \begin{table}[H]
 \centering
@@ -718,15 +718,13 @@ File upload & Full & Full & Full & Full \\
 \textsuperscript{a} Opera uses the standard Chromium PWA install prompt, identical in behaviour to Chrome.
 \end{table}
 
-All four browser configurations deliver full compatibility across every tested feature. Because both Chrome and Opera share the Chromium engine, service worker behaviour, IndexedDB access, and PWA installation are consistent across the board. This uniformity is particularly practical in the Ethiopian industrial park context, where Opera Mini is widely used on lower-end Android devices owing to its data-compression mode.
+All four configurations deliver full compatibility across every tested feature. Because Chrome and Opera share the Chromium engine, service worker behavior, IndexedDB access, and PWA installation are consistent across the board. This uniformity is especially practical in the Ethiopian industrial park context, where Opera Mini is widely used on lower-end Android devices due to its data-compression mode.
 
 \subsection{Usability Evaluation}
 
 \subsubsection{Evaluation Design and Participants}
 
-A usability evaluation was conducted on \textbf{10 February 2026} with nine representative stakeholders drawn from two user groups: IPDC management staff and tenant firm representatives. Participants were recruited purposively to ensure coverage of both user roles and multiple industrial park contexts. The evaluator shared the live platform URL (\url{https://ipdc-oss-platform.vercel.app/}) with participants, who accessed it on their own devices --- a realistic test of the platform's accessibility under actual field conditions.
-
-Table~\ref{tab:sus-participants} lists the participant profiles.
+A usability evaluation was conducted on \textbf{10 February 2026} with nine representative stakeholders from two user groups: IPDC management staff and tenant firm representatives. Participants were recruited purposively to ensure coverage of both roles and multiple industrial park contexts. The evaluator shared the live platform URL (\url{https://ipdc-oss-platform.vercel.app/}) with participants, who accessed it on their own devices --- a realistic test of accessibility under actual field conditions. Table~\ref{tab:sus-participants} lists the participant profiles.
 
 \begin{table}[H]
 \centering
@@ -754,7 +752,7 @@ P9 & Tenant Representative & Hawassa SEZ           & Smartphone (Opera)    & 77.
 
 \subsubsection{Task Scenarios}
 
-Each participant completed four structured task scenarios on the prototype before filling out the SUS questionnaire:
+Each participant completed four structured task scenarios on the prototype before completing the SUS questionnaire:
 
 \begin{enumerate}
 \item \textbf{Sign in and navigate the dashboard} --- log in using provided credentials and locate the service request list.
@@ -765,17 +763,17 @@ Each participant completed four structured task scenarios on the prototype befor
 
 \subsubsection{SUS Score Calculation}
 
-The System Usability Scale consists of ten Likert-scale items alternating between positive and negative phrasing \citep{Brooke1996}. For each participant, the contribution of each item is calculated as: (score $- 1$) for odd-numbered positive items and (5 $-$ score) for even-numbered negative items. The contributions are summed and multiplied by 2.5 to produce an individual score on a 0--100 scale. The mean across the nine participants is:
+The System Usability Scale consists of ten Likert-scale items alternating between positive and negative phrasing \citep{Brooke1996}. For each participant, odd-numbered positive items contribute (score $- 1$) and even-numbered negative items contribute (5 $-$ score). Contributions are summed and multiplied by 2.5, producing an individual score on a 0--100 scale. The mean across the nine participants is:
 
 \[
 \bar{S} = \frac{77.5 + 72.5 + 75.0 + 70.0 + 75.0 + 77.5 + 72.5 + 72.5 + 77.5}{9} = \frac{670.5}{9} \approx \mathbf{74.5}
 \]
 
-Following the adjective rating scale established by \citet{Bangor2009}, a score of 74.5 falls in the \textbf{``Good''} range. It exceeds the widely cited industry average of 68, indicating that stakeholders perceive the platform as genuinely usable despite the inherent complexity of a multi-role, offline-capable system.
+Following the adjective rating scale established by \citet{Bangor2009}, a score of 74.5 falls in the \textbf{``Good''} range, exceeding the widely cited industry average of 68. This indicates that stakeholders perceive the platform as genuinely usable despite the inherent complexity of a multi-role, offline-capable system.
 
 \subsubsection{Qualitative Feedback}
 
-Post-task open-ended feedback was collected from participants. Positive themes included:
+Post-task open-ended feedback was collected from all participants. Positive themes included:
 
 \begin{itemize}
 \item \textbf{Clarity of offline status indicator.} Several participants noted that the real-time online/offline status bar gave them confidence when connectivity was unreliable: \textit{``This is itself best for the future --- you can see exactly when it is working offline''} (P6, Adama SEZ).
@@ -787,11 +785,11 @@ Areas identified for improvement included:
 
 \begin{itemize}
 \item \textbf{Amharic language support} (noted by six of nine participants as a priority for wider roll-out among non-English-speaking staff).
-\item \textbf{Confirmation dialogs before token deductions} (requested by three tenant participants who wanted an explicit ``Are you sure?'' prompt before submitting requests that deduct tokens).
+\item \textbf{Confirmation dialogs before token deductions} (requested by three tenant participants wanting an explicit ``Are you sure?'' prompt before fee-deducting submissions).
 \item \textbf{Richer push notifications} (two management staff participants wanted mobile notifications for request status changes rather than relying on checking the dashboard).
 \end{itemize}
 
-These findings are consistent with the requirements gathered from the 49-respondent questionnaire (Section~\ref{sec:data-collection}): both data sources highlight Amharic localisation and proactive notification as the most impactful near-term improvements.
+These findings align closely with the requirements gathered from the 49-respondent questionnaire (Section~\ref{sec:data-collection}): both data sources consistently highlight Amharic localization and proactive notification as the most impactful near-term improvements.
 
 \subsection{DSR Guidelines Compliance Assessment}
 
@@ -819,4 +817,4 @@ Table~\ref{tab:dsr-compliance} evaluates the research against Hevner's seven DSR
 
 \section{Chapter Summary}
 
-This chapter documented the implementation and evaluation of the IPDC platform prototype, comprising roughly 105 source files with dual-layer offline storage, dual-mode authentication, a tiered digital service token system, three AI models, and Workbox-powered PWA configuration. All three AI models show strong performance on synthetic evaluation data: the XGBoost service classifier achieves 100\% category accuracy, the predictive maintenance ensemble reaches $R^{2} = 0.9989$, and the LambdaRank park recommender achieves NDCG@3 of 0.9572; these results are best interpreted as an architectural baseline, with deployment on real IPDC operational data providing the definitive validation. Technical evaluation confirms all nine offline scenarios pass, Lighthouse performance scores (89/87/96/92) meet targets, full compatibility holds across Chrome and Opera on both desktop and mobile, a usability evaluation with nine real IPDC stakeholders on 10 February 2026 yields a SUS mean score of 74.5 (``Good''), and all seven of Hevner's DSR guidelines are satisfied. The next chapter pulls these findings together into design principles and maps out directions for future work.
+This chapter documented the implementation and evaluation of the IPDC platform prototype --- approximately 105 source files with dual-layer offline storage, dual-mode authentication, a tiered digital service token system, three AI models, and Workbox-powered PWA configuration. All three AI models show strong performance on synthetic evaluation data: the XGBoost service classifier achieves 100\% category accuracy, the predictive maintenance ensemble reaches $R^{2} = 0.9989$, and the LambdaRank park recommender achieves NDCG@3 of 0.9572; these results establish an architectural baseline pending validation on real IPDC operational data. Technical evaluation confirms all nine offline scenarios pass; Lighthouse scores (89/87/96/92) meet targets; full compatibility holds across Chrome and Opera on both desktop and mobile; a usability evaluation with nine real stakeholders on 10 February 2026 yields a mean SUS score of 74.5 (``Good''); and all seven of Hevner's DSR guidelines are satisfied. The next chapter synthesizes these findings into design principles and outlines directions for future work.
