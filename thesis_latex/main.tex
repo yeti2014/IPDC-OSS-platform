@@ -186,6 +186,8 @@
 \input{chapters/chapter6}
 
 % --- Appendices ---
+% Give appendix chapters a unique hyperref anchor (avoids chapter.1 conflict)
+\renewcommand{\theHchapter}{app.\arabic{chapter}}
 \input{chapters/appendix}
 
 % --- Bibliography ---
