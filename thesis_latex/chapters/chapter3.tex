@@ -121,18 +121,18 @@ A systematic analysis of Chinese smart park platforms --- primarily WeChat Work 
 
 This analysis served two purposes: it established the source model for the technology adaptation framework, and it provided concrete design inspiration for specific features such as workflow automation, approval routing, and status tracking.
 
-\subsection{Field Observations}
+\subsection{Contextual Insights from Open-Ended Responses}
 
-Field visits to IPDC industrial parks provided firsthand insight into service delivery workflows, infrastructure conditions, and user behavior. Observations focused on:
+Each questionnaire included open-ended questions alongside the Likert-scale items, specifically to capture contextual detail that closed-format items cannot surface. Respondents were invited to describe, in their own words:
 
 \begin{itemize}
-\item How tenants physically interact with administrative offices for service delivery;
-\item The technology infrastructure in place (available devices, network quality, power reliability);
-\item How different stakeholder groups communicate with one another;
-\item Environmental factors that affect technology use (heat, dust, noise in industrial settings).
+\item How service requests are currently submitted and tracked in their park;
+\item The typical impact of internet disruptions on their daily work;
+\item What they found most frustrating about existing administrative processes;
+\item What features they would most want a digital platform to provide.
 \end{itemize}
 
-These observations complemented the questionnaire findings by surfacing tacit aspects of service delivery that stakeholders might not articulate in a structured survey.
+Reading through the narrative responses was, in many ways, the most instructive part of the data collection process. Several respondents offered remarkably detailed accounts of the workarounds they had developed to cope with the absence of digital tools --- sending requests via WhatsApp, keeping personal notebooks of pending submissions, or delegating follow-up calls to colleagues when office visits were impractical. Patterns across these accounts gave shape to the operational context that could not have been inferred from numeric responses alone, and they directly informed the design priorities set out in Chapter~\ref{ch:analysis}.
 
 \section{System Development Methodology}
 
@@ -244,4 +244,4 @@ The platform is also designed with organizational ethics in mind. Administrative
 
 \section{Chapter Summary}
 
-This chapter laid out the research methodology, with Design Science Research as the overarching paradigm and the DSRM process model organizing the work into six activities from problem identification through to communication. Data collection drew on stakeholder questionnaires (49 respondents across eleven parks), document analysis, Chinese platform analysis, and field observations, while development followed agile-inspired iterations with technology choices driven by offline-first requirements. The evaluation framework combines technical assessment of offline functionality, synchronization, and performance with SUS usability evaluation and DSR guidelines compliance review. The next chapter presents the system analysis and design, covering stakeholder requirements, the China-to-Ethiopia adaptation framework, and the resulting system architecture.
+Three methodological pillars support this research: Design Science Research as the overarching paradigm, a structured multi-source data collection process, and agile-inspired iterative development. The stakeholder questionnaire --- 49 respondents drawn from eleven parks across Ethiopia --- produced both quantitative measurements and rich narrative accounts of service delivery as it actually operates today. Document analysis and a systematic examination of Chinese smart park platforms provided the design source material, while open-ended questionnaire responses added the contextual texture that structured items alone cannot capture. Technology choices were made explicitly on the basis of offline-first requirements rather than convenience or familiarity, which is worth emphasising because it shaped every subsequent architectural decision. Evaluation draws on technical offline testing and the SUS instrument. What ties these elements together is the DSRM process, which keeps the research accountable to both scientific rigour and the practical realities IPDC stakeholders face.
