@@ -47,7 +47,7 @@ ai-models/ & Three ML models + FastAPI backend & 12 \\
 
 \subsection{Build and Deployment Configuration}
 
-The Vite build configuration uses manual chunk splitting to improve caching behavior. Three vendor chunks are separated: \texttt{vendor} (React and ReactDOM), \texttt{mui} (Material-UI components), and \texttt{firebase} (Firebase SDKs). Keeping these distinct means application code updates do not force browsers to re-download cached vendor libraries --- a particularly worthwhile optimization where connectivity is limited.
+The Vite build uses manual chunk splitting (\texttt{vendor}, \texttt{mui}, \texttt{firebase}) so application updates do not invalidate cached library bundles --- valuable where connectivity is limited.
 
 The vite-plugin-pwa generates the service worker and web app manifest automatically from the configuration in \texttt{vite.config.ts}. The deployed platform is accessible at the following URLs:
 
@@ -156,7 +156,7 @@ Each request follows a defined status progression: \texttt{pending} $\rightarrow
 
 The token system provides an internal mechanism for tracking service fees without requiring an external payment gateway. Its implementation spans the \texttt{TokenDashboard} component and the \texttt{billingService} module.
 
-\textbf{Token Tiers} reward engagement: basic (0--499 tokens, 0\% discount), silver (500--1,499 tokens, 5\% discount), gold (1,500--4,999 tokens, 10\% discount), and platinum (5,000+ tokens, 20\% discount). Higher tiers also unlock increased monthly request limits and priority support access.
+\textbf{Token Tiers} reward engagement: basic through platinum (four tiers), each unlocking progressively larger discounts (0--20\%), higher monthly request limits, and priority support.
 
 \textbf{Service Costs} vary by both service type and priority level. Table~\ref{tab:token-costs} shows the pricing matrix.
 
@@ -178,7 +178,7 @@ Waste Management & 35 & 60 & 85 & 110 \\
 \end{tabular}
 \end{table}
 
-A complete audit trail is maintained across seven transaction types: \texttt{initial\_allocation}, \texttt{service\_request} (deduction), \texttt{service\_completion}, \texttt{refund}, \texttt{bonus}, \texttt{penalty}, and \texttt{purchase}. Administrators credit tokens to tenant accounts after confirming that external payments (cash, bank transfer) have been received. Figure~\ref{fig:token-dashboard} shows the token dashboard interface.
+A complete audit trail covers all transaction types (allocation, deduction, refund, bonus, penalty, purchase). Administrators credit tokens after confirming external payment receipt. Figure~\ref{fig:token-dashboard} shows the token dashboard interface.
 
 \begin{figure}[H]
 \centering
@@ -358,7 +358,7 @@ Average Confidence Score & 0.95 & --- \\
 
 The training data was split into 70\% training (1,386 samples), 15\% validation (297 samples), and 15\% test (297 samples).
 
-The category classifier reaches perfect accuracy on the synthetic test set, which is perhaps less surprising than it first appears: the eleven IPDC service types have clearly distinct vocabulary patterns, so the separation task is inherently easier than in open-domain classification. The priority predictor's moderate accuracy (40\%) is more telling --- priority assignment involves subjective human judgment that textual features alone cannot fully capture, and 40\% should be read as a realistic ceiling rather than a shortcoming. The time estimator achieves a mean absolute error of 2.63 days, offering tenants useful estimates for planning. Figure~\ref{fig:model1-eval} presents the confusion matrix for service type classification and the scatter plot of predicted versus actual processing days.
+Category classification reaches 100\% on the synthetic set --- the eleven IPDC service types have distinct vocabulary patterns, making separation straightforward. The priority predictor's 40\% accuracy reflects the subjectivity of human judgment, not a shortcoming of the model. The time estimator's 2.63-day MAE offers tenants useful planning estimates. Figure~\ref{fig:model1-eval} presents the confusion matrix for service type classification and the scatter plot of predicted versus actual processing days.
 
 \begin{figure}[H]
 \centering
@@ -454,9 +454,7 @@ The near-perfect regression performance ($R^{2} = 0.9989$) reflects the tight re
 
 \subsubsection{Architecture}
 
-The park recommendation model uses LightGBM's LambdaRank algorithm, a learning-to-rank approach that directly optimizes Normalized Discounted Cumulative Gain (NDCG). Each of the 800 tenant profiles is paired with all 13 Ethiopian industrial parks, producing 10,400 ranking instances. Match scores (0--100) are mapped to five relevance grades: 0 (poor, 0--20), 1 (fair, 20--40), 2 (good, 40--60), 3 (very good, 60--80), and 4 (excellent, 80--100).
-
-Eleven features describe each tenant-park pair: three categorical features (industry sector, park identifier, preferred region) encoded with LabelEncoder, and eight numerical features (investment capital, employee count, land needed, power requirement, water requirement, export orientation, minimum budget, maximum budget).
+The park recommendation model uses LightGBM's LambdaRank algorithm, directly optimizing NDCG. Each of the 800 tenant profiles is paired with all 13 Ethiopian industrial parks (10,400 ranking instances), with match scores (0--100) mapped to five relevance grades. Eleven features describe each pair: three categorical (industry sector, park identifier, preferred region) and eight numerical (investment capital, employee count, land, power, water, export orientation, budget range).
 
 \begin{table}[H]
 \centering
@@ -530,7 +528,7 @@ Park Recommender & LightGBM Rank & NDCG@3 & Alibaba/Tencent: 0.85--0.88 & 0.9572
 \end{tabular}
 \end{table}
 
-All three models meet or exceed the figures reported for their Chinese reference implementations. Two important caveats apply. First, the IPDC models were trained and evaluated on \emph{synthetic} datasets designed to reflect realistic IPDC operational patterns (see Section~\ref{sec:ai-training}), whereas the Chinese reference systems are production deployments trained on years of real operational data. Near-perfect scores on a self-generated synthetic dataset are expected and should be interpreted as establishing an architectural baseline rather than a claim of superiority over mature deployed systems. Second, the Chinese benchmark figures (Alibaba ET Industrial Brain: 85--92\%; Huawei FusionPlant: 80--88\%; Tencent WeCity NDCG@3: 0.85) represent values cited in the published literature for comparable tasks and are used here as indicative reference points. All source code, training scripts, and model artefacts are available in the project repository \citep{BerhanuIPDC2025} for independent reproduction and re-evaluation once real IPDC operational data become available. The models are designed for online learning, with Model 3 configured to retrain automatically after every 50 new tenant placements or on a monthly schedule.
+All three models meet or exceed their Chinese reference benchmarks. Two caveats apply: the IPDC models trained on \emph{synthetic} data, so near-perfect scores establish an architectural baseline rather than a claim of superiority over mature production deployments; and the Chinese benchmark figures are literature values for comparable tasks, used here as indicative reference points. Source code, training scripts, and model artefacts are available in the project repository \citep{BerhanuIPDC2025}; Model 3 is configured to retrain automatically as real operational data accumulate.
 
 \section{PWA Implementation Details}
 
