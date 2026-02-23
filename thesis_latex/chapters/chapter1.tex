@@ -31,8 +31,6 @@ This connectivity gap poses a serious adaptation challenge. Chinese platforms li
 
 The offline-first paradigm offers a compelling path forward. As \citet{Kleppmann2019} articulate in their influential work on local-first software, this paradigm flips the conventional assumption that being online is the default state. In an offline-first system, the application works fully without a network connection; connectivity becomes an enhancement, not a requirement.
 
-It is worth distinguishing offline-first from merely offline-capable. An offline-capable system is designed primarily for online use, treating offline mode as a fallback — a reactive approach. An offline-first system, by contrast, treats offline operation as the primary design consideration — a proactive one. Given that Ethiopian parks lose connectivity for three to five hours daily and experience complete outages multiple times a month, offline is not an exceptional state; it is the expected one. This is why the present research adopts offline-first as its core design philosophy.
-
 Progressive Web Application (PWA) technology provides the technical foundation for building offline-first web platforms. PWAs use service workers, client-side caching, and background synchronization to keep applications functional through connectivity disruptions \citep{AterPWA2017, Majchrzak2018, Tandel2018}. Research confirms that PWAs deliver experiences comparable to native apps while offering clear advantages in cross-platform deployment and offline capability \citep{AhnAllen2020, BiornHansen2017}. Crucially, a single PWA codebase serves desktop browsers, mobile browsers, and can be installed on phones as an app-like experience — eliminating the need for separate native mobile development.
 
 Google's Firebase, and specifically its Firestore database, complements this approach with built-in offline persistence: data is automatically cached on-device and synchronized when the network returns \citep{GoogleFirebase2024}. Firebase's free tier (50,000 daily reads, 20,000 daily writes, 1~GB storage) comfortably covers prototype development and initial deployment. Combining Chinese smart park design thinking, offline-first PWA architecture, and Firebase backend services creates a genuine opportunity to build digital governance solutions that work where infrastructure is limited.
@@ -169,22 +167,9 @@ For \textbf{tenant enterprises}, the most immediate gain is service access that 
 
 \textbf{Functional Scope:} The prototype covers core service delivery functions: service request submission and tracking, maintenance request management, announcements, document management, and digital token-based fee tracking.
 
-\textbf{Technical Scope---Platform Architecture:} The research produces a PWA built with modern web technologies, ensuring:
-\begin{itemize}
-\item Cross-platform accessibility across desktops, tablets, and phones without separate native applications;
-\item Mobile app-like experience with home screen installation and offline access;
-\item A single codebase serving all platforms consistently.
-\end{itemize}
+\textbf{Technical Scope:} The research produces a PWA built with modern web technologies, delivering cross-platform accessibility across desktops, tablets, and phones from a single codebase, with home screen installation and offline access. Firebase provides the cloud backend via its built-in Firestore offline persistence.
 
-\textbf{Technical Scope---Backend Services:} Firebase provides the cloud backend, chosen for its built-in offline persistence through Firestore.
-
-\textbf{Fee Tracking Scope---Digital Service Token System:} Rather than integrating with external payment gateways, the platform uses an internal token system:
-\begin{itemize}
-\item Administrators assign tokens (credits) to tenant accounts;
-\item Service fees are calculated and deducted from token balances;
-\item When tenants pay through any external method, administrators add corresponding tokens.
-\end{itemize}
-This approach demonstrates the complete fee management workflow independently, with a clear path to future payment gateway integration.
+\textbf{Fee Tracking Scope---Digital Service Token System:} Rather than integrating with external payment gateways, the platform uses an internal token system: administrators assign tokens to tenant accounts, fees are deducted on request, and tokens are topped up when external payments are confirmed. This demonstrates the complete fee workflow with a clear path to future payment gateway integration.
 
 \textbf{Scope Exclusions:} The research leaves out native mobile app development, external payment gateway integration, IoT sensor integration, and advanced analytics — all noted as directions for future work.
 
@@ -222,29 +207,25 @@ Drawing on South-South technology transfer literature \citep{Chen2018, Hensenger
 
 \section{Definition of Key Terms}
 
-\textbf{Offline-First Architecture:} A software design approach that treats local data storage and processing as primary, allowing full application functionality without a network connection. Network availability enhances synchronization but is not a prerequisite.
+\textbf{Offline-First Architecture:} A software design approach treating local data storage as primary, so the application remains fully functional without network access; connectivity enhances synchronization but is not a prerequisite.
 
-\textbf{Progressive Web Application (PWA):} A web application using service workers, web app manifests, and caching APIs to deliver app-like experiences with offline capability, push notifications, and home screen installation across desktop and mobile browsers.
+\textbf{Progressive Web Application (PWA):} A web application using service workers, manifests, and caching APIs to deliver app-like offline capability, push notifications, and home screen installation across desktop and mobile browsers.
 
-\textbf{One-Stop Service (OSS):} A service delivery model that consolidates multiple services into a single access point, eliminating the need to visit separate channels or locations.
+\textbf{One-Stop Service (OSS):} A service delivery model consolidating multiple services into a single access point, eliminating the need to visit separate channels or locations.
 
-\textbf{Digital Service Token:} An internal unit of value used to track service fees within the platform. Tokens are assigned to tenant accounts by administrators and deducted when services are requested, providing fee transparency without requiring external payment integration.
+\textbf{Digital Service Token:} An internal credit unit for tracking service fees; administrators assign tokens to tenant accounts and the system deducts them when services are requested.
 
 \textbf{Firebase:} Google's Backend-as-a-Service platform offering Firestore (cloud database with offline persistence), authentication, hosting, and cloud functions.
 
-\textbf{Service Worker:} A JavaScript file running in a separate browser thread that enables background processing, request interception, and caching strategies supporting offline functionality.
+\textbf{Service Worker:} A JavaScript file running in a background browser thread that enables request interception, caching, and offline functionality.
 
-\textbf{IndexedDB:} A browser API for storing structured data client-side, supporting persistent local storage for offline-first applications.
+\textbf{IndexedDB:} A browser API for client-side structured data storage, used here via Dexie.js as the local offline queue and data cache.
 
-\textbf{Smart Park:} An industrial park using digital technologies for intelligent management, automated services, real-time monitoring, and data-driven decision-making.
+\textbf{Smart Park:} An industrial park using digital technologies for intelligent management, automated services, and data-driven decision-making.
 
 \textbf{Digital Governance:} The use of digital technologies to deliver organisational services, engage stakeholders, and manage operations electronically.
 
-\textbf{Background Synchronization:} A PWA capability that automatically synchronizes data between client and server when connectivity is available, without user intervention.
-
-\textbf{Connectivity-Constrained Environment:} A setting where internet access is unreliable, intermittent, or unavailable for extended periods, requiring special design consideration.
-
-\textbf{Design Science Research (DSR):} A research paradigm that creates and evaluates IT artifacts to solve identified organisational problems, producing both practical solutions and generalizable knowledge.
+\textbf{Design Science Research (DSR):} A research paradigm centered on creating and evaluating IT artifacts to solve identified organisational problems, producing practical solutions and generalizable knowledge.
 
 \textbf{Industrial Parks Development Corporation (IPDC):} The Ethiopian government corporation, established in 2014, responsible for developing, managing, and operating industrial parks across Ethiopia.
 
