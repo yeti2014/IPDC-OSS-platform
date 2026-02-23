@@ -27,17 +27,17 @@ The overall lesson from RQ1 is that successful technology transfer requires syst
 
 A dual-layer offline storage architecture --- combining Firebase Firestore's transparent persistence with an application-level IndexedDB queue managed through Dexie.js --- can sustain core service delivery during connectivity disruptions. What makes this work in practice is a layered combination of technologies, each solving a different part of the problem. Firestore's \texttt{persistentLocalCache()} with \texttt{persistentMultipleTabManager()} handles read operations automatically, caching accessed data without requiring the application to manage it explicitly. Dexie.js adds an explicit offline queue for write operations, because Firestore's optimistic writes cannot always be trusted when the network is genuinely absent. Workbox-managed service workers cover the application shell itself, matching caching behaviour to data type: static resources get aggressive CacheFirst treatment, API responses fall through to cache via NetworkFirst when the network fails, and lower-priority content uses StaleWhileRevalidate to trade perfect freshness for reliable availability.
 
-The evaluation confirmed this architecture's effectiveness. All nine offline functionality test scenarios passed, proving that core workflows --- authentication, service browsing, request submission, complaint filing, announcement viewing, and dashboard access --- operate correctly without connectivity. Synchronization testing confirmed that queued operations process properly upon reconnection, with data integrity preserved across the offline-to-online transition. Performance measurements show load times under 3 seconds on first visit and under 1.5 seconds from cache, with offline operations responding in under 500 milliseconds --- well within acceptable thresholds for constrained environments.
+Testing bore this out. All nine offline functionality test scenarios passed, proving that core workflows --- authentication, service browsing, request submission, complaint filing, announcement viewing, and dashboard access --- operate correctly without connectivity. Synchronization testing confirmed that queued operations process properly upon reconnection, with data integrity preserved across the offline-to-online transition. Performance measurements show load times under 3 seconds on first visit and under 1.5 seconds from cache, with offline operations responding in under 500 milliseconds --- well within acceptable thresholds for constrained environments.
 
 The architectural takeaway is that offline-first capability in a multi-stakeholder platform calls for a layered approach rather than reliance on any single technology. The combination of transparent caching for reads, explicit queuing for writes, and asset caching for the application shell produces a resilient system that degrades gracefully across the connectivity spectrum.
 
 \subsection{RQ3: How Effective Is the Resulting Platform in Terms of Functionality and Usability?}
 
-The evaluation produced encouraging results on both technical functionality and user experience.
+The prototype holds up well on both dimensions --- technical and experiential --- though with different levels of confidence.
 
 On the technical side, the prototype implements twelve functional requirements spanning authentication, service requests, digital tokens, AI analytics, complaint management, announcements, interactive mapping, and administrative dashboards. Cross-platform testing confirmed consistent behavior across desktop browsers, mobile browsers, and installed PWA instances. The service worker reliably caches assets, and the offline queue processes pending operations without data loss upon reconnection.
 
-On the usability side, the System Usability Scale evaluation yielded a mean score of 74.5, placing the platform in the ``Good'' range according to \citet{Bangor2009} --- above the widely cited average of 68. This result suggests the platform delivers a genuinely usable experience for its target stakeholder groups, despite the complexity of a multi-role, offline-capable system.
+The usability picture is similarly encouraging. The System Usability Scale evaluation yielded a mean score of 74.5, placing the platform in the ``Good'' range according to \citet{Bangor2009} --- above the widely cited average of 68 --- suggesting the platform delivers a genuinely usable experience for its target stakeholder groups, despite the complexity of a multi-role, offline-capable system.
 
 Qualitative feedback highlighted several strengths: the clarity of the service request workflow, the value of real-time status tracking, and the reassurance provided by visible offline indicators. Participants also noted areas for improvement, including Amharic language support, more detailed help documentation, and richer push notifications. These observations directly inform the recommendations at the close of this chapter.
 
@@ -81,7 +81,7 @@ The \textbf{functional prototype} is the principal practical contribution --- a 
 
 The \textbf{technology stack} and implementation patterns documented throughout this thesis supply a replicable blueprint for similar projects. The combination of React, Firebase offline persistence, Dexie.js for explicit queuing, and Workbox for service worker management is not the only possible stack --- but it proved effective, cost-efficient on the Firebase free tier, and maintainable for a solo researcher working within thesis constraints.
 
-The \textbf{AI model integration} for service classification, predictive maintenance, and park recommendation demonstrates how machine learning can be woven into administrative platforms to support data-driven decision-making. Though the current models rely on synthetic training data, they establish the architecture and integration patterns needed for production retraining on real operational data.
+Weaving machine learning into the platform --- for service classification, predictive maintenance, and park recommendation --- demonstrates that AI can support data-driven decisions in administrative systems without requiring persistent connectivity. The current models rely on synthetic training data, but they establish the architecture and integration patterns needed for production retraining once real operational data is available.
 
 \subsection{Methodological Contributions}
 
@@ -93,7 +93,7 @@ DSR is not often combined with iterative software development --- the two commun
 
 What does a system that works reliably during connectivity outages tell us about digital governance theory? Quite a bit, it turns out. Offline-first architecture has been largely absent from e-governance literature, yet the success demonstrated here suggests the field may be operating on an assumption --- persistent connectivity --- that does not hold in the contexts where digital transformation is most needed. Theoretical models of digital governance should treat connectivity as a variable rather than a constant, opening research directions that the current literature has mostly left unexplored.
 
-The adaptation framework findings also suggest that infrastructure constraints should be treated as a primary adaptation dimension in technology transfer, not a background condition. This carries implications for theories of technology diffusion and innovation adoption in developing economies.
+A related implication follows from the adaptation framework: infrastructure constraints belong at the centre of technology transfer analysis, not treated as background. This carries implications for theories of technology diffusion and innovation adoption in developing economies.
 
 \subsection{Implications for Practice}
 
