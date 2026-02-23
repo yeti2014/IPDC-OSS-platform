@@ -49,17 +49,7 @@ The research follows the six-activity DSRM process model proposed by \citet{Peff
 \label{fig:dsrm-process}
 \end{figure}
 
-\textbf{Activity 1 --- Problem Identification and Motivation} was carried out through a review of the scholarly literature (Chapter~\ref{ch:literature}) and an analysis of current IPDC service delivery processes. The convergence of documented service gaps \citep{Guteta2022, Guteta2023} with the connectivity constraints specific to Ethiopian infrastructure established the importance and urgency of the problem.
-
-\textbf{Activity 2 --- Define Objectives of a Solution} translated the identified problem into concrete design objectives. Through stakeholder requirement gathering and analysis of Chinese smart park reference models, the research defined the functional and non-functional requirements for the platform (detailed in Chapter~\ref{ch:analysis}).
-
-\textbf{Activity 3 --- Design and Development} produced the core artifact: an offline-first PWA prototype built with React, Firebase, and Dexie.js. The architecture was designed to keep services running during connectivity disruptions while supporting workflows involving multiple stakeholder groups.
-
-\textbf{Activity 4 --- Demonstration} showed the artifact in action through structured walkthroughs of tenant, administrator, and operations workflows, including scenarios that specifically test offline operation.
-
-\textbf{Activity 5 --- Evaluation} assessed the artifact through technical testing of offline functionality, synchronization accuracy, and cross-platform compatibility, alongside a usability evaluation using the System Usability Scale.
-
-\textbf{Activity 6 --- Communication} takes the form of this thesis, which presents the artifact, the reasoning behind its design, evaluation results, and the design principles that emerged from the work.
+\textbf{Activity 1} (Problem Identification) drew on the literature review and IPDC service delivery analysis; \textbf{Activity 2} (Define Objectives) translated stakeholder requirements and Chinese smart park analysis into design requirements (Chapter~\ref{ch:analysis}); \textbf{Activity 3} (Design \& Development) produced the offline-first PWA prototype; \textbf{Activity 4} (Demonstration) showed tenant, administrator, and operations workflows under both online and offline conditions; \textbf{Activity 5} (Evaluation) assessed offline functionality, synchronization, performance, and usability via SUS; and \textbf{Activity 6} (Communication) is this thesis.
 
 \section{Research Design Overview}
 
@@ -132,7 +122,7 @@ Each questionnaire included open-ended questions alongside the Likert-scale item
 \item What features they would most want a digital platform to provide.
 \end{itemize}
 
-Reading through the narrative responses was, in many ways, the most instructive part of the data collection process. Several respondents offered remarkably detailed accounts of the workarounds they had developed to cope with the absence of digital tools --- sending requests via WhatsApp, keeping personal notebooks of pending submissions, or delegating follow-up calls to colleagues when office visits were impractical. Patterns across these accounts gave shape to the operational context that could not have been inferred from numeric responses alone, and they directly informed the design priorities set out in Chapter~\ref{ch:analysis}.
+The narratives were often the most instructive part of the data. Respondents described workarounds ranging from WhatsApp requests to personal notebooks for tracking submissions, and those patterns shaped the design priorities set out in Chapter~\ref{ch:analysis} in ways numeric responses alone could not.
 
 \section{System Development Methodology}
 
@@ -177,13 +167,7 @@ PDF Generation & jsPDF + AutoTable & Client-side PDF generation for invoices and
 \end{tabular}
 \end{table}
 
-\textbf{React and TypeScript} were chosen as the frontend foundation because React's component model supports the modular architecture a multi-stakeholder platform requires, and TypeScript catches type errors at compile time --- important for a complex application with eight separate type definition files.
-
-\textbf{Firebase} was preferred over alternatives such as Supabase or a custom Node.js backend primarily because of its built-in offline persistence. When Firestore is configured with \texttt{persistentLocalCache()}, it automatically maintains a local copy of accessed data and handles bidirectional synchronization. This drastically reduces the engineering effort required for offline-first behavior compared to building custom synchronization logic from scratch.
-
-\textbf{Dexie.js} complements Firebase's offline capabilities by providing a local database under the application's direct control. It handles operations that require explicit offline queuing, such as service requests submitted while internet access is unavailable. Together, Firestore's transparent cache and Dexie's explicit queue form a dual-layer offline storage architecture.
-
-\textbf{Workbox} handles service worker management. Writing service worker code manually is notoriously easy to get subtly wrong; Workbox provides declarative configuration for caching strategies (CacheFirst, NetworkFirst, StaleWhileRevalidate) that are already well-tested in production environments.
+\textbf{React and TypeScript} provide a component model suited to multi-stakeholder complexity, with compile-time type safety across eight type definition files. \textbf{Firebase} was chosen over Supabase or a custom backend specifically for \texttt{persistentLocalCache()}, which automatically handles offline data and bidirectional synchronization without custom sync logic. \textbf{Dexie.js} adds an explicit write queue for operations that Firestore's optimistic cache cannot guarantee during genuine offline periods; together they form the dual-layer storage architecture. \textbf{Workbox} handles service worker management through declarative CacheFirst, NetworkFirst, and StaleWhileRevalidate configurations, avoiding the subtle errors that manual service worker code reliably introduces.
 
 \subsection{Development Tools and Environment}
 
