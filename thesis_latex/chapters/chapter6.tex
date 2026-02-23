@@ -125,44 +125,24 @@ The adaptation framework also suggests that technology adoption policies should 
 
 \section{Recommendations for Future Work}
 
-\subsection{Short-Term Recommendations (3--6 Months)}
-
 \begin{enumerate}
-\item \textbf{Implement Amharic Language Support.} The immediate priority is establishing i18n infrastructure, completing Amharic translation files, having them validated by native speakers, and testing the Amharic interface across all platform features --- essential for inclusive accessibility.
+\item \textbf{Implement Amharic Language Support.} The immediate priority is establishing i18n infrastructure, completing Amharic translation files, validating them with native speakers, and testing the Amharic interface across all features --- essential for inclusive accessibility.
 
-\item \textbf{Expand Usability Testing.} Run a larger-scale SUS evaluation with participants from multiple industrial parks, including Bole Lemi, Hawassa, Adama, and Kombolcha. A minimum of 30 participants spanning all three stakeholder roles would yield statistically robust usability data.
+\item \textbf{Expand Usability Testing.} Run a larger-scale SUS evaluation spanning Bole Lemi, Hawassa, Adama, and Kombolcha, with a minimum of 30 participants across all three stakeholder roles for statistically robust findings.
 
-\item \textbf{Enhance Notification System.} Implement push notifications for service request status changes, announcement publications, and token balance updates. Firebase Cloud Messaging provides the necessary infrastructure, and the PWA service worker already supports push notification handling.
+\item \textbf{Enhance Notifications.} Implement push notifications for service request status changes, announcements, and token balance updates via Firebase Cloud Messaging --- the PWA service worker already supports push handling.
 
-\item \textbf{Improve Help Documentation.} Develop in-app contextual help and onboarding tutorials in response to evaluation feedback about the need for user guidance, available in both English and Amharic.
-\end{enumerate}
+\item \textbf{Train AI Models on Real Data.} Replace synthetic training data with actual IPDC operational records, using model versioning and A/B testing to validate improved predictions as historical data becomes available.
 
-\subsection{Medium-Term Recommendations (6--12 Months)}
+\item \textbf{Implement Conflict Resolution.} Develop a strategy for concurrent offline modifications using operational transformation or conflict-free replicated data types (CRDTs) --- increasingly important as the user base grows beyond a single-device-per-user assumption.
 
-\begin{enumerate}
-\item \textbf{Train AI Models on Real Data.} Replace synthetic training data with actual IPDC operational records for all three models. This requires working with IPDC data management to access historical service request logs, maintenance records, and park performance data, with model versioning and A/B testing to validate improved predictions.
+\item \textbf{Integrate with External Systems.} Build API connections to IPDC's financial systems (token purchases), customs and logistics platforms (trade facilitation), and utility management systems (automated billing).
 
-\item \textbf{Implement Advanced Conflict Resolution.} Develop a conflict resolution strategy for concurrent offline modifications, potentially using operational transformation or conflict-free replicated data types (CRDTs) --- increasingly important as the user base grows.
+\item \textbf{Pilot Deployment.} A live pilot at one park --- one willing tenant group, a subset of services, real internet outages --- would provide validation that no amount of controlled testing can replicate.
 
-\item \textbf{Integrate with External Systems.} Build API integrations with IPDC's financial systems for token purchases, customs and logistics systems for trade facilitation, and utility management systems for automated billing.
+\item \textbf{Scale to All IPDC Parks.} After a successful pilot, roll out across the full IPDC portfolio with park-specific configuration and data federation for tenants operating across multiple locations.
 
-\item \textbf{Add Reporting and Analytics.} Expand the administrative dashboard with comprehensive reporting covering service delivery KPIs, tenant satisfaction trends, maintenance prediction accuracy, and platform usage analytics.
-
-\item \textbf{Pilot Deployment.} At some point the system needs to meet actual internet outages rather than simulated ones. A pilot at one park --- starting with a willing group of tenants and a subset of services --- would give real-world validation that no amount of controlled testing can replicate.
-\end{enumerate}
-
-\subsection{Long-Term Recommendations (12--24 Months)}
-
-\begin{enumerate}
-\item \textbf{Scale to All IPDC Parks.} After a successful pilot, roll the platform out to all IPDC-managed parks, incorporating park-specific configuration and potentially park-to-park data federation for tenants operating across multiple locations.
-
-\item \textbf{Mobile Payment Integration.} As Ethiopia's digital payment ecosystem matures (telebirr gaining traction), integrate mobile payment capabilities to replace or supplement the token-based system with direct digital payments.
-
-\item \textbf{Offline AI Inference.} Explore deploying lightweight machine learning models directly in the browser using TensorFlow.js or ONNX Runtime Web, enabling AI-powered features to function during offline periods without server connectivity.
-
-\item \textbf{Multi-Language Expansion.} Beyond Amharic, consider support for additional Ethiopian languages (Afaan Oromoo, Tigrinya) and foreign investor languages (Chinese, Turkish) to serve the diverse stakeholder community.
-
-\item \textbf{Open-Source Release.} Consider releasing the platform's core offline-first framework as an open-source toolkit that other organizations in developing countries could adapt, extending the research's impact beyond IPDC.
+\item \textbf{Mobile Payment Integration.} As Ethiopia's digital payment ecosystem matures, integrate telebirr and CBE Birr to supplement or replace the token-based fee system with direct digital payments.
 \end{enumerate}
 
 \section{Concluding Remarks}
@@ -171,8 +151,6 @@ This research began with a straightforward observation: Ethiopian industrial par
 
 The offline-first digital one-stop service platform developed here demonstrates that reliable digital service delivery in connectivity-challenged environments is not merely a theoretical possibility but something achievable with web technologies available today. The Progressive Web Application architecture, paired with dual-layer offline storage and differentiated caching, creates a platform that serves users whether they are connected, intermittently connected, or entirely offline.
 
-Perhaps more importantly, the research revealed that the challenge of building digital platforms for developing country contexts is not primarily technical. The technologies exist: Firebase provides offline persistence, Dexie.js manages local databases, Workbox handles service worker caching, and React renders responsive interfaces. The deeper challenge is thoughtful adaptation --- taking solutions designed for one context and reshaping them for the needs, constraints, and aspirations of another. The China-to-Ethiopia Technology Adaptation Framework offers one way to approach that challenge systematically.
+The deeper challenge proved to be not technical but contextual: the technologies exist, and the harder work was reshaping them for the needs and constraints of a different setting. The China-to-Ethiopia Technology Adaptation Framework offers a systematic way to approach that, and the seven design principles --- connectivity independence, layered caching, transparent degradation, adaptation over transplantation, authentication spanning connectivity states, progressive feature availability, and client-side intelligence --- are offered as both practical guidance and contributions to the design knowledge base.
 
-The seven design principles distilled from this work --- connectivity independence, layered caching, transparent degradation, adaptation over transplantation, authentication spanning connectivity states, progressive feature availability, and client-side intelligence --- are offered both as practical guidance for practitioners and as contributions to the growing body of design knowledge in offline-first and local-first computing.
-
-As Ethiopia continues its industrial development program and IPDC expands its portfolio of managed parks, demand for efficient, reliable, and accessible digital service delivery will only grow. This research provides a concrete starting point --- the functional prototype --- and a knowledge foundation --- the adaptation framework and design principles --- for that digital transformation journey. The path from proof-of-concept to production system will take sustained effort, institutional commitment, and continued attention to every stakeholder group's needs. But the research confirms that the destination is within reach, and the offline-first approach marks out a viable road.
+As IPDC expands its park portfolio, demand for reliable digital service delivery will only grow. This research provides a concrete starting point in the functional prototype and a knowledge foundation in the adaptation framework and design principles. The path from proof-of-concept to production will take sustained effort and institutional commitment --- but the research confirms the destination is within reach.
