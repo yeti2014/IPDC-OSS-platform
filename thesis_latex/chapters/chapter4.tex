@@ -11,13 +11,13 @@ Getting from stakeholder pain points to a working system design is rarely a line
 
 Organizational analysis of IPDC's structure, combined with insights from the stakeholder questionnaires, identified four distinct stakeholder groups, each with its own role, priorities, and interaction patterns.
 
-\textbf{Tenant Enterprises} are the primary consumers of services. Their representatives --- typically operations managers and administrative staff --- submit service requests, track progress, handle fee payments, and raise complaints. Speed, transparency, and the ability to keep working during connectivity outages are their chief concerns.
+\textbf{Tenant Enterprises} submit service requests, track progress, and handle fee payments; speed, transparency, and offline operation are their chief concerns.
 
-\textbf{IPDC Administrative Staff} serve as the bridge between tenants and operational resources. Service coordinators, permit officers, and finance officers process requests, publish announcements, manage tenant accounts, and resolve complaints. Workflow efficiency and dependable record-keeping matter most to this group.
+\textbf{IPDC Administrative Staff} process requests, publish announcements, manage tenant accounts, and resolve complaints; workflow efficiency and reliable record-keeping matter most.
 
-\textbf{Operations Personnel} are the ones doing the physical work once a request is approved. A maintenance coordinator might receive a task assignment, find they cannot access the system from a remote corner of the park, and need to pick it back up an hour later. That specific scenario --- task received, connectivity lost, work continues --- is exactly what the mobile offline task queue was built for.
+\textbf{Operations Personnel} receive and complete task assignments in the field --- often in areas with unreliable connectivity --- making the offline task queue directly relevant to their working day.
 
-\textbf{IPDC Management} needs the big picture without getting pulled into the day-to-day. Directors and planning officers are not logging requests or resolving complaints --- they are asking questions like: Are service resolution times improving? Which parks are underperforming relative to their size? The platform serves this group through aggregated dashboards rather than operational workflows.
+\textbf{IPDC Management} needs aggregated operational data (resolution times, park performance, resource utilization) rather than direct involvement in individual workflows.
 
 \subsection{Functional Requirements}
 
@@ -191,11 +191,7 @@ The platform is organized as a three-tier architecture adapted for offline-first
 \label{fig:architecture}
 \end{figure}
 
-The \textbf{Presentation Tier} comprises 41 React components across six modules (admin, common, layout, map, operations, tenant) and 15 page-level components. Material-UI supplies the responsive design system; Workbox handles service worker management for asset caching and offline navigation.
-
-The \textbf{Service Tier} mediates between the user interface and persistent storage. Firebase Authentication handles online identity verification, backed by an offline authentication module that checks cached credentials stored in IndexedDB. The Firestore SDK provides transparent offline caching, and a custom sync service manages the explicit operation queue. Separately, the FastAPI backend serves three AI models through REST endpoints.
-
-The \textbf{Data Tier} blends cloud and local storage. Cloud Firestore holds twelve collections constituting the complete data model. Firebase Storage retains uploaded documents and images. IndexedDB (through Dexie.js) maintains a local queue of pending operations and cached service request data for offline access.
+The \textbf{Presentation Tier} comprises 41 React components (six modules + 15 pages), with Material-UI for responsive design and Workbox for service worker management. The \textbf{Service Tier} connects the UI to storage: Firebase Auth handles online verification with an offline fallback against cached IndexedDB credentials, the Firestore SDK provides transparent caching, a custom sync service manages the write queue, and FastAPI serves the three AI models. The \textbf{Data Tier} blends cloud Firestore (12 collections), Firebase Storage (documents and images), and IndexedDB via Dexie.js (local queue and cached data).
 
 \subsection{Offline-First Architecture Design}
 
@@ -343,33 +339,11 @@ The sync queue recognizes four status values: \texttt{pending} (awaiting sync), 
 
 \section{User Interface Design}
 
-\subsection{Design Principles}
+The interface follows Material Design through MUI, with a professional blue (\texttt{\#2563eb}) primary and confident green (\texttt{\#059669}) secondary, and status-specific colors (amber pending, blue approved, purple in-progress, green completed, red rejected). Responsive breakpoints at 600px and 960px cover all device categories via the \texttt{useDeviceDetection} hook.
 
-The interface follows Material Design guidelines through the MUI component library, enhanced with a custom theme. A primary color (\texttt{\#2563eb}, professional blue) and secondary color (\texttt{\#059669}, confident green) establish a visual identity suited to an institutional platform. Status-specific colors give instant feedback: amber for pending, blue for approved, purple for in-progress, green for completed, and red for rejected.
+After authentication, each user is routed to a role-appropriate dashboard: \textbf{Tenant} (submit and track requests, manage tokens, file complaints, view park recommendations); \textbf{Admin} (manage all requests and announcements, handle tenant accounts and complaints, oversee billing and assets); \textbf{Operations} (fulfill tasks, schedule maintenance, inspect assets).
 
-Responsive breakpoints at 600px and 960px ensure the platform works across device categories. The \texttt{useDeviceDetection} hook dynamically adjusts layout density and navigation patterns based on the device in use.
-
-\subsection{Navigation and Role-Based Views}
-
-After authentication, the routing system directs each user to a role-appropriate dashboard:
-
-\begin{itemize}
-\item \textbf{Tenant Dashboard:} Service request submission, request tracking, token management, complaint filing, park recommendations.
-\item \textbf{Admin Dashboard:} Request management (across all tenants), announcement creation, tenant account management, complaint resolution, billing oversight, asset management.
-\item \textbf{Operations Dashboard:} Service fulfillment, maintenance scheduling, asset inspection, performance metrics.
-\end{itemize}
-
-\subsection{Status Indicators}
-
-The \texttt{StatusBar} component keeps users informed about system state at all times, showing:
-\begin{itemize}
-\item Online/offline connectivity status with a color-coded indicator;
-\item Device type (desktop, tablet, or mobile);
-\item Number of pending sync operations;
-\item Timestamp of the last successful synchronization.
-\end{itemize}
-
-This transparency is essential for an offline-first system, where users need to know whether their actions have been synchronized to the server or are still waiting in a local queue.
+The persistent \texttt{StatusBar} shows connectivity status, device type, pending sync count, and last sync timestamp --- essential feedback for an offline-first system where users need to know whether actions are queued locally or already written to the server.
 
 \section{Chapter Summary}
 
