@@ -21,7 +21,7 @@ Language requirements, communication patterns, and interface expectations shaped
 
 Regulatory structures, service fee systems, and administrative hierarchies differed enough to require deliberate redesign rather than simple mapping. The digital service token system illustrates this clearly: where Chinese platforms integrate with established digital payment ecosystems, the token system was designed to work within Ethiopia's current financial infrastructure while leaving a pathway open for future digital payment integration.
 
-The overall lesson from RQ1 is that successful technology transfer requires systematic adaptation across multiple dimensions, not straightforward feature replication. The adaptation framework offers a structured means of doing this --- one applicable to other technology transfer situations in developing economies.
+What RQ1 makes clear is that technology transfer across infrastructure contexts demands real adaptation work, not replication. The adaptation framework built here gives that work structure --- structure that applies beyond Ethiopia to similar technology transfer situations in developing economies.
 
 \subsection{RQ2: What Architecture Enables Reliable Service Delivery During Connectivity Disruptions?}
 
@@ -29,7 +29,7 @@ A dual-layer offline storage architecture --- combining Firebase Firestore's tra
 
 Testing bore this out. All nine offline functionality test scenarios passed, proving that core workflows --- authentication, service browsing, request submission, complaint filing, announcement viewing, and dashboard access --- operate correctly without connectivity. Synchronization testing confirmed that queued operations process properly upon reconnection, with data integrity preserved across the offline-to-online transition. Performance measurements show load times under 3 seconds on first visit and under 1.5 seconds from cache, with offline operations responding in under 500 milliseconds --- well within acceptable thresholds for constrained environments.
 
-The architectural takeaway is that offline-first capability in a multi-stakeholder platform calls for a layered approach rather than reliance on any single technology. The combination of transparent caching for reads, explicit queuing for writes, and asset caching for the application shell produces a resilient system that degrades gracefully across the connectivity spectrum.
+No single technology handles offline-first capability in a multi-stakeholder platform. What works is a layered approach: transparent caching for reads, explicit queuing for writes, and asset caching for the application shell --- each doing a different job, together producing a system that degrades gracefully across the connectivity spectrum.
 
 \subsection{RQ3: How Effective Is the Resulting Platform in Terms of Functionality and Usability?}
 
@@ -41,7 +41,7 @@ The usability picture is similarly encouraging. The System Usability Scale evalu
 
 Qualitative feedback highlighted several strengths: the clarity of the service request workflow, the value of real-time status tracking, and the reassurance provided by visible offline indicators. Participants also noted areas for improvement, including Amharic language support, more detailed help documentation, and richer push notifications. These observations directly inform the recommendations at the close of this chapter.
 
-A mean SUS score of 74.5 from nine stakeholders is encouraging, though it is worth being honest about what nine participants can and cannot tell us. The score is indicative rather than statistically definitive; the qualitative feedback is arguably as useful as the number itself. What the evaluation does establish with more confidence is that the platform is not difficult to use in ways that would undermine adoption --- and for a proof-of-concept, that is the right threshold to clear.
+A mean SUS score of 74.5 from nine stakeholders is encouraging, though nine participants can only tell us so much. The score is indicative rather than statistically definitive; the qualitative feedback is arguably as useful as the number itself. What the evaluation does establish with more confidence is that the platform is not difficult to use in ways that would undermine adoption --- and for a proof-of-concept, that is the right threshold to clear.
 
 \section{Design Principles}
 
@@ -67,7 +67,7 @@ Seven design principles emerged from the iterative design and evaluation process
 
 \subsection{Theoretical Contributions}
 
-Three fields converge in this research --- information systems, digital governance, and ICT for development --- and each yields a theoretical contribution.
+This research touches three fields --- information systems, digital governance, and ICT for development --- and leaves something in each.
 
 The \textbf{China-to-Ethiopia Technology Adaptation Framework} is the most structurally novel of the three contributions. Technology transfer frameworks exist in the literature, but few have been designed specifically for adapting smart city and smart park solutions from reliably connected economies to contexts where connectivity is a daily uncertainty. The four-dimension structure --- infrastructure, functional, cultural, operational --- gives practitioners a replicable analytical scaffolding that the existing literature has not provided.
 
@@ -93,7 +93,7 @@ DSR is not often combined with iterative software development --- the two commun
 
 What does a system that works reliably during connectivity outages tell us about digital governance theory? Quite a bit, it turns out. Offline-first architecture has been largely absent from e-governance literature, yet the success demonstrated here suggests the field may be operating on an assumption --- persistent connectivity --- that does not hold in the contexts where digital transformation is most needed. Theoretical models of digital governance should treat connectivity as a variable rather than a constant, opening research directions that the current literature has mostly left unexplored.
 
-A related implication follows from the adaptation framework: infrastructure constraints belong at the centre of technology transfer analysis, not treated as background. This carries implications for theories of technology diffusion and innovation adoption in developing economies.
+The adaptation framework points to a related gap in technology transfer theory: infrastructure constraints are typically treated as background conditions rather than central analytical variables. Foregrounding them changes what theories of technology diffusion and innovation adoption in developing economies need to account for.
 
 \subsection{Implications for Practice}
 

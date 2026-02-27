@@ -11,7 +11,7 @@ Research methodology is worth explaining carefully here, because the choices mad
 
 Design Science Research (DSR) was selected as the guiding paradigm because of the nature of the problem itself. IPDC faces a well-documented operational challenge --- paper-based service delivery in an environment with unreliable connectivity --- and no adequate solution exists. Behavioral methods such as surveys or case studies could characterize the problem more precisely, but they would not produce the practical artifact needed to actually address it. DSR, by contrast, is built around designing and evaluating artifacts that address real operational problems while also contributing to the knowledge base \citep{Hevner2004}.
 
-Three features of the research problem make it particularly well suited to DSR. The problem is practical and situated within a real organization: IPDC needs a working digital platform, not just a theoretical analysis. The solution also demands creative design rather than routine technology deployment, since no existing system addresses offline-first industrial park governance in African settings. And the research aims to produce generalizable knowledge --- design principles and an adaptation framework --- alongside the specific artifact, which is precisely what distinguishes DSR from ordinary software development \citep{Gregor2013}.
+Three characteristics of the problem point clearly toward DSR. IPDC needs a working platform, not a theoretical analysis, so the research has to produce something real. No existing system addresses offline-first industrial park governance in African settings, so design work is unavoidable --- there is nothing to simply deploy. And the research aims to produce generalizable knowledge alongside the artifact --- design principles and an adaptation framework --- which is what distinguishes DSR from software development as such \citep{Gregor2013}.
 
 \subsection{DSRM Process Model Application}
 
@@ -109,7 +109,7 @@ Existing IPDC documentation was reviewed to understand formal service processes,
 
 A systematic analysis of Chinese smart park platforms --- primarily WeChat Work and DingTalk --- identified features, interaction patterns, and architectural approaches that could inform the IPDC platform design. The analysis drew on platform documentation, published research, and publicly available demonstrations, with features categorized by their relevance and transferability to the Ethiopian context.
 
-This analysis served two purposes: it established the source model for the technology adaptation framework, and it provided concrete design inspiration for specific features such as workflow automation, approval routing, and status tracking.
+The analysis established the source model for the technology adaptation framework while also generating concrete design ideas --- workflow automation, approval routing, status tracking --- for the IPDC platform.
 
 \subsection{Contextual Insights from Open-Ended Responses}
 
@@ -141,7 +141,7 @@ Iterations were organized around functional modules: authentication and user man
 
 \subsection{Technology Selection Rationale}
 
-Technology choices were guided by three criteria: compatibility with offline-first architectural requirements, maturity and community support for long-term viability, and cost-effectiveness for a thesis research prototype. Table~\ref{tab:tech-stack} summarizes the technologies selected and the reasoning behind each.
+Three questions governed every technology choice: does it support offline-first operation, is it mature enough to rely on, and does it stay within a thesis research budget? Table~\ref{tab:tech-stack} summarizes the technologies selected and the reasoning behind each.
 
 \begin{table}[H]
 \centering
@@ -177,7 +177,7 @@ Version control was managed through Git. The production build pipeline uses Vite
 
 \section{Evaluation Framework}
 
-The prototype evaluation combines technical assessment with usability evaluation, reflecting the dual nature of what DSR aims to achieve: the artifact must both function correctly and be genuinely useful to the people it serves \citep{Hevner2004}. The evaluation design follows the Framework for Evaluation in Design Science Research (FEDS) proposed by \citet{Venable2016}, which recommends pairing formative and summative evaluation strategies.
+An artifact that works correctly but frustrates users, or one that users like but whose offline architecture fails, would both fall short of what DSR demands \citep{Hevner2004}. The evaluation therefore covers both technical operation and user experience, following the FEDS framework proposed by \citet{Venable2016}, which pairs formative and summative strategies.
 
 \subsection{Technical Evaluation}
 
@@ -228,4 +228,4 @@ The platform is also designed with organizational ethics in mind. Administrative
 
 \section{Chapter Summary}
 
-Three methodological pillars support this research: Design Science Research as the overarching paradigm, a structured multi-source data collection process, and agile-inspired iterative development. The stakeholder questionnaire --- 49 respondents drawn from eleven parks across Ethiopia --- produced both quantitative measurements and rich narrative accounts of service delivery as it actually operates today. Document analysis and a systematic examination of Chinese smart park platforms provided the design source material, while open-ended questionnaire responses added the contextual texture that structured items alone cannot capture. Technology choices were made explicitly on the basis of offline-first requirements rather than convenience or familiarity, which is worth emphasising because it shaped every subsequent architectural decision. Evaluation draws on technical offline testing and the SUS instrument. What ties these elements together is the DSRM process, which keeps the research accountable to both scientific rigour and the practical realities IPDC stakeholders face.
+The methodology rests on Design Science Research as the overarching paradigm, a structured multi-source data collection process, and agile-inspired iterative development. Forty-nine respondents from eleven parks across Ethiopia supplied both quantitative measurements and narrative accounts of how service delivery actually operates --- the kind of detail that Likert scales miss. Document analysis and a systematic examination of WeChat Work and DingTalk provided the design source material. Technology choices followed offline-first requirements before any other consideration, a decision that shaped every subsequent architectural move. Technical offline testing and the SUS instrument handled evaluation. The DSRM process held everything together, keeping the research accountable to scientific rigour and operational reality in equal measure.

@@ -9,7 +9,7 @@ Getting from stakeholder pain points to a working system design is rarely a line
 
 \subsection{Stakeholder Identification and Analysis}
 
-Organizational analysis of IPDC's structure, combined with insights from the stakeholder questionnaires, identified four distinct stakeholder groups, each with its own role, priorities, and interaction patterns.
+Reading IPDC's organizational structure alongside the questionnaire data revealed four distinct stakeholder groups, each with a different relationship to the platform and different expectations from it.
 
 \textbf{Tenant Enterprises} submit service requests, track progress, and handle fee payments; speed, transparency, and offline operation are their chief concerns.
 
@@ -97,7 +97,7 @@ Won't Have (this phase) & External payment gateway, IoT integration, Amharic loc
 
 \subsection{Chinese Smart Park Feature Analysis}
 
-An examination of WeChat Work and DingTalk platforms revealed several feature categories common to Chinese smart parks: enterprise messaging and group communication, workflow approval routing, service request submission and tracking, payment processing (through WeChat Pay or Alipay), document management, attendance and access control, video conferencing, and analytics dashboards.
+WeChat Work and DingTalk share a recognizable feature set: enterprise messaging, workflow approval routing, service request submission and tracking, payment processing (WeChat Pay or Alipay), document management, attendance and access control, video conferencing, and analytics dashboards.
 
 \subsection{Adaptation Dimensions}
 
@@ -138,7 +138,7 @@ Alibaba Cloud backend & Firebase (Google Cloud) & Global availability, built-in 
 
 \subsection{Offline-First Adaptation Strategy}
 
-The offline-first adaptation represents the most architecturally consequential departure from the Chinese reference models. It is worth being clear that this is not simply a matter of enabling a ``save offline'' toggle; it requires rethinking how data flows through the entire system. The adaptation is built on three guiding principles:
+The offline-first adaptation is the most architecturally consequential departure from the Chinese reference models --- not a matter of enabling a ``save offline'' toggle but a rethinking of how data flows through the entire system. The adaptation is built on three guiding principles:
 
 \begin{enumerate}
 \item \textbf{Local-first data storage:} Every piece of data the user reads comes from local storage (the Firestore cache or IndexedDB), while network requests happen in the background to keep things synchronized.
@@ -347,4 +347,4 @@ The persistent \texttt{StatusBar} shows connectivity status, device type, pendin
 
 \section{Chapter Summary}
 
-The analysis and design work described in this chapter produced several concrete outputs: twelve functional and seven non-functional requirement groups grounded in stakeholder input, a four-dimension adaptation framework translating Chinese platform patterns to the Ethiopian context, and a three-tier architecture built from 41 React components, Firebase and FastAPI services, and a dual-layer local storage strategy. Of these, the dual-mode authentication and queue-based synchronization mechanisms arguably matter most to end users --- they are what make the platform feel continuous and trustworthy rather than intermittent and fragile. It is also worth noting that many of the design decisions recorded here were not obvious at the outset; they emerged iteratively as the constraints of the Ethiopian operating environment became clearer. How those decisions translate into working software, and what the evaluation reveals about them, is the subject of the next chapter.
+The analysis and design work described in this chapter produced several concrete outputs: twelve functional and seven non-functional requirement groups grounded in stakeholder input, a four-dimension adaptation framework translating Chinese platform patterns to the Ethiopian context, and a three-tier architecture built from 41 React components, Firebase and FastAPI services, and a dual-layer local storage strategy. Of these, the dual-mode authentication and queue-based synchronization mechanisms arguably matter most to end users --- they are what make the platform feel continuous and trustworthy rather than intermittent and fragile. Many of the design decisions recorded here were not obvious at the outset; they emerged iteratively as the constraints of the Ethiopian operating environment became clearer. How those decisions translate into working software, and what the evaluation reveals about them, is the subject of the next chapter.
