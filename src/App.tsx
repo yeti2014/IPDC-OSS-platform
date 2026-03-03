@@ -12,7 +12,8 @@ import { ZonesDashboard } from './pages/ZonesDashboard';
 import { ParkManagement } from './pages/ParkManagement';
 import { OSSServices } from './pages/OSSServices';
 import { ComplaintManagementDashboard } from './pages/ComplaintManagementDashboard';
-import ParksMapPage from './pages/ParksMapPage';
+// Lazy-load to prevent Leaflet from loading at app startup — it crashes mobile browsers
+const ParksMapPage = React.lazy(() => import('./pages/ParksMapPage'));
 import CreateRequestPage from './pages/CreateRequestPage';
 import ServiceTierSelectionPage from './pages/ServiceTierSelectionPage';
 import EntryServicesPage from './pages/EntryServicesPage';
@@ -158,7 +159,13 @@ function AppRoutes() {
         path="/parks-map"
         element={
           <PrivateRoute>
-            <ParksMapPage />
+            <React.Suspense fallback={
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+                <CircularProgress />
+              </Box>
+            }>
+              <ParksMapPage />
+            </React.Suspense>
           </PrivateRoute>
         }
       />
