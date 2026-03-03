@@ -44,8 +44,6 @@ import { Complaint, ComplaintStatus, ResolutionAction } from '../types/complaint
 import { formatDistanceToNow, format } from 'date-fns';
 import { useAuth } from '../contexts/AuthContext';
 import { StatusBar, OfflineBanner } from '../components/common/StatusBar';
-import AnnouncementBanner from '../components/common/AnnouncementBanner';
-
 export const ComplaintManagementDashboard = () => {
   const { userData } = useAuth();
   const navigate = useNavigate();
@@ -255,7 +253,6 @@ export const ComplaintManagementDashboard = () => {
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
       <StatusBar />
       <OfflineBanner />
-      <AnnouncementBanner />
 
       <Container maxWidth="xl" sx={{ py: 4 }}>
         <Box sx={{ mb: 4, display: 'flex', alignItems: 'center', gap: 2 }}>

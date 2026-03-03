@@ -274,26 +274,6 @@ export const AdminDashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Complaint Statistics Card */}
-        {(complaintStats.pending > 0 || complaintStats.underReview > 0) && (
-          <Alert severity="warning" sx={{ mb: 4 }}>
-            <AlertTitle>Pending Complaints</AlertTitle>
-            {complaintStats.pending} pending and {complaintStats.underReview} under review complaints
-            require your attention. Average resolution time: {complaintStats.averageResolutionTime.toFixed(1)} hours
-            {complaintStats.averageResolutionTime > 48 && ' (exceeds 48-hour SLA)'}
-            <Box sx={{ mt: 2 }}>
-              <Button
-                variant="outlined"
-                size="small"
-                color="inherit"
-                onClick={() => navigate('/admin/complaints')}
-              >
-                View All Complaints
-              </Button>
-            </Box>
-          </Alert>
-        )}
-
         <Grid container spacing={3} sx={{ mb: 4 }}>
           <Grid item xs={6} sm={3}>
             <Card>

@@ -228,7 +228,7 @@ const ParksMap: React.FC<ParksMapProps> = ({ onParkClick, selectedPark }) => {
       </Card>
 
       {/* Map */}
-      <Box sx={{ flexGrow: 1, height: 'calc(100vh - 300px)', minHeight: '400px' }}>
+      <Box sx={{ flexGrow: 1, height: { xs: '38vh', sm: '48vh', md: 'calc(100vh - 300px)' }, minHeight: { xs: 200, sm: 280, md: 400 } }}>
         <MapContainer
           center={[9.145, 40.489]} // Ethiopia center
           zoom={6}
