@@ -33,7 +33,7 @@ export const StatusBar: React.FC = () => {
               minWidth: 0,
             }}
           >
-            IPDC Digital Platform
+            IPDC-OSS
           </Typography>
           <Box sx={{ display: 'flex', gap: { xs: 0.5, sm: 1 }, alignItems: 'center', flexShrink: 0 }}>
             <NotificationBell />
