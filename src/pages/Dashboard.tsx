@@ -1,5 +1,5 @@
 // src/pages/Dashboard.tsx
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   Box,
@@ -53,6 +53,41 @@ import ParksMap from '../components/map/ParksMap';
 import ParkDetailsModal from '../components/map/ParkDetailsModal';
 import { IndustrialPark } from '../data/ethiopianParks';
 
+// Local error boundary for the map — prevents the entire app crashing if
+// Leaflet fails to initialize on mobile/PWA environments.
+class MapErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() { return { hasError: true }; }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <Box
+          sx={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            height: 400, flexDirection: 'column', gap: 2,
+            bgcolor: 'grey.100', borderRadius: 2,
+          }}
+        >
+          <Typography color="text.secondary" fontWeight="medium">
+            Parks Map unavailable on this device
+          </Typography>
+          <Typography variant="body2" color="text.secondary" textAlign="center" px={3}>
+            Your browser does not support the interactive map.
+            Please open the platform in a desktop browser for the full map experience.
+          </Typography>
+        </Box>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export const Dashboard = () => {
   const { userData, logOut } = useAuth();
   const { t } = useTranslation();
@@ -68,7 +103,7 @@ export const Dashboard = () => {
   const [profileDialogOpen, setProfileDialogOpen] = useState(false);
   const [complaintDialogOpen, setComplaintDialogOpen] = useState(false);
   const [complaintRequest, setComplaintRequest] = useState<ServiceRequest | null>(null);
-  const [tabValue, setTabValue] = useState(0);
+  const [tabValue, setTabValue] = useState(1); // Default to Service Requests (map crashes on mobile)
   const [filters, setFilters] = useState<FilterState>({
     search: '',
     status: 'all',
@@ -329,7 +364,9 @@ export const Dashboard = () => {
         {/* PARKS MAP TAB */}
         {tabValue === 0 && (
           <Box sx={{ height: '600px', width: '100%' }}>
-            <ParksMap onParkClick={handleParkClick} selectedPark={selectedPark} />
+            <MapErrorBoundary>
+              <ParksMap onParkClick={handleParkClick} selectedPark={selectedPark} />
+            </MapErrorBoundary>
           </Box>
         )}
 

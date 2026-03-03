@@ -74,11 +74,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const initPersistence = async () => {
       try {
-        await setPersistence(auth, indexedDBLocalPersistence);
+        // Race against a 5-second timeout — mobile PWA environments can hang on IndexedDB
+        await Promise.race([
+          setPersistence(auth, indexedDBLocalPersistence),
+          new Promise<void>(resolve => setTimeout(resolve, 5000)),
+        ]);
         console.log('✅ Firebase auth persistence set to IndexedDB');
       } catch {
         try {
-          await setPersistence(auth, browserLocalPersistence);
+          await Promise.race([
+            setPersistence(auth, browserLocalPersistence),
+            new Promise<void>(resolve => setTimeout(resolve, 3000)),
+          ]);
           console.log('✅ Firebase auth persistence set to localStorage (fallback)');
         } catch (error) {
           console.error('❌ Failed to set Firebase persistence:', error);
