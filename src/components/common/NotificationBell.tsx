@@ -61,7 +61,7 @@ export const NotificationBell: React.FC = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
         PaperProps={{
-          sx: { width: 360, maxHeight: 480 },
+          sx: { width: { xs: 'min(360px, calc(100vw - 16px))', sm: 360 }, maxHeight: 480 },
         }}
       >
         {[
@@ -95,19 +95,22 @@ export const NotificationBell: React.FC = () => {
                 gap: 0.5,
               }}
             >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%' }}>
+              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, width: '100%', minWidth: 0 }}>
                 {!notification.read && (
-                  <CircleIcon sx={{ fontSize: 8, color: 'primary.main' }} />
+                  <CircleIcon sx={{ fontSize: 8, color: 'primary.main', flexShrink: 0, mt: 0.75 }} />
                 )}
                 <ListItemText
                   primary={notification.title}
                   secondary={notification.message}
+                  sx={{ minWidth: 0 }}
                   primaryTypographyProps={{
                     fontWeight: notification.read ? 'normal' : 'bold',
                     fontSize: '0.875rem',
+                    sx: { whiteSpace: 'normal', wordBreak: 'break-word' },
                   }}
                   secondaryTypographyProps={{
                     fontSize: '0.75rem',
+                    sx: { whiteSpace: 'normal', wordBreak: 'break-word', display: 'block' },
                   }}
                 />
               </Box>
