@@ -187,7 +187,7 @@ export const TenantLifecycleTimeline: React.FC<TenantLifecycleTimelineProps> = (
         sx={{
           mt: 3,
           p: 2,
-          bgcolor: activeStep === steps.length - 1 ? 'success.lighter' : 'primary.lighter',
+          bgcolor: activeStep === steps.length - 1 ? '#e8f5e9' : '#e3f2fd',
           border: '1px solid',
           borderColor: activeStep === steps.length - 1 ? 'success.main' : 'primary.main',
         }}

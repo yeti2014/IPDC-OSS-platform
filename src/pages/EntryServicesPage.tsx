@@ -378,7 +378,7 @@ export const EntryServicesPage: React.FC = () => {
                           p: 2,
                           border: '2px solid',
                           borderColor: 'success.main',
-                          bgcolor: 'success.lighter',
+                          bgcolor: '#e8f5e9',
                         }}
                       >
                         <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
@@ -837,7 +837,7 @@ export const EntryServicesPage: React.FC = () => {
                               )}
 
                               {/* Cost Summary */}
-                              <Paper elevation={0} sx={{ p: 2, bgcolor: 'primary.lighter', mb: 2 }}>
+                              <Paper elevation={0} sx={{ p: 2, bgcolor: '#e3f2fd', mb: 2 }}>
                                 <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
                                   Estimated Monthly Costs
                                 </Typography>
@@ -945,7 +945,7 @@ export const EntryServicesPage: React.FC = () => {
                         ))}
 
                         {/* AI Attribution */}
-                        <Box mt={3} p={2} bgcolor="info.lighter" borderRadius={2}>
+                        <Box mt={3} p={2} bgcolor="#e3f2fd" borderRadius={2}>
                           <Typography variant="caption" color="text.secondary" display="block">
                             Powered by AI Model 3 - Industrial Park Recommendation Engine
                           </Typography>

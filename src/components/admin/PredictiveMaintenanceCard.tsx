@@ -346,7 +346,7 @@ export const PredictiveMaintenanceCard: React.FC<PredictiveMaintenanceCardProps>
                 </ListItem>
               </List>
 
-              <Box mt={2} p={1} bgcolor="info.lighter" borderRadius={1}>
+              <Box mt={2} p={1} bgcolor="#e3f2fd" borderRadius={1}>
                 <Typography variant="caption" color="text.secondary">
                   🤖 Powered by AI Model 2 - Predictive Maintenance
                 </Typography>

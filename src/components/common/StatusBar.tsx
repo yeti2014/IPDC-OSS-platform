@@ -22,22 +22,34 @@ export const StatusBar: React.FC = () => {
   return (
     <AppBar position="static" color="default" elevation={1}>
       <Container maxWidth="lg">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
+        <Toolbar sx={{ minHeight: { xs: 56, sm: 64 } }}>
+          <Typography
+            variant="h6"
+            component="div"
+            noWrap
+            sx={{
+              flexGrow: 1,
+              fontWeight: 'bold',
+              fontSize: { xs: '0.9rem', sm: '1.15rem', md: '1.25rem' },
+              minWidth: 0,
+            }}
+          >
             IPDC Digital Platform
           </Typography>
-       <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-  <NotificationBell />
-  <LanguageSwitcher />
-  <SyncStatus
-    pendingCount={pendingSyncCount}
-    isSyncing={isSyncing}
-    syncProgress={syncProgress}
-    onSync={handleSync}
-  />
-  <OnlineStatusBadge />
-  <DeviceModeBadge />
-</Box>
+          <Box sx={{ display: 'flex', gap: { xs: 0.5, sm: 1 }, alignItems: 'center', flexShrink: 0 }}>
+            <NotificationBell />
+            <LanguageSwitcher />
+            <SyncStatus
+              pendingCount={pendingSyncCount}
+              isSyncing={isSyncing}
+              syncProgress={syncProgress}
+              onSync={handleSync}
+            />
+            <OnlineStatusBadge />
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+              <DeviceModeBadge />
+            </Box>
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>

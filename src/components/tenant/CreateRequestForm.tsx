@@ -479,7 +479,7 @@ export const CreateRequestForm: React.FC<CreateRequestFormProps> = ({ open, onCl
                     p: 2,
                     border: '2px solid',
                     borderColor: 'info.main',
-                    bgcolor: 'info.lighter'
+                    bgcolor: '#e3f2fd'
                   }}
                 >
                   <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>

@@ -395,7 +395,7 @@ export const PurchaseTokensDialog = ({ open, onClose, onSuccess }: PurchaseToken
                 {(selectedPackage.price * 1.15).toLocaleString()} ETB
               </Typography>
             </Box>
-            <Box sx={{ bgcolor: 'info.lighter', p: 2, borderRadius: 1 }}>
+            <Box sx={{ bgcolor: '#e3f2fd', p: 2, borderRadius: 1 }}>
               <Typography variant="body2" color="text.secondary" gutterBottom>
                 You will receive:
               </Typography>
