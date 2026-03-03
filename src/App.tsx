@@ -1,7 +1,7 @@
 // src/App.tsx
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { ThemeProvider, createTheme, CssBaseline, Box, Typography, Button } from '@mui/material';
+import { ThemeProvider, createTheme, CssBaseline, Box, Typography, Button, CircularProgress } from '@mui/material';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
@@ -72,7 +72,27 @@ const theme = createTheme({
 });
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
-  const { userData } = useAuth();
+  const { userData, currentUser } = useAuth();
+
+  // Firebase auth succeeded but Firestore profile not yet fetched — show spinner
+  // instead of incorrectly redirecting to /login (the race condition white screen)
+  if (currentUser && !userData) {
+    return (
+      <Box
+        sx={{
+          display: 'flex', flexDirection: 'column', alignItems: 'center',
+          justifyContent: 'center', minHeight: '100vh', gap: 2,
+          background: 'linear-gradient(135deg, #1a237e 0%, #0d47a1 50%, #01579b 100%)',
+        }}
+      >
+        <CircularProgress size={48} sx={{ color: 'white' }} />
+        <Typography variant="body1" sx={{ color: 'rgba(255,255,255,0.85)' }}>
+          Loading your profile...
+        </Typography>
+      </Box>
+    );
+  }
+
   return userData ? <>{children}</> : <Navigate to="/login" />;
 }
 
