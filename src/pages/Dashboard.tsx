@@ -136,6 +136,13 @@ export const Dashboard = () => {
       q = query(collection(db, 'serviceRequests'));
     }
 
+    const toDate = (ts: any): Date => {
+      if (!ts) return new Date();
+      if (typeof ts.toDate === 'function') return ts.toDate();
+      if (ts.seconds) return new Date(ts.seconds * 1000);
+      return new Date();
+    };
+
     const unsubscribe = onSnapshot(
       q,
       (snapshot) => {
@@ -145,9 +152,9 @@ export const Dashboard = () => {
           requestsData.push({
             id: doc.id,
             ...data,
-            createdAt: data.createdAt?.toDate() || new Date(),
-            updatedAt: data.updatedAt?.toDate() || new Date(),
-            completedAt: data.completedAt?.toDate(),
+            createdAt: toDate(data.createdAt),
+            updatedAt: toDate(data.updatedAt),
+            completedAt: data.completedAt ? toDate(data.completedAt) : undefined,
           } as ServiceRequest);
         });
         
