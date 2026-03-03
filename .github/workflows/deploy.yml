@@ -1,27 +1,40 @@
-name: Deploy to Vercel
+name: Deploy to Vercel and Render
 
 on:
   push:
     branches:
       - main
-    paths:
-      - 'src/**'
-      - 'public/**'
-      - 'index.html'
-      - 'vite.config.ts'
-      - 'package.json'
-      - 'vercel.json'
 
 jobs:
-  deploy:
+  deploy-vercel:
     runs-on: ubuntu-latest
     name: Deploy Frontend to Vercel
+    if: |
+      contains(toJson(github.event.commits.*.modified), 'src/') ||
+      contains(toJson(github.event.commits.*.added), 'src/') ||
+      contains(toJson(github.event.commits.*.modified), 'public/') ||
+      contains(toJson(github.event.commits.*.modified), 'index.html') ||
+      contains(toJson(github.event.commits.*.modified), 'vite.config.ts') ||
+      contains(toJson(github.event.commits.*.modified), 'package.json') ||
+      contains(toJson(github.event.commits.*.modified), 'vercel.json')
     steps:
       - name: Trigger Vercel Deployment
         run: |
           curl -s -X POST "${{ secrets.VERCEL_DEPLOY_HOOK }}" \
-            -H "Content-Type: application/json" \
-            --fail \
-            -o /dev/null \
-            -w "HTTP Status: %{http_code}\n"
+            --fail -o /dev/null -w "Vercel HTTP Status: %{http_code}\n"
           echo "Vercel deployment triggered for commit ${{ github.sha }}"
+
+  deploy-render:
+    runs-on: ubuntu-latest
+    name: Deploy AI Backend to Render
+    if: |
+      contains(toJson(github.event.commits.*.modified), 'ai-models/') ||
+      contains(toJson(github.event.commits.*.added), 'ai-models/') ||
+      contains(toJson(github.event.commits.*.modified), 'ai-models/requirements.txt') ||
+      contains(toJson(github.event.commits.*.modified), 'ai-models/build.sh')
+    steps:
+      - name: Trigger Render Deployment
+        run: |
+          curl -s -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}" \
+            --fail -o /dev/null -w "Render HTTP Status: %{http_code}\n"
+          echo "Render deployment triggered for commit ${{ github.sha }}"
