@@ -279,7 +279,7 @@ export const Login = () => {
               sx={{
                 mt: { xs: 2, sm: 3 },
                 p: { xs: 1.5, sm: 2 },
-                bgcolor: 'info.lighter',
+                bgcolor: '#e3f2fd',
                 borderRadius: 1
               }}
             >

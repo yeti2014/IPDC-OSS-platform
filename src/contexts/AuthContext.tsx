@@ -1,5 +1,6 @@
 // src/contexts/AuthContext.tsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import {
   User,
   onAuthStateChanged,
@@ -228,9 +229,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const value = { currentUser, userData, loading, isOffline, signIn, signUp, logOut };
 
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',
+          gap: 2,
+          background: 'linear-gradient(135deg, #1a237e 0%, #0d47a1 50%, #01579b 100%)',
+        }}
+      >
+        <CircularProgress size={48} sx={{ color: 'white' }} />
+        <Typography variant="body1" sx={{ color: 'rgba(255,255,255,0.85)' }}>
+          Loading IPDC Platform...
+        </Typography>
+      </Box>
+    );
+  }
+
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 };

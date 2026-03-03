@@ -16,6 +16,8 @@ import {
   CircularProgress,
   Chip,
   Paper,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import {
@@ -34,6 +36,8 @@ import { db } from '../config/firebase';
 export const Signup = () => {
   const navigate = useNavigate();
   const { signUp } = useAuth();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [selectedRole, setSelectedRole] = useState<'tenant' | 'admin' | null>(null);
   const [adminExists, setAdminExists] = useState<boolean | null>(null);
@@ -133,15 +137,15 @@ export const Signup = () => {
         alignItems: 'center',
         justifyContent: 'center',
         background: 'linear-gradient(135deg, #1a237e 0%, #0d47a1 50%, #01579b 100%)',
-        padding: 3,
+        padding: { xs: 2, sm: 3 },
       }}
     >
       {/* Header */}
-      <Box sx={{ textAlign: 'center', mb: 4 }}>
-        <Typography variant="h3" component="h1" fontWeight="bold" color="white" gutterBottom>
+      <Box sx={{ textAlign: 'center', mb: { xs: 2, sm: 4 } }}>
+        <Typography variant={isMobile ? 'h5' : 'h3'} component="h1" fontWeight="bold" color="white" gutterBottom>
           IPDC Digital Platform
         </Typography>
-        <Typography variant="h6" color="rgba(255,255,255,0.8)">
+        <Typography variant={isMobile ? 'body1' : 'h6'} color="rgba(255,255,255,0.8)">
           One-Stop Service for Industrial Park Investment
         </Typography>
       </Box>
@@ -165,8 +169,8 @@ export const Signup = () => {
                 }}
                 onClick={() => handleRoleSelect('tenant')}
               >
-                <CardContent sx={{ p: 4, textAlign: 'center' }}>
-                  <BusinessIcon sx={{ fontSize: 64, color: 'primary.main', mb: 2 }} />
+                <CardContent sx={{ p: { xs: 2, sm: 4 }, textAlign: 'center' }}>
+                  <BusinessIcon sx={{ fontSize: { xs: 48, sm: 64 }, color: 'primary.main', mb: 2 }} />
                   <Typography variant="h5" fontWeight="bold" gutterBottom>
                     Investor / Tenant
                   </Typography>
@@ -218,8 +222,8 @@ export const Signup = () => {
                 }}
                 onClick={() => !adminExists && handleRoleSelect('admin')}
               >
-                <CardContent sx={{ p: 4, textAlign: 'center' }}>
-                  <AdminIcon sx={{ fontSize: 64, color: adminExists ? 'grey.400' : 'warning.main', mb: 2 }} />
+                <CardContent sx={{ p: { xs: 2, sm: 4 }, textAlign: 'center' }}>
+                  <AdminIcon sx={{ fontSize: { xs: 48, sm: 64 }, color: adminExists ? 'grey.400' : 'warning.main', mb: 2 }} />
                   <Typography variant="h5" fontWeight="bold" gutterBottom>
                     Initial Admin Setup
                   </Typography>
@@ -303,13 +307,13 @@ export const Signup = () => {
       {/* Registration Form */}
       {selectedRole && (
         <Container maxWidth="sm">
-          <Paper elevation={6} sx={{ p: 4, borderRadius: 2 }}>
+          <Paper elevation={6} sx={{ p: { xs: 2, sm: 4 }, borderRadius: 2 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
               <IconButton onClick={() => setSelectedRole(null)} sx={{ mr: 1 }}>
                 <ArrowBackIcon />
               </IconButton>
               <Box sx={{ flex: 1 }}>
-                <Typography variant="h5" component="h1" fontWeight="bold">
+                <Typography variant={isMobile ? 'h6' : 'h5'} component="h1" fontWeight="bold">
                   {selectedRole === 'tenant' ? 'Investor Registration' : 'Initial Admin Setup'}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">

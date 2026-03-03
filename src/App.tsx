@@ -1,7 +1,7 @@
 // src/App.tsx
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
+import { ThemeProvider, createTheme, CssBaseline, Box, Typography, Button } from '@mui/material';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
@@ -19,6 +19,46 @@ import EntryServicesPage from './pages/EntryServicesPage';
 import FacilityServicesPage from './pages/FacilityServicesPage';
 import { initIndexedDB } from './utils/indexedDB';
 import { setupAutoSync } from './services/offlineQueue';
+
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error: Error, info: React.ErrorInfo) {
+    console.error('App error:', error, info);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <Box
+          sx={{
+            display: 'flex', flexDirection: 'column', alignItems: 'center',
+            justifyContent: 'center', minHeight: '100vh', p: 3, textAlign: 'center',
+            background: 'linear-gradient(135deg, #1a237e 0%, #0d47a1 50%, #01579b 100%)',
+          }}
+        >
+          <Typography variant="h5" fontWeight="bold" sx={{ color: 'white', mb: 1 }}>
+            Something went wrong
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.75)', mb: 3 }}>
+            Please refresh the page to continue.
+          </Typography>
+          <Button variant="contained" color="inherit" onClick={() => window.location.reload()}>
+            Refresh Page
+          </Button>
+        </Box>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const theme = createTheme({
   palette: {
@@ -162,14 +202,16 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AuthProvider>
-        <Router>
-          <AppRoutes />
-        </Router>
-      </AuthProvider>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AuthProvider>
+          <Router>
+            <AppRoutes />
+          </Router>
+        </AuthProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
 
