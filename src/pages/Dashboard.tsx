@@ -14,6 +14,7 @@ import {
   Tab,
   Chip,
   Stack,
+  CircularProgress,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import {
@@ -49,7 +50,9 @@ import TenantLifecycleTimeline from '../components/tenant/TenantLifecycleTimelin
 import { useTranslation } from 'react-i18next';
 import { complaintService } from '../services/complaintService';
 import { useNavigate } from 'react-router-dom';
-import ParksMap from '../components/map/ParksMap';
+// Lazy-load ParksMap so Leaflet's module-level code doesn't run at import time
+// (Leaflet crashes on mobile if executed during Dashboard module initialization)
+const ParksMap = React.lazy(() => import('../components/map/ParksMap'));
 import ParkDetailsModal from '../components/map/ParkDetailsModal';
 import { IndustrialPark } from '../data/ethiopianParks';
 
@@ -365,7 +368,13 @@ export const Dashboard = () => {
         {tabValue === 0 && (
           <Box sx={{ height: '600px', width: '100%' }}>
             <MapErrorBoundary>
-              <ParksMap onParkClick={handleParkClick} selectedPark={selectedPark} />
+              <React.Suspense fallback={
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                  <CircularProgress />
+                </Box>
+              }>
+                <ParksMap onParkClick={handleParkClick} selectedPark={selectedPark} />
+              </React.Suspense>
             </MapErrorBoundary>
           </Box>
         )}
