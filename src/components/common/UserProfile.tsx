@@ -235,7 +235,14 @@ export const UserProfile: React.FC<UserProfileProps> = ({ open, onClose }) => {
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
         {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
 
-        <Tabs value={tabValue} onChange={(e, newValue) => setTabValue(newValue)} sx={{ mb: 3 }}>
+        <Tabs
+          value={tabValue}
+          onChange={(e, newValue) => setTabValue(newValue)}
+          variant="scrollable"
+          scrollButtons="auto"
+          allowScrollButtonsMobile
+          sx={{ mb: 3 }}
+        >
           <Tab label="Profile" />
           <Tab label="Security" />
           <Tab label="Notifications" />

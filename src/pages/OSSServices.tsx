@@ -121,6 +121,7 @@ export const OSSServices = () => {
               onChange={(e, value) => setSelectedCategory(value)}
               variant="scrollable"
               scrollButtons="auto"
+              allowScrollButtonsMobile
             >
               {categories.map((category) => (
                 <Tab

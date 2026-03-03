@@ -315,7 +315,14 @@ export const AssetManagement = () => {
       )}
 
       {/* Tabs */}
-      <Tabs value={tabValue} onChange={(e, newValue) => setTabValue(newValue)} sx={{ mb: 3 }}>
+      <Tabs
+        value={tabValue}
+        onChange={(e, newValue) => setTabValue(newValue)}
+        variant="scrollable"
+        scrollButtons="auto"
+        allowScrollButtonsMobile
+        sx={{ mb: 3 }}
+      >
         <Tab label={`All Assets (${assets.length})`} />
         <Tab label={`Operational (${assets.filter(a => a.status === 'operational').length})`} />
         <Tab label={`In Maintenance (${assets.filter(a => a.status === 'maintenance' || a.status === 'repair').length})`} />

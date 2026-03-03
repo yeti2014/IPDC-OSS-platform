@@ -304,7 +304,13 @@ export const TokenDashboard = () => {
         <Grid item xs={12}>
           <Card>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={tabValue} onChange={(e, newValue) => setTabValue(newValue)}>
+              <Tabs
+                value={tabValue}
+                onChange={(e, newValue) => setTabValue(newValue)}
+                variant="scrollable"
+                scrollButtons="auto"
+                allowScrollButtonsMobile
+              >
                 <Tab label="Transaction History" icon={<HistoryIcon />} iconPosition="start" />
                 <Tab label="Service Costs" icon={<InfoIcon />} iconPosition="start" />
                 <Tab label="Billing & Invoices" icon={<ReceiptIcon />} iconPosition="start" />
