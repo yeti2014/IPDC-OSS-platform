@@ -7,7 +7,7 @@
  * - Tencent WeCity Smart Park Map
  *
  * Features:
- * - Displays all 15 Ethiopian IPDC parks
+ * - Displays all 13 Ethiopian IPDC parks (Special Economic Zones)
  * - Color-coded markers by status
  * - Click markers for park details
  * - Search and filter functionality
