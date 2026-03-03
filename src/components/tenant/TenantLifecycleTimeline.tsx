@@ -163,7 +163,7 @@ export const TenantLifecycleTimeline: React.FC<TenantLifecycleTimelineProps> = (
                         }}
                       >
                         {service.completed ? (
-                          <CheckCircle sx={{ fontSize: 18, color: 'success.main' }} />
+                          <CompleteIcon sx={{ fontSize: 18, color: 'success.main' }} />
                         ) : (
                           <PendingIcon sx={{ fontSize: 18, color: 'grey.400' }} />
                         )}
