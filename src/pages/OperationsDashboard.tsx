@@ -247,8 +247,7 @@ export const OperationsDashboard = () => {
   const myTasks = inProgressRequests.filter(r => r.assignedTo === userData?.uid);
 
   const displayRequests = tabValue === 0 ? approvedRequests :
-                          tabValue === 1 ? inProgressRequests :
-                          tabValue === 2 ? myTasks :
+                          tabValue === 1 ? myTasks :
                           completedRequests;
 
   return (
@@ -343,14 +342,13 @@ export const OperationsDashboard = () => {
             allowScrollButtonsMobile
           >
             <Tab label={`${t('requests.approved')} (${approvedRequests.length})`} />
-            <Tab label={`${t('requests.inProgress')} (${inProgressRequests.length})`} />
             <Tab label={`My Tasks (${myTasks.length})`} />
             <Tab label={`Completed (${completedRequests.length})`} />
             <Tab label={t('nav.announcements')} />
           </Tabs>
         </Box>
 
-        {tabValue !== 4 && (
+        {tabValue !== 3 && (
           loading ? (
             <Card>
               <CardContent>
@@ -364,9 +362,8 @@ export const OperationsDashboard = () => {
               <CardContent>
                 <Typography textAlign="center" py={4} color="text.secondary">
                   {tabValue === 0 && 'No approved requests'}
-                  {tabValue === 1 && 'No requests in progress'}
-                  {tabValue === 2 && 'No tasks assigned to you'}
-                  {tabValue === 3 && 'No completed requests'}
+                  {tabValue === 1 && 'No tasks assigned to you'}
+                  {tabValue === 2 && 'No completed requests'}
                 </Typography>
               </CardContent>
             </Card>
@@ -451,7 +448,7 @@ export const OperationsDashboard = () => {
           )
         )}
 
-        {tabValue === 4 && (
+        {tabValue === 3 && (
           <Box>
             <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <CampaignIcon />
