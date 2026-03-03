@@ -63,6 +63,10 @@ import {
 import { StatusBar, OfflineBanner } from '../components/common/StatusBar';
 import { aiApiClient, ServiceClassificationResponse } from '../services/aiApiService';
 import { recommendParks, TenantProfile, ParkRecommendation } from '../services/aiApi';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { db } from '../config/firebase';
+import { useAuth } from '../contexts/AuthContext';
+import { queueFirestoreOperation } from '../services/offlineQueue';
 
 // Park recommendation constants
 const parkSteps = ['Business Profile', 'Requirements', 'AI Recommendations'];
@@ -76,6 +80,7 @@ export const EntryServicesPage: React.FC = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { userData } = useAuth();
 
   // Tab state
   const [activeTab, setActiveTab] = useState(0);
@@ -161,21 +166,88 @@ export const EntryServicesPage: React.FC = () => {
     setSubmitting(true);
     setFormError('');
 
+    const isOnline = navigator.onLine;
+    console.log(`📶 Entry service submission - connection: ${isOnline ? 'Online' : 'Offline'}`);
+
+    const requestData = {
+      tenantId: userData?.uid || 'anonymous',
+      tenantName: formData.companyName.trim() || userData?.displayName || userData?.email || 'Unknown',
+      tenantEmail: formData.email.trim() || userData?.email || '',
+      serviceType: 'other' as const,
+      title: formData.title.trim(),
+      description: formData.description.trim(),
+      priority: (aiClassification?.priority as 'low' | 'medium' | 'high' | 'urgent') || 'medium',
+      location: '',
+      status: 'pending' as const,
+      tokenCost: 0, // Entry services are free (no token required)
+      tokensReserved: false,
+      tokensDeducted: false,
+      attachments: [],
+      createdAt: Timestamp.now(),
+      updatedAt: Timestamp.now(),
+      notes: [
+        formData.contactPerson ? `Contact: ${formData.contactPerson}` : '',
+        formData.phone ? `Phone: ${formData.phone}` : '',
+        aiClassification ? `AI Classification: ${aiClassification.service_type_display}` : '',
+        aiClassification?.estimated_processing_days
+          ? `Est. Processing: ${aiClassification.estimated_processing_days} days`
+          : '',
+      ].filter(Boolean).join(' | '),
+    };
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      if (!isOnline) {
+        // ── OFFLINE MODE ──────────────────────────────────────────────────────
+        console.log('📴 Offline: queuing entry service request for sync...');
+        await queueFirestoreOperation('create', 'serviceRequests', requestData);
+        console.log('✅ Entry request queued successfully');
+        alert(
+          `📴 Offline Mode\n\n` +
+          `Your entry service application has been saved locally and will be submitted when you're back online.\n\n` +
+          `Company: ${formData.companyName}\n` +
+          `Title: ${formData.title.trim()}\n\n` +
+          `No token payment required for entry services.`
+        );
+        navigate('/dashboard');
+        return;
+      }
+
+      // ── ONLINE MODE ───────────────────────────────────────────────────────
+      console.log('🌐 Online: submitting entry service request to Firestore...');
+      const docRef = await addDoc(collection(db, 'serviceRequests'), requestData);
+      console.log('✅ Entry request created:', docRef.id);
 
       alert(
-        `Entry Service Application Submitted!\n\n` +
+        `✅ Entry Service Application Submitted!\n\n` +
         `Company: ${formData.companyName}\n` +
-        `Service Type: ${aiClassification?.service_type_display || 'Not classified'}\n` +
-        `Priority: ${aiClassification?.priority?.toUpperCase() || 'Normal'}\n` +
+        `Service Type: ${aiClassification?.service_type_display || 'Administrative Service'}\n` +
+        `Priority: ${(aiClassification?.priority || 'medium').toUpperCase()}\n` +
         `Est. Processing: ${aiClassification?.estimated_processing_days || 'TBD'} days\n\n` +
-        `An IPDC administrator will contact you shortly.`
+        `An IPDC administrator will contact you shortly. No token payment required.`
       );
 
       navigate('/dashboard');
+
     } catch (err: any) {
-      setFormError(err.message || 'Failed to submit application');
+      console.error('❌ Entry service submission error:', err);
+
+      // Network error fallback — queue for later sync
+      if (!navigator.onLine || err.code === 'unavailable' || err.message?.includes('network')) {
+        console.log('📴 Network error, falling back to offline queue...');
+        try {
+          await queueFirestoreOperation('create', 'serviceRequests', requestData);
+          alert(
+            `📴 Connection Lost\n\n` +
+            `Your entry service application has been saved locally and will sync when you're back online.\n\n` +
+            `Company: ${formData.companyName}`
+          );
+          navigate('/dashboard');
+        } catch (queueError) {
+          setFormError('Failed to save application offline. Please try again.');
+        }
+      } else {
+        setFormError(err.message || 'Failed to submit application');
+      }
     } finally {
       setSubmitting(false);
     }

@@ -39,6 +39,7 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { FileUpload } from '../components/common/FileUpload';
 import { UploadResult } from '../services/fileUploadService';
+import { queueFirestoreOperation } from '../services/offlineQueue';
 
 const facilityServices: { value: ServiceType; label: string; icon: string }[] = [
   { value: 'maintenance', label: 'Maintenance', icon: '🔧' },
@@ -134,7 +135,11 @@ export const FacilityServicesPage: React.FC = () => {
       return;
     }
 
-    if (tokenBalance < estimatedCost) {
+    const isOnline = navigator.onLine;
+    console.log(`📶 Connection status: ${isOnline ? 'Online' : 'Offline'}`);
+
+    // Only block on insufficient tokens when online (balance is verified from server)
+    if (isOnline && tokenBalance < estimatedCost) {
       setError(`Insufficient tokens. You need ${estimatedCost} tokens but only have ${tokenBalance} tokens.`);
       return;
     }
@@ -142,84 +147,103 @@ export const FacilityServicesPage: React.FC = () => {
     setSubmitting(true);
     setError('');
 
+    const requestData = {
+      tenantId: userData.uid,
+      tenantName: userData.displayName || userData.email,
+      tenantEmail: userData.email,
+      serviceType: formData.serviceType,
+      title: formData.title.trim(),
+      description: formData.description.trim(),
+      priority: formData.priority,
+      location: formData.location.trim(),
+      status: 'pending' as const,
+      tokenCost: estimatedCost,
+      tokensReserved: true,
+      tokensDeducted: false,
+      attachments: uploadedFiles.map(f => ({
+        url: f.url,
+        fileName: f.fileName,
+        size: f.size,
+        type: f.type,
+        path: f.path,
+      })),
+      createdAt: Timestamp.now(),
+      updatedAt: Timestamp.now(),
+      notes: '',
+    };
+
     try {
-      console.log('📝 Creating facility management request...');
+      if (!isOnline) {
+        // ── OFFLINE MODE ──────────────────────────────────────────────────────
+        console.log('📴 Offline: queuing facility request for sync...');
+        await queueFirestoreOperation('create', 'serviceRequests', requestData);
+        console.log('✅ Request queued successfully');
+        alert(
+          `📴 Offline Mode\n\n` +
+          `Your facility service request has been saved locally and will be submitted when you're back online.\n\n` +
+          `Service: ${facilityServices.find(s => s.value === formData.serviceType)?.label}\n` +
+          `Estimated cost: ${estimatedCost} tokens\n` +
+          `Title: ${formData.title.trim()}`
+        );
+        navigate('/dashboard');
+        return;
+      }
 
-      // Create service request in Firestore
-      const requestData = {
-        tenantId: userData.uid,
-        tenantName: userData.displayName || userData.email,
-        tenantEmail: userData.email,
-        serviceType: formData.serviceType,
-        title: formData.title.trim(),
-        description: formData.description.trim(),
-        priority: formData.priority,
-        location: formData.location.trim(),
-        status: 'pending' as const,
-        tokenCost: estimatedCost,
-        tokensReserved: true,
-        tokensDeducted: false,
-        attachments: uploadedFiles.map(f => ({
-          url: f.url,
-          fileName: f.fileName,
-          size: f.size,
-          type: f.type,
-          path: f.path
-        })),
-        createdAt: Timestamp.now(),
-        updatedAt: Timestamp.now(),
-        notes: '',
-      };
-
-      console.log('📤 Sending to Firestore...');
+      // ── ONLINE MODE ───────────────────────────────────────────────────────
+      console.log('🌐 Online: submitting facility request to Firestore...');
       const docRef = await addDoc(collection(db, 'serviceRequests'), requestData);
-      console.log('✅ Request created successfully:', docRef.id);
+      console.log('✅ Request created:', docRef.id);
 
-      // Send notification to tenant (confirmation)
       try {
         await notificationService.notifyRequestCreated(
-          userData.uid,
-          userData.email || '',
+          userData.uid, userData.email || '',
           userData.displayName || userData.email || 'User',
-          docRef.id,
-          formData.title,
-          formData.serviceType,
-          formData.priority
+          docRef.id, formData.title, formData.serviceType, formData.priority
         );
-        console.log('📧 Tenant notification sent');
       } catch (emailError) {
         console.error('Tenant notification failed (non-critical):', emailError);
       }
 
-      // Send notification to Admin about new request
       try {
         await notificationService.notifyAdminNewRequest(
           userData.displayName || userData.email || 'Tenant',
-          docRef.id,
-          formData.title,
+          docRef.id, formData.title,
           facilityServices.find(s => s.value === formData.serviceType)?.label || formData.serviceType,
           formData.priority
         );
-        console.log('📧 Admin notification sent');
       } catch (adminNotifError) {
         console.error('Admin notification failed (non-critical):', adminNotifError);
       }
 
-      const totalAttachments = uploadedFiles.length;
-
       alert(
-        `Facility Service Request Created!\n\n` +
+        `✅ Facility Service Request Created!\n\n` +
         `Service: ${facilityServices.find(s => s.value === formData.serviceType)?.label}\n` +
         `Token Cost: ${estimatedCost} tokens (reserved)\n` +
-        `Attachments: ${totalAttachments} file(s) uploaded\n` +
-        `Current Balance: ${tokenBalance} tokens\n\n` +
-        `Your request has been submitted successfully and admin has been notified!`
+        `Attachments: ${uploadedFiles.length} file(s)\n\n` +
+        `Your request has been submitted and admin has been notified!`
       );
-
       navigate('/dashboard');
+
     } catch (err: any) {
-      console.error('❌ Error creating request:', err);
-      setError(err.message || 'Failed to create request');
+      console.error('❌ Error creating facility request:', err);
+
+      // Network error fallback — queue for later sync
+      if (!navigator.onLine || err.code === 'unavailable' || err.message?.includes('network')) {
+        console.log('📴 Network error detected, falling back to offline queue...');
+        try {
+          await queueFirestoreOperation('create', 'serviceRequests', requestData);
+          alert(
+            `📴 Connection Lost\n\n` +
+            `Your request has been saved locally and will sync when you're back online.\n\n` +
+            `Title: ${formData.title.trim()}`
+          );
+          navigate('/dashboard');
+        } catch (queueError) {
+          setError('Failed to save request offline. Please try again.');
+        }
+      } else {
+        setError(err.message || 'Failed to create request');
+      }
     } finally {
       setSubmitting(false);
     }
