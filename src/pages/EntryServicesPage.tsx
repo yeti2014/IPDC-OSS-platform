@@ -492,7 +492,7 @@ export const EntryServicesPage: React.FC = () => {
             {activeTab === 1 && (
               <Box>
                 {/* Stepper */}
-                <Stepper activeStep={parkActiveStep} sx={{ mb: 4 }}>
+                <Stepper activeStep={parkActiveStep} alternativeLabel sx={{ mb: 4 }}>
                   {parkSteps.map((label) => (
                     <Step key={label}>
                       <StepLabel>{label}</StepLabel>
