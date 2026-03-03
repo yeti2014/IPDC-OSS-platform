@@ -92,16 +92,27 @@ export const AdminDashboard = () => {
       const requestsData: ServiceRequest[] = [];
       snapshot.forEach((doc) => {
         const data = doc.data();
+        // toDate() is only available on Firestore Timestamp objects; guard against
+        // plain {seconds, nanoseconds} maps that may exist from pre-fix offline syncs
+        const toDate = (ts: any): Date => {
+          if (!ts) return new Date();
+          if (typeof ts.toDate === 'function') return ts.toDate();
+          if (ts.seconds) return new Date(ts.seconds * 1000);
+          return new Date();
+        };
         requestsData.push({
           id: doc.id,
           ...data,
-          createdAt: data.createdAt?.toDate() || new Date(),
-          updatedAt: data.updatedAt?.toDate() || new Date(),
+          createdAt: toDate(data.createdAt),
+          updatedAt: toDate(data.updatedAt),
         } as ServiceRequest);
       });
-      
+
       requestsData.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
       setRequests(requestsData);
+      setLoading(false);
+    }, (error) => {
+      console.error('AdminDashboard: service requests listener error:', error);
       setLoading(false);
     });
 

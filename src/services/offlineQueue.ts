@@ -7,9 +7,33 @@ import {
   dequeueOperation,
   QueuedOperation,
 } from '../utils/indexedDB';
-import { collection, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { notificationService } from './notificationService';
+
+/**
+ * Firebase Timestamp objects lose their prototype when serialized through IndexedDB.
+ * This helper recursively converts any plain {seconds, nanoseconds} objects back to
+ * proper Firestore Timestamps before writing to Firestore.
+ */
+function reconstructTimestamps(obj: any): any {
+  if (obj === null || obj === undefined || typeof obj !== 'object') return obj;
+  if (obj instanceof Timestamp) return obj;
+  if (Array.isArray(obj)) return obj.map(reconstructTimestamps);
+  if (
+    'seconds' in obj &&
+    'nanoseconds' in obj &&
+    typeof obj.seconds === 'number' &&
+    Object.keys(obj).length === 2
+  ) {
+    return new Timestamp(obj.seconds, obj.nanoseconds);
+  }
+  const result: Record<string, any> = {};
+  for (const key of Object.keys(obj)) {
+    result[key] = reconstructTimestamps(obj[key]);
+  }
+  return result;
+}
 
 // Maximum retry attempts for failed operations
 const MAX_RETRY_ATTEMPTS = 3;
@@ -112,7 +136,9 @@ export async function processQueue(): Promise<{
  */
 async function executeOperation(operation: QueuedOperation): Promise<void> {
   const { type, data } = operation;
-  const { collectionName, documentId, ...payload } = data;
+  const { collectionName, documentId, ...rawPayload } = data;
+  // Rebuild any Timestamps that lost their prototype during IndexedDB serialisation
+  const payload = reconstructTimestamps(rawPayload);
 
   switch (type) {
     case 'create': {
