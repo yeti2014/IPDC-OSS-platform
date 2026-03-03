@@ -341,7 +341,13 @@ export const ComplaintManagementDashboard = () => {
         </Box>
 
         <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
-          <Tabs value={tabValue} onChange={(_e, newValue) => setTabValue(newValue)}>
+          <Tabs
+            value={tabValue}
+            onChange={(_e, newValue) => setTabValue(newValue)}
+            variant="scrollable"
+            scrollButtons="auto"
+            allowScrollButtonsMobile
+          >
             <Tab label={`Pending (${pendingComplaints.length})`} />
             <Tab label={`Under Review (${underReviewComplaints.length})`} />
             <Tab label={`Resolved (${resolvedComplaints.length})`} />

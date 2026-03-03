@@ -372,7 +372,7 @@ export const FacilityServicesPage: React.FC = () => {
                 elevation={0}
                 sx={{
                   p: 2,
-                  bgcolor: 'primary.lighter',
+                  bgcolor: '#e3f2fd',
                   border: '1px solid',
                   borderColor: 'primary.main',
                 }}
