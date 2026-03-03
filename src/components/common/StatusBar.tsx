@@ -6,7 +6,6 @@ import { AppBar, Toolbar, Typography, Box, Container, Alert, AlertTitle } from '
 import { OnlineStatusBadge } from './OnlineStatusIndicator';
 import { DeviceModeBadge } from './DeviceModeIndicator';
 import SyncStatus from './SyncStatus';
-import LanguageSwitcher from './LanguageSwitcher';
 import { useOnlineStatus } from '../../hooks/useOnlineStatus';
 import { useDeviceDetection } from '../../hooks/useDeviceDetection';
 import { useOfflineStorage } from '../../hooks/useOfflineStorage';
@@ -38,7 +37,6 @@ export const StatusBar: React.FC = () => {
           </Typography>
           <Box sx={{ display: 'flex', gap: { xs: 0.5, sm: 1 }, alignItems: 'center', flexShrink: 0 }}>
             <NotificationBell />
-            <LanguageSwitcher />
             <SyncStatus
               pendingCount={pendingSyncCount}
               isSyncing={isSyncing}
