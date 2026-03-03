@@ -59,7 +59,7 @@ export const EthiopianDateDisplay = ({
             size="small"
             sx={{
               fontSize: '0.8rem',
-              bgcolor: 'success.lighter',
+              bgcolor: '#e8f5e9',
               color: 'success.dark',
               borderColor: 'success.main',
               fontFamily: '"Noto Sans Ethiopic", "Nyala", sans-serif',
