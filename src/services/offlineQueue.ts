@@ -9,6 +9,7 @@ import {
 } from '../utils/indexedDB';
 import { collection, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import { notificationService } from './notificationService';
 
 // Maximum retry attempts for failed operations
 const MAX_RETRY_ATTEMPTS = 3;
@@ -114,10 +115,40 @@ async function executeOperation(operation: QueuedOperation): Promise<void> {
   const { collectionName, documentId, ...payload } = data;
 
   switch (type) {
-    case 'create':
-      await addDoc(collection(db, collectionName), payload);
+    case 'create': {
+      const docRef = await addDoc(collection(db, collectionName), payload);
       console.log('✅ Created document in Firestore:', collectionName);
+
+      // Send notifications after syncing a service request
+      if (collectionName === 'serviceRequests') {
+        const { tenantId, tenantEmail, tenantName, title, serviceType, priority } = payload;
+        try {
+          await Promise.all([
+            notificationService.notifyRequestCreated(
+              tenantId || '',
+              tenantEmail || '',
+              tenantName || 'Tenant',
+              docRef.id,
+              title || 'Service Request',
+              serviceType || 'other',
+              priority || 'medium'
+            ),
+            notificationService.notifyAdminNewRequest(
+              tenantName || 'Tenant',
+              docRef.id,
+              title || 'Service Request',
+              serviceType || 'other',
+              priority || 'medium'
+            ),
+          ]);
+          console.log('✅ Notifications sent for synced request:', docRef.id);
+        } catch (notifError) {
+          // Don't let notification failure break the sync
+          console.error('⚠️ Notifications failed after sync:', notifError);
+        }
+      }
       break;
+    }
 
     case 'update':
       if (!documentId) {
