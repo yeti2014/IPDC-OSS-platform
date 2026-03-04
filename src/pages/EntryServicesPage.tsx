@@ -67,6 +67,7 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useAuth } from '../contexts/AuthContext';
 import { queueFirestoreOperation } from '../services/offlineQueue';
+import { notificationService } from '../services/notificationService';
 
 // Park recommendation constants
 const parkSteps = ['Business Profile', 'Requirements', 'AI Recommendations'];
@@ -216,6 +217,30 @@ export const EntryServicesPage: React.FC = () => {
       console.log('🌐 Online: submitting entry service request to Firestore...');
       const docRef = await addDoc(collection(db, 'serviceRequests'), requestData);
       console.log('✅ Entry request created:', docRef.id);
+
+      // Notify tenant and admin
+      try {
+        await Promise.all([
+          notificationService.notifyRequestCreated(
+            requestData.tenantId,
+            requestData.tenantEmail,
+            requestData.tenantName,
+            docRef.id,
+            requestData.title,
+            requestData.serviceType,
+            requestData.priority
+          ),
+          notificationService.notifyAdminNewRequest(
+            requestData.tenantName,
+            docRef.id,
+            requestData.title,
+            requestData.serviceType,
+            requestData.priority
+          ),
+        ]);
+      } catch (notifError) {
+        console.error('Notification failed (non-critical):', notifError);
+      }
 
       alert(
         `✅ Entry Service Application Submitted!\n\n` +
