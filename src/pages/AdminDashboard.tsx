@@ -129,25 +129,35 @@ export const AdminDashboard = () => {
   };
 
   const handleApprove = async (request: ServiceRequest) => {
+    const isOnline = navigator.onLine;
     try {
+      // Firebase SDK queues this write automatically when offline
       await updateDoc(doc(db, 'serviceRequests', request.id), {
         status: 'approved',
         updatedAt: serverTimestamp(),
       });
 
-      // Notify tenant about approval
-      await notificationService.notifyRequestStatusChanged(
-        request.tenantId,
-        request.tenantEmail,
-        request.tenantName,
-        request.id,
-        request.title,
-        'pending',
-        'approved',
-        userData?.displayName || userData?.email || 'Admin'
-      );
+      if (!isOnline) {
+        alert('📴 Offline Mode\n\nApproval saved locally and will sync to the server when you reconnect. Notifications will be sent after sync.');
+        return;
+      }
 
-      // Notify Operations team about new approved request
+      // Notifications only when online
+      try {
+        await notificationService.notifyRequestStatusChanged(
+          request.tenantId,
+          request.tenantEmail,
+          request.tenantName,
+          request.id,
+          request.title,
+          'pending',
+          'approved',
+          userData?.displayName || userData?.email || 'Admin'
+        );
+      } catch (notifError) {
+        console.error('Tenant notification failed (non-critical):', notifError);
+      }
+
       try {
         await notificationService.notifyOperationsRequestApproved(
           request.tenantName,
@@ -157,7 +167,6 @@ export const AdminDashboard = () => {
           request.priority || 'medium',
           request.location || 'Not specified'
         );
-        console.log('📧 Operations notified about approved request');
       } catch (opsNotifError) {
         console.error('Operations notification failed (non-critical):', opsNotifError);
       }
@@ -167,23 +176,34 @@ export const AdminDashboard = () => {
   };
 
   const handleReject = async (request: ServiceRequest) => {
+    const isOnline = navigator.onLine;
     try {
+      // Firebase SDK queues this write automatically when offline
       await updateDoc(doc(db, 'serviceRequests', request.id), {
         status: 'rejected',
         updatedAt: serverTimestamp(),
         notes: 'Rejected by administrator',
       });
 
-      await notificationService.notifyRequestStatusChanged(
-        request.tenantId,
-        request.tenantEmail,
-        request.tenantName,
-        request.id,
-        request.title,
-        'pending',
-        'rejected',
-        userData?.displayName || userData?.email || 'Admin'
-      );
+      if (!isOnline) {
+        alert('📴 Offline Mode\n\nRejection saved locally and will sync to the server when you reconnect. Notifications will be sent after sync.');
+        return;
+      }
+
+      try {
+        await notificationService.notifyRequestStatusChanged(
+          request.tenantId,
+          request.tenantEmail,
+          request.tenantName,
+          request.id,
+          request.title,
+          'pending',
+          'rejected',
+          userData?.displayName || userData?.email || 'Admin'
+        );
+      } catch (notifError) {
+        console.error('Tenant notification failed (non-critical):', notifError);
+      }
     } catch (error) {
       console.error('Error rejecting request:', error);
     }

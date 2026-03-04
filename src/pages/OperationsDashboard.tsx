@@ -91,7 +91,9 @@ export const OperationsDashboard = () => {
   }, [userData]);
 
   const handleStartWork = async (request: ServiceRequest) => {
+    const isOnline = navigator.onLine;
     try {
+      // Firebase SDK queues this write automatically when offline
       await updateDoc(doc(db, 'serviceRequests', request.id), {
         status: 'in-progress',
         assignedTo: userData?.uid,
@@ -99,18 +101,27 @@ export const OperationsDashboard = () => {
         updatedAt: serverTimestamp(),
       });
 
-      // Notify tenant about status change
+      if (!isOnline) {
+        alert('📴 Offline Mode\n\nTask assigned to you locally and will sync when you reconnect. Tenant will be notified after sync.');
+        return;
+      }
+
+      // Notify tenant only when online
       if (request.tenantId && request.tenantEmail && request.tenantName) {
-        await notificationService.notifyRequestStatusChanged(
-          request.tenantId,
-          request.tenantEmail,
-          request.tenantName,
-          request.id,
-          request.title,
-          'approved',
-          'in-progress',
-          userData?.displayName || userData?.email || 'Operations Team'
-        );
+        try {
+          await notificationService.notifyRequestStatusChanged(
+            request.tenantId,
+            request.tenantEmail,
+            request.tenantName,
+            request.id,
+            request.title,
+            'approved',
+            'in-progress',
+            userData?.displayName || userData?.email || 'Operations Team'
+          );
+        } catch (notifError) {
+          console.error('Tenant notification failed (non-critical):', notifError);
+        }
       }
     } catch (error) {
       console.error('Error starting work:', error);
@@ -118,6 +129,13 @@ export const OperationsDashboard = () => {
   };
 
   const handleComplete = async (request: ServiceRequest) => {
+    // Token deduction uses a Firestore transaction which requires a live server
+    // connection — it cannot be queued offline. Block and inform the operator.
+    if (!navigator.onLine) {
+      alert('📴 Offline Mode\n\nCompleting a request requires an internet connection because token deduction must be processed in real-time.\n\nPlease reconnect and try again.');
+      return;
+    }
+
     try {
       // Check if tokens were already deducted (prevent double charging)
       if ((request as any).tokensDeducted) {

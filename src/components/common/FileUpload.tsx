@@ -54,6 +54,13 @@ export const FileUpload: React.FC<FileUploadProps> = ({
 
     if (selectedFiles.length === 0) return;
 
+    // Block uploads when offline — Firebase Storage has no offline capability
+    if (!navigator.onLine) {
+      setError('File uploads require an internet connection. Please reconnect and try again.');
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      return;
+    }
+
     // Check max files limit
     const totalFiles = files.length + existingFiles.length + selectedFiles.length;
     if (totalFiles > maxFiles) {
