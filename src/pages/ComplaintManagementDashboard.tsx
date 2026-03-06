@@ -39,6 +39,8 @@ import {
   ArrowBack as BackIcon,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '../config/firebase';
 import { complaintService } from '../services/complaintService';
 import { Complaint, ComplaintStatus, ResolutionAction } from '../types/complaint';
 import { formatDistanceToNow, format } from 'date-fns';
@@ -73,31 +75,55 @@ export const ComplaintManagementDashboard = () => {
     adminResponse: '',
   });
 
+  // Real-time listener for complaints
   useEffect(() => {
-    loadComplaints();
-    loadStats();
+    const toDate = (ts: any): Date => {
+      if (!ts) return new Date();
+      if (typeof ts.toDate === 'function') return ts.toDate();
+      if (ts.seconds) return new Date(ts.seconds * 1000);
+      return new Date();
+    };
+
+    const unsubscribe = onSnapshot(
+      collection(db, 'complaints'),
+      (snapshot) => {
+        const data: Complaint[] = [];
+        snapshot.forEach((doc) => {
+          const d = doc.data();
+          if (d.status === 'pending' || d.status === 'under-review') {
+            data.push({
+              id: doc.id,
+              ...d,
+              createdAt: toDate(d.createdAt),
+              updatedAt: toDate(d.updatedAt),
+              resolvedAt: d.resolvedAt ? toDate(d.resolvedAt) : undefined,
+            } as Complaint);
+          }
+        });
+        data.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+        setComplaints(data);
+        setLoading(false);
+
+        // Update stats from snapshot
+        let total = 0, pending = 0, underReview = 0, resolved = 0, rejected = 0;
+        snapshot.forEach((doc) => {
+          const d = doc.data();
+          total++;
+          if (d.status === 'pending') pending++;
+          else if (d.status === 'under-review') underReview++;
+          else if (d.status === 'resolved') resolved++;
+          else if (d.status === 'rejected') rejected++;
+        });
+        setStats(prev => ({ ...prev, total, pending, underReview, resolved, rejected }));
+      },
+      (error) => {
+        console.error('Complaints listener error:', error);
+        setLoading(false);
+      }
+    );
+
+    return () => unsubscribe();
   }, []);
-
-  const loadComplaints = async () => {
-    setLoading(true);
-    try {
-      const data = await complaintService.getPendingComplaints();
-      setComplaints(data);
-    } catch (error) {
-      console.error('Error loading complaints:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const loadStats = async () => {
-    try {
-      const data = await complaintService.getComplaintStats();
-      setStats(data);
-    } catch (error) {
-      console.error('Error loading stats:', error);
-    }
-  };
 
   const handleViewDetails = (complaint: Complaint) => {
     setSelectedComplaint(complaint);
@@ -151,8 +177,6 @@ export const ComplaintManagementDashboard = () => {
       if (result.success) {
         alert('✅ Complaint resolved successfully');
         setResolveDialogOpen(false);
-        loadComplaints();
-        loadStats();
       } else {
         alert(`❌ ${result.message}`);
       }
@@ -181,8 +205,6 @@ export const ComplaintManagementDashboard = () => {
       if (result.success) {
         alert('✅ Complaint rejected');
         setRejectDialogOpen(false);
-        loadComplaints();
-        loadStats();
       } else {
         alert(`❌ ${result.message}`);
       }
@@ -194,11 +216,7 @@ export const ComplaintManagementDashboard = () => {
 
   const handleUpdateStatus = async (complaintId: string, status: ComplaintStatus) => {
     try {
-      const result = await complaintService.updateComplaintStatus(complaintId, status);
-      if (result.success) {
-        loadComplaints();
-        loadStats();
-      }
+      await complaintService.updateComplaintStatus(complaintId, status);
     } catch (error) {
       console.error('Error updating status:', error);
     }

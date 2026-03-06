@@ -423,6 +423,25 @@ class NotificationService {
   }
 
   /**
+   * Notify admin when a tenant files a complaint
+   */
+  async notifyAdminNewComplaint(
+    tenantName: string,
+    complaintId: string,
+    complaintSubject: string,
+    severity: string
+  ): Promise<void> {
+    await this.createInAppNotification(
+      '',
+      'New Complaint Filed',
+      `${tenantName} filed a ${severity} complaint: ${complaintSubject}`,
+      severity === 'critical' || severity === 'high' ? 'error' : 'warning',
+      complaintId,
+      'admin'
+    );
+  }
+
+  /**
    * Notify admin when operations completes a task
    */
   async notifyAdminTaskCompleted(

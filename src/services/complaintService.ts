@@ -96,8 +96,17 @@ class ComplaintService {
 
       console.log('✅ Complaint filed successfully:', docRef.id);
 
-      // Note: In-app notifications for complaint filing could be added here
-      // Currently focusing on email notifications for resolution/rejection
+      // Notify admin about new complaint
+      try {
+        await notificationService.notifyAdminNewComplaint(
+          data.tenantName,
+          docRef.id,
+          data.subject,
+          data.severity
+        );
+      } catch (notifError) {
+        console.error('Admin complaint notification failed (non-critical):', notifError);
+      }
 
       return {
         success: true,
