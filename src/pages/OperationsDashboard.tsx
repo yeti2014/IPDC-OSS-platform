@@ -259,9 +259,12 @@ export const OperationsDashboard = () => {
     }
   };
 
-  const approvedRequests = requests.filter(r => r.status === 'approved');
-  const inProgressRequests = requests.filter(r => r.status === 'in-progress');
-  const completedRequests = requests.filter(r => r.status === 'completed');
+  // Tier 1 entry service requests (serviceType === 'other') are admin-managed only — exclude from operator view
+  const isFacilityRequest = (r: ServiceRequest) => r.serviceType !== 'other';
+
+  const approvedRequests = requests.filter(r => r.status === 'approved' && isFacilityRequest(r));
+  const inProgressRequests = requests.filter(r => r.status === 'in-progress' && isFacilityRequest(r));
+  const completedRequests = requests.filter(r => r.status === 'completed' && isFacilityRequest(r));
   const myTasks = inProgressRequests.filter(r => r.assignedTo === userData?.uid);
 
   const displayRequests = tabValue === 0 ? approvedRequests :

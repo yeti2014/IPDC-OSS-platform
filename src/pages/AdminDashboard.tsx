@@ -32,6 +32,7 @@ import {
   Campaign as CampaignIcon,
   Business as BusinessIcon,
   ReportProblem as ComplaintIcon,
+  TaskAlt as CompleteEntryIcon,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { collection, query, where, onSnapshot, updateDoc, doc, serverTimestamp } from 'firebase/firestore';
@@ -158,20 +159,59 @@ export const AdminDashboard = () => {
         console.error('Tenant notification failed (non-critical):', notifError);
       }
 
-      try {
-        await notificationService.notifyOperationsRequestApproved(
-          request.tenantName,
-          request.id,
-          request.title,
-          request.serviceType || 'Service Request',
-          request.priority || 'medium',
-          request.location || 'Not specified'
-        );
-      } catch (opsNotifError) {
-        console.error('Operations notification failed (non-critical):', opsNotifError);
+      // Only notify Operations for Tier 2 facility requests — entry services (serviceType='other') are admin-managed only
+      if (request.serviceType !== 'other') {
+        try {
+          await notificationService.notifyOperationsRequestApproved(
+            request.tenantName,
+            request.id,
+            request.title,
+            request.serviceType || 'Service Request',
+            request.priority || 'medium',
+            request.location || 'Not specified'
+          );
+        } catch (opsNotifError) {
+          console.error('Operations notification failed (non-critical):', opsNotifError);
+        }
       }
     } catch (error) {
       console.error('Error approving request:', error);
+    }
+  };
+
+  // Tier 1 Entry Service: admin completes directly — no token deduction, no operator routing
+  const handleCompleteEntryService = async (request: ServiceRequest) => {
+    const isOnline = navigator.onLine;
+    try {
+      await updateDoc(doc(db, 'serviceRequests', request.id), {
+        status: 'completed',
+        completedAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+        tokensDeducted: false,
+        notes: 'Entry service information provided by IPDC Administration. No token charge applies.',
+      });
+
+      if (!isOnline) {
+        alert('📴 Offline Mode\n\nEntry service marked as completed locally and will sync when you reconnect.');
+        return;
+      }
+
+      try {
+        await notificationService.notifyRequestStatusChanged(
+          request.tenantId,
+          request.tenantEmail,
+          request.tenantName,
+          request.id,
+          request.title,
+          'pending',
+          'completed',
+          userData?.displayName || userData?.email || 'IPDC Administration'
+        );
+      } catch (notifError) {
+        console.error('Tenant notification failed (non-critical):', notifError);
+      }
+    } catch (error) {
+      console.error('Error completing entry service:', error);
     }
   };
 
@@ -404,7 +444,15 @@ export const AdminDashboard = () => {
                 <TableBody>
                   {requests.map((request) => (
                     <TableRow key={request.id} hover>
-                      <TableCell>{request.serviceType || 'N/A'}</TableCell>
+                      <TableCell>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                          <Typography variant="body2">{request.serviceType || 'N/A'}</Typography>
+                          {request.serviceType === 'other' && (
+                            <Chip label="Tier 1 · Entry" size="small" color="info"
+                              sx={{ fontSize: '0.65rem', height: 18, width: 'fit-content' }} />
+                          )}
+                        </Box>
+                      </TableCell>
                       <TableCell>
                         <Typography variant="body2" fontWeight="medium">
                           {request.title}
@@ -433,15 +481,29 @@ export const AdminDashboard = () => {
                               <ViewIcon />
                             </IconButton>
                           </Tooltip>
-                          <Tooltip title="Approve">
-                            <IconButton
-                              size="small"
-                              color="success"
-                              onClick={() => handleApprove(request)}
-                            >
-                              <ApproveIcon />
-                            </IconButton>
-                          </Tooltip>
+                          {request.serviceType === 'other' ? (
+                            // Tier 1 Entry Service — admin responds & completes directly, no token, no operator
+                            <Tooltip title="Complete & Notify Tenant (No token charge)">
+                              <IconButton
+                                size="small"
+                                color="success"
+                                onClick={() => handleCompleteEntryService(request)}
+                              >
+                                <CompleteEntryIcon />
+                              </IconButton>
+                            </Tooltip>
+                          ) : (
+                            // Tier 2 Facility Service — approve routes to operator team
+                            <Tooltip title="Approve & Route to Operations">
+                              <IconButton
+                                size="small"
+                                color="success"
+                                onClick={() => handleApprove(request)}
+                              >
+                                <ApproveIcon />
+                              </IconButton>
+                            </Tooltip>
+                          )}
                           <Tooltip title="Reject">
                             <IconButton
                               size="small"
