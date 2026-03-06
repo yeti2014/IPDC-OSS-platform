@@ -478,6 +478,23 @@ class NotificationService {
   }
 
   /**
+   * Notify tenant when their complaint is successfully filed
+   */
+  async notifyTenantComplaintFiled(
+    tenantId: string,
+    complaintSubject: string,
+    complaintId: string
+  ): Promise<void> {
+    await this.createInAppNotification(
+      tenantId,
+      'Complaint Submitted',
+      `Your complaint "${complaintSubject}" has been received. Admin will review within 48 hours.`,
+      'info',
+      complaintId
+    );
+  }
+
+  /**
    * Notify admin when operations completes a task
    */
   async notifyAdminTaskCompleted(

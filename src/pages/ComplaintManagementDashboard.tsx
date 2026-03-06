@@ -90,15 +90,13 @@ export const ComplaintManagementDashboard = () => {
         const data: Complaint[] = [];
         snapshot.forEach((doc) => {
           const d = doc.data();
-          if (d.status === 'pending' || d.status === 'under-review') {
-            data.push({
-              id: doc.id,
-              ...d,
-              createdAt: toDate(d.createdAt),
-              updatedAt: toDate(d.updatedAt),
-              resolvedAt: d.resolvedAt ? toDate(d.resolvedAt) : undefined,
-            } as Complaint);
-          }
+          data.push({
+            id: doc.id,
+            ...d,
+            createdAt: toDate(d.createdAt),
+            updatedAt: toDate(d.updatedAt),
+            resolvedAt: d.resolvedAt ? toDate(d.resolvedAt) : undefined,
+          } as Complaint);
         });
         data.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
         setComplaints(data);

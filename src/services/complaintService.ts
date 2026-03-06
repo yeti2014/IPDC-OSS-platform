@@ -108,6 +108,17 @@ class ComplaintService {
         console.error('Admin complaint notification failed (non-critical):', notifError);
       }
 
+      // Notify tenant that their complaint was received
+      try {
+        await notificationService.notifyTenantComplaintFiled(
+          data.tenantId,
+          data.subject,
+          docRef.id
+        );
+      } catch (notifError) {
+        console.error('Tenant complaint filed notification failed (non-critical):', notifError);
+      }
+
       return {
         success: true,
         complaintId: docRef.id,
