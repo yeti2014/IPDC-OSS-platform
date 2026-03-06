@@ -199,6 +199,22 @@ export const OperationsDashboard = () => {
 
       console.log(`✅ Tokens deducted: ${deductResult.cost} tokens. New balance: ${deductResult.newBalance}`);
 
+      // Notify tenant if token balance is running low (< 50 tokens)
+      if (deductResult.newBalance < 50 && request.tenantId && request.tenantEmail && request.tenantName) {
+        try {
+          await notificationService.notifyLowTokenBalance(
+            request.tenantId,
+            request.tenantEmail,
+            request.tenantName,
+            deductResult.newBalance,
+            'standard'
+          );
+          console.log('🔔 Low token balance notification sent to tenant');
+        } catch (lowBalanceError) {
+          console.error('Low balance notification failed (non-critical):', lowBalanceError);
+        }
+      }
+
       // Notify tenant about completion WITH TOKEN INFORMATION
       if (request.tenantId && request.tenantEmail && request.tenantName) {
         await notificationService.notifyRequestStatusChanged(

@@ -304,9 +304,21 @@ class ComplaintService {
 
       console.log('✅ Complaint resolved successfully');
 
-      // Send email notification to tenant about resolution
+      // In-app notification — always fires, bypasses email preference gate
+      const resolutionMessage = this.getResolutionMessage(data.action, data.refundAmount);
       try {
-        const resolutionMessage = this.getResolutionMessage(data.action, data.refundAmount);
+        await notificationService.notifyTenantComplaintResolved(
+          complaint.tenantId,
+          complaint.subject,
+          resolutionMessage,
+          data.complaintId
+        );
+        console.log('🔔 In-app resolution notification sent to tenant');
+      } catch (notifError) {
+        console.error('In-app resolution notification failed (non-critical):', notifError);
+      }
+      // Email notification — best-effort
+      try {
         await notificationService.sendNotification(
           complaint.tenantEmail,
           complaint.tenantName,
@@ -327,8 +339,7 @@ class ComplaintService {
         );
         console.log('📧 Resolution email sent to tenant:', complaint.tenantEmail);
       } catch (emailError) {
-        console.error('Failed to send resolution email to tenant:', emailError);
-        // Don't fail the whole operation if email fails
+        console.error('Failed to send resolution email to tenant (non-critical):', emailError);
       }
 
       return {
@@ -378,7 +389,19 @@ class ComplaintService {
 
       console.log('✅ Complaint rejected');
 
-      // Send email notification to tenant about rejection
+      // In-app notification — always fires, bypasses email preference gate
+      try {
+        await notificationService.notifyTenantComplaintRejected(
+          complaint.tenantId,
+          complaint.subject,
+          data.adminResponse,
+          data.complaintId
+        );
+        console.log('🔔 In-app rejection notification sent to tenant');
+      } catch (notifError) {
+        console.error('In-app rejection notification failed (non-critical):', notifError);
+      }
+      // Email notification — best-effort
       try {
         await notificationService.sendNotification(
           complaint.tenantEmail,
@@ -398,8 +421,7 @@ class ComplaintService {
         );
         console.log('📧 Rejection email sent to tenant:', complaint.tenantEmail);
       } catch (emailError) {
-        console.error('Failed to send rejection email to tenant:', emailError);
-        // Don't fail the whole operation if email fails
+        console.error('Failed to send rejection email to tenant (non-critical):', emailError);
       }
 
       return {

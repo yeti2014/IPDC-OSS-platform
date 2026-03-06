@@ -345,6 +345,4 @@ After authentication, each user is routed to a role-appropriate dashboard: \text
 
 The persistent \texttt{StatusBar} shows connectivity status, device type, pending sync count, and last sync timestamp --- essential feedback for an offline-first system where users need to know whether actions are queued locally or already written to the server.
 
-\section{Chapter Summary}
-
-The analysis and design work described in this chapter produced several concrete outputs: twelve functional and seven non-functional requirement groups grounded in stakeholder input, a four-dimension adaptation framework translating Chinese platform patterns to the Ethiopian context, and a three-tier architecture built from 41 React components, Firebase and FastAPI services, and a dual-layer local storage strategy. Of these, the dual-mode authentication and queue-based synchronization mechanisms arguably matter most to end users --- they are what make the platform feel continuous and trustworthy rather than intermittent and fragile. Many of the design decisions recorded here were not obvious at the outset; they emerged iteratively as the constraints of the Ethiopian operating environment became clearer. How those decisions translate into working software, and what the evaluation reveals about them, is the subject of the next chapter.
+How those design decisions translate into working software --- and what real stakeholders made of it --- is the subject of Chapter~\ref{ch:implementation}.

@@ -187,27 +187,38 @@ export const Dashboard = () => {
     });
   }, [localRequests]);
 
-  // Load complaints when tab is active (adjust index for tenant vs non-tenant)
+  // Real-time complaints listener for tenant — fires immediately and stays in sync
   useEffect(() => {
-    const complaintsTabIndex = userData?.role === 'tenant' ? 3 : -1;
-    if (userData?.role === 'tenant' && tabValue === complaintsTabIndex) {
-      loadComplaints();
-    }
-  }, [userData, tabValue]);
+    if (!userData || userData.role !== 'tenant') return;
 
-  const loadComplaints = async () => {
-    if (!userData) return;
     setComplaintsLoading(true);
-    try {
-      const tenantComplaints = await complaintService.getTenantComplaints(userData.uid);
-      setComplaints(tenantComplaints);
-    } catch (error) {
-      console.error('Error loading complaints:', error);
-      showToast('Failed to load complaints', 'error');
-    } finally {
+    const q = query(
+      collection(db, 'complaints'),
+      where('tenantId', '==', userData.uid)
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const data: any[] = [];
+      snapshot.forEach((doc) => {
+        const d = doc.data();
+        data.push({
+          id: doc.id,
+          ...d,
+          createdAt: d.createdAt?.toDate ? d.createdAt.toDate() : new Date(),
+          updatedAt: d.updatedAt?.toDate ? d.updatedAt.toDate() : new Date(),
+          resolvedAt: d.resolvedAt?.toDate ? d.resolvedAt.toDate() : undefined,
+        });
+      });
+      data.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+      setComplaints(data);
       setComplaintsLoading(false);
-    }
-  };
+    }, (error) => {
+      console.error('Error loading complaints:', error);
+      setComplaintsLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [userData]);
 
   const handleLogout = async () => {
     try {
@@ -282,7 +293,7 @@ export const Dashboard = () => {
     showToast('Complaint filed successfully! Admin will review within 48 hours.', 'success');
     setComplaintDialogOpen(false);
     setComplaintRequest(null);
-    loadComplaints(); // Refresh complaints list to show the newly filed complaint
+    // onSnapshot listener automatically reflects the new complaint — no manual reload needed
   };
 
   const showToast = (message: string, severity: 'success' | 'error' | 'info' | 'warning') => {

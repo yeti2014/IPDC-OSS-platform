@@ -105,32 +105,32 @@ class NotificationService {
     metadata?: { requestId?: string; userId?: string; relatedEntityId?: string }
   ): Promise<{ success: boolean; message: string; notificationId?: string }> {
     try {
-      // Check if user wants this notification
-      if (metadata?.userId) {
-        const preferences = await this.getUserPreferences(metadata.userId);
-        if (!this.shouldSendNotification(preferences, type)) {
-          console.log(`🔕 Notification skipped based on user preferences: ${type}`);
-          return { success: true, message: 'Notification skipped based on preferences' };
-        }
-      }
-
-      // Get email template
+      // Get email template (needed for both in-app and email)
       const template = emailTemplateService.getTemplate(type, templateData);
 
-      // Create IN-APP NOTIFICATION for notification bell
+      // Create IN-APP NOTIFICATION first — always fires regardless of email preferences
       if (metadata?.userId) {
         let notifType: 'info' | 'success' | 'warning' | 'error' = 'info';
-        if (type.includes('approved') || type.includes('completed')) notifType = 'success';
+        if (type.includes('approved') || type.includes('completed') || type.includes('resolved')) notifType = 'success';
         if (type.includes('rejected')) notifType = 'error';
         if (type.includes('warning') || type.includes('low')) notifType = 'warning';
 
         await this.createInAppNotification(
           metadata.userId,
           template.subject,
-          template.text.substring(0, 200), // First 200 chars for preview
+          template.text.substring(0, 200),
           notifType,
           metadata.requestId
         );
+      }
+
+      // Check email preferences before sending email — preferences only gate the email, not the bell
+      if (metadata?.userId) {
+        const preferences = await this.getUserPreferences(metadata.userId);
+        if (!this.shouldSendNotification(preferences, type)) {
+          console.log(`🔕 Email skipped based on user preferences: ${type}`);
+          return { success: true, message: 'In-app notification sent; email skipped per preferences' };
+        }
       }
 
       // Create notification record
@@ -419,6 +419,42 @@ class NotificationService {
       priority === 'urgent' || priority === 'high' ? 'warning' : 'info',
       requestId,
       'admin' // userRole
+    );
+  }
+
+  /**
+   * Notify tenant when their complaint is resolved — in-app only, bypasses email preferences
+   */
+  async notifyTenantComplaintResolved(
+    tenantId: string,
+    complaintSubject: string,
+    resolutionAction: string,
+    complaintId: string
+  ): Promise<void> {
+    await this.createInAppNotification(
+      tenantId,
+      'Complaint Resolved',
+      `Your complaint "${complaintSubject}" has been resolved: ${resolutionAction}`,
+      'success',
+      complaintId
+    );
+  }
+
+  /**
+   * Notify tenant when their complaint is rejected — in-app only, bypasses email preferences
+   */
+  async notifyTenantComplaintRejected(
+    tenantId: string,
+    complaintSubject: string,
+    adminResponse: string,
+    complaintId: string
+  ): Promise<void> {
+    await this.createInAppNotification(
+      tenantId,
+      'Complaint Not Upheld',
+      `Your complaint "${complaintSubject}" was not upheld. Admin response: ${adminResponse}`,
+      'error',
+      complaintId
     );
   }
 

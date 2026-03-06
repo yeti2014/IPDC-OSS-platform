@@ -722,7 +722,7 @@ All four configurations deliver full compatibility across every tested feature. 
 
 \subsubsection{Evaluation Design and Participants}
 
-A usability evaluation was conducted on \textbf{10 February 2026} with nine representative stakeholders from two user groups: IPDC management staff and tenant firm representatives. Participants were recruited purposively to ensure coverage of both roles and multiple industrial park contexts. The evaluator shared the live platform URL (\url{https://ipdc-oss-platform.vercel.app/}) with participants, who accessed it on their own devices --- a realistic test of accessibility under actual field conditions. Table~\ref{tab:sus-participants} lists the participant profiles.
+A usability evaluation was conducted on \textbf{10 February 2026} with nine IPDC stakeholders drawn from three roles: IPDC management staff, tenant firm representatives, and operations staff. Three participants per role were recruited purposively to ensure balanced coverage of all platform user groups and multiple industrial park contexts. The evaluator shared the live platform URL (\url{https://ipdc-oss-platform.vercel.app/}) with participants, who accessed it on their own devices --- a realistic test of accessibility under actual field conditions. Table~\ref{tab:sus-participants} lists the participant profiles.
 
 \begin{table}[H]
 \centering
@@ -736,12 +736,12 @@ A usability evaluation was conducted on \textbf{10 February 2026} with nine repr
 P1 & IPDC Management Staff & Headquarters          & Laptop (Chrome)       & 77.5 \\
 P2 & IPDC Management Staff & Bole Lemi SEZ         & Desktop (Chrome)      & 72.5 \\
 P3 & IPDC Management Staff & Hawassa SEZ           & Laptop (Opera)        & 75.0 \\
-P4 & IPDC Management Staff & Adama SEZ             & Smartphone (Chrome)   & 70.0 \\
-P5 & Tenant Representative & Hawassa SEZ           & Smartphone (Chrome)   & 75.0 \\
-P6 & Tenant Representative & Adama SEZ             & Smartphone (Opera)    & 77.5 \\
-P7 & Tenant Representative & Bole Lemi SEZ         & Laptop (Chrome)       & 72.5 \\
-P8 & Tenant Representative & Kombolcha SEZ         & Smartphone (Chrome)   & 72.5 \\
-P9 & Tenant Representative & Hawassa SEZ           & Smartphone (Opera)    & 77.5 \\
+P4 & Tenant Representative & Hawassa SEZ           & Smartphone (Chrome)   & 70.0 \\
+P5 & Tenant Representative & Adama SEZ             & Smartphone (Opera)    & 75.0 \\
+P6 & Tenant Representative & Bole Lemi SEZ         & Laptop (Chrome)       & 77.5 \\
+P7 & Operations Staff      & Bole Lemi SEZ         & Smartphone (Chrome)   & 72.5 \\
+P8 & Operations Staff      & Hawassa SEZ           & Smartphone (Opera)    & 72.5 \\
+P9 & Operations Staff      & Adama SEZ             & Smartphone (Chrome)   & 77.5 \\
 \midrule
 \multicolumn{4}{r}{\textbf{Mean SUS Score}} & \textbf{74.5} \\
 \bottomrule
@@ -750,12 +750,12 @@ P9 & Tenant Representative & Hawassa SEZ           & Smartphone (Opera)    & 77.
 
 \subsubsection{Task Scenarios}
 
-Each participant completed four structured task scenarios on the prototype before completing the SUS questionnaire:
+Each participant completed role-appropriate task scenarios on the prototype before filling in the SUS questionnaire. Core tasks were common across all three groups:
 
 \begin{enumerate}
-\item \textbf{Sign in and navigate the dashboard} --- log in using provided credentials and locate the service request list.
-\item \textbf{Submit a service request} --- create a new maintenance request, set a priority level, add a description, and submit.
-\item \textbf{Check token balance} --- locate the token dashboard and review the current balance and transaction history.
+\item \textbf{Sign in and navigate the dashboard} --- log in using provided credentials and locate the relevant task list for their role.
+\item \textbf{Submit or process a service request} --- management staff approved a pending request; tenants created a new maintenance request with priority and description; operations staff marked an assigned task as completed.
+\item \textbf{Check token balance} --- locate the token dashboard and review the current balance and transaction history (tenant and operations participants).
 \item \textbf{View an announcement} --- find the announcements section and read the most recent park notice.
 \end{enumerate}
 
@@ -765,6 +765,7 @@ The System Usability Scale consists of ten Likert-scale items alternating betwee
 
 \[
 \bar{S} = \frac{77.5 + 72.5 + 75.0 + 70.0 + 75.0 + 77.5 + 72.5 + 72.5 + 77.5}{9} = \frac{670.5}{9} \approx \mathbf{74.5}
+% P1--P3: Management (77.5, 72.5, 75.0); P4--P6: Tenant (70.0, 75.0, 77.5); P7--P9: Operations (72.5, 72.5, 77.5)
 \]
 
 On \citet{Bangor2009}'s adjective scale, 74.5 lands in the \textbf{``Good''} band --- nine points clear of the 68 that the field generally treats as an average-system benchmark. This indicates that stakeholders perceive the platform as genuinely usable despite the inherent complexity of a multi-role, offline-capable system.
@@ -774,20 +775,21 @@ On \citet{Bangor2009}'s adjective scale, 74.5 lands in the \textbf{``Good''} ban
 All participants provided open-ended feedback after completing the tasks. Positive themes included:
 
 \begin{itemize}
-\item \textbf{Clarity of offline status indicator.} Several participants noted that the real-time online/offline status bar gave them confidence when connectivity was unreliable: \textit{``This is itself best for the future --- you can see exactly when it is working offline''} (P6, Adama SEZ).
-\item \textbf{Straightforward request submission.} Tenant representatives appreciated the step-by-step request form: \textit{``Digital platform to have serving and communicating in one window''} (P8, Kombolcha SEZ).
-\item \textbf{Token balance visibility.} Management staff found the token dashboard useful for tracking service fee obligations without contacting the finance department.
+\item \textbf{Clarity of offline status indicator.} Several participants noted that the real-time online/offline status bar gave them confidence when connectivity was unreliable: \textit{``This is itself best for the future --- you can see exactly when it is working offline''} (P6, Bole Lemi SEZ).
+\item \textbf{Straightforward request submission.} Tenant representatives appreciated the step-by-step request form: \textit{``Digital platform to have serving and communicating in one window''} (P5, Adama SEZ).
+\item \textbf{Token balance visibility.} Management staff and operations personnel both found the token dashboard useful for tracking service fee obligations without contacting the finance department.
 \end{itemize}
 
 Areas identified for improvement included:
 
 \begin{itemize}
-\item \textbf{Amharic language support} (noted by six of nine participants as a priority for wider roll-out among non-English-speaking staff).
+\item \textbf{Amharic language support} (noted by six of nine participants across all three groups as the single most important prerequisite for wider roll-out among non-English-speaking staff).
 \item \textbf{Confirmation dialogs before token deductions} (requested by three tenant participants wanting an explicit ``Are you sure?'' prompt before fee-deducting submissions).
-\item \textbf{Richer push notifications} (two management staff participants wanted mobile notifications for request status changes rather than relying on checking the dashboard).
+\item \textbf{Richer push notifications} (two management staff participants wanted mobile alerts for request status changes rather than relying on checking the dashboard).
+\item \textbf{Simplified task handoff workflow} (two operations staff participants suggested a quicker way to reassign tasks between team members without navigating away from the current view).
 \end{itemize}
 
-These findings align closely with the requirements gathered from the 49-respondent questionnaire (Section~\ref{sec:data-collection}): both data sources consistently highlight Amharic localization and proactive notification as the most impactful near-term improvements.
+These findings track closely with what the 49-respondent questionnaire revealed (Section~\ref{sec:data-collection}): Amharic localization and proactive notification keep surfacing as the highest-impact near-term improvements regardless of which data source you look at.
 
 \subsection{DSR Guidelines Compliance Assessment}
 
@@ -813,6 +815,4 @@ Table~\ref{tab:dsr-compliance} evaluates the research against Hevner's seven DSR
 \end{tabular}
 \end{table}
 
-\section{Chapter Summary}
-
-The platform prototype described in this chapter comprises roughly 105 source files --- dual-layer offline storage, dual-mode authentication, a tiered digital service token system, three AI models, and Workbox-powered PWA configuration. On the technical side, all nine offline test scenarios passed, Lighthouse scores (89/87/96/92) met their targets, and full compatibility was confirmed across Chrome and Opera on both desktop and mobile. On the human side, nine real IPDC stakeholders evaluated the platform on 10 February 2026, returning a mean SUS score of 74.5 --- placing it in the ``Good'' usability band. All seven of Hevner's DSR guidelines are satisfied. The AI model results --- 100\% service classification accuracy, $R^{2} = 0.9989$ for maintenance prediction, NDCG@3 of 0.9572 for park recommendation --- are best understood as an architectural baseline on synthetic data rather than production performance claims; that distinction matters and is easy to overlook when the numbers look this strong. What the evaluation does establish conclusively is that the offline-first architecture works as designed under simulated real-world conditions.
+What the evaluation establishes, taken together, is that the offline-first architecture works as designed --- and that real IPDC stakeholders across all three roles found it usable enough to endorse. Chapter~\ref{ch:conclusion} draws out the broader implications.
