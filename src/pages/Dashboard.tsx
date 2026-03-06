@@ -223,6 +223,44 @@ export const Dashboard = () => {
     setDetailsDialogOpen(true);
   };
 
+  // Compute tenant journey stage dynamically from their actual service requests
+  const computeTenantStatus = () => {
+    const entryRequests = requests.filter(r => r.serviceType === 'other');
+    const facilityRequests = requests.filter(r => r.serviceType !== 'other');
+    const completedEntry = entryRequests.filter(r => r.status === 'completed');
+    const completedFacility = facilityRequests.filter(r => r.status === 'completed');
+
+    // Determine stage: new → applying → approved → settled → active
+    let stage: 'new' | 'applying' | 'approved' | 'settled' | 'active';
+    if (completedFacility.length > 0) {
+      stage = 'active';
+    } else if (facilityRequests.length > 0) {
+      stage = 'settled';
+    } else if (completedEntry.length > 0) {
+      stage = 'approved';
+    } else if (entryRequests.length > 0) {
+      stage = 'applying';
+    } else {
+      stage = 'new';
+    }
+
+    // Check which specific entry services have been completed (keyword matching)
+    const hasCompleted = (keywords: string[]) =>
+      completedEntry.some(r =>
+        keywords.some(kw => r.title?.toLowerCase().includes(kw))
+      );
+
+    return {
+      stage,
+      completedServices: {
+        investmentPermit: hasCompleted(['investment permit', 'investment']),
+        businessLicense: hasCompleted(['business license', 'business registration', 'license']),
+        workPermit: hasCompleted(['work permit']),
+        taxRegistration: hasCompleted(['tax registration', 'tax']),
+      },
+    };
+  };
+
   const handleRequestCreated = () => {
     showToast('Request created successfully!', 'success');
   };
@@ -324,17 +362,7 @@ export const Dashboard = () => {
         {userData?.role === 'tenant' && (
           <>
             {/* Tenant Lifecycle Status Timeline */}
-            <TenantLifecycleTimeline
-              status={{
-                stage: 'active', // Simulated - in real app, fetch from user profile
-                completedServices: {
-                  investmentPermit: true,
-                  businessLicense: true,
-                  workPermit: true,
-                  taxRegistration: true,
-                },
-              }}
-            />
+            <TenantLifecycleTimeline status={computeTenantStatus()} />
 
             {/* Section Header for New Service Requests */}
             <Box sx={{ mb: 3, mt: 2 }}>

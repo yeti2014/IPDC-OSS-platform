@@ -201,9 +201,24 @@ export const TenantLifecycleTimeline: React.FC<TenantLifecycleTimelineProps> = (
             color={activeStep === steps.length - 1 ? 'success' : 'primary'}
             size="small"
           />
-          {activeStep < 2 && (
+          {activeStep === 0 && (
+            <Typography variant="caption" color="text.secondary">
+              • Submit an Entry Service request to begin your journey
+            </Typography>
+          )}
+          {activeStep === 1 && (
             <Typography variant="caption" color="text.secondary">
               • Entry Services (Tier 1) - AI-assisted, no tokens required
+            </Typography>
+          )}
+          {activeStep === 2 && (
+            <Typography variant="caption" color="text.secondary">
+              • Entry services completed — awaiting settlement in IPDC premises
+            </Typography>
+          )}
+          {activeStep === 3 && (
+            <Typography variant="caption" color="text.secondary">
+              • Settled in park — Facility Management (Tier 2) services now available
             </Typography>
           )}
           {activeStep >= 4 && (
