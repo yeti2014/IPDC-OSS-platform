@@ -68,12 +68,12 @@ PARTICIPANTS = [
     ("P1", "IPDC Management Staff",   "Headquarters",  "Laptop (Chrome)"),
     ("P2", "IPDC Management Staff",   "Bole Lemi SEZ", "Desktop (Chrome)"),
     ("P3", "IPDC Management Staff",   "Hawassa SEZ",   "Laptop (Opera)"),
-    ("P4", "IPDC Management Staff",   "Adama SEZ",     "Smartphone (Chrome)"),
-    ("P5", "Tenant Representative",   "Hawassa SEZ",   "Smartphone (Chrome)"),
-    ("P6", "Tenant Representative",   "Adama SEZ",     "Smartphone (Opera)"),
-    ("P7", "Tenant Representative",   "Bole Lemi SEZ", "Laptop (Chrome)"),
-    ("P8", "Tenant Representative",   "Kombolcha SEZ", "Smartphone (Chrome)"),
-    ("P9", "Tenant Representative",   "Hawassa SEZ",   "Smartphone (Opera)"),
+    ("P4", "Tenant Representative",   "Hawassa SEZ",   "Smartphone (Chrome)"),
+    ("P5", "Tenant Representative",   "Adama SEZ",     "Smartphone (Opera)"),
+    ("P6", "Tenant Representative",   "Bole Lemi SEZ", "Laptop (Chrome)"),
+    ("P7", "Operations Staff",        "Bole Lemi SEZ", "Smartphone (Chrome)"),
+    ("P8", "Operations Staff",        "Hawassa SEZ",   "Smartphone (Opera)"),
+    ("P9", "Operations Staff",        "Adama SEZ",     "Smartphone (Chrome)"),
 ]
 
 SUS_QUESTIONS = [
