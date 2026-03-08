@@ -58,8 +58,11 @@ export const initOfflineAuthDB = async (): Promise<IDBPDatabase<AuthDB>> => {
   return dbInstance;
 };
 
+const LAST_EMAIL_KEY = 'ipdc-last-login-email';
+
 /**
- * Cache user authentication state
+ * Cache user authentication state, keyed by email so multiple accounts
+ * on the same device each have their own offline profile.
  */
 export const cacheAuthState = async (userData: {
   uid: string;
@@ -68,11 +71,15 @@ export const cacheAuthState = async (userData: {
   role: string;
 }) => {
   try {
+    const key = userData.email?.toLowerCase();
+    if (!key) return;
     const db = await initOfflineAuthDB();
     await db.put('authState', {
       ...userData,
       lastSync: new Date(),
-    }, 'currentUser');
+    }, key);
+    // Remember the last email so we can restore state without knowing it upfront
+    localStorage.setItem(LAST_EMAIL_KEY, key);
     console.log('✅ Auth state cached offline');
   } catch (error) {
     console.error('❌ Failed to cache auth state:', error);
@@ -80,35 +87,23 @@ export const cacheAuthState = async (userData: {
 };
 
 /**
- * Retrieve cached authentication state
+ * Retrieve cached authentication state for a specific email.
+ * Falls back to the last-logged-in email when no email is supplied.
  */
-export const getCachedAuthState = async () => {
+export const getCachedAuthState = async (email?: string | null) => {
   try {
+    const key = email?.toLowerCase() || localStorage.getItem(LAST_EMAIL_KEY);
+    if (!key) return null;
     const db = await initOfflineAuthDB();
-    const authState = await db.get('authState', 'currentUser');
-
+    const authState = await db.get('authState', key);
     if (authState) {
       console.log('✅ Retrieved cached auth state');
       return authState;
     }
-
     return null;
   } catch (error) {
     console.error('❌ Failed to retrieve cached auth state:', error);
     return null;
-  }
-};
-
-/**
- * Clear cached authentication state (on logout)
- */
-export const clearCachedAuthState = async () => {
-  try {
-    const db = await initOfflineAuthDB();
-    await db.delete('authState', 'currentUser');
-    console.log('✅ Cached auth state cleared');
-  } catch (error) {
-    console.error('❌ Failed to clear cached auth state:', error);
   }
 };
 

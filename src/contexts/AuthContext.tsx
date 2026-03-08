@@ -100,7 +100,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.log('🔒 Attempting offline authentication...');
       const isValidOffline = await verifyOfflineCredentials(email, password);
       if (isValidOffline) {
-        const cachedAuth = await getCachedAuthState();
+        const cachedAuth = await getCachedAuthState(email);
         if (cachedAuth) {
           setUserData({
             uid: cachedAuth.uid,
@@ -131,7 +131,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setIsOffline(true);
         const isValidOffline = await verifyOfflineCredentials(email, password);
         if (isValidOffline) {
-          const cachedAuth = await getCachedAuthState();
+          const cachedAuth = await getCachedAuthState(email);
           if (cachedAuth) {
             setUserData({
               uid: cachedAuth.uid,
@@ -201,7 +201,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
         } catch (error) {
           console.error('❌ Failed to fetch user data:', error);
-          const cachedAuth = await getCachedAuthState();
+          const cachedAuth = await getCachedAuthState(user.email);
           if (cachedAuth) {
             setUserData({
               uid: cachedAuth.uid,
