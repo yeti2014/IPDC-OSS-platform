@@ -18,7 +18,6 @@ import { UserRole } from '../types';
 import {
   cacheAuthState,
   getCachedAuthState,
-  clearCachedAuthState,
   cacheCredentials,
   verifyOfflineCredentials,
   initOfflineAuthDB,
@@ -167,8 +166,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logOut = async () => {
-    // Clear offline auth cache
-    await clearCachedAuthState();
+    // Do NOT clear cached auth state — it is needed for offline re-login after logout.
+    // Only the Firebase session token is revoked; the profile cache (uid, email, role)
+    // must persist so verifyOfflineCredentials + getCachedAuthState can reconstruct
+    // the session when the user logs back in while offline.
     if (!isOffline) {
       await signOut(auth);
     } else {
