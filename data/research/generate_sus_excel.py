@@ -90,14 +90,42 @@ SUS_QUESTIONS = [
 ]
 
 TASK_SCENARIOS = [
-    ("Task 1", "Sign in and navigate the dashboard",
-     "Log in using provided credentials and locate the service request list."),
-    ("Task 2", "Submit a service request",
-     "Create a new maintenance request, set a priority level, add a description, and submit."),
-    ("Task 3", "Check token balance",
-     "Locate the token dashboard and review the current balance and transaction history."),
-    ("Task 4", "View an announcement",
-     "Find the announcements section and read the most recent park notice."),
+    # Management Staff tasks
+    ("Task M1", "[Management] Review and process a service request",
+     "Log in as Admin, open a pending service request, review the details, and approve or reject it with a stated reason."),
+    ("Task M2", "[Management] Resolve a tenant complaint",
+     "Navigate to Complaint Management, open a pending complaint, select a resolution action, add resolution notes, and confirm."),
+    ("Task M3", "[Management] Publish a park-wide announcement",
+     "Create a new announcement with a title, body text, and priority level, then publish it to all park users."),
+    ("Task M4", "[Management] View request analytics dashboard",
+     "Navigate to the admin dashboard and review the summary statistics, request counts by status, and charts."),
+    # Tenant Representative tasks
+    ("Task T1", "[Tenant] Submit a new service request",
+     "Log in as Tenant, select a service category, fill in the request details and priority, attach a document if available, and submit."),
+    ("Task T2", "[Tenant] Check token balance and transaction history",
+     "Locate the token section on the dashboard and review the current balance and the list of past transactions."),
+    ("Task T3", "[Tenant] File a complaint on a completed service",
+     "Navigate to My Complaints, select a completed request, choose a complaint category and severity, describe the issue, and submit."),
+    ("Task T4", "[Tenant] Read an in-app bell notification",
+     "Click the notification bell icon, open an unread notification, and confirm the message content."),
+    # Operations Staff tasks
+    ("Task O1", "[Operations] Accept a task from the approved queue",
+     "Log in as Operations Staff, open the Approved Requests tab, select a request, and mark it as In Progress."),
+    ("Task O2", "[Operations] Complete a task and confirm token deduction",
+     "Mark an in-progress task as completed, confirm the token amount to deduct from the tenant, and submit."),
+    ("Task O3", "[Operations] Review completed task history",
+     "Navigate to the Completed tab and review the list of previously fulfilled tasks."),
+    ("Task O4", "[Operations] Read a park announcement",
+     "Open the Announcements tab in the Operations dashboard and read the latest park-wide notice."),
+    # Offline simulation — all roles
+    ("Task X1", "[All Roles] Browse dashboard while offline",
+     "Facilitator enables airplane mode. Participant navigates the dashboard and confirms data is still visible."),
+    ("Task X2", "[All Roles] Submit a request or action while offline",
+     "While offline, perform a key action (submit request / complete task). Confirm the item queues locally."),
+    ("Task X3", "[All Roles] Offline re-login with cached credentials",
+     "While offline, log out then log back in using the same credentials. Confirm the system authenticates from cache."),
+    ("Task X4", "[All Roles] Sync confirmation on reconnection",
+     "Facilitator restores network. Participant confirms the sync banner appears and queued items are uploaded."),
 ]
 
 wb = openpyxl.Workbook()
@@ -148,11 +176,12 @@ ws1["A7"].font = Font(name="Calibri", size=11, bold=True, color=BLUE_DARK)
 ws1["A7"].alignment = left()
 
 sheet_guide = [
-    ("Instructions",          "This sheet — purpose, SUS formula, scoring guide, task scenarios"),
-    ("Participant Profiles",  "Participant IDs, roles, industrial parks, devices used (10-Feb-2026)"),
+    ("Instructions",          "This sheet — purpose, SUS formula, scoring guide, role-differentiated task scenarios"),
+    ("Participant Profiles",  "P1–P9 roles, parks, devices, and tenant company profile (investment type, sector)"),
     ("SUS Raw Responses",     "Raw 1–5 ratings for all 10 SUS items from each participant — FILL THIS IN"),
     ("SUS Score Calculation", "Auto-calculated converted scores and final SUS score per participant"),
     ("Summary & Results",     "Final scores, mean, interpretation, grade, and bar chart"),
+    ("Offline Experience",    "Supplementary Q8b/Q19/Q20 responses — offline tasks attempted, confidence score, clarity"),
 ]
 
 row = 8
@@ -274,19 +303,27 @@ ws1.row_dimensions[row].height = 36
 # ══════════════════════════════════════════════════════════════════════════════
 # SHEET 2 — Participant Profiles
 # ══════════════════════════════════════════════════════════════════════════════
+# Tenant company profile data (P4=Hawassa, P5=Adama, P6=Bole Lemi)
+TENANT_PROFILES = {
+    "P4": ("Foreign-invested", "Garment & Textile"),
+    "P5": ("Local (Ethiopian)", "Agro-processing & Food"),
+    "P6": ("Joint Venture",    "Light Manufacturing"),
+}
+
 ws2 = wb.create_sheet("Participant Profiles")
 ws2.sheet_view.showGridLines = False
-for col, w in zip(["A","B","C","D","E","F"], [8, 10, 28, 24, 22, 16]):
+for col, w in zip(["A","B","C","D","E","F","G","H"], [6, 8, 28, 22, 20, 16, 20, 20]):
     ws2.column_dimensions[col].width = w
 
-merge_title(ws2, "A1:F1",
+merge_title(ws2, "A1:H1",
     "Usability Evaluation — Participant Profiles (10 February 2026)",
     bg=BLUE_DARK, size=13)
 ws2.row_dimensions[1].height = 32
 
 # Column headers
-h_labels = ["#", "ID", "Role", "Industrial Park / SEZ", "Device Used", "Date of Evaluation"]
-h_cols   = ["A", "B", "C",    "D",                      "E",           "F"]
+h_labels = ["#", "ID", "Role", "Industrial Park / SEZ", "Device Used", "Date",
+            "Investment Type *", "Industry Sector *"]
+h_cols   = ["A", "B", "C", "D", "E", "F", "G", "H"]
 for col, lbl in zip(h_cols, h_labels):
     c = ws2[f"{col}2"]
     c.value = lbl
@@ -299,7 +336,9 @@ ws2.row_dimensions[2].height = 20
 for i, (pid, role, park, device) in enumerate(PARTICIPANTS, start=1):
     row = i + 2
     bg = GREY_LIGHT if i % 2 == 0 else WHITE
-    for col, val in zip(h_cols, [i, pid, role, park, device, "10 February 2026"]):
+    inv_type = TENANT_PROFILES.get(pid, ("—", "—"))[0]
+    sector   = TENANT_PROFILES.get(pid, ("—", "—"))[1]
+    for col, val in zip(h_cols, [i, pid, role, park, device, "10 Feb 2026", inv_type, sector]):
         c = ws2[f"{col}{row}"]
         c.value = val
         c.font = body_font(size=10)
@@ -309,9 +348,10 @@ for i, (pid, role, park, device) in enumerate(PARTICIPANTS, start=1):
     ws2.row_dimensions[row].height = 18
 
 note_row = len(PARTICIPANTS) + 4
-ws2.merge_cells(f"A{note_row}:F{note_row}")
+ws2.merge_cells(f"A{note_row}:H{note_row}")
 ws2[f"A{note_row}"].value = (
-    "Note: Participant IDs (P1–P9) are pseudonymised to protect privacy. "
+    "Note: Participant IDs (P1–P9) are pseudonymised. "
+    "* Investment Type and Sector apply to Tenant Representatives (P4–P6) only. "
     "Signed consent forms are held by the researcher and available on request."
 )
 ws2[f"A{note_row}"].font = Font(name="Calibri", size=9, italic=True, color="757575")
@@ -677,11 +717,138 @@ ws5.row_dimensions[chart_row].height = 16
 
 ws5.add_chart(chart, f"A{chart_row+1}")
 
+# ══════════════════════════════════════════════════════════════════════════════
+# SHEET 6 — Offline Experience
+# ══════════════════════════════════════════════════════════════════════════════
+ws6 = wb.create_sheet("Offline Experience")
+ws6.sheet_view.showGridLines = False
+for col, w in zip(["A","B","C","D","E","F","G","H"], [6, 8, 28, 22, 28, 28, 28, 28]):
+    ws6.column_dimensions[col].width = w
+
+merge_title(ws6, "A1:H1",
+    "Offline Experience — Supplementary Data (Q8b, Q19, Q20 from Google Form)",
+    bg=BLUE_DARK, size=12)
+ws6.row_dimensions[1].height = 30
+
+merge_title(ws6, "A2:I2",
+    "These questions are supplementary to the SUS — they do NOT affect the SUS score calculation.",
+    bg=BLUE_MID, size=10)
+ws6.row_dimensions[2].height = 20
+
+# Sub-header: Q9b task checkboxes
+merge_title(ws6, "A3:I3", "Q8b — Offline Tasks Attempted (tick = attempted)  |  Google Form: Section 6 of 9", bg=BLUE_LIGHT, fg="212121", size=10)
+ws6.row_dimensions[3].height = 18
+
+q9b_headers = ["#", "ID", "Role",
+    "Browsed dashboard offline (All)",
+    "Submitted request offline (Tenant)",
+    "Completed task offline (Operations)",
+    "Reviewed request offline (Management)",
+    "Offline re-login (All)",
+    "Sync banner on reconnect (All)"]
+q9b_extra_cols = ["H", "I"]
+q9b_cols = ["A","B","C","D","E","F","G","H","I"]
+for col, w in zip(["A","B","C","D","E","F","G","H","I"], [6, 8, 28, 26, 26, 26, 26, 26, 26]):
+    ws6.column_dimensions[col].width = w
+for col, lbl in zip(q9b_cols, q9b_headers):
+    c = ws6[f"{col}4"]
+    c.value = lbl
+    c.font = header_font(size=9)
+    c.fill = fill(BLUE_HEADER)
+    c.alignment = center(wrap=True)
+    c.border = thin_border()
+ws6.row_dimensions[4].height = 50
+
+for i, (pid, role, park, device) in enumerate(PARTICIPANTS, start=1):
+    row = i + 4
+    bg = GREY_LIGHT if i % 2 == 0 else WHITE
+    for col, val in zip(["A","B","C"], [i, pid, role]):
+        c = ws6[f"{col}{row}"]
+        c.value = val
+        c.font = body_font(size=10)
+        c.fill = fill(bg)
+        c.alignment = center()
+        c.border = thin_border()
+    for col in ["D","E","F","G","H","I"]:
+        c = ws6[f"{col}{row}"]
+        c.value = None
+        c.font = Font(name="Calibri", size=11, bold=True, color=BLUE_DARK)
+        c.fill = fill(WHITE)
+        c.alignment = center()
+        c.border = thin_border()
+        c.number_format = "@"
+    ws6.row_dimensions[row].height = 18
+
+# Instruction for Q8b
+instr_row = len(PARTICIPANTS) + 6
+ws6.merge_cells(f"A{instr_row}:I{instr_row}")
+ws6[f"A{instr_row}"].value = "Enter  ✓  if the participant attempted the task, or leave blank if not attempted."
+ws6[f"A{instr_row}"].font = Font(name="Calibri", size=9, italic=True, color="757575")
+ws6[f"A{instr_row}"].alignment = left()
+
+# Q10 and Q11 sub-headers
+q10_start = instr_row + 2
+merge_title(ws6, f"A{q10_start}:I{q10_start}",
+    "Q19 — Offline Confidence Score  |  Q20 — Online/Offline Clarity  |  Google Form: Section 8 of 9",
+    bg=BLUE_LIGHT, fg="212121", size=10)
+ws6.row_dimensions[q10_start].height = 18
+
+q10_hdr_row = q10_start + 1
+for col, lbl in zip(["A","B","C","D","E"],
+    ["#", "ID", "Role",
+     "Q19: Offline data confidence (1–5)\n1=Not confident  5=Fully confident",
+     "Q20: Online/offline clarity\nYes always / Sometimes / No"]):
+    c = ws6[f"{col}{q10_hdr_row}"]
+    c.value = lbl
+    c.font = header_font(size=9)
+    c.fill = fill(BLUE_HEADER)
+    c.alignment = center(wrap=True)
+    c.border = thin_border()
+ws6.row_dimensions[q10_hdr_row].height = 44
+
+for i, (pid, role, park, device) in enumerate(PARTICIPANTS, start=1):
+    row = q10_hdr_row + i
+    bg = GREY_LIGHT if i % 2 == 0 else WHITE
+    for col, val in zip(["A","B","C"], [i, pid, role]):
+        c = ws6[f"{col}{row}"]
+        c.value = val
+        c.font = body_font(size=10)
+        c.fill = fill(bg)
+        c.alignment = center()
+        c.border = thin_border()
+    for col in ["D","E"]:
+        c = ws6[f"{col}{row}"]
+        c.value = None
+        c.font = Font(name="Calibri", size=11, bold=True, color=BLUE_DARK)
+        c.fill = fill(WHITE)
+        c.alignment = center()
+        c.border = thin_border()
+    ws6.row_dimensions[row].height = 18
+
+# Mean for Q10
+mean_q10_row = q10_hdr_row + len(PARTICIPANTS) + 1
+ws6.merge_cells(f"A{mean_q10_row}:C{mean_q10_row}")
+ws6[f"A{mean_q10_row}"].value = "MEAN (Q19)"
+ws6[f"A{mean_q10_row}"].font = Font(name="Calibri", size=10, bold=True, color=WHITE)
+ws6[f"A{mean_q10_row}"].fill = fill(GREEN_DARK)
+ws6[f"A{mean_q10_row}"].alignment = center()
+ws6[f"A{mean_q10_row}"].border = thin_border()
+
+d_start = q10_hdr_row + 1
+d_end   = q10_hdr_row + len(PARTICIPANTS)
+ws6[f"D{mean_q10_row}"].value = f"=IFERROR(AVERAGEIF(D{d_start}:D{d_end},\"<>\"),\"\")"
+ws6[f"D{mean_q10_row}"].number_format = "0.00"
+ws6[f"D{mean_q10_row}"].font = Font(name="Calibri", size=12, bold=True, color=WHITE)
+ws6[f"D{mean_q10_row}"].fill = fill(GREEN_DARK)
+ws6[f"D{mean_q10_row}"].alignment = center()
+ws6[f"D{mean_q10_row}"].border = thin_border()
+ws6.row_dimensions[mean_q10_row].height = 22
+
 # ── Save ──────────────────────────────────────────────────────────────────────
 wb.save(OUTPUT_FILE)
-print(f"✅  Workbook saved: {OUTPUT_FILE}")
+print(f"[OK] Workbook saved: {OUTPUT_FILE}")
 print("    Sheets: Instructions | Participant Profiles | SUS Raw Responses |")
-print("            SUS Score Calculation | Summary & Results")
+print("            SUS Score Calculation | Summary & Results | Offline Experience")
 print()
 print("Next steps:")
 print("  1. Distribute the Google Form (or paper form) to your 9 participants")
