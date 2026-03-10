@@ -285,80 +285,60 @@ The admin dashboard (\texttt{src/pages/AdminDashboard.tsx}) is the central manag
 \section{AI Model Training and Evaluation}
 \label{sec:ai-training}
 
-This section documents how the three machine learning models were trained, what their data looks like, how they are structured, and how well they perform. All models were trained on synthetic datasets designed to reflect realistic IPDC operational patterns, with architectures informed by leading Chinese smart city systems --- Alibaba ET Industrial Brain, Tencent WeCity, and Huawei FusionPlant.
+Three machine learning models were trained on synthetic datasets reflecting realistic IPDC operational patterns, with architectures informed by Alibaba ET Industrial Brain, Tencent WeCity, and Huawei FusionPlant. All training code, datasets, and model artefacts are in the project repository \citep{BerhanuIPDC2025}.
 
-\subsection{Training Data}
+\subsection{Datasets and Architectures}
 
-Three domain-specific datasets were produced using the data synthesis pipeline (\texttt{ai-models/data/generate\_synthetic\_data.py}). Table~\ref{tab:training-data} summarizes their characteristics.
+Table~\ref{tab:training-data} summarizes the three datasets.
 
 \begin{table}[H]
 \centering
-\caption{Training Dataset Characteristics}
+\caption{Training Datasets and Model Architectures}
 \label{tab:training-data}
 \small
-\begin{tabular}{p{3.5cm}p{2cm}p{2cm}p{5cm}}
+\begin{tabular}{p{2.8cm}p{1.5cm}p{1.5cm}p{3.5cm}p{3cm}}
 \toprule
-\textbf{Dataset} & \textbf{Records} & \textbf{Features} & \textbf{Target Variables} \\
+\textbf{Model} & \textbf{Records} & \textbf{Features} & \textbf{Algorithm} & \textbf{Target} \\
 \midrule
-Service Requests & 2,200 & 10 & Service type (11 classes), priority (4 classes), processing days (continuous) \\
-Asset Maintenance & 500 & 14 & Failure flag (binary), days to failure (continuous), risk level (3 classes) \\
-Park Placements & 10,400\textsuperscript{a} & 11 & Match score (relevance grade 0--4) \\
+Service Classifier & 2,200 & 10 & XGBoost Ensemble (3 sub-models) & Type (11 classes), priority, processing days \\
+Predictive Maintenance & 500 & 14 & RF + Gradient Boosting & Failure flag, days to failure, risk level \\
+Park Recommendation & 10,400\textsuperscript{a} & 11 & LightGBM LambdaRank & Match relevance grade (0--4) \\
 \bottomrule
 \end{tabular}
-
-\vspace{0.3cm}
+\vspace{0.2cm}
 \footnotesize
-\textsuperscript{a} 800 tenant profiles $\times$ 13 industrial parks = 10,400 ranking pairs.
+\textsuperscript{a} 800 tenant profiles $\times$ 13 parks = 10,400 ranking pairs.
 \end{table}
 
-The service requests dataset includes text fields (title, description) processed through TF-IDF vectorization, alongside temporal metadata (hour of day, day of week) and text statistics (word count, character length). The asset maintenance dataset captures equipment attributes such as age, condition scores, maintenance history, and sensor readings (temperature, vibration level). The park placements dataset pairs every tenant profile with all 13 Ethiopian industrial parks in a learning-to-rank format, where the chosen park receives the highest relevance grade.
+\textbf{Model 1 (Service Classifier)} uses TF-IDF vectorization (1,500-term vocabulary, unigrams and bigrams) plus four metadata features (hour, day, text length, word count), yielding 1,504 inputs per request. Three XGBoost sub-models handle category classification, priority prediction, and processing time estimation. Split: 70/15/15\%.
 
-\subsection{Model 1: Smart Service Classifier}
+\textbf{Model 2 (Predictive Maintenance)} engineers 14 features from asset attributes including age, maintenance history, operating hours, sensor readings, and a composite condition score. Random Forest handles binary failure prediction and risk classification; Gradient Boosting handles time-to-failure regression. Split: 70/15/15\%.
 
-\subsubsection{Architecture}
+\textbf{Model 3 (Park Recommendation)} pairs each tenant profile with all 13 Ethiopian industrial parks (10,400 ranking instances). LightGBM LambdaRank optimizes NDCG directly. Split: 80/20\% by tenant.
 
-The service classifier is an XGBoost ensemble comprising three specialized sub-models. Text features are extracted using TF-IDF vectorization with a 1,500-term vocabulary (unigrams and bigrams, minimum document frequency of 2, maximum document frequency of 0.90). Four metadata features --- hour of day, day of week, text length, and word count --- are scaled with StandardScaler and concatenated with the TF-IDF vectors, yielding 1,504 input features per request.
+\subsection{Results and Benchmark Comparison}
+
+Table~\ref{tab:benchmark-comparison} compares all three models against Chinese smart city reference benchmarks.
 
 \begin{table}[H]
 \centering
-\caption{Service Classifier Configuration and Results}
-\label{tab:model1-config}
-\label{tab:model1-results}
+\caption{IPDC Model Performance vs.\ Chinese Smart City Benchmarks}
+\label{tab:benchmark-comparison}
 \small
-
-\textbf{(a) Sub-Model Configurations}\\[0.3em]
-\begin{tabular}{p{3.5cm}p{2.5cm}p{2cm}p{2cm}p{2cm}}
+\begin{tabular}{p{2.8cm}p{2.5cm}p{3cm}p{2.5cm}}
 \toprule
-\textbf{Sub-Model} & \textbf{Objective} & \textbf{Depth} & \textbf{LR} & \textbf{Trees} \\
+\textbf{Model} & \textbf{Key Metric} & \textbf{Chinese Benchmark} & \textbf{IPDC Result} \\
 \midrule
-Category Classifier & Multi-class softmax & 6 & 0.1 & 100 \\
-Priority Predictor & Multi-class softmax & 5 & 0.1 & 80 \\
-Time Estimator & Squared error & 4 & 0.1 & 60 \\
+Service Classifier & Type accuracy & Alibaba ET: 85--92\% & 100\% \\
+ & Processing time MAE & $\pm$3 days & 2.63 days \\
+Pred.\ Maintenance & $R^{2}$ (days to failure) & Huawei FP: 80--88\% & 0.9989 \\
+ & Risk accuracy & --- & 99\% \\
+Park Recommender & NDCG@3 & Alibaba/Tencent: 0.85--0.88 & 0.9572 \\
 \bottomrule
 \end{tabular}
-
-\vspace{0.5cm}
-\textbf{(b) Evaluation Results}\\[0.3em]
-\begin{tabular}{p{5cm}cc}
-\toprule
-\textbf{Metric} & \textbf{Value} & \textbf{Benchmark\textsuperscript{a}} \\
-\midrule
-Service Type Accuracy & 100\% & 85--92\% \\
-Priority Classification Accuracy & 40\% & --- \\
-Processing Time MAE & 2.63 days & $\pm$3 days \\
-Processing Time $R^{2}$ & 0.577 & --- \\
-Average Confidence Score & 0.95 & --- \\
-\bottomrule
-\end{tabular}
-
-\vspace{0.3cm}
-\footnotesize
-\textsuperscript{a} Alibaba ET Industrial Brain benchmark on similar classification tasks.
 \end{table}
 
-The training data was split into 70\% training (1,386 samples), 15\% validation (297 samples), and 15\% test (297 samples).
-
-Category classification reaches 100\% on the synthetic set --- the eleven IPDC service types have distinct vocabulary patterns, making separation straightforward. The priority predictor's 40\% accuracy reflects the subjectivity of human judgment, not a shortcoming of the model. The time estimator's 2.63-day MAE offers tenants useful planning estimates. Figure~\ref{fig:model1-eval} presents the confusion matrix for service type classification and the scatter plot of predicted versus actual processing days.
+All three models meet or exceed their reference benchmarks. Two honest caveats: the models trained on \emph{synthetic} data, so strong scores establish an architectural baseline rather than a claim of superiority over mature production systems; and the Chinese figures are literature values used as indicative reference points. The priority predictor's 40\% accuracy is expected --- priority labels reflect human judgment, which is inherently subjective. Figure~\ref{fig:model1-eval} and Figure~\ref{fig:model2-eval} show evaluation plots for Models 1 and 2; Model 3's feature importance appears in Figure~\ref{fig:feature-importance-park}.
 
 \begin{figure}[H]
 \centering
@@ -371,62 +351,9 @@ Category classification reaches 100\% on the synthetic set --- the eleven IPDC s
 \centering
 \includegraphics[width=\textwidth]{figures/model1_time_prediction_scatter.png}
 \end{minipage}
-\caption[Service Classifier Evaluation (Model 1)]{Service Classifier Evaluation (Model 1) --- Confusion Matrix (left) and Processing Time Prediction (right)}
+\caption[Service Classifier Evaluation (Model 1)]{Service Classifier Evaluation --- Confusion Matrix (left) and Processing Time Prediction (right)}
 \label{fig:model1-eval}
 \end{figure}
-
-\subsection{Model 2: Predictive Maintenance System}
-
-\subsubsection{Architecture}
-
-The predictive maintenance system combines two algorithms in a dual-algorithm ensemble: Random Forest for classification and Gradient Boosting for regression. Fourteen engineered features are derived from raw asset attributes, including age in days, days since last maintenance, cumulative maintenance count, operating hours, historical failure count, sensor readings (temperature, vibration level), and a composite condition score:
-
-\begin{equation}
-\text{Condition Score} = \frac{\text{age\_months}}{120} \times 30 + \frac{\text{days\_since\_maint}}{365} \times 30 + \text{failures} \times 10 + \frac{\text{hours}}{20000} \times 10
-\label{eq:condition-score}
-\end{equation}
-
-Categorical features (asset category, status, condition level) are encoded with LabelEncoder; all features are normalized using StandardScaler.
-
-\begin{table}[H]
-\centering
-\caption{Predictive Maintenance Configuration and Results}
-\label{tab:model2-config}
-\label{tab:model2-results}
-\small
-
-\textbf{(a) Sub-Model Configurations}\\[0.3em]
-\begin{tabular}{p{3.5cm}p{3cm}p{2cm}p{2cm}p{2cm}}
-\toprule
-\textbf{Sub-Model} & \textbf{Algorithm} & \textbf{Depth} & \textbf{Trees} & \textbf{Min Leaf} \\
-\midrule
-Failure Predictor & Random Forest & 10 & 100 & 2 \\
-Days-to-Failure & Gradient Boosting & 5 & 100 & --- \\
-Risk Classifier & Random Forest & 10 & 100 & 2 \\
-\bottomrule
-\end{tabular}
-
-\vspace{0.5cm}
-\textbf{(b) Evaluation Results}\\[0.3em]
-\begin{tabular}{p{5cm}cc}
-\toprule
-\textbf{Metric} & \textbf{Value} & \textbf{Benchmark\textsuperscript{a}} \\
-\midrule
-Failure Prediction Accuracy & 100\% & 80--88\% \\
-Days Until Failure MAE & 0.014 days & --- \\
-Days Until Failure $R^{2}$ & 0.9989 & --- \\
-Risk Classification Accuracy & 99\% & --- \\
-\bottomrule
-\end{tabular}
-
-\vspace{0.3cm}
-\footnotesize
-\textsuperscript{a} Huawei FusionPlant IoT predictive maintenance benchmark.
-\end{table}
-
-The training data was split into 70\% training (350 samples), 15\% validation (75 samples), and 15\% test (75 samples).
-
-The near-perfect regression performance ($R^{2} = 0.9989$) reflects the tight relationship between the engineered features and failure timing in the synthetic dataset. The risk classifier reaches 99\% accuracy across low, medium, and high risk levels. Figure~\ref{fig:model2-eval} shows the risk classification confusion matrix and the scatter plot of predicted versus actual days to failure; Figure~\ref{fig:feature-importance-maintenance} displays the feature importance ranking.
 
 \begin{figure}[H]
 \centering
@@ -439,67 +366,9 @@ The near-perfect regression performance ($R^{2} = 0.9989$) reflects the tight re
 \centering
 \includegraphics[width=\textwidth]{figures/model2_days_prediction_scatter.png}
 \end{minipage}
-\caption[Predictive Maintenance Evaluation (Model 2)]{Predictive Maintenance Evaluation (Model 2) --- Risk Confusion Matrix (left) and Days-to-Failure Prediction (right)}
+\caption[Predictive Maintenance Evaluation (Model 2)]{Predictive Maintenance Evaluation --- Risk Confusion Matrix (left) and Days-to-Failure Prediction (right)}
 \label{fig:model2-eval}
 \end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.65\textwidth]{figures/model2_feature_importance.png}
-\caption{Feature Importance for Predictive Maintenance (Model 2)}
-\label{fig:feature-importance-maintenance}
-\end{figure}
-
-\subsection{Model 3: Park Recommendation System}
-
-\subsubsection{Architecture}
-
-The park recommendation model uses LightGBM's LambdaRank algorithm, directly optimizing NDCG. Each of the 800 tenant profiles is paired with all 13 Ethiopian industrial parks (10,400 ranking instances), with match scores (0--100) mapped to five relevance grades. Eleven features describe each pair: three categorical (industry sector, park identifier, preferred region) and eight numerical (investment capital, employee count, land, power, water, export orientation, budget range).
-
-\begin{table}[H]
-\centering
-\caption{Park Recommendation Configuration and Results}
-\label{tab:model3-config}
-\label{tab:model3-results}
-\small
-
-\textbf{(a) Model Configuration}\\[0.3em]
-\begin{tabular}{ll}
-\toprule
-\textbf{Parameter} & \textbf{Value} \\
-\midrule
-Algorithm & LambdaRank (LightGBM) \\
-Objective & lambdarank \\
-Evaluation Metric & NDCG@3, NDCG@5, NDCG@10 \\
-Max Depth & 6 \\
-Number of Leaves & 31 \\
-Learning Rate & 0.05 \\
-Number of Trees & 200 \\
-Early Stopping Rounds & 50 \\
-Groups & By tenant\_id (13 parks per group) \\
-\bottomrule
-\end{tabular}
-
-\vspace{0.5cm}
-\textbf{(b) Evaluation Results}\\[0.3em]
-\begin{tabular}{p{5cm}cc}
-\toprule
-\textbf{Metric} & \textbf{Value} & \textbf{Benchmark\textsuperscript{a}} \\
-\midrule
-NDCG@3 & 0.9572 & 0.85--0.88 \\
-Top-3 Accuracy & 95.625\% & --- \\
-Test Groups Evaluated & 160 tenants & --- \\
-\bottomrule
-\end{tabular}
-
-\vspace{0.3cm}
-\footnotesize
-\textsuperscript{a} Alibaba ET Industrial Brain (NDCG@3: 0.88) and Tencent WeCity (NDCG@3: 0.85) on comparable park/zone placement tasks.
-\end{table}
-
-Data was split by tenant: 80\% for training (640 tenants $\times$ 13 parks = 8,320 pairs) and 20\% for testing (160 tenants $\times$ 13 parks = 2,080 pairs).
-
-An NDCG@3 of 0.9572 means the model correctly places the most suitable park within its top three recommendations for over 95\% of test tenants --- surpassing both the Alibaba ET and Tencent WeCity benchmarks on comparable placement tasks. Figure~\ref{fig:feature-importance-park} shows the feature importance ranking.
 
 \begin{figure}[H]
 \centering
@@ -507,28 +376,6 @@ An NDCG@3 of 0.9572 means the model correctly places the most suitable park with
 \caption{Feature Importance for Park Recommendation (Model 3)}
 \label{fig:feature-importance-park}
 \end{figure}
-
-\subsection{Comparative Benchmark Summary}
-
-Table~\ref{tab:benchmark-comparison} presents a side-by-side comparison of all three IPDC models against their Chinese smart city counterparts.
-
-\begin{table}[H]
-\centering
-\caption{IPDC Model Performance vs. Chinese Smart City Benchmarks}
-\label{tab:benchmark-comparison}
-\small
-\begin{tabular}{p{2.5cm}p{2.2cm}lll}
-\toprule
-\textbf{Model} & \textbf{Algorithm} & \textbf{Key Metric} & \textbf{Chinese Benchmark} & \textbf{IPDC} \\
-\midrule
-Service Classifier & XGBoost Ensemble & Accuracy & Alibaba ET: 85--92\% & 100\% \\
-Pred.\ Maintenance & RF + GB Ensemble & $R^{2}$ (days) & Huawei FP: 80--88\% & 0.9989 \\
-Park Recommender & LightGBM Rank & NDCG@3 & Alibaba/Tencent: 0.85--0.88 & 0.9572 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-All three models meet or exceed their Chinese reference benchmarks. Two caveats apply: the IPDC models trained on \emph{synthetic} data, so near-perfect scores establish an architectural baseline rather than a claim of superiority over mature production deployments; and the Chinese benchmark figures are literature values for comparable tasks, used here as indicative reference points. Source code, training scripts, and model artefacts are available in the project repository \citep{BerhanuIPDC2025}; Model 3 is configured to retrain automatically as real operational data accumulate.
 
 \section{PWA Implementation Details}
 
@@ -815,4 +662,4 @@ Table~\ref{tab:dsr-compliance} evaluates the research against Hevner's seven DSR
 \end{tabular}
 \end{table}
 
-What the evaluation establishes, taken together, is that the offline-first architecture works as designed --- and that real IPDC stakeholders across all three roles found it usable enough to endorse. Chapter~\ref{ch:conclusion} draws out the broader implications.
+The technical tests confirm the offline-first architecture works as designed. The SUS results show that real IPDC stakeholders across all three roles found the system usable. Chapter~\ref{ch:conclusion} draws out what those two findings mean together.

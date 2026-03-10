@@ -89,25 +89,11 @@ DSR is not often combined with iterative software development --- the two commun
 
 \section{Implications}
 
-\subsection{Implications for Theory}
+\textbf{For theory:} Digital governance literature treats persistent connectivity as a background assumption. This research shows that is not a safe assumption in the contexts where digital transformation is most needed. Theoretical models of e-governance should treat connectivity as a variable, not a constant. The adaptation framework also foregrounds infrastructure constraints as central analytical variables --- a shift that changes what technology transfer theory needs to account for.
 
-What does a system that works reliably during connectivity outages tell us about digital governance theory? Quite a bit, it turns out. Offline-first architecture has been largely absent from e-governance literature, yet the success demonstrated here suggests the field may be operating on an assumption --- persistent connectivity --- that does not hold in the contexts where digital transformation is most needed. Theoretical models of digital governance should treat connectivity as a variable rather than a constant, opening research directions that the current literature has mostly left unexplored.
+\textbf{For practice:} The prototype gives IPDC a concrete starting point. Practitioners in similar settings get a dual-layer storage architecture --- transparent database caching plus explicit write queuing --- that is domain-agnostic and adaptable to any context where operations need to continue during connectivity gaps. A single PWA codebase serving desktop and mobile also cuts development cost compared to native app approaches.
 
-The adaptation framework points to a related gap in technology transfer theory: infrastructure constraints are typically treated as background conditions rather than central analytical variables. Foregrounding them changes what theories of technology diffusion and innovation adoption in developing economies need to account for.
-
-\subsection{Implications for Practice}
-
-For IPDC specifically, this research demonstrates that digitally transforming industrial park services is technically feasible within current infrastructure constraints. The prototype provides a concrete picture of what a digital one-stop service could look like and how it could function during the connectivity disruptions that characterize Ethiopian industrial parks. IPDC leadership can use it as a foundation for refining requirements and engaging stakeholders in discussions about full-scale development.
-
-Ethiopian government agencies and industrial development bodies face a similar challenge across many service domains: commercial platforms assume connectivity levels that government infrastructure in much of the country cannot yet guarantee. Offline-first PWAs offer --- at least in principle --- a viable route to digital service delivery that sidesteps that constraint. The PWA approach also eliminates app store dependencies and enables cross-platform deployment from a single codebase, reducing both development costs and the complexity of reaching diverse user populations.
-
-The design principles and technology stack that emerged from this research give technology practitioners in developing country contexts something concrete to work with. The dual-layer storage architecture --- transparent database caching layered with explicit write queuing --- is not specific to industrial parks; it is adaptable to any domain where multi-user operations need to continue during connectivity gaps.
-
-\subsection{Implications for Policy}
-
-Standard procurement practice contains a quiet irony: connectivity requirements for digital government services are typically written for systems that already exist, not populations that still lack reliable access. An offline-first approach --- designing for the full connectivity spectrum --- could break that pattern in regions where infrastructure has consistently lagged behind policy ambitions.
-
-The adaptation framework also suggests that technology adoption policies should encourage systematic adaptation rather than wholesale procurement. Solutions designed for high-connectivity environments may not merely underperform in low-connectivity contexts --- they could actively undermine service delivery if they replace functioning manual processes with unreliable digital ones.
+\textbf{For policy:} Standard procurement frameworks for digital government services assume reliable connectivity. That assumption does not hold across much of Ethiopia. An offline-first design requirement --- building for the full connectivity spectrum from the start --- would prevent organizations from replacing working manual processes with digital ones that fail during outages. The adaptation framework also argues for systematic adaptation as a procurement principle: solutions designed for high-connectivity environments need genuine reworking, not just configuration, before they work in constrained contexts.
 
 \section{Limitations}
 
@@ -149,8 +135,8 @@ The adaptation framework also suggests that technology adoption policies should 
 
 This research began with a straightforward observation: Ethiopian industrial parks need digital tools, but those tools must work even when the internet does not. That observation set in motion an inquiry touching technology transfer, architectural design, cross-cultural adaptation, and the practical realities of building software for infrastructure-constrained environments.
 
-The offline-first digital one-stop service platform developed here demonstrates that reliable digital service delivery in connectivity-challenged environments is not merely a theoretical possibility but something achievable with web technologies available today. The Progressive Web Application architecture, paired with dual-layer offline storage and differentiated caching, creates a platform that serves users whether they are connected, intermittently connected, or entirely offline.
+The platform built here shows that reliable digital service delivery during connectivity disruptions is achievable with web technologies available right now. A React PWA, Firebase offline persistence, a Dexie.js write queue, and Workbox service workers --- none of them exotic --- add up to a system that keeps working when the internet does not.
 
-The deeper challenge proved to be not technical but contextual: the technologies exist, and the harder work was reshaping them for the needs and constraints of a different setting. The China-to-Ethiopia Technology Adaptation Framework offers a systematic way to approach that, and the seven design principles --- connectivity independence, layered caching, transparent degradation, adaptation over transplantation, authentication spanning connectivity states, progressive feature availability, and client-side intelligence --- are offered as both practical guidance and contributions to the design knowledge base.
+The harder problem turned out to be contextual rather than technical. The Chinese smart park tools exist and work well. Adapting them for a setting with different infrastructure, different institutions, and different organisational culture required deliberate, structured effort. That is what the adaptation framework is for. The seven design principles record what the process taught: build for offline from the start, cache different data types differently, degrade gracefully rather than failing hard, and never assume connectivity will be available when you need it most.
 
-As IPDC expands its park portfolio, demand for reliable digital service delivery will only grow. This research provides a concrete starting point in the functional prototype and a knowledge foundation in the adaptation framework and design principles. The path from proof-of-concept to production will take sustained effort and institutional commitment --- but the research confirms the destination is within reach.
+Whether this reaches full deployment at IPDC depends on factors beyond this research. What the research does establish is that the obstacles are not architectural. The technology is ready.

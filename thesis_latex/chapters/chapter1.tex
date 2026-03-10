@@ -5,19 +5,19 @@
 
 \subsection{Global Context: Digital Transformation in Industrial Parks}
 
-Across the world, industrial parks have moved well beyond providing land and utilities. Smart technologies now sit at the centre of park strategy --- not just to cut administrative costs, but because tenants increasingly expect the same digital governance they encounter elsewhere. Integrated platforms that consolidate services, enable real-time communication, and generate operational data have become the benchmark \citep{Yang2025, Huang2023}.
+Industrial parks used to be straightforward propositions: land, utilities, and perhaps a customs office. That picture has shifted. Digital platforms have become standard infrastructure in how many parks now operate --- handling service requests, keeping tenants informed, and giving management the data they need to make decisions \citep{Yang2025, Huang2023}.
 
-China has gone further than most. Parks built around WeChat Work and DingTalk have changed how tenants and administrators interact: business registration, permit processing, facility management, and communication all flow through a single digital interface \citep{Huang2023, Schreieck2022}. That kind of integration is no longer a novelty --- it is a working demonstration of what digital park governance actually looks like.
+China pushed this further than most. Parks running WeChat Work or DingTalk have consolidated business registration, permit processing, facility management, and tenant communication into a single interface \citep{Huang2023, Schreieck2022}. The result is not just administrative convenience. It changes the day-to-day relationship between park management and the companies they serve.
 
-The appeal of these models to other countries is obvious, particularly in developing economies whose industrial zones still run on manual administration. The Belt and Road Initiative (BRI) and its digital extension, the Digital Silk Road (DSR), have built practical pathways for technology exchange between China and partner countries across Africa \citep{LiuBRI2023, deKluiver2024, ElKadi2024}.
+Other countries have taken notice. Developing economies whose industrial zones still depend on in-person visits and paper files have good reason to ask whether the Chinese model could work for them too. The Belt and Road Initiative and its digital extension, the Digital Silk Road, have opened practical channels for exactly this kind of technology exchange between China and African partners \citep{LiuBRI2023, deKluiver2024, ElKadi2024}.
 
 \subsection{Ethiopian Context: Industrial Parks and Digital Transformation}
 
-Industrial park development sits at the centre of Ethiopia's economic strategy --- and the Industrial Parks Development Corporation (IPDC), established in 2014, is the institution charged with making it work \citep{Oqubay2015, IPDC2020}. Bole Lemi, Eastern Industrial Zone, Hawassa, and a growing number of other parks host domestic and international manufacturers whose exports and employment figures are central to the country's development plans \citep{Guteta2024, Tesfaw2023}.
+Ethiopia's industrial park programme is a cornerstone of the country's growth strategy, and the Industrial Parks Development Corporation (IPDC), set up in 2014, runs the parks that deliver it \citep{Oqubay2015, IPDC2020}. Bole Lemi, Eastern Industrial Zone, Hawassa, and several others host domestic and international manufacturers whose output and employment numbers are central to national development targets \citep{Guteta2024, Tesfaw2023}.
 
-China's involvement in Ethiopian industrial parks goes well beyond trade. Several parks were built with Chinese capital and technical expertise, and Chinese firms remain a substantial share of the tenant base. That relationship, already deep on the investment side, makes a natural case for examining whether the digital governance tools Chinese parks have developed could be adapted to serve Ethiopian ones \citep{Negesa2022}.
+China's footprint in these parks goes beyond investment. Several parks were built using Chinese capital and technical expertise, and Chinese firms make up a large portion of the tenant base. Given that relationship, it is a reasonable question to ask whether the digital governance tools Chinese parks have refined over the past decade could be adapted to work in Ethiopia \citep{Negesa2022}.
 
-Where those tools are absent, the gap shows. Service requests still require in-person office visits. Approval processes give tenants little sense of where things stand. Fee collection means cash or a separate bank visit, with no system linking payments to the requests they cover. These are not small inefficiencies --- they create delays and frustration that shape how tenants experience IPDC and how they assess whether to stay or expand \citep{Guteta2022, Guteta2023}.
+The answer matters because the current situation is not working well. A tenant needing a service has to visit an office in person. There is no tracking once a request is submitted. Fee payments happen separately, in cash or through a bank branch, with no link back to the original request. These are not edge cases or minor friction points --- they slow operations and frustrate firms that came from places where this is handled digitally \citep{Guteta2022, Guteta2023}.
 
 \subsection{The Connectivity Challenge: Infrastructure Constraints}
 
@@ -29,11 +29,11 @@ Chinese platforms like WeChat Work and DingTalk were built for persistent connec
 
 \subsection{The Offline-First Paradigm: A Solution Framework}
 
-The offline-first paradigm inverts the usual assumption: instead of treating connectivity as the default and failure as the exception, the application treats local operation as the baseline and the network as an optional enhancement. \citet{Kleppmann2019} put this plainly in their work on local-first software --- the application works fully without a network connection; connectivity, when it arrives, is used for synchronization.
+The offline-first paradigm flips the usual assumption. Rather than treating connectivity as the norm and outages as edge cases, it treats local operation as the default and the network as an enhancement when available. \citet{Kleppmann2019} described this clearly in their local-first software work: the application runs fully without a connection, and synchronization happens when connectivity returns.
 
-Progressive Web Applications (PWAs) make this practical for web platforms. Service workers intercept network requests and serve cached responses when the network is absent; IndexedDB persists structured data locally; background synchronization pushes queued operations to the server once connectivity returns \citep{AterPWA2017, Majchrzak2018, Tandel2018}. Research confirms that PWAs match native apps on most user-facing criteria while offering a cross-platform reach that native development cannot: one codebase serves desktop browsers, mobile browsers, and installs on phones as an app-like experience \citep{AhnAllen2020, BiornHansen2017}.
+Progressive Web Applications make this workable for browser-based platforms. Service workers intercept network requests and serve cached data when the network is gone; IndexedDB stores structured data locally; background sync pushes queued operations to the server once the connection comes back \citep{AterPWA2017, Majchrzak2018, Tandel2018}. Studies comparing PWAs and native apps find similar user experience outcomes, with the added benefit that a single PWA codebase runs on both desktops and phones without maintaining separate builds \citep{AhnAllen2020, BiornHansen2017}.
 
-Google's Firebase reinforces this architecture. Firestore's built-in offline persistence caches data automatically and synchronizes it when the network returns, without requiring the application to manage that transition explicitly \citep{GoogleFirebase2024}. The free tier --- 50,000 daily reads, 20,000 writes, 1~GB storage --- covers both prototype development and a pilot deployment. Taken together, Chinese smart park design thinking, offline-first PWA architecture, and Firebase's persistence layer form the basis for digital governance that does not depend on a reliable connection to remain useful.
+Firebase fits naturally into this picture. Firestore handles offline data persistence automatically --- cached reads are served from local storage and writes queue for upload, without the application needing to manage the transition \citep{GoogleFirebase2024}. The free tier allows 50,000 daily reads, 20,000 writes, and 1~GB of storage, which covers prototype development and an initial pilot. Chinese smart park design principles, offline-first PWA architecture, and Firebase's built-in persistence together produce a foundation for digital park governance that does not collapse when the connection drops.
 
 \section{Statement of the Problem}
 
@@ -51,31 +51,31 @@ Currently, IPDC relies almost entirely on paper-based systems and disconnected c
 
 \textbf{Stakeholder Frustration:} Ethiopian industrial parks compete for international investment. Tenant firms arriving from China, India, or other countries where park administration is already digital encounter a jarring step backward at IPDC. That experience shapes retention decisions and the attractiveness of IPDC parks to prospective investors who can compare alternatives.
 
-Digitisation is the obvious answer, but conventional cloud-based platforms are a poor fit given the infrastructure constraints described above. Frequent outages would make cloud-dependent systems unavailable precisely when they are most needed --- a particularly troubling irony, since disruptions tend to cluster around periods of high operational activity. Existing research offers limited guidance for this specific challenge: the Chinese smart park literature assumes reliable connectivity \citep{Yang2023, Wang2022}; offline-first and PWA literature addresses simpler citizen services rather than complex industrial workflows \citep{Cherukuri2024, Muawwal2024}; and e-government research in developing countries acknowledges connectivity as a challenge without providing practical solutions for industrial settings \citep{Denbu2019, Lessa2019}.
+Going digital is the logical response, but a standard cloud-based system would simply create a new version of the same problem. An internet-dependent platform goes dark during every outage --- and given that Ethiopian parks lose connectivity for hours at a time, that means the system fails exactly when staff are trying to process requests and tenants are waiting for updates. The literature does not offer much help here: Chinese smart park research assumes stable broadband \citep{Yang2023, Wang2022}; offline-first and PWA studies tend to focus on simpler single-user citizen services rather than multi-party industrial workflows \citep{Cherukuri2024, Muawwal2024}; and e-government work in developing countries acknowledges connectivity constraints without providing concrete architectural solutions for industrial settings \citep{Denbu2019, Lessa2019}.
 
-This research fills that gap by building an offline-first digital one-stop service that brings Chinese smart park principles to the Ethiopian context. The central research question is: \textit{How can Chinese smart park digital governance models be systematically adapted using offline-first PWA architecture to deliver reliable digital services in connectivity-constrained Ethiopian industrial parks?}
+This research addresses that gap directly by designing and building an offline-first digital one-stop service that adapts Chinese smart park governance principles for the Ethiopian context. The central question driving the work is: \textit{How can Chinese smart park digital governance models be systematically adapted using offline-first PWA architecture to deliver reliable digital services in connectivity-constrained Ethiopian industrial parks?}
 
 \section{Motivations}
 
-Several converging factors motivated this work:
+A few specific things motivated this work beyond the general problem:
 
 \begin{itemize}
-\item \textbf{Operational Efficiency:} Paper-based systems create bottlenecks across service delivery, approvals, and communication. A digital platform that consolidates these services — and keeps working during outages — would substantially reduce administrative burden and improve the tenant experience.
+\item \textbf{Operational inefficiency that has a known fix.} Paper workflows create delays, lost requests, and frustrated tenants --- and a digital platform that keeps working during outages would address this concretely, not theoretically.
 
-\item Ethiopia's connectivity reality sets the fundamental design constraint. Most digital governance solutions assume stable internet, making them a poor fit for environments that lose connectivity for three to five hours daily --- a mismatch this research treats as a design problem to solve rather than an obstacle to accept.
+\item \textbf{A design constraint the literature ignores.} Most digital governance tools assume reliable internet. Ethiopian parks lose connectivity for three to five hours daily. Treating that as a design requirement rather than an obstacle to work around is the starting point this research takes.
 
-\item \textbf{Leveraging China-Ethiopia Technology Relationships:} China's deep involvement in Ethiopian industrial parks creates a natural opportunity for technology adaptation. Platforms like WeChat Work and DingTalk offer tested governance models, but no systematic framework yet exists for adapting them to African infrastructure realities — and developing that framework is a core motivation for this work.
+\item \textbf{An existing China-Ethiopia relationship to build on.} Chinese firms built several Ethiopian parks and still make up a large share of tenants. There are tested digital governance platforms on the Chinese side, and there is no systematic framework for adapting them for African infrastructure conditions. Developing that framework is one reason this work exists.
 
-\item The industrial park programme is growing. A platform proven at existing parks could scale across the entire IPDC portfolio through a single PWA codebase --- a cost-effective route to nationwide digital transformation that avoids duplicating development effort across sites.
+\item \textbf{Scalability across the IPDC portfolio.} A single PWA codebase can serve every IPDC park --- desktop and mobile --- without duplicating development. That makes a working prototype at one park a realistic starting point for nationwide deployment.
 
-\item \textbf{Data-Driven Decision Making:} Paper-based systems produce no digital records. A digital platform with integrated AI capabilities — service classification, predictive maintenance, park recommendation — would fundamentally improve IPDC's capacity for evidence-based management.
+\item \textbf{No digital records means no management data.} Paper systems produce nothing useful for analytics. Integrating AI capabilities for service classification, maintenance prediction, and park recommendation would give IPDC management tools they currently have no access to.
 
-\item Offline-first principles have rarely been tested against the complexity of multi-stakeholder industrial workflows in developing countries. The design principles and architectural patterns that emerge from this work aim to fill that gap --- one applicable to similar initiatives across Africa and other connectivity-constrained regions.
+\item \textbf{An untested application of offline-first principles.} PWA offline research typically covers simple citizen-facing services. Multi-stakeholder industrial workflows with approvals, token transactions, and complaint handling are a different problem. Working through it here produces patterns others can reuse.
 \end{itemize}
 
 \section{Research Questions}
 
-This study is organized around three research questions, each targeting a distinct facet of the problem: how the Chinese models can be adapted, what architecture makes the platform work without reliable connectivity, and which design principles should govern feature prioritization.
+Three research questions structure the study. Each addresses a different part of the problem.
 
 \textbf{RQ1: What systematic adaptation methodology enables the transfer of Chinese Smart Park digital governance models to connectivity-constrained African industrial parks?}
 
@@ -135,27 +135,7 @@ Table~\ref{tab:obj-rq-mapping} maps the specific objectives to research question
 
 \section{Significance of the Study}
 
-The significance of this work plays out at several levels --- some more immediately practical, others more squarely academic.
-
-\subsection{Academic Contributions}
-
-\textbf{Technology Adaptation Framework:} A systematic methodology for adapting Chinese smart park models to connectivity-constrained African settings fills a gap in the literature — existing work documents Chinese implementations and general technology transfer principles separately, but no prior framework addresses this specific adaptation challenge.
-
-\textbf{Offline-First Architecture for Complex Workflows:} By pushing offline-first PWA research beyond simple citizen services into complex multi-stakeholder industrial workflows, this work addresses the specific architectural challenges of approval processes, status tracking, and multi-party coordination in offline-capable systems.
-
-\textbf{Design Science Research in African Contexts:} DSR is well established as a methodology, but its application to software engineering problems in African industrial settings remains relatively uncommon. This work demonstrates --- not just argues --- that research rigour and practical relevance can coexist in that context.
-
-\subsection{Practical Contributions}
-
-\textbf{IPDC Digital Transformation:} The prototype directly addresses documented service delivery challenges at Ethiopian industrial parks, laying groundwork for broader digital transformation at IPDC.
-
-\textbf{Replicable Solution Model:} The design principles and architecture patterns that emerge can serve as a template for similar projects in connectivity-constrained settings across Africa and beyond.
-
-\textbf{Cross-Platform Accessibility:} The PWA approach demonstrates how one codebase serves both desktop and mobile users — a cost-effective path for organisations with limited development resources.
-
-\subsection{Stakeholder Benefits}
-
-For \textbf{tenant enterprises}, the most immediate gain is service access that works regardless of whether the internet does --- token tracking and request status visibility replacing the need to follow up by phone or visit the office. \textbf{Administrative staff} gain streamlined workflows and a digital audit trail: less paper, and a much clearer picture of what is pending and what has stalled. \textbf{Operations personnel} can receive and update task assignments in the field without connectivity, which changes the practical reality of their working day. And \textbf{IPDC management} gains the operational data they currently have no way to access: service volumes, resolution times, and resource utilization across the entire park portfolio, in one place.
+The research makes contributions at three levels. \textbf{Academically}: the China-to-Ethiopia Technology Adaptation Framework fills a gap no prior work has addressed; the offline-first architecture extends PWA research beyond simple citizen services into complex multi-stakeholder industrial workflows; and the DSR application to an African industrial setting demonstrates that research rigor and practical relevance can coexist in that context. \textbf{Practically}: the prototype gives IPDC a working starting point for digital transformation; the design principles and architecture patterns can serve as a template for similar projects across Africa; and the single-codebase PWA approach cuts development cost for organizations with limited resources. \textbf{For specific stakeholders}: tenants get service access that works during outages with transparent status tracking; administrative staff get digital workflows and an audit trail replacing paper; operations personnel can update task assignments in the field without connectivity; and IPDC management gets operational data --- volumes, resolution times, resource utilization --- they currently have no way to access.
 
 \section{Scope and Limitations}
 
