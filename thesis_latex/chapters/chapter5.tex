@@ -296,13 +296,13 @@ Table~\ref{tab:training-data} summarizes the three datasets.
 \caption{Training Datasets and Model Architectures}
 \label{tab:training-data}
 \small
-\begin{tabular}{p{2.8cm}p{1.5cm}p{1.5cm}p{3.5cm}p{3cm}}
+\begin{tabular}{p{3.4cm}rlp{3.2cm}p{3.0cm}}
 \toprule
-\textbf{Model} & \textbf{Records} & \textbf{Features} & \textbf{Algorithm} & \textbf{Target} \\
+\textbf{Model} & \textbf{Records} & \textbf{Feat.} & \textbf{Algorithm} & \textbf{Target} \\
 \midrule
-Service Classifier & 2,200 & 10 & XGBoost Ensemble (3 sub-models) & Type (11 classes), priority, processing days \\
-Predictive Maintenance & 500 & 14 & RF + Gradient Boosting & Failure flag, days to failure, risk level \\
-Park Recommendation & 10,400\textsuperscript{a} & 11 & LightGBM LambdaRank & Match relevance grade (0--4) \\
+Service Classifier      & 2,200              & 10 & XGBoost Ensemble (3 sub-models) & Type (11 classes), priority, processing days \\
+Predictive Maintenance  & 500                & 14 & RF + Gradient Boosting          & Failure flag, days to failure, risk level \\
+Park Recommendation     & 10,400\textsuperscript{a} & 11 & LightGBM LambdaRank    & Match relevance grade (0--4) \\
 \bottomrule
 \end{tabular}
 \vspace{0.2cm}
@@ -325,15 +325,15 @@ Table~\ref{tab:benchmark-comparison} compares all three models against Chinese s
 \caption{IPDC Model Performance vs.\ Chinese Smart City Benchmarks}
 \label{tab:benchmark-comparison}
 \small
-\begin{tabular}{p{2.8cm}p{2.5cm}p{3cm}p{2.5cm}}
+\begin{tabular}{p{3.8cm}p{3.2cm}p{3.8cm}l}
 \toprule
 \textbf{Model} & \textbf{Key Metric} & \textbf{Chinese Benchmark} & \textbf{IPDC Result} \\
 \midrule
-Service Classifier & Type accuracy & Alibaba ET: 85--92\% & 100\% \\
- & Processing time MAE & $\pm$3 days & 2.63 days \\
-Pred.\ Maintenance & $R^{2}$ (days to failure) & Huawei FP: 80--88\% & 0.9989 \\
- & Risk accuracy & --- & 99\% \\
-Park Recommender & NDCG@3 & Alibaba/Tencent: 0.85--0.88 & 0.9572 \\
+Service Classifier      & Type accuracy           & Alibaba ET: 85--92\%         & 100\% \\
+                        & Processing time MAE     & $\pm$3 days                  & 2.63 days \\
+Predictive Maintenance  & $R^{2}$ (days to fail.) & Huawei FP: 80--88\%          & 0.9989 \\
+                        & Risk accuracy           & ---                          & 99\% \\
+Park Recommender        & NDCG@3                  & Alibaba/Tencent: 0.85--0.88  & 0.9572 \\
 \bottomrule
 \end{tabular}
 \end{table}
