@@ -148,21 +148,21 @@ Three questions governed every technology choice: does it support offline-first 
 \caption{Technology Stack Summary}
 \label{tab:tech-stack}
 \small
-\begin{tabular}{p{2.2cm}p{3cm}p{6.5cm}}
+\begin{tabular}{p{3.0cm}p{2.8cm}p{6.0cm}}
 \toprule
 \textbf{Category} & \textbf{Technology} & \textbf{Selection Rationale} \\
 \midrule
-Frontend Framework & React 19 + TypeScript & Component-based architecture, strong PWA ecosystem, type safety for complex application \\
-Build Tool & Vite 7 & Fast development server, native PWA plugin support via vite-plugin-pwa \\
-UI Library & Material-UI (MUI) 7 & Comprehensive component library, responsive design, accessibility support \\
-Backend & Firebase 12 (Firestore, Auth, Storage) & Built-in offline persistence, generous free tier, real-time synchronization \\
-Local Database & Dexie.js 4 (IndexedDB) & High-level IndexedDB wrapper, React hooks integration, query capabilities \\
-PWA Tooling & Workbox 7 + vite-plugin-pwa & Industry-standard service worker management, precaching and runtime caching \\
-AI Backend & FastAPI (Python) & Lightweight REST API, Pydantic validation, easy model deployment \\
-Maps & Leaflet + React-Leaflet & Open-source mapping, no API key required, offline tile caching potential \\
-Forms & React Hook Form + Zod & Performant form handling, schema-based validation \\
-Charts & Recharts & React-native charting, responsive, minimal dependencies \\
-PDF Generation & jsPDF + AutoTable & Client-side PDF generation for invoices and reports \\
+Frontend Framework  & React 19 + TypeScript          & Component-based architecture, strong PWA ecosystem, type safety \\
+Build Tool          & Vite 7                         & Fast dev server, native PWA plugin support via vite-plugin-pwa \\
+UI Library          & Material-UI (MUI) 7            & Comprehensive component library, responsive design, accessibility \\
+Backend             & Firebase 12 (Firestore, Auth)  & Built-in offline persistence, generous free tier, real-time sync \\
+Local Database      & Dexie.js 4 (IndexedDB)         & High-level IndexedDB wrapper, React hooks integration \\
+PWA Tooling         & Workbox 7 + vite-plugin-pwa    & Industry-standard service worker management and caching \\
+AI Backend          & FastAPI (Python)                & Lightweight REST API, Pydantic validation, easy model deployment \\
+Maps                & Leaflet + React-Leaflet        & Open-source mapping, no API key required, offline tile support \\
+Forms               & React Hook Form + Zod          & Performant form handling, schema-based validation \\
+Charts              & Recharts                       & React-native charting, responsive, minimal dependencies \\
+PDF Generation      & jsPDF + AutoTable              & Client-side PDF generation for invoices and reports \\
 \bottomrule
 \end{tabular}
 \end{table}
