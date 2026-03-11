@@ -386,7 +386,7 @@ All three models meet or exceed their reference benchmarks. Two honest caveats: 
 
 The PWA is configured through the \texttt{VitePWA} plugin in \texttt{vite.config.ts}. The service worker runs in \texttt{autoUpdate} mode with \texttt{skipWaiting} and \texttt{clientsClaim} enabled, so new versions take effect immediately across all open tabs. Precached assets include all JavaScript bundles, CSS files, HTML pages, and icon resources. An offline fallback page (\texttt{public/offline.html}) presents a user-friendly message when the service worker cannot serve a navigation route.
 
-The manifest sets the display mode to standalone, enabling full-screen operation when installed on mobile devices. Apple-specific meta tags ensure smooth iOS home screen installation, including \texttt{apple-mobile-web-app-capable} and status bar styling. Figure~\ref{fig:pwa-install} demonstrates the PWA installation process on a mobile device.
+The manifest sets the display mode to standalone, enabling full-screen operation when installed on mobile devices. Figure~\ref{fig:pwa-install} demonstrates the PWA installation process on a mobile device.
 
 \begin{figure}[H]
 \centering
@@ -531,7 +531,7 @@ Every metric meets or exceeds its target. Notably, offline operations are faster
 \centering
 \includegraphics[width=\textwidth]{figures/fig_lighthouse_meta.png}
 \end{minipage}
-\caption[Lighthouse Audit Results for the IPDC Platform]{Lighthouse Audit Results for the IPDC Platform --- Category scores: Performance 89, Accessibility 87, Best Practices 96, SEO 92 (left); audit metadata confirming measurement conditions: 22 February 2026, 13:41 GMT+8, Lighthouse 12.0.0, Emulated Desktop, Chromium 127.0.0.0 (right).}
+\caption[Lighthouse Audit Results for the IPDC Platform]{Lighthouse Audit Results for the IPDC Platform --- Category scores: Performance 89, Accessibility 87, Best Practices 96, SEO 92 (left); audit metadata and measurement conditions (right).}
 \label{fig:lighthouse}
 \end{figure}
 
