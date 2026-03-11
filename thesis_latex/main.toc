@@ -1,0 +1,166 @@
+\contentsline {chapter}{\numberline {摘要}{}}{I}{section*.1}%
+\contentsline {chapter}{\numberline {Abstract}{}}{II}{section*.2}%
+\contentsline {chapter}{\numberline {List of Figures}{}}{VII}{section*.3}%
+\contentsline {chapter}{\numberline {List of Tables}{}}{VIII}{section*.4}%
+\contentsline {chapter}{\numberline {List of Abbreviations}{}}{IX}{section*.5}%
+\contentsline {chapter}{\numberline {Chapter 1}Introduction}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Background of the Study}{1}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Global Context: Digital Transformation in Industrial Parks}{1}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Ethiopian Context: Industrial Parks and Digital Transformation}{1}{subsection.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.3}The Connectivity Challenge: Infrastructure Constraints}{2}{subsection.1.1.3}%
+\contentsline {subsection}{\numberline {1.1.4}The Offline-First Paradigm: A Solution Framework}{2}{subsection.1.1.4}%
+\contentsline {section}{\numberline {1.2}Statement of the Problem}{3}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Motivations}{5}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Research Questions}{5}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Research Objectives}{6}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}General Objective}{6}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Specific Objectives}{6}{subsection.1.5.2}%
+\contentsline {section}{\numberline {1.6}Significance of the Study}{8}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Scope and Limitations}{9}{section.1.7}%
+\contentsline {subsection}{\numberline {1.7.1}Scope of the Research}{9}{subsection.1.7.1}%
+\contentsline {subsection}{\numberline {1.7.2}Limitations}{9}{subsection.1.7.2}%
+\contentsline {section}{\numberline {1.8}Theoretical Framework}{10}{section.1.8}%
+\contentsline {subsection}{\numberline {1.8.1}Design Science Research (DSR)}{10}{subsection.1.8.1}%
+\contentsline {subsection}{\numberline {1.8.2}Appropriate Technology Theory}{10}{subsection.1.8.2}%
+\contentsline {subsection}{\numberline {1.8.3}Local-First Software Principles}{11}{subsection.1.8.3}%
+\contentsline {subsection}{\numberline {1.8.4}Technology Transfer Framework}{11}{subsection.1.8.4}%
+\contentsline {section}{\numberline {1.9}Definition of Key Terms}{11}{section.1.9}%
+\contentsline {section}{\numberline {1.10}Thesis Organization}{12}{section.1.10}%
+\contentsline {chapter}{\numberline {Chapter 2}Literature Review}{14}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Introduction}{14}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Chinese Smart Park Digital Ecosystems}{14}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Evolution of Smart Industrial Parks in China}{14}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Digital One-Stop Service Platforms}{15}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Park Innovation Management Framework}{15}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Suzhou Industrial Park Case Study}{16}{subsection.2.2.4}%
+\contentsline {section}{\numberline {2.3}Belt and Road Initiative and Digital Silk Road}{16}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}China-Africa Technology Transfer Context}{16}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Technology Adaptation in South-South Transfer}{17}{subsection.2.3.2}%
+\contentsline {section}{\numberline {2.4}Digital Governance in Developing Countries}{17}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}E-Government Evolution and Models}{17}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}E-Government in Ethiopia}{17}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}One-Stop Service Delivery Models}{18}{subsection.2.4.3}%
+\contentsline {section}{\numberline {2.5}Offline-First Architecture and PWA Technologies}{18}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Local-First Software Principles}{18}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Progressive Web Application Technologies}{19}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Service Workers and Caching Strategies}{19}{subsection.2.5.3}%
+\contentsline {subsection}{\numberline {2.5.4}IndexedDB and Client-Side Data Persistence}{20}{subsection.2.5.4}%
+\contentsline {subsection}{\numberline {2.5.5}Firebase Offline Persistence}{20}{subsection.2.5.5}%
+\contentsline {section}{\numberline {2.6}ICT4D and Connectivity Constraints}{20}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}ICT for Development Frameworks}{20}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Connectivity Challenges in Developing Regions}{21}{subsection.2.6.2}%
+\contentsline {subsection}{\numberline {2.6.3}Mobile-First and Offline-First in Development Contexts}{21}{subsection.2.6.3}%
+\contentsline {section}{\numberline {2.7}Technology Adaptation Frameworks}{21}{section.2.7}%
+\contentsline {section}{\numberline {2.8}Ethiopian Industrial Parks Context}{22}{section.2.8}%
+\contentsline {subsection}{\numberline {2.8.1}Industrial Parks Development Corporation (IPDC)}{22}{subsection.2.8.1}%
+\contentsline {subsection}{\numberline {2.8.2}Current Service Delivery Challenges}{22}{subsection.2.8.2}%
+\contentsline {subsection}{\numberline {2.8.3}Infrastructure and Connectivity Context}{23}{subsection.2.8.3}%
+\contentsline {subsection}{\numberline {2.8.4}China-Ethiopia Industrial Park Relationships}{23}{subsection.2.8.4}%
+\contentsline {section}{\numberline {2.9}Design Science Research Methodology}{24}{section.2.9}%
+\contentsline {subsection}{\numberline {2.9.1}DSR Paradigm and Principles}{24}{subsection.2.9.1}%
+\contentsline {subsection}{\numberline {2.9.2}DSRM Process and Artifact Types}{24}{subsection.2.9.2}%
+\contentsline {section}{\numberline {2.10}Related Works and Comparative Analysis}{24}{section.2.10}%
+\contentsline {subsection}{\numberline {2.10.1}Smart Park Implementations}{24}{subsection.2.10.1}%
+\contentsline {subsection}{\numberline {2.10.2}Offline-First and PWA Applications}{25}{subsection.2.10.2}%
+\contentsline {subsection}{\numberline {2.10.3}E-Government in Ethiopian Context}{25}{subsection.2.10.3}%
+\contentsline {section}{\numberline {2.11}Research Gap Analysis}{26}{section.2.11}%
+\contentsline {subsection}{\numberline {2.11.1}Identified Gaps}{26}{subsection.2.11.1}%
+\contentsline {section}{\numberline {2.12}Conceptual Framework}{27}{section.2.12}%
+\contentsline {chapter}{\numberline {Chapter 3}Research Methodology}{28}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Introduction}{28}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Research Paradigm: Design Science Research}{28}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Justification of the DSR Approach}{28}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}DSRM Process Model Application}{29}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Research Design Overview}{29}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Data Collection Methods}{30}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Stakeholder Requirements Questionnaire}{30}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Document Analysis}{31}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Platform Analysis: WeChat Work and DingTalk}{31}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}Contextual Insights from Open-Ended Responses}{32}{subsection.3.4.4}%
+\contentsline {section}{\numberline {3.5}System Development Methodology}{32}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Agile-Inspired Iterative Development}{32}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Technology Selection Rationale}{33}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Development Tools and Environment}{34}{subsection.3.5.3}%
+\contentsline {section}{\numberline {3.6}Evaluation Framework}{34}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Technical Evaluation}{34}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Usability Evaluation}{35}{subsection.3.6.2}%
+\contentsline {subsection}{\numberline {3.6.3}DSR Guidelines Compliance}{35}{subsection.3.6.3}%
+\contentsline {section}{\numberline {3.7}Ethical Considerations}{36}{section.3.7}%
+\contentsline {chapter}{\numberline {Chapter 4}System Analysis and Design}{37}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Introduction}{37}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Requirements Analysis}{37}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Stakeholder Identification and Analysis}{37}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Functional Requirements}{38}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Non-Functional Requirements}{38}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}MoSCoW Prioritization}{39}{subsection.4.2.4}%
+\contentsline {section}{\numberline {4.3}China-to-Ethiopia Technology Adaptation Framework}{40}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Chinese Smart Park Feature Analysis}{40}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Adaptation Dimensions}{40}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Feature Mapping and Modification Matrix}{41}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Offline-First Adaptation Strategy}{41}{subsection.4.3.4}%
+\contentsline {section}{\numberline {4.4}System Architecture}{42}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}High-Level Architecture Overview}{42}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Offline-First Architecture Design}{43}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}PWA Architecture}{44}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}Authentication Architecture}{44}{subsection.4.4.4}%
+\contentsline {subsection}{\numberline {4.4.5}AI Integration Architecture}{45}{subsection.4.4.5}%
+\contentsline {section}{\numberline {4.5}Database Design}{46}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Firestore Collections Schema}{46}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}IndexedDB Schema (Dexie.js)}{47}{subsection.4.5.2}%
+\contentsline {section}{\numberline {4.6}User Interface Design}{48}{section.4.6}%
+\contentsline {chapter}{\numberline {Chapter 5}Implementation and Evaluation}{49}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Introduction}{49}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Development Environment and Tools}{49}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Development Setup}{49}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Project Structure}{49}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Build and Deployment Configuration}{50}{subsection.5.2.3}%
+\contentsline {section}{\numberline {5.3}Key Feature Implementation}{51}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Offline-First Architecture Implementation}{51}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Authentication with Offline Fallback}{52}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Service Request Management}{54}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}Digital Service Token System}{55}{subsection.5.3.4}%
+\contentsline {subsection}{\numberline {5.3.5}AI Model Integration}{56}{subsection.5.3.5}%
+\contentsline {subsection}{\numberline {5.3.6}Complaint Management System}{59}{subsection.5.3.6}%
+\contentsline {subsection}{\numberline {5.3.7}Announcement System}{60}{subsection.5.3.7}%
+\contentsline {subsection}{\numberline {5.3.8}Interactive Park Map}{60}{subsection.5.3.8}%
+\contentsline {subsection}{\numberline {5.3.9}Administrative Dashboard}{61}{subsection.5.3.9}%
+\contentsline {section}{\numberline {5.4}AI Model Training and Evaluation}{62}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Datasets and Architectures}{62}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Results and Benchmark Comparison}{63}{subsection.5.4.2}%
+\contentsline {section}{\numberline {5.5}PWA Implementation Details}{66}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Responsive Design Across Devices}{68}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Prototype Demonstration}{69}{section.5.7}%
+\contentsline {subsection}{\numberline {5.7.1}Tenant Workflow}{69}{subsection.5.7.1}%
+\contentsline {subsection}{\numberline {5.7.2}Admin Workflow}{70}{subsection.5.7.2}%
+\contentsline {subsection}{\numberline {5.7.3}Offline Operation Demonstration}{70}{subsection.5.7.3}%
+\contentsline {section}{\numberline {5.8}Evaluation Results}{72}{section.5.8}%
+\contentsline {subsection}{\numberline {5.8.1}Technical Evaluation}{72}{subsection.5.8.1}%
+\contentsline {subsubsection}{Offline Functionality Testing}{72}{subsection.5.8.1}%
+\contentsline {subsubsection}{Performance Metrics}{73}{figure.5.15}%
+\contentsline {subsubsection}{Cross-Platform Compatibility}{76}{figure.5.16}%
+\contentsline {subsection}{\numberline {5.8.2}Usability Evaluation}{76}{subsection.5.8.2}%
+\contentsline {subsubsection}{Evaluation Design and Participants}{76}{subsection.5.8.2}%
+\contentsline {subsubsection}{Task Scenarios}{77}{table.5.8}%
+\contentsline {subsubsection}{SUS Score Calculation}{78}{Item.27}%
+\contentsline {subsubsection}{Qualitative Feedback}{78}{Item.27}%
+\contentsline {subsection}{\numberline {5.8.3}DSR Guidelines Compliance Assessment}{79}{subsection.5.8.3}%
+\contentsline {chapter}{\numberline {Chapter 6}Conclusions and Recommendations}{80}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Introduction}{80}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Summary of Findings}{80}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}RQ1: How Can Chinese Smart Industrial Park Models Be Adapted for Ethiopian Industrial Parks?}{80}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}RQ2: What Architecture Enables Reliable Service Delivery During Connectivity Disruptions?}{81}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}RQ3: How Effective Is the Resulting Platform in Terms of Functionality and Usability?}{82}{subsection.6.2.3}%
+\contentsline {section}{\numberline {6.3}Design Principles}{83}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Research Contributions}{85}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Theoretical Contributions}{85}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Practical Contributions}{85}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Methodological Contributions}{86}{subsection.6.4.3}%
+\contentsline {section}{\numberline {6.5}Implications}{86}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Limitations}{87}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Recommendations for Future Work}{88}{section.6.7}%
+\contentsline {section}{\numberline {6.8}Concluding Remarks}{89}{section.6.8}%
+\contentsline {chapter}{\numberline {Appendix}Stakeholder Questionnaire Instruments}{91}{chapter.app.1}%
+\contentsline {chapter}{\numberline {Appendix}System Usability Scale (SUS) Instrument and Score Calculation}{92}{chapter.app.2}%
+\contentsline {chapter}{\numberline {References}{}}{94}{section*.8}%
+\contentsline {chapter}{\numberline {致谢}{}}{99}{section*.9}%
+\contentsline {chapter}{\numberline {个人简历}{}}{101}{section*.10}%

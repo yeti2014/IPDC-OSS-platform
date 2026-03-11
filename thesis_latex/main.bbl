@@ -1,0 +1,2239 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{nty/global//global/global/global}
+  \entry{AhnAllen2020}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=AH}{%
+         family={Ahn},
+         familyi={A\bibinitperiod},
+         given={Hyunwoo},
+         giveni={H\bibinitperiod},
+      }}%
+      {{hash=AS}{%
+         family={Allen},
+         familyi={A\bibinitperiod},
+         given={Sarah},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AHAS1}
+    \strng{fullhash}{AHAS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{number}{3--4}
+    \field{pages}{385\bibrangedash 412}
+    \field{title}{Caching Strategies for Progressive Web Applications: A
+  Comparative Analysis}
+    \field{volume}{19}
+    \field{journaltitle}{Journal of Web Engineering}
+    \field{year}{2020}
+  \endentry
+
+  \entry{Alibaba2024}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=A}{%
+         family={{Alibaba Group}},
+         familyi={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{A1}
+    \strng{fullhash}{A1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{note}{Accessed: 2024-11-20}
+    \field{title}{{DingTalk}: Intelligent Workspace for Enterprise
+  Collaboration}
+    \verb{url}
+    \verb https://www.dingtalk.com
+    \endverb
+    \field{year}{2024}
+  \endentry
+
+  \entry{ArchibaldJake2023}{article}{}{}
+    \name{author}{1}{}{%
+      {{hash=AJ}{%
+         family={Archibald},
+         familyi={A\bibinitperiod},
+         given={Jake},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AJ1}
+    \strng{fullhash}{AJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{title}{The Offline Cookbook: Patterns for Offline Web Applications}
+    \verb{url}
+    \verb https://web.dev/offline-cookbook
+    \endverb
+    \field{journaltitle}{Google Developers}
+    \field{year}{2023}
+  \endentry
+
+  \entry{Askim2011}{article}{}{}
+    \name{author}{4}{}{%
+      {{hash=AJ}{%
+         family={Askim},
+         familyi={A\bibinitperiod},
+         given={Jostein},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=FAL}{%
+         family={Fimreite},
+         familyi={F\bibinitperiod},
+         given={Anne\bibnamedelima Lise},
+         giveni={A\bibinitperiod\bibinitdelim L\bibinitperiod},
+      }}%
+      {{hash=MA}{%
+         family={Moseley},
+         familyi={M\bibinitperiod},
+         given={Alice},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=PLH}{%
+         family={Pedersen},
+         familyi={P\bibinitperiod},
+         given={Lene\bibnamedelima Holm},
+         giveni={L\bibinitperiod\bibinitdelim H\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AJ+1}
+    \strng{fullhash}{AJFALMAPLH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{number}{4}
+    \field{pages}{1451\bibrangedash 1468}
+    \field{title}{One-Stop Shops for Social Welfare: The Adaptation of an
+  Organizational Form in Three Countries}
+    \field{volume}{89}
+    \field{journaltitle}{Public Administration}
+    \field{year}{2011}
+  \endentry
+
+  \entry{AterPWA2017}{book}{}{}
+    \name{author}{1}{}{%
+      {{hash=AT}{%
+         family={Ater},
+         familyi={A\bibinitperiod},
+         given={Tal},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {O'Reilly Media}%
+    }
+    \strng{namehash}{AT1}
+    \strng{fullhash}{AT1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{title}{Building Progressive Web Apps: Bringing the Power of Native
+  to the Browser}
+    \field{year}{2017}
+  \endentry
+
+  \entry{Avgerou2010}{article}{}{}
+    \name{author}{1}{}{%
+      {{hash=AC}{%
+         family={Avgerou},
+         familyi={A\bibinitperiod},
+         given={Chrisanthi},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AC1}
+    \strng{fullhash}{AC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{number}{3}
+    \field{pages}{1\bibrangedash 18}
+    \field{title}{Discourses on {ICT} and Development}
+    \field{volume}{6}
+    \field{journaltitle}{Information Technologies and International
+  Development}
+    \field{year}{2010}
+  \endentry
+
+  \entry{Bangor2009}{article}{}{}
+    \name{author}{3}{}{%
+      {{hash=BA}{%
+         family={Bangor},
+         familyi={B\bibinitperiod},
+         given={Aaron},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=KP}{%
+         family={Kortum},
+         familyi={K\bibinitperiod},
+         given={Philip},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=MJ}{%
+         family={Miller},
+         familyi={M\bibinitperiod},
+         given={James},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BAKPMJ1}
+    \strng{fullhash}{BAKPMJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{3}
+    \field{pages}{114\bibrangedash 123}
+    \field{title}{Determining What Individual {SUS} Scores Mean: Adding an
+  Adjective Rating Scale}
+    \field{volume}{4}
+    \field{journaltitle}{Journal of Usability Studies}
+    \field{year}{2009}
+  \endentry
+
+  \entry{Bannister2015}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=BF}{%
+         family={Bannister},
+         familyi={B\bibinitperiod},
+         given={Frank},
+         giveni={F\bibinitperiod},
+      }}%
+      {{hash=CR}{%
+         family={Connolly},
+         familyi={C\bibinitperiod},
+         given={Regina},
+         giveni={R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BFCR1}
+    \strng{fullhash}{BFCR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{1}
+    \field{pages}{1\bibrangedash 11}
+    \field{title}{The Great Theory Hunt: Does E-Government Really Have a
+  Problem?}
+    \field{volume}{32}
+    \field{journaltitle}{Government Information Quarterly}
+    \field{year}{2015}
+  \endentry
+
+  \entry{BerhanuIPDC2025}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=BKY}{%
+         family={Berhanu},
+         familyi={B\bibinitperiod},
+         given={Kebede\bibnamedelima Yetnayet},
+         giveni={K\bibinitperiod\bibinitdelim Y\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BKY1}
+    \strng{fullhash}{BKY1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{howpublished}{GitHub}
+    \field{note}{Source code and research data repository}
+    \field{title}{{IPDC Digital One-Stop-Shop Platform: Offline-First PWA for
+  Ethiopian Industrial Parks Development Corporation}}
+    \verb{url}
+    \verb https://github.com/yeti2014/IPDC-OSS-platform
+    \endverb
+    \field{year}{2025}
+  \endentry
+
+  \entry{Bhatnagar2014}{article}{}{}
+    \name{author}{1}{}{%
+      {{hash=BS}{%
+         family={Bhatnagar},
+         familyi={B\bibinitperiod},
+         given={Subhash},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BS1}
+    \strng{fullhash}{BS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{391}
+    \field{title}{Public Service Delivery: Role of Information and
+  Communication Technology in Improving Governance and Development Impact}
+    \field{journaltitle}{Asian Development Bank Economics Working Paper Series}
+    \field{year}{2014}
+  \endentry
+
+  \entry{BiornHansen2017}{inproceedings}{}{}
+    \name{author}{3}{}{%
+      {{hash=BHA}{%
+         family={Biorn-Hansen},
+         familyi={B\bibinithyphendelim H\bibinitperiod},
+         given={Andreas},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=MTA}{%
+         family={Majchrzak},
+         familyi={M\bibinitperiod},
+         given={Tim\bibnamedelima A.},
+         giveni={T\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+      {{hash=GTM}{%
+         family={Gronli},
+         familyi={G\bibinitperiod},
+         given={Tor-Morten},
+         giveni={T\bibinithyphendelim M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BHAMTAGTM1}
+    \strng{fullhash}{BHAMTAGTM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{booktitle}{Proceedings of the International Conference on Web
+  Information Systems and Technologies}
+    \field{pages}{344\bibrangedash 351}
+    \field{title}{Progressive Web Apps: The Possible Web-Native Unifier for
+  Mobile Development}
+    \field{year}{2017}
+  \endentry
+
+  \entry{Brautigam2011}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=BD}{%
+         family={Brautigam},
+         familyi={B\bibinitperiod},
+         given={Deborah},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=TX}{%
+         family={Tang},
+         familyi={T\bibinitperiod},
+         given={Xiaoyang},
+         giveni={X\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BDTX1}
+    \strng{fullhash}{BDTX1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{1}
+    \field{pages}{27\bibrangedash 54}
+    \field{title}{African Shenzhen: China's Special Economic Zones in Africa}
+    \field{volume}{49}
+    \field{journaltitle}{Journal of Modern African Studies}
+    \field{year}{2011}
+  \endentry
+
+  \entry{Brooke1996}{incollection}{}{}
+    \name{author}{1}{}{%
+      {{hash=BJ}{%
+         family={Brooke},
+         familyi={B\bibinitperiod},
+         given={John},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \name{editor}{4}{}{%
+      {{hash=JPW}{%
+         family={Jordan},
+         familyi={J\bibinitperiod},
+         given={P.\bibnamedelima W.},
+         giveni={P\bibinitperiod\bibinitdelim W\bibinitperiod},
+      }}%
+      {{hash=TB}{%
+         family={Thomas},
+         familyi={T\bibinitperiod},
+         given={B.},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=MIL}{%
+         family={McClelland},
+         familyi={M\bibinitperiod},
+         given={I.\bibnamedelima L.},
+         giveni={I\bibinitperiod\bibinitdelim L\bibinitperiod},
+      }}%
+      {{hash=WB}{%
+         family={Weerdmeester},
+         familyi={W\bibinitperiod},
+         given={B.},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Taylor \& Francis}%
+    }
+    \strng{namehash}{BJ1}
+    \strng{fullhash}{BJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{booktitle}{Usability Evaluation in Industry}
+    \field{pages}{189\bibrangedash 194}
+    \field{title}{{SUS}: A ``Quick and Dirty'' Usability Scale}
+    \field{year}{1996}
+  \endentry
+
+  \entry{ChenNath2016}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=CKM}{%
+         family={Chen},
+         familyi={C\bibinitperiod},
+         given={Kuo-Ming},
+         giveni={K\bibinithyphendelim M\bibinitperiod},
+      }}%
+      {{hash=NR}{%
+         family={Nath},
+         familyi={N\bibinitperiod},
+         given={Ravindra},
+         giveni={R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CKMNR1}
+    \strng{fullhash}{CKMNR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{number}{10--11}
+    \field{pages}{983\bibrangedash 1000}
+    \field{title}{Connectivity Patterns and Digital Service Delivery in
+  Developing Regions}
+    \field{volume}{40}
+    \field{journaltitle}{Telecommunications Policy}
+    \field{year}{2016}
+  \endentry
+
+  \entry{Chen2022}{article}{}{}
+    \name{author}{3}{}{%
+      {{hash=CM}{%
+         family={Chen},
+         familyi={C\bibinitperiod},
+         given={Mingxing},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=LW}{%
+         family={Liu},
+         familyi={L\bibinitperiod},
+         given={Weidong},
+         giveni={W\bibinitperiod},
+      }}%
+      {{hash=LD}{%
+         family={Lu},
+         familyi={L\bibinitperiod},
+         given={Dadao},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CMLWLD1}
+    \strng{fullhash}{CMLWLD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{pages}{334\bibrangedash 339}
+    \field{title}{Challenges and the Way Forward in China's New-Type
+  Urbanization}
+    \field{volume}{55}
+    \field{journaltitle}{Land Use Policy}
+    \field{year}{2022}
+  \endentry
+
+  \entry{Chen2018}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=CYC}{%
+         family={Chen},
+         familyi={C\bibinitperiod},
+         given={Yun-Chung},
+         giveni={Y\bibinithyphendelim C\bibinitperiod},
+      }}%
+      {{hash=LJ}{%
+         family={Liu},
+         familyi={L\bibinitperiod},
+         given={Jiajia},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CYCLJ1}
+    \strng{fullhash}{CYCLJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{number}{5}
+    \field{pages}{702\bibrangedash 714}
+    \field{title}{South--South Technology Transfer: The Case of China--Africa
+  Cooperation}
+    \field{volume}{45}
+    \field{journaltitle}{Science and Public Policy}
+    \field{year}{2018}
+  \endentry
+
+  \entry{Cherukuri2024}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=CS}{%
+         family={Cherukuri},
+         familyi={C\bibinitperiod},
+         given={Srinivas},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=PD}{%
+         family={Patel},
+         familyi={P\bibinitperiod},
+         given={Dhaval},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CSPD1}
+    \strng{fullhash}{CSPD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{number}{2}
+    \field{pages}{64\bibrangedash 72}
+    \field{title}{Implementing Offline-First Progressive Web Applications:
+  Patterns for Data Synchronization and Conflict Resolution}
+    \field{volume}{41}
+    \field{journaltitle}{IEEE Software}
+    \field{year}{2024}
+  \endentry
+
+  \entry{Denbu2019}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=DA}{%
+         family={Denbu},
+         familyi={D\bibinitperiod},
+         given={Abera},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=WB}{%
+         family={Wondimu},
+         familyi={W\bibinitperiod},
+         given={Berhane},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{DAWB1}
+    \strng{fullhash}{DAWB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{number}{2}
+    \field{pages}{18\bibrangedash 39}
+    \field{title}{Challenges of E-Government Implementation in Ethiopian Public
+  Organizations}
+    \field{volume}{6}
+    \field{journaltitle}{Ethiopian Journal of Public Management}
+    \field{year}{2019}
+  \endentry
+
+  \entry{Donner2015}{book}{}{}
+    \name{author}{1}{}{%
+      {{hash=DJ}{%
+         family={Donner},
+         familyi={D\bibinitperiod},
+         given={Jonathan},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {MIT Press}%
+    }
+    \strng{namehash}{DJ1}
+    \strng{fullhash}{DJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{title}{After Access: Inclusion, Development, and a More Mobile
+  Internet}
+    \list{location}{1}{%
+      {Cambridge, MA}%
+    }
+    \field{year}{2015}
+  \endentry
+
+  \entry{Edgerton2007}{book}{}{}
+    \name{author}{1}{}{%
+      {{hash=ED}{%
+         family={Edgerton},
+         familyi={E\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Oxford University Press}%
+    }
+    \strng{namehash}{ED1}
+    \strng{fullhash}{ED1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{E}
+    \field{sortinithash}{E}
+    \field{title}{The Shock of the Old: Technology and Global History Since
+  1900}
+    \list{location}{1}{%
+      {Oxford}%
+    }
+    \field{year}{2007}
+  \endentry
+
+  \entry{ElKadi2024}{article}{}{}
+    \name{author}{1}{}{%
+      {{hash=EKTH}{%
+         family={El\bibnamedelima Kadi},
+         familyi={E\bibinitperiod\bibinitdelim K\bibinitperiod},
+         given={Tin\bibnamedelima Hinane},
+         giveni={T\bibinitperiod\bibinitdelim H\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{EKTH1}
+    \strng{fullhash}{EKTH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{E}
+    \field{sortinithash}{E}
+    \field{number}{490}
+    \field{pages}{45\bibrangedash 67}
+    \field{title}{The Digital Silk Road: China's Technological Influence in
+  Africa}
+    \field{volume}{123}
+    \field{journaltitle}{African Affairs}
+    \field{year}{2024}
+  \endentry
+
+  \entry{Ethiotelecom2023}{article}{}{}
+    \name{author}{1}{}{%
+      {{hash=E}{%
+         family={{Ethio Telecom}},
+         familyi={E\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{E1}
+    \strng{fullhash}{E1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{E}
+    \field{sortinithash}{E}
+    \field{title}{Annual Performance Report 2022/2023}
+    \list{location}{1}{%
+      {Addis Ababa, Ethiopia}%
+    }
+    \field{year}{2023}
+  \endentry
+
+  \entry{Dexie2024}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=FD}{%
+         family={Fahlander},
+         familyi={F\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{FD1}
+    \strng{fullhash}{FD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{note}{Accessed: 2024-12-15}
+    \field{title}{Dexie.js: A Minimalistic Wrapper for {IndexedDB}}
+    \verb{url}
+    \verb https://dexie.org
+    \endverb
+    \field{year}{2024}
+  \endentry
+
+  \entry{Fall2003}{article}{}{}
+    \name{author}{1}{}{%
+      {{hash=FK}{%
+         family={Fall},
+         familyi={F\bibinitperiod},
+         given={Kevin},
+         giveni={K\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{FK1}
+    \strng{fullhash}{FK1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{number}{4}
+    \field{pages}{27\bibrangedash 34}
+    \field{title}{A Delay-Tolerant Network Architecture for Challenged
+  Internets}
+    \field{volume}{33}
+    \field{journaltitle}{ACM SIGCOMM Computer Communication Review}
+    \field{year}{2003}
+  \endentry
+
+  \entry{Gaunt2020}{article}{}{}
+    \name{author}{1}{}{%
+      {{hash=GM}{%
+         family={Gaunt},
+         familyi={G\bibinitperiod},
+         given={Matt},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{GM1}
+    \strng{fullhash}{GM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{title}{Service Workers: An Introduction}
+    \verb{url}
+    \verb https://developers.google.com/web/fundamentals/primers/service-worker
+    \verb s
+    \endverb
+    \field{journaltitle}{Google Web Fundamentals}
+    \field{year}{2020}
+  \endentry
+
+  \entry{Gebreeyesus2019}{article}{}{}
+    \name{author}{1}{}{%
+      {{hash=GM}{%
+         family={Gebreeyesus},
+         familyi={G\bibinitperiod},
+         given={Mulu},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{GM2}
+    \strng{fullhash}{GM2}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{title}{Industrial Policy and Development in Ethiopia: Evolution and
+  Present Experimentation}
+    \field{journaltitle}{Brookings Institution Africa Growth Initiative Working
+  Paper}
+    \field{year}{2019}
+  \endentry
+
+  \entry{GoogleFirebase2024}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=G}{%
+         family={{Google}},
+         familyi={G\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{G1}
+    \strng{fullhash}{G1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{note}{Accessed: 2024-12-15}
+    \field{title}{Firebase Documentation: Cloud {Firestore} Offline
+  Persistence}
+    \verb{url}
+    \verb https://firebase.google.com/docs/firestore/manage-data/enable-offline
+    \endverb
+    \field{year}{2024}
+  \endentry
+
+  \entry{Workbox2024}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=G}{%
+         family={{Google}},
+         familyi={G\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{G1}
+    \strng{fullhash}{G1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{note}{Accessed: 2024-12-15}
+    \field{title}{Workbox: JavaScript Libraries for Progressive Web Apps}
+    \verb{url}
+    \verb https://developer.chrome.com/docs/workbox
+    \endverb
+    \field{year}{2024}
+  \endentry
+
+  \entry{Gregor2013}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=GS}{%
+         family={Gregor},
+         familyi={G\bibinitperiod},
+         given={Shirley},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=HAR}{%
+         family={Hevner},
+         familyi={H\bibinitperiod},
+         given={Alan\bibnamedelima R.},
+         giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{GSHAR1}
+    \strng{fullhash}{GSHAR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{number}{2}
+    \field{pages}{337\bibrangedash 355}
+    \field{title}{Positioning and Presenting Design Science Research for
+  Maximum Impact}
+    \field{volume}{37}
+    \field{journaltitle}{MIS Quarterly}
+    \field{year}{2013}
+  \endentry
+
+  \entry{Guteta2023}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=GD}{%
+         family={Guteta},
+         familyi={G\bibinitperiod},
+         given={Dereje},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=JX}{%
+         family={Jiang},
+         familyi={J\bibinitperiod},
+         given={Xuezhong},
+         giveni={X\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{GDJX1}
+    \strng{fullhash}{GDJX1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{number}{2}
+    \field{pages}{189\bibrangedash 204}
+    \field{title}{Evaluating Service Delivery in Ethiopian Industrial Parks: A
+  Multi-Stakeholder Perspective}
+    \field{volume}{15}
+    \field{journaltitle}{African Journal of Science, Technology, Innovation and
+  Development}
+    \field{year}{2023}
+  \endentry
+
+  \entry{Guteta2022}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=GD}{%
+         family={Guteta},
+         familyi={G\bibinitperiod},
+         given={Dereje},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=JX}{%
+         family={Jiang},
+         familyi={J\bibinitperiod},
+         given={Xuezhong},
+         giveni={X\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{GDJX1}
+    \strng{fullhash}{GDJX1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{number}{6}
+    \field{pages}{3512}
+    \field{title}{Industrial Park Development in Ethiopia: Challenges and
+  Prospects}
+    \field{volume}{14}
+    \field{journaltitle}{Sustainability}
+    \field{year}{2022}
+  \endentry
+
+  \entry{Guteta2024}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=GD}{%
+         family={Guteta},
+         familyi={G\bibinitperiod},
+         given={Dereje},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=JX}{%
+         family={Jiang},
+         familyi={J\bibinitperiod},
+         given={Xuezhong},
+         giveni={X\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{GDJX1}
+    \strng{fullhash}{GDJX1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{number}{1}
+    \field{pages}{112\bibrangedash 134}
+    \field{title}{Service Quality and Tenant Satisfaction in Ethiopian
+  Industrial Parks: An Empirical Assessment}
+    \field{volume}{25}
+    \field{journaltitle}{Journal of African Business}
+    \field{year}{2024}
+  \endentry
+
+  \entry{Heeks2018}{book}{}{}
+    \name{author}{1}{}{%
+      {{hash=HR}{%
+         family={Heeks},
+         familyi={H\bibinitperiod},
+         given={Richard},
+         giveni={R\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Routledge}%
+    }
+    \strng{namehash}{HR1}
+    \strng{fullhash}{HR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{title}{Information and Communication Technology for Development
+  ({ICT4D})}
+    \list{location}{1}{%
+      {London}%
+    }
+    \field{year}{2018}
+  \endentry
+
+  \entry{Hensengerth2018}{article}{}{}
+    \name{author}{1}{}{%
+      {{hash=HO}{%
+         family={Hensengerth},
+         familyi={H\bibinitperiod},
+         given={Oliver},
+         giveni={O\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{HO1}
+    \strng{fullhash}{HO1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{number}{8}
+    \field{pages}{1527\bibrangedash 1544}
+    \field{title}{South--South Technology Transfer: Who Benefits? A Critical
+  Analysis of China's Technology Engagement in Africa}
+    \field{volume}{39}
+    \field{journaltitle}{Third World Quarterly}
+    \field{year}{2018}
+  \endentry
+
+  \entry{Hevner2004}{article}{}{}
+    \name{author}{4}{}{%
+      {{hash=HAR}{%
+         family={Hevner},
+         familyi={H\bibinitperiod},
+         given={Alan\bibnamedelima R.},
+         giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod},
+      }}%
+      {{hash=MST}{%
+         family={March},
+         familyi={M\bibinitperiod},
+         given={Salvatore\bibnamedelima T.},
+         giveni={S\bibinitperiod\bibinitdelim T\bibinitperiod},
+      }}%
+      {{hash=PJ}{%
+         family={Park},
+         familyi={P\bibinitperiod},
+         given={Jinsoo},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=RS}{%
+         family={Ram},
+         familyi={R\bibinitperiod},
+         given={Sudha},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{HAR+1}
+    \strng{fullhash}{HARMSTPJRS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{number}{1}
+    \field{pages}{75\bibrangedash 105}
+    \field{title}{Design Science in Information Systems Research}
+    \field{volume}{28}
+    \field{journaltitle}{MIS Quarterly}
+    \field{year}{2004}
+  \endentry
+
+  \entry{Huang2023}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=HL}{%
+         family={Huang},
+         familyi={H\bibinitperiod},
+         given={Lingyi},
+         giveni={L\bibinitperiod},
+      }}%
+      {{hash=ZW}{%
+         family={Zhang},
+         familyi={Z\bibinitperiod},
+         given={Wei},
+         giveni={W\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{HLZW1}
+    \strng{fullhash}{HLZW1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{number}{2}
+    \field{pages}{47\bibrangedash 69}
+    \field{title}{Smart Industrial Parks in China: From Space Providers to
+  Service Ecosystems}
+    \field{volume}{30}
+    \field{journaltitle}{Journal of Urban Technology}
+    \field{year}{2023}
+  \endentry
+
+  \entry{IPDC2020}{report}{}{}
+    \name{author}{1}{}{%
+      {{hash=I}{%
+         family={{Industrial Parks Development Corporation}},
+         familyi={I\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{I1}
+    \strng{fullhash}{I1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{I}
+    \field{sortinithash}{I}
+    \field{title}{IPDC Annual Report 2019/2020}
+    \list{location}{1}{%
+      {Addis Ababa, Ethiopia}%
+    }
+    \list{institution}{1}{%
+      {Industrial Parks Development Corporation of Ethiopia}%
+    }
+    \field{type}{techreport}
+    \field{year}{2020}
+  \endentry
+
+  \entry{ITU2023}{article}{}{}
+    \name{author}{1}{}{%
+      {{hash=I}{%
+         family={{International Telecommunication Union}},
+         familyi={I\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{I2}
+    \strng{fullhash}{I2}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{I}
+    \field{sortinithash}{I}
+    \field{title}{Measuring Digital Development: {ICT} Price Trends 2023}
+    \list{location}{1}{%
+      {Geneva}%
+    }
+    \field{year}{2023}
+  \endentry
+
+  \entry{Kleppmann2019}{inproceedings}{}{}
+    \name{author}{4}{}{%
+      {{hash=KM}{%
+         family={Kleppmann},
+         familyi={K\bibinitperiod},
+         given={Martin},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=WA}{%
+         family={Wiggins},
+         familyi={W\bibinitperiod},
+         given={Adam},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=vHP}{%
+         prefix={van},
+         prefixi={v\bibinitperiod},
+         family={Hardenberg},
+         familyi={H\bibinitperiod},
+         given={Peter},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=MM}{%
+         family={McGranaghan},
+         familyi={M\bibinitperiod},
+         given={Mark},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {ACM}%
+    }
+    \strng{namehash}{KM+1}
+    \strng{fullhash}{KMWAHPvMM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{booktitle}{Proceedings of the ACM SIGPLAN International Symposium on
+  New Ideas, New Paradigms, and Reflections on Programming and Software
+  (Onward!)}
+    \field{pages}{154\bibrangedash 178}
+    \field{title}{Local-First Software: You Own Your Data, in Spite of the
+  Cloud}
+    \field{year}{2019}
+  \endentry
+
+  \entry{deKluiver2024}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=dKH}{%
+         prefix={de},
+         prefixi={d\bibinitperiod},
+         family={Kluiver},
+         familyi={K\bibinitperiod},
+         given={Hannah},
+         giveni={H\bibinitperiod},
+      }}%
+      {{hash=GI}{%
+         family={Gagliardone},
+         familyi={G\bibinitperiod},
+         given={Iginio},
+         giveni={I\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{KHdGI1}
+    \strng{fullhash}{KHdGI1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{number}{1}
+    \field{pages}{113\bibrangedash 132}
+    \field{title}{The Belt and Road Initiative and Africa's Digital Future:
+  Opportunities, Risks, and Governance}
+    \field{volume}{77}
+    \field{journaltitle}{Journal of International Affairs}
+    \field{year}{2024}
+  \endentry
+
+  \entry{Layne2001}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=LK}{%
+         family={Layne},
+         familyi={L\bibinitperiod},
+         given={Karen},
+         giveni={K\bibinitperiod},
+      }}%
+      {{hash=LJ}{%
+         family={Lee},
+         familyi={L\bibinitperiod},
+         given={Jungwoo},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{LKLJ1}
+    \strng{fullhash}{LKLJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{number}{2}
+    \field{pages}{122\bibrangedash 136}
+    \field{title}{Developing Fully Functional E-Government: A Four Stage Model}
+    \field{volume}{18}
+    \field{journaltitle}{Government Information Quarterly}
+    \field{year}{2001}
+  \endentry
+
+  \entry{Lessa2019}{article}{}{}
+    \name{author}{3}{}{%
+      {{hash=LL}{%
+         family={Lessa},
+         familyi={L\bibinitperiod},
+         given={Lemma},
+         giveni={L\bibinitperiod},
+      }}%
+      {{hash=NS}{%
+         family={Negash},
+         familyi={N\bibinitperiod},
+         given={Solomon},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=HM}{%
+         family={Hailemariam},
+         familyi={H\bibinitperiod},
+         given={Mesfin},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{LLNSHM1}
+    \strng{fullhash}{LLNSHM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{number}{5}
+    \field{pages}{e12093}
+    \field{title}{E-Government Implementation Challenges in Ethiopia}
+    \field{volume}{85}
+    \field{journaltitle}{Electronic Journal of Information Systems in
+  Developing Countries}
+    \field{year}{2019}
+  \endentry
+
+  \entry{Lewis2018}{article}{}{}
+    \name{author}{1}{}{%
+      {{hash=LJR}{%
+         family={Lewis},
+         familyi={L\bibinitperiod},
+         given={James\bibnamedelima R.},
+         giveni={J\bibinitperiod\bibinitdelim R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{LJR1}
+    \strng{fullhash}{LJR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{number}{7}
+    \field{pages}{577\bibrangedash 590}
+    \field{title}{The System Usability Scale: Past, Present, and Future}
+    \field{volume}{34}
+    \field{journaltitle}{International Journal of Human--Computer Interaction}
+    \field{year}{2018}
+  \endentry
+
+  \entry{LiuBRI2023}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=LW}{%
+         family={Liu},
+         familyi={L\bibinitperiod},
+         given={Weidong},
+         giveni={W\bibinitperiod},
+      }}%
+      {{hash=DM}{%
+         family={Dunford},
+         familyi={D\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{LWDM1}
+    \strng{fullhash}{LWDM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{number}{1}
+    \field{pages}{1\bibrangedash 30}
+    \field{title}{The Belt and Road Initiative and the Digital Silk Road:
+  Infrastructure and Connectivity}
+    \field{volume}{64}
+    \field{journaltitle}{Eurasian Geography and Economics}
+    \field{year}{2023}
+  \endentry
+
+  \entry{Majchrzak2018}{inproceedings}{}{}
+    \name{author}{3}{}{%
+      {{hash=MTA}{%
+         family={Majchrzak},
+         familyi={M\bibinitperiod},
+         given={Tim\bibnamedelima A.},
+         giveni={T\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+      {{hash=BHA}{%
+         family={Biorn-Hansen},
+         familyi={B\bibinithyphendelim H\bibinitperiod},
+         given={Andreas},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=GTM}{%
+         family={Gronli},
+         familyi={G\bibinitperiod},
+         given={Tor-Morten},
+         giveni={T\bibinithyphendelim M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MTABHAGTM1}
+    \strng{fullhash}{MTABHAGTM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{booktitle}{Proceedings of the Hawaii International Conference on
+  System Sciences}
+    \field{pages}{5735\bibrangedash 5744}
+    \field{title}{Progressive Web Apps: The Definite Approach to Cross-Platform
+  Development?}
+    \field{year}{2018}
+  \endentry
+
+  \entry{March1995}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=MST}{%
+         family={March},
+         familyi={M\bibinitperiod},
+         given={Salvatore\bibnamedelima T.},
+         giveni={S\bibinitperiod\bibinitdelim T\bibinitperiod},
+      }}%
+      {{hash=SGF}{%
+         family={Smith},
+         familyi={S\bibinitperiod},
+         given={Gerald\bibnamedelima F.},
+         giveni={G\bibinitperiod\bibinitdelim F\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MSTSGF1}
+    \strng{fullhash}{MSTSGF1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{number}{4}
+    \field{pages}{251\bibrangedash 266}
+    \field{title}{Design and Natural Science Research on Information
+  Technology}
+    \field{volume}{15}
+    \field{journaltitle}{Decision Support Systems}
+    \field{year}{1995}
+  \endentry
+
+  \entry{React2024}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=M}{%
+         family={{Meta Platforms}},
+         familyi={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{M1}
+    \strng{fullhash}{M1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{note}{Accessed: 2024-12-15}
+    \field{title}{React: A {JavaScript} Library for Building User Interfaces}
+    \verb{url}
+    \verb https://react.dev
+    \endverb
+    \field{year}{2024}
+  \endentry
+
+  \entry{MDN2024}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=M}{%
+         family={{Mozilla Developer Network}},
+         familyi={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{M2}
+    \strng{fullhash}{M2}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{note}{Accessed: 2024-12-15}
+    \field{title}{{IndexedDB} {API} -- Web {APIs}}
+    \verb{url}
+    \verb https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
+    \endverb
+    \field{year}{2024}
+  \endentry
+
+  \entry{Muawwal2024}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=MA}{%
+         family={Muawwal},
+         familyi={M\bibinitperiod},
+         given={Ahmed},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=KS}{%
+         family={Khan},
+         familyi={K\bibinitperiod},
+         given={Shahbaz},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MAKS1}
+    \strng{fullhash}{MAKS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{number}{1}
+    \field{pages}{1\bibrangedash 22}
+    \field{title}{Offline-First Application Development for Government Services
+  in Connectivity-Constrained Contexts}
+    \field{volume}{20}
+    \field{journaltitle}{International Journal of Electronic Government
+  Research}
+    \field{year}{2024}
+  \endentry
+
+  \entry{Negesa2022}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=NC}{%
+         family={Negesa},
+         familyi={N\bibinitperiod},
+         given={Chali},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=LD}{%
+         family={Liu},
+         familyi={L\bibinitperiod},
+         given={Dehua},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{NCLD1}
+    \strng{fullhash}{NCLD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{N}
+    \field{sortinithash}{N}
+    \field{number}{3}
+    \field{pages}{245\bibrangedash 268}
+    \field{title}{Chinese Investment in Ethiopian Industrial Parks:
+  Opportunities and Challenges}
+    \field{volume}{20}
+    \field{journaltitle}{Journal of Chinese Economic and Business Studies}
+    \field{year}{2022}
+  \endentry
+
+  \entry{Nicoara2018}{book}{}{}
+    \name{author}{1}{}{%
+      {{hash=NNU}{%
+         family={Nicoara},
+         familyi={N\bibinitperiod},
+         given={Nicola\bibnamedelima Ugo},
+         giveni={N\bibinitperiod\bibinitdelim U\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Packt Publishing}%
+    }
+    \strng{namehash}{NNU1}
+    \strng{fullhash}{NNU1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{N}
+    \field{sortinithash}{N}
+    \field{title}{Offline First Web Development}
+    \field{year}{2018}
+  \endentry
+
+  \entry{Nielsen1993}{book}{}{}
+    \name{author}{1}{}{%
+      {{hash=NJ}{%
+         family={Nielsen},
+         familyi={N\bibinitperiod},
+         given={Jakob},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Academic Press}%
+    }
+    \strng{namehash}{NJ1}
+    \strng{fullhash}{NJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{N}
+    \field{sortinithash}{N}
+    \field{title}{Usability Engineering}
+    \list{location}{1}{%
+      {Boston}%
+    }
+    \field{year}{1993}
+  \endentry
+
+  \entry{Oqubay2018}{article}{}{}
+    \name{author}{1}{}{%
+      {{hash=OA}{%
+         family={Oqubay},
+         familyi={O\bibinitperiod},
+         given={Arkebe},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{OA1}
+    \strng{fullhash}{OA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{O}
+    \field{sortinithash}{O}
+    \field{number}{S1}
+    \field{pages}{94\bibrangedash 106}
+    \field{title}{Industrial Policy and Late Industrialization in Ethiopia}
+    \field{volume}{30}
+    \field{journaltitle}{African Development Review}
+    \field{year}{2018}
+  \endentry
+
+  \entry{Oqubay2015}{book}{}{}
+    \name{author}{1}{}{%
+      {{hash=OA}{%
+         family={Oqubay},
+         familyi={O\bibinitperiod},
+         given={Arkebe},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Oxford University Press}%
+    }
+    \strng{namehash}{OA1}
+    \strng{fullhash}{OA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{O}
+    \field{sortinithash}{O}
+    \field{title}{Made in Africa: Industrial Policy in Ethiopia}
+    \list{location}{1}{%
+      {Oxford}%
+    }
+    \field{year}{2015}
+  \endentry
+
+  \entry{Oqubay2019}{book}{}{}
+    \name{author}{2}{}{%
+      {{hash=OA}{%
+         family={Oqubay},
+         familyi={O\bibinitperiod},
+         given={Arkebe},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=LJY}{%
+         family={Lin},
+         familyi={L\bibinitperiod},
+         given={Justin\bibnamedelima Yifu},
+         giveni={J\bibinitperiod\bibinitdelim Y\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Oxford University Press}%
+    }
+    \strng{namehash}{OALJY1}
+    \strng{fullhash}{OALJY1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{O}
+    \field{sortinithash}{O}
+    \field{title}{China--Africa and an Economic Transformation}
+    \list{location}{1}{%
+      {Oxford}%
+    }
+    \field{year}{2019}
+  \endentry
+
+  \entry{PRNewswire2024}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=P}{%
+         family={{PR Newswire}},
+         familyi={P\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{P1}
+    \strng{fullhash}{P1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{P}
+    \field{sortinithash}{P}
+    \field{note}{Accessed: 2024-11-25}
+    \field{title}{Suzhou Industrial Park Launches `Marvelous City of {SIP}'
+  One-Stop Mobile Service Platform}
+    \verb{url}
+    \verb https://www.prnewswire.com
+    \endverb
+    \field{year}{2024}
+  \endentry
+
+  \entry{Peffers2007}{article}{}{}
+    \name{author}{4}{}{%
+      {{hash=PK}{%
+         family={Peffers},
+         familyi={P\bibinitperiod},
+         given={Ken},
+         giveni={K\bibinitperiod},
+      }}%
+      {{hash=TT}{%
+         family={Tuunanen},
+         familyi={T\bibinitperiod},
+         given={Tuure},
+         giveni={T\bibinitperiod},
+      }}%
+      {{hash=RMA}{%
+         family={Rothenberger},
+         familyi={R\bibinitperiod},
+         given={Marcus\bibnamedelima A.},
+         giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+      {{hash=CS}{%
+         family={Chatterjee},
+         familyi={C\bibinitperiod},
+         given={Samir},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{PK+1}
+    \strng{fullhash}{PKTTRMACS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{P}
+    \field{sortinithash}{P}
+    \field{number}{3}
+    \field{pages}{45\bibrangedash 77}
+    \field{title}{A Design Science Research Methodology for Information Systems
+  Research}
+    \field{volume}{24}
+    \field{journaltitle}{Journal of Management Information Systems}
+    \field{year}{2007}
+  \endentry
+
+  \entry{Rogers2003}{book}{}{}
+    \name{author}{1}{}{%
+      {{hash=REM}{%
+         family={Rogers},
+         familyi={R\bibinitperiod},
+         given={Everett\bibnamedelima M.},
+         giveni={E\bibinitperiod\bibinitdelim M\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Free Press}%
+    }
+    \strng{namehash}{REM1}
+    \strng{fullhash}{REM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{R}
+    \field{sortinithash}{R}
+    \field{edition}{5th}
+    \field{title}{Diffusion of Innovations}
+    \list{location}{1}{%
+      {New York}%
+    }
+    \field{year}{2003}
+  \endentry
+
+  \entry{Sahay2017}{article}{}{}
+    \name{author}{3}{}{%
+      {{hash=SS}{%
+         family={Sahay},
+         familyi={S\bibinitperiod},
+         given={Sundeep},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=SMK}{%
+         family={Sein},
+         familyi={S\bibinitperiod},
+         given={Maung\bibnamedelima K.},
+         giveni={M\bibinitperiod\bibinitdelim K\bibinitperiod},
+      }}%
+      {{hash=UC}{%
+         family={Urquhart},
+         familyi={U\bibinitperiod},
+         given={Cathy},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SSSMKUC1}
+    \strng{fullhash}{SSSMKUC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{number}{12}
+    \field{pages}{837\bibrangedash 847}
+    \field{title}{Flipping the Context: {ICT4D}, the Next Grand Challenge for
+  {IS} Research and Practice}
+    \field{volume}{18}
+    \field{journaltitle}{Journal of the Association for Information Systems}
+    \field{year}{2017}
+  \endentry
+
+  \entry{Schreieck2022}{article}{}{}
+    \name{author}{3}{}{%
+      {{hash=SM}{%
+         family={Schreieck},
+         familyi={S\bibinitperiod},
+         given={Maximilian},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=WM}{%
+         family={Wiesche},
+         familyi={W\bibinitperiod},
+         given={Manuel},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=KH}{%
+         family={Krcmar},
+         familyi={K\bibinitperiod},
+         given={Helmut},
+         giveni={H\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SMWMKH1}
+    \strng{fullhash}{SMWMKH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{number}{4}
+    \field{pages}{789\bibrangedash 815}
+    \field{title}{Digital Platform Adaptation: Strategies for Cross-Context
+  Deployment}
+    \field{volume}{32}
+    \field{journaltitle}{Information Systems Journal}
+    \field{year}{2022}
+  \endentry
+
+  \entry{Schumacher1973}{book}{}{}
+    \name{author}{1}{}{%
+      {{hash=SEF}{%
+         family={Schumacher},
+         familyi={S\bibinitperiod},
+         given={Ernst\bibnamedelima Friedrich},
+         giveni={E\bibinitperiod\bibinitdelim F\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Harper \& Row}%
+    }
+    \strng{namehash}{SEF1}
+    \strng{fullhash}{SEF1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{title}{Small Is Beautiful: Economics as if People Mattered}
+    \field{year}{1973}
+  \endentry
+
+  \entry{Sein2019}{article}{}{}
+    \name{author}{4}{}{%
+      {{hash=SMK}{%
+         family={Sein},
+         familyi={S\bibinitperiod},
+         given={Maung\bibnamedelima K.},
+         giveni={M\bibinitperiod\bibinitdelim K\bibinitperiod},
+      }}%
+      {{hash=TD}{%
+         family={Thapa},
+         familyi={T\bibinitperiod},
+         given={Devinder},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=HM}{%
+         family={Hatakka},
+         familyi={H\bibinitperiod},
+         given={Mathias},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=SO}{%
+         family={S{\ae}b{\o}},
+         familyi={S\bibinitperiod},
+         given={{\O}ystein},
+         giveni={{\O}\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SMK+1}
+    \strng{fullhash}{SMKTDHMSO1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{number}{1}
+    \field{pages}{7\bibrangedash 38}
+    \field{title}{A Holistic Perspective on the Theoretical Foundations for
+  {ICT4D} Research}
+    \field{volume}{25}
+    \field{journaltitle}{Information Technology for Development}
+    \field{year}{2019}
+  \endentry
+
+  \entry{Tandel2018}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=TSS}{%
+         family={Tandel},
+         familyi={T\bibinitperiod},
+         given={Sayali\bibnamedelima S.},
+         giveni={S\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+      {{hash=JA}{%
+         family={Jamadar},
+         familyi={J\bibinitperiod},
+         given={Ayesha},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{TSSJA1}
+    \strng{fullhash}{TSSJA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{number}{9}
+    \field{pages}{9439\bibrangedash 9444}
+    \field{title}{Impact of Progressive Web Apps on Web App Development}
+    \field{volume}{7}
+    \field{journaltitle}{International Journal of Innovative Research in
+  Science, Engineering and Technology}
+    \field{year}{2018}
+  \endentry
+
+  \entry{Tencent2024}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=T}{%
+         family={{Tencent}},
+         familyi={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{T1}
+    \strng{fullhash}{T1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{note}{Accessed: 2024-11-20}
+    \field{title}{{WeChat Work} ({WeCom}): Enterprise Communication and
+  Collaboration Platform}
+    \verb{url}
+    \verb https://work.weixin.qq.com
+    \endverb
+    \field{year}{2024}
+  \endentry
+
+  \entry{Tesfaw2023}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=TM}{%
+         family={Tesfaw},
+         familyi={T\bibinitperiod},
+         given={Mekonnen},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=GT}{%
+         family={Gebrehiwot},
+         familyi={G\bibinitperiod},
+         given={Tsegay},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{TMGT1}
+    \strng{fullhash}{TMGT1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{number}{1}
+    \field{pages}{33\bibrangedash 52}
+    \field{title}{Digital Transformation Readiness in Ethiopian Public
+  Enterprises: Challenges and Pathways}
+    \field{volume}{16}
+    \field{journaltitle}{Ethiopian Journal of Science and Technology}
+    \field{year}{2023}
+  \endentry
+
+  \entry{Toyama2015}{book}{}{}
+    \name{author}{1}{}{%
+      {{hash=TK}{%
+         family={Toyama},
+         familyi={T\bibinitperiod},
+         given={Kentaro},
+         giveni={K\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {PublicAffairs}%
+    }
+    \strng{namehash}{TK1}
+    \strng{fullhash}{TK1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{title}{Geek Heresy: Rescuing Social Change from the Cult of
+  Technology}
+    \list{location}{1}{%
+      {New York}%
+    }
+    \field{year}{2015}
+  \endentry
+
+  \entry{UN2022}{report}{}{}
+    \name{author}{1}{}{%
+      {{hash=U}{%
+         family={{United Nations}},
+         familyi={U\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{U1}
+    \strng{fullhash}{U1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{U}
+    \field{sortinithash}{U}
+    \field{title}{E-Government Survey 2022: The Future of Digital Government}
+    \list{location}{1}{%
+      {New York}%
+    }
+    \list{institution}{2}{%
+      {United Nations Department of Economic}%
+      {Social Affairs}%
+    }
+    \field{type}{techreport}
+    \field{year}{2022}
+  \endentry
+
+  \entry{Venable2016}{article}{}{}
+    \name{author}{3}{}{%
+      {{hash=VJ}{%
+         family={Venable},
+         familyi={V\bibinitperiod},
+         given={John},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=PHJ}{%
+         family={Pries-Heje},
+         familyi={P\bibinithyphendelim H\bibinitperiod},
+         given={Jan},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=BR}{%
+         family={Baskerville},
+         familyi={B\bibinitperiod},
+         given={Richard},
+         giveni={R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{VJPHJBR1}
+    \strng{fullhash}{VJPHJBR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{V}
+    \field{sortinithash}{V}
+    \field{number}{1}
+    \field{pages}{77\bibrangedash 89}
+    \field{title}{{FEDS}: A Framework for Evaluation in Design Science
+  Research}
+    \field{volume}{25}
+    \field{journaltitle}{European Journal of Information Systems}
+    \field{year}{2016}
+  \endentry
+
+  \entry{Walsham2017}{article}{}{}
+    \name{author}{1}{}{%
+      {{hash=WG}{%
+         family={Walsham},
+         familyi={W\bibinitperiod},
+         given={Geoff},
+         giveni={G\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{WG1}
+    \strng{fullhash}{WG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{W}
+    \field{sortinithash}{W}
+    \field{number}{1}
+    \field{pages}{18\bibrangedash 41}
+    \field{title}{{ICT4D} Research: Reflections on History and Future Agenda}
+    \field{volume}{23}
+    \field{journaltitle}{Information Technology for Development}
+    \field{year}{2017}
+  \endentry
+
+  \entry{Wang2022}{article}{}{}
+    \name{author}{3}{}{%
+      {{hash=WJ}{%
+         family={Wang},
+         familyi={W\bibinitperiod},
+         given={Jianlin},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=CT}{%
+         family={Chen},
+         familyi={C\bibinitperiod},
+         given={Tao},
+         giveni={T\bibinitperiod},
+      }}%
+      {{hash=ZY}{%
+         family={Zhang},
+         familyi={Z\bibinitperiod},
+         given={Yue},
+         giveni={Y\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{WJCTZY1}
+    \strng{fullhash}{WJCTZY1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{W}
+    \field{sortinithash}{W}
+    \field{number}{4}
+    \field{pages}{101742}
+    \field{title}{Digital Governance Platforms in Chinese Industrial Parks:
+  Architecture and Implementation}
+    \field{volume}{39}
+    \field{journaltitle}{Government Information Quarterly}
+    \field{year}{2022}
+  \endentry
+
+  \entry{Wimmer2002}{article}{}{}
+    \name{author}{1}{}{%
+      {{hash=WMA}{%
+         family={Wimmer},
+         familyi={W\bibinitperiod},
+         given={Maria\bibnamedelima A.},
+         giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{WMA1}
+    \strng{fullhash}{WMA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{W}
+    \field{sortinithash}{W}
+    \field{number}{1}
+    \field{pages}{92\bibrangedash 103}
+    \field{title}{A European Perspective Towards Online One-Stop Government:
+  The {eGOV} Project}
+    \field{volume}{1}
+    \field{journaltitle}{Electronic Commerce Research and Applications}
+    \field{year}{2002}
+  \endentry
+
+  \entry{WorldBank2022}{report}{}{}
+    \name{author}{1}{}{%
+      {{hash=W}{%
+         family={{World Bank}},
+         familyi={W\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{W1}
+    \strng{fullhash}{W1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{W}
+    \field{sortinithash}{W}
+    \field{title}{Ethiopia Digital Foundations Project: Implementation Status
+  Report}
+    \list{location}{1}{%
+      {Washington, DC}%
+    }
+    \list{institution}{1}{%
+      {World Bank Group}%
+    }
+    \field{type}{techreport}
+    \field{year}{2022}
+  \endentry
+
+  \entry{Yang2023}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=YR}{%
+         family={Yang},
+         familyi={Y\bibinitperiod},
+         given={Rui},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=LJ}{%
+         family={Li},
+         familyi={L\bibinitperiod},
+         given={Jing},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{YRLJ1}
+    \strng{fullhash}{YRLJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Y}
+    \field{sortinithash}{Y}
+    \field{number}{1}
+    \field{pages}{78\bibrangedash 99}
+    \field{title}{One-Stop Digital Services in Chinese Smart Parks: A
+  Multi-Case Study}
+    \field{volume}{19}
+    \field{journaltitle}{Electronic Government, an International Journal}
+    \field{year}{2023}
+  \endentry
+
+  \entry{Yang2025}{article}{}{}
+    \name{author}{3}{}{%
+      {{hash=YR}{%
+         family={Yang},
+         familyi={Y\bibinitperiod},
+         given={Rui},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=ZM}{%
+         family={Zhou},
+         familyi={Z\bibinitperiod},
+         given={Ming},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=LJ}{%
+         family={Li},
+         familyi={L\bibinitperiod},
+         given={Jing},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{YRZMLJ1}
+    \strng{fullhash}{YRZMLJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Y}
+    \field{sortinithash}{Y}
+    \field{pages}{123095}
+    \field{title}{Evolving Smart Park Ecosystems: Digital Integration and
+  Tenant Satisfaction in Chinese Industrial Zones}
+    \field{volume}{200}
+    \field{journaltitle}{Technological Forecasting and Social Change}
+    \field{year}{2025}
+  \endentry
+
+  \entry{Yu2020}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=YW}{%
+         family={Yu},
+         familyi={Y\bibinitperiod},
+         given={Wenhui},
+         giveni={W\bibinitperiod},
+      }}%
+      {{hash=XC}{%
+         family={Xu},
+         familyi={X\bibinitperiod},
+         given={Chengzhong},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{YWXC1}
+    \strng{fullhash}{YWXC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Y}
+    \field{sortinithash}{Y}
+    \field{number}{2}
+    \field{pages}{1\bibrangedash 20}
+    \field{title}{Developing Smart Cities in China: An Empirical Analysis}
+    \field{volume}{7}
+    \field{journaltitle}{International Journal of Public Administration in the
+  Digital Age}
+    \field{year}{2020}
+  \endentry
+
+  \entry{Zeng2021}{article}{}{}
+    \name{author}{1}{}{%
+      {{hash=ZDZ}{%
+         family={Zeng},
+         familyi={Z\bibinitperiod},
+         given={Douglas\bibnamedelima Zhihua},
+         giveni={D\bibinitperiod\bibinitdelim Z\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{ZDZ1}
+    \strng{fullhash}{ZDZ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Z}
+    \field{sortinithash}{Z}
+    \field{number}{2}
+    \field{pages}{259\bibrangedash 275}
+    \field{title}{The Past, Present, and Future of Special Economic Zones and
+  Their Impact}
+    \field{volume}{24}
+    \field{journaltitle}{Journal of International Economic Law}
+    \field{year}{2021}
+  \endentry
+
+  \entry{Zheng2018}{article}{}{}
+    \name{author}{4}{}{%
+      {{hash=ZY}{%
+         family={Zheng},
+         familyi={Z\bibinitperiod},
+         given={Yingqin},
+         giveni={Y\bibinitperiod},
+      }}%
+      {{hash=HM}{%
+         family={Hatakka},
+         familyi={H\bibinitperiod},
+         given={Mathias},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=SS}{%
+         family={Sahay},
+         familyi={S\bibinitperiod},
+         given={Sundeep},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=AA}{%
+         family={Andersson},
+         familyi={A\bibinitperiod},
+         given={Annika},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{ZY+1}
+    \strng{fullhash}{ZYHMSSAA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Z}
+    \field{sortinithash}{Z}
+    \field{number}{1}
+    \field{pages}{1\bibrangedash 14}
+    \field{title}{Conceptualizing Development in Information and Communication
+  Technology for Development ({ICT4D})}
+    \field{volume}{24}
+    \field{journaltitle}{Information Technology for Development}
+    \field{year}{2018}
+  \endentry
+\enddatalist
+\endinput
