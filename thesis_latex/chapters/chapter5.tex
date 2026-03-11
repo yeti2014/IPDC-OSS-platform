@@ -17,61 +17,33 @@ The development environment centered on Visual Studio Code as the primary IDE, N
 The project follows a modular directory structure organized by concern. Application source code lives in \texttt{src/}, while machine learning components and the API server reside in \texttt{ai-models/}. Table~\ref{tab:project-structure} provides an overview of the directory layout and component counts.
 
 \begin{table}[H]
-
 \centering
-
 \caption{Project Directory Structure and Component Counts}
-
 \label{tab:project-structure}
-
 \small
-
 \begin{tabular}{p{3.8cm}p{7.5cm}l}
-
 \toprule
-
 \textbf{Directory} & \textbf{Purpose} & \textbf{Files} \\
-
 \midrule
-
 src/components/admin/ & Admin-specific UI components & 6 \\
-
 src/components/common/ & Shared UI components (StatusBar, FileUpload, etc.) & 12 \\
-
 src/components/layout/ & Navigation and layout scaffolding & 3 \\
-
 src/components/map/ & Interactive park map and details & 3 \\
-
 src/components/operations/ & Operations module components & 4 \\
-
 src/components/tenant/ & Tenant-specific components & 13 \\
-
 src/pages/ & Page-level route components & 15 \\
-
 src/services/ & Business logic and API services & 18 \\
-
 src/services/offline/ & Offline storage and sync services & 3 \\
-
 src/contexts/ & React context providers & 1 \\
-
 src/hooks/ & Custom React hooks & 4 \\
-
 src/db/ & Dexie.js schema definition & 1 \\
-
 src/types/ & TypeScript type definitions & 8 \\
-
 src/config/ & Firebase and theme configuration & 2 \\
-
 ai-models/ & Three ML models + FastAPI backend & 12 \\
-
 \midrule
-
 \textbf{Total} & & \textbf{$\sim$105} \\
-
 \bottomrule
-
 \end{tabular}
-
 \end{table}
 
 \subsection{Build and Deployment Configuration}
@@ -97,17 +69,11 @@ The offline-first architecture is realized through three cooperating subsystems:
 \textbf{Firebase Offline Persistence} is activated in the Firebase configuration module (\texttt{src/config/firebase.ts}) during initialization:
 
 \begin{lstlisting}[language=Java, caption={Firebase Offline Persistence Configuration}, label={lst:firebase-config}]
-
 initializeFirestore(app, {
-
   localCache: persistentLocalCache({
-
     tabManager: persistentMultipleTabManager()
-
   })
-
 });
-
 \end{lstlisting}
 
 This instructs Firestore to maintain a persistent local cache of all documents the user has accessed, keeping it intact across browser sessions and coordinating access when multiple tabs are open. When the network is unavailable, reads are served from this cache and writes are internally queued for later synchronization.
@@ -115,21 +81,13 @@ This instructs Firestore to maintain a persistent local cache of all documents t
 \textbf{Dexie.js Local Database} extends Firestore's cache with explicit offline data management. The schema, defined in \texttt{src/db/schema.ts}, sets up two indexed tables:
 
 \begin{lstlisting}[language=Java, caption={Dexie.js Database Schema}, label={lst:dexie-schema}]
-
 const db = new Dexie('IPDCDatabase');
-
 db.version(1).stores({
-
   serviceRequests:
-
     'id, tenantId, status, priority, serviceType, createdAt',
-
   syncQueue:
-
     '++id, type, collection, status, createdAt'
-
 });
-
 \end{lstlisting}
 
 \textbf{The Sync Service} (\texttt{src/services/offline/syncService.ts}) picks up queued items once connectivity is detected. It iterates through pending entries, converts local JavaScript \texttt{Date} objects to Firestore \texttt{Timestamp} objects, writes to the appropriate collection, and marks each item with an updated status. A built-in retry mechanism handles transient failures so no queued data is lost.
@@ -139,71 +97,42 @@ db.version(1).stores({
 The authentication system implements the dual-mode design outlined in Chapter~\ref{ch:analysis}. The \texttt{AuthContext} (\texttt{src/contexts/AuthContext.tsx}) wraps the entire application and manages authentication state. When signing in online, credentials are verified through Firebase Auth and cached locally:
 
 \begin{lstlisting}[language=Java, caption={Credential Caching After Online Authentication}, label={lst:auth-cache}]
-
 // After successful Firebase Auth sign-in:
-
 await cacheCredentials(email, password);
-
 await cacheAuthState({
-
   uid: user.uid,
-
   email: user.email,
-
   displayName: user.displayName,
-
   role: userData.role
-
 });
-
 \end{lstlisting}
 
 If the sign-in attempt fails because of a network error, the context automatically falls back to offline verification:
 
 \begin{lstlisting}[language=Java, caption={Offline Authentication Fallback}, label={lst:auth-offline}]
-
 // Network error detected during sign-in:
-
 const isValid = await verifyOfflineCredentials(email, password);
-
 if (isValid) {
-
   const cachedUser = await getCachedAuthState();
-
   // Grant access using cached user profile
-
 }
-
 \end{lstlisting}
 
 Any user who has previously authenticated while online can therefore continue using the platform during connectivity outages. Figure~\ref{fig:auth-interfaces} shows the sign-in and tenant registration interfaces.
 
 \begin{figure}[H]
-
 \centering
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_sign_in.png}
-
 \end{minipage}
-
 \hfill
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_sign_up.png}
-
 \end{minipage}
-
 \caption[Authentication Interfaces]{Authentication Interfaces --- Sign-In (left) and Tenant Registration (right)}
-
 \label{fig:auth-interfaces}
-
 \end{figure}
 
 \subsection{Service Request Management}
@@ -213,31 +142,18 @@ Service request management forms the backbone of the platform. The \texttt{Creat
 Each request follows a defined status progression: \texttt{pending} $\rightarrow$ \texttt{approved} $\rightarrow$ \texttt{in-progress} $\rightarrow$ \texttt{completed}. Administrators may also \texttt{reject} a request with a stated reason. Every status transition triggers a notification and updates the record in Firestore --- or in the local queue when offline. Figure~\ref{fig:tenant-workflow} shows the tenant dashboard alongside the service request creation form.
 
 \begin{figure}[H]
-
 \centering
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_tenant_dashboard.jpeg}
-
 \end{minipage}
-
 \hfill
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_create_request.png}
-
 \end{minipage}
-
 \caption[Tenant Service Request Workflow]{Tenant Service Request Workflow --- Dashboard Overview (left) and Request Creation Form (right)}
-
 \label{fig:tenant-workflow}
-
 \end{figure}
 
 \subsection{Digital Service Token System}
@@ -249,51 +165,30 @@ The token system provides an internal mechanism for tracking service fees withou
 \textbf{Service Costs} vary by both service type and priority level. Table~\ref{tab:token-costs} shows the pricing matrix.
 
 \begin{table}[H]
-
 \centering
-
 \caption{Service Token Pricing Matrix (tokens per request)}
-
 \label{tab:token-costs}
-
 \small
-
 \begin{tabular}{lcccc}
-
 \toprule
-
 \textbf{Service Type} & \textbf{Low} & \textbf{Medium} & \textbf{High} & \textbf{Urgent} \\
-
 \midrule
-
 Maintenance & 50 & 80 & 120 & 150 \\
-
 IT Support & 60 & 100 & 140 & 180 \\
-
 Security & 40 & 65 & 95 & 120 \\
-
 Cleaning & 25 & 45 & 65 & 80 \\
-
 Waste Management & 35 & 60 & 85 & 110 \\
-
 \bottomrule
-
 \end{tabular}
-
 \end{table}
 
 A complete audit trail covers all transaction types (allocation, deduction, refund, bonus, penalty, purchase). Administrators credit tokens after confirming external payment receipt. Figure~\ref{fig:token-dashboard} shows the token dashboard interface.
 
 \begin{figure}[H]
-
 \centering
-
 \includegraphics[width=0.75\textwidth]{figures/fig_token_dashboard.png}
-
 \caption{Digital Service Token Dashboard}
-
 \label{fig:token-dashboard}
-
 \end{figure}
 
 \subsection{AI Model Integration}
@@ -309,59 +204,33 @@ Three machine learning models are connected to the platform through a FastAPI ba
 All three models degrade gracefully: if the API is unreachable, the interface disables AI features without disrupting core service request and management workflows. Figure~\ref{fig:ai-interfaces} shows the service classifier and park recommendation interfaces; Figure~\ref{fig:predictive-views} presents the predictive maintenance module.
 
 \begin{figure}[H]
-
 \centering
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_service_classifier.jpeg}
-
 \end{minipage}
-
 \hfill
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_park_recommendation.jpeg}
-
 \end{minipage}
-
 \caption[AI Model Interfaces]{AI Model Interfaces --- Service Classifier (left) and Park Recommendation (right)}
-
 \label{fig:ai-interfaces}
-
 \end{figure}
 
 \begin{figure}[H]
-
 \centering
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_predictive_maintenance 1.png}
-
 \end{minipage}
-
 \hfill
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_predictive_maintenance_2.png}
-
 \end{minipage}
-
 \caption[Predictive Maintenance Views]{Predictive Maintenance Views --- Asset Overview (left) and Maintenance Detail (right)}
-
 \label{fig:predictive-views}
-
 \end{figure}
 
 \subsection{Complaint Management System}
@@ -369,31 +238,18 @@ All three models degrade gracefully: if the API is unreachable, the interface di
 The complaint management module gives tenants a structured channel for raising issues with completed service requests. Nine complaint categories are available: service quality, incomplete work, delays, unprofessional conduct, billing dispute, facility issue, safety concern, communication gap, and other. Each complaint supports evidence uploads (images, documents, videos) and follows a resolution workflow: \texttt{pending} $\rightarrow$ \texttt{under-review} $\rightarrow$ \texttt{resolved} or \texttt{rejected}. Resolution actions range from full or partial token refund to service rework and compensation, with a 48-hour SLA target tracked for each complaint. Figure~\ref{fig:communication-interfaces} shows the complaint management and announcement interfaces.
 
 \begin{figure}[H]
-
 \centering
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_complaint_management.png}
-
 \end{minipage}
-
 \hfill
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_announcements.png}
-
 \end{minipage}
-
 \caption[Communication and Feedback Interfaces]{Communication and Feedback Interfaces --- Complaint Management (left) and Announcement System (right)}
-
 \label{fig:communication-interfaces}
-
 \end{figure}
 
 \subsection{Announcement System}
@@ -405,15 +261,10 @@ The announcement module lets administrators create and distribute notices target
 The park map module uses Leaflet and React-Leaflet to render an interactive geographic visualization of Ethiopian industrial parks. Clicking a marker opens a \texttt{ParkDetailsModal} displaying location details, available infrastructure, operational status, and tenant composition. Park coordinate data is stored in a static file within the application, so the map remains available during offline operation. Figure~\ref{fig:parks-map} shows the interface.
 
 \begin{figure}[H]
-
 \centering
-
 \includegraphics[width=0.85\textwidth]{figures/fig_parks_map.png}
-
 \caption{Interactive Industrial Parks Map}
-
 \label{fig:parks-map}
-
 \end{figure}
 
 \subsection{Administrative Dashboard}
@@ -421,31 +272,18 @@ The park map module uses Leaflet and React-Leaflet to render an interactive geog
 The admin dashboard (\texttt{src/pages/AdminDashboard.tsx}) is the central management interface. From here, administrators can view all service requests across the system, manage tenant accounts, create announcements, resolve complaints, oversee token and billing records, and manage park assets. Tabbed navigation organizes these functions; summary statistics and charts (powered by Recharts) provide at-a-glance operational visibility. Park operators have a dedicated dashboard for day-to-day service operations within their assigned park. Both are shown in Figure~\ref{fig:management-dashboards}.
 
 \begin{figure}[H]
-
 \centering
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_admin_dashboard.png}
-
 \end{minipage}
-
 \hfill
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_operators_dashboard.png}
-
 \end{minipage}
-
 \caption[Management Dashboard Interfaces]{Management Dashboard Interfaces --- Administrator (left) and Park Operators (right)}
-
 \label{fig:management-dashboards}
-
 \end{figure}
 
 \section{AI Model Training and Evaluation}
@@ -459,39 +297,22 @@ Three machine learning models were trained on synthetic datasets reflecting real
 Table~\ref{tab:training-data} summarizes the three datasets.
 
 \begin{table}[H]
-
 \centering
-
 \caption{Training Datasets and Model Architectures}
-
 \label{tab:training-data}
-
 \small
-
 \begin{tabular}{p{3.4cm}rlp{3.2cm}p{3.0cm}}
-
 \toprule
-
 \textbf{Model} & \textbf{Records} & \textbf{Feat.} & \textbf{Algorithm} & \textbf{Target} \\
-
 \midrule
-
 Service Classifier      & 2,200              & 10 & XGBoost Ensemble (3 sub-models) & Type (11 classes), priority, processing days \\
-
 Predictive Maintenance  & 500                & 14 & RF + Gradient Boosting          & Failure flag, days to failure, risk level \\
-
 Park Recommendation     & 10,400\textsuperscript{a} & 11 & LightGBM LambdaRank    & Match relevance grade (0--4) \\
-
 \bottomrule
-
 \end{tabular}
-
 \vspace{0.2cm}
-
 \footnotesize
-
 \textsuperscript{a} 800 tenant profiles $\times$ 13 parks = 10,400 ranking pairs.
-
 \end{table}
 
 \textbf{Model 1 (Service Classifier)} uses TF-IDF vectorization (1,500-term vocabulary, unigrams and bigrams) plus four metadata features (hour, day, text length, word count), yielding 1,504 inputs per request. Three XGBoost sub-models handle category classification, priority prediction, and processing time estimation. Split: 70/15/15\%.
@@ -505,107 +326,60 @@ Park Recommendation     & 10,400\textsuperscript{a} & 11 & LightGBM LambdaRank  
 Table~\ref{tab:benchmark-comparison} compares all three models against Chinese smart city reference benchmarks.
 
 \begin{table}[H]
-
 \centering
-
 \caption{IPDC Model Performance vs.\ Chinese Smart City Benchmarks}
-
 \label{tab:benchmark-comparison}
-
 \small
-
 \begin{tabular}{p{3.8cm}p{3.2cm}p{3.8cm}l}
-
 \toprule
-
 \textbf{Model} & \textbf{Key Metric} & \textbf{Chinese Benchmark} & \textbf{IPDC Result} \\
-
 \midrule
-
 Service Classifier      & Type accuracy           & Alibaba ET: 85--92\%         & 100\% \\
-
                         & Processing time MAE     & $\pm$3 days                  & 2.63 days \\
-
 Predictive Maintenance  & $R^{2}$ (days to fail.) & Huawei FP: 80--88\%          & 0.9989 \\
-
                         & Risk accuracy           & ---                          & 99\% \\
-
 Park Recommender        & NDCG@3                  & Alibaba/Tencent: 0.85--0.88  & 0.9572 \\
-
 \bottomrule
-
 \end{tabular}
-
 \end{table}
 
 All three models meet or exceed their reference benchmarks. Two honest caveats: the models trained on \emph{synthetic} data, so strong scores establish an architectural baseline rather than a claim of superiority over mature production systems; and the Chinese figures are literature values used as indicative reference points. The priority predictor's 40\% accuracy is expected --- priority labels reflect human judgment, which is inherently subjective. Figure~\ref{fig:model1-eval} and Figure~\ref{fig:model2-eval} show evaluation plots for Models 1 and 2; Model 3's feature importance appears in Figure~\ref{fig:feature-importance-park}.
 
 \begin{figure}[H]
-
 \centering
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/model1_confusion_matrix_category.png}
-
 \end{minipage}
-
 \hfill
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/model1_time_prediction_scatter.png}
-
 \end{minipage}
-
 \caption[Service Classifier Evaluation (Model 1)]{Service Classifier Evaluation --- Confusion Matrix (left) and Processing Time Prediction (right)}
-
 \label{fig:model1-eval}
-
 \end{figure}
 
 \begin{figure}[H]
-
 \centering
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/model2_confusion_matrix_risk.png}
-
 \end{minipage}
-
 \hfill
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/model2_days_prediction_scatter.png}
-
 \end{minipage}
-
 \caption[Predictive Maintenance Evaluation (Model 2)]{Predictive Maintenance Evaluation --- Risk Confusion Matrix (left) and Days-to-Failure Prediction (right)}
-
 \label{fig:model2-eval}
-
 \end{figure}
 
 \begin{figure}[H]
-
 \centering
-
 \includegraphics[width=0.65\textwidth]{figures/model3_feature_importance.png}
-
 \caption{Feature Importance for Park Recommendation (Model 3)}
-
 \label{fig:feature-importance-park}
-
 \end{figure}
 
 \section{PWA Implementation Details}
@@ -615,41 +389,23 @@ The PWA is configured through the \texttt{VitePWA} plugin in \texttt{vite.config
 The manifest sets the display mode to standalone, enabling full-screen operation when installed on mobile devices. Apple-specific meta tags ensure smooth iOS home screen installation, including \texttt{apple-mobile-web-app-capable} and status bar styling. Figure~\ref{fig:pwa-install} demonstrates the PWA installation process on a mobile device.
 
 \begin{figure}[H]
-
 \centering
-
 \begin{minipage}[t]{0.30\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_pwa_add_home.png}
-
 \end{minipage}
-
 \hfill
-
 \begin{minipage}[t]{0.30\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_pwa_install_dialog.png}
-
 \end{minipage}
-
 \hfill
-
 \begin{minipage}[t]{0.30\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_pwa_standalone.png}
-
 \end{minipage}
-
 \caption[PWA Installation on Mobile]{PWA Installation on Mobile: Add to Home Screen prompt (left), Install App dialog (center), and Standalone PWA mode (right)}
-
 \label{fig:pwa-install}
-
 \end{figure}
 
 \section{Responsive Design Across Devices}
@@ -657,19 +413,12 @@ The manifest sets the display mode to standalone, enabling full-screen operation
 The platform achieves a fully responsive layout using Material-UI's breakpoint system. Navigation, dashboard layout, and content areas adjust automatically by screen size. On desktop screens ($\geq$960px), a full sidebar navigation displays with expanded labels. On tablet screens (600--959px), the sidebar collapses to icon-only mode. On mobile screens ($<$600px), the sidebar is replaced by a bottom navigation bar and hamburger menu optimized for touch interaction. The device type indicator in the status bar dynamically reflects the current device context. Figure~\ref{fig:responsive-views} shows desktop and mobile layouts side by side.
 
 \begin{figure}[H]
-
 \centering
-
-\includegraphics[width=0.38\textwidth]{figures/fig_desktop_view.png}
-
+\includegraphics[width=0.40\textwidth]{figures/fig_desktop_view.png}
 \hfill
-
-\includegraphics[width=0.38\textwidth]{figures/fig_mobile_view.jpg}
-
+\includegraphics[width=0.40\textwidth]{figures/fig_mobile_view.jpg}
 \caption[Responsive Design Across Devices]{Responsive Design: Desktop View (left) and Mobile View (right)}
-
 \label{fig:responsive-views}
-
 \end{figure}
 
 \section{Prototype Demonstration}
@@ -687,31 +436,18 @@ The administrator workflow centers on processing incoming requests: reviewing su
 The offline workflow showcases the platform's core value proposition. With connectivity disabled (via browser DevTools or physical disconnection): the user logs in using cached credentials; browses previously loaded data from the Firestore cache; submits a new service request, which is saved to IndexedDB and queued for sync; and the \texttt{StatusBar} shows ``Offline'' status with a ``1 pending sync'' indicator. When connectivity returns: the sync service automatically processes the queue; the request appears in Firestore and becomes visible to administrators; and the \texttt{StatusBar} updates to ``Online'' with ``0 pending sync.'' Figure~\ref{fig:offline-online} captures both states.
 
 \begin{figure}[H]
-
 \centering
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_offline_status.jpg}
-
 \end{minipage}
-
 \hfill
-
 \begin{minipage}[t]{0.48\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_online_status.jpg}
-
 \end{minipage}
-
 \caption[Offline and Online Mode Comparison]{Offline and Online Mode Comparison --- Offline with Pending Sync (left) and Online After Sync (right)}
-
 \label{fig:offline-online}
-
 \end{figure}
 
 \section{Evaluation Results}
@@ -723,57 +459,34 @@ The offline workflow showcases the platform's core value proposition. With conne
 Every core feature was tested under simulated offline conditions using Chrome DevTools network throttling. Table~\ref{tab:offline-tests} presents the results.
 
 \begin{table}[H]
-
 \centering
-
 \caption{Offline Functionality Test Results}
-
 \label{tab:offline-tests}
-
 \small
-
 \begin{tabular}{p{4.2cm}lp{5.8cm}}
-
 \toprule
-
 \textbf{Test Scenario} & \textbf{Result} & \textbf{Observation} \\
-
 \midrule
-
 User login (previously authenticated) & PASS & Cached credentials verified; role-based dashboard loaded \\
-
 View existing service requests & PASS & Data served from Firestore local cache \\
-
 Submit new service request & PASS & Saved to IndexedDB; added to sync queue \\
-
 View token balance and history & PASS & Cached data displayed; pending transactions noted \\
-
 View announcements & PASS & Previously loaded announcements displayed \\
-
 File complaint on completed request & PASS & Complaint saved locally; queued for sync \\
-
 Navigate between pages & PASS & Precached assets served by service worker \\
-
 Auto-sync on reconnection & PASS & Queue processed within 5 seconds of connectivity \\
-
 PWA installation (mobile) & PASS & Installed via browser prompt; opens in standalone mode \\
-
 \bottomrule
-
 \end{tabular}
-
 \end{table}
 
 All nine test scenarios passed, confirming that the offline-first architecture keeps core workflows fully functional during connectivity disruptions. Figure~\ref{fig:offline-submission-evidence} shows an offline service request submitted during a live demonstration, with the \texttt{StatusBar} displaying ``Offline'' mode and the request saved locally to IndexedDB pending synchronisation.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.45\textwidth]{figures/fig_offline_submission_evidence.jpg}
-
+\includegraphics[height=0.35\textheight,keepaspectratio]{figures/fig_offline_submission_evidence.jpg}
 \caption{Live Evidence of Offline Service Request Submission}
-
 \label{fig:offline-submission-evidence}
-
 \end{figure}
 
 \subsubsection{Performance Metrics}
@@ -781,81 +494,45 @@ All nine test scenarios passed, confirming that the offline-first architecture k
 Performance was measured using the Chrome DevTools Performance panel and Lighthouse audits. Table~\ref{tab:performance} summarizes the findings.
 
 \begin{table}[H]
-
 \centering
-
 \caption{Performance Metrics Summary\textsuperscript{a}}
-
 \label{tab:performance}
-
 \small
-
 \begin{tabular}{p{5cm}cc}
-
 \toprule
-
 \textbf{Metric} & \textbf{Value} & \textbf{Target} \\
-
 \midrule
-
 Initial page load (first visit) & 2.1s & $<$3s \\
-
 Subsequent page load (cached) & 0.8s & $<$2s \\
-
 Service request submission (offline) & 0.3s & $<$1s \\
-
 Service request submission (online) & 1.4s & $<$2s \\
-
 Sync queue processing (per item) & 0.8s & $<$2s \\
-
 Lighthouse Performance score & 89/100 & $>$80 \\
-
 Lighthouse Accessibility score & 87/100 & $>$80 \\
-
 Lighthouse Best Practices score & 96/100 & $>$85 \\
-
 Lighthouse SEO score & 92/100 & $>$85 \\
-
 \bottomrule
-
 \end{tabular}
-
 \vspace{0.3cm}
-
 \footnotesize
-
 \textsuperscript{a} Lighthouse scores measured on 22 February 2026 at 13:41 GMT+8 using Lighthouse 12.0.0 on Chromium 127.0.0.0, emulated desktop configuration, against the production deployment at \url{https://ipdc-oss-platform.vercel.app/}. Load-time figures were captured using Chrome DevTools Performance panel under the same session. Note: Lighthouse flagged stored IndexedDB data from prior sessions at the measurement URL; auditing in incognito mode may yield marginally higher performance figures.
-
 \end{table}
 
 Every metric meets or exceeds its target. Notably, offline operations are faster than their online equivalents because they bypass network latency entirely, writing data straight to IndexedDB. Lighthouse audit results appear in Figure~\ref{fig:lighthouse}.
 
 \begin{figure}[H]
-
 \centering
-
 \begin{minipage}[t]{0.54\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_lighthouse_scores.png}
-
 \end{minipage}
-
 \hfill
-
 \begin{minipage}[t]{0.44\textwidth}
-
 \centering
-
 \includegraphics[width=\textwidth]{figures/fig_lighthouse_meta.png}
-
 \end{minipage}
-
 \caption[Lighthouse Audit Results for the IPDC Platform]{Lighthouse Audit Results for the IPDC Platform --- Category scores: Performance 89, Accessibility 87, Best Practices 96, SEO 92 (left); audit metadata confirming measurement conditions: 22 February 2026, 13:41 GMT+8, Lighthouse 12.0.0, Emulated Desktop, Chromium 127.0.0.0 (right).}
-
 \label{fig:lighthouse}
-
 \end{figure}
 
 \subsubsection{Cross-Platform Compatibility}
@@ -863,43 +540,24 @@ Every metric meets or exceeds its target. Notably, offline operations are faster
 The prototype was tested on four browser configurations covering the two browsers most widely used by IPDC staff and tenants: Google Chrome and Opera (both Chromium-based). Testing was conducted on desktop and mobile (Android) environments. Table~\ref{tab:cross-platform} presents the results.
 
 \begin{table}[H]
-
 \centering
-
 \caption{Cross-Platform Compatibility Results (Chrome and Opera)}
-
 \label{tab:cross-platform}
-
 \small
-
 \begin{tabular}{p{3.2cm}llll}
-
 \toprule
-
 \textbf{Feature} & \textbf{Desktop Chrome} & \textbf{Desktop Opera} & \textbf{Mobile Chrome} & \textbf{Mobile Opera} \\
-
 \midrule
-
 Core UI rendering & Full & Full & Full & Full \\
-
 Service worker & Full & Full & Full & Full \\
-
 Offline data access & Full & Full & Full & Full \\
-
 PWA installation & Full & Full\textsuperscript{a} & Full & Full\textsuperscript{a} \\
-
 File upload & Full & Full & Full & Full \\
-
 \bottomrule
-
 \end{tabular}
-
 \vspace{0.3cm}
-
 \footnotesize
-
 \textsuperscript{a} Opera uses the standard Chromium PWA install prompt, identical in behaviour to Chrome.
-
 \end{table}
 
 All four configurations deliver full compatibility across every tested feature. Because Chrome and Opera share the Chromium engine, service worker behavior, IndexedDB access, and PWA installation are consistent across the board. This uniformity is especially practical in the Ethiopian industrial park context, where Opera Mini is widely used on lower-end Android devices due to its data-compression mode.
@@ -911,49 +569,27 @@ All four configurations deliver full compatibility across every tested feature. 
 A usability evaluation was conducted on \textbf{10 February 2026} with nine IPDC stakeholders drawn from three roles: IPDC management staff, tenant firm representatives, and operations staff. Three participants per role were recruited purposively to ensure balanced coverage of all platform user groups and multiple industrial park contexts. The evaluator shared the live platform URL (\url{https://ipdc-oss-platform.vercel.app/}) with participants, who accessed it on their own devices --- a realistic test of accessibility under actual field conditions. Table~\ref{tab:sus-participants} lists the participant profiles.
 
 \begin{table}[H]
-
 \centering
-
 \caption{Usability Evaluation Participant Profiles (10 February 2026)}
-
 \label{tab:sus-participants}
-
 \small
-
 \begin{tabular}{p{0.6cm}p{3.5cm}p{3.5cm}p{2.5cm}c}
-
 \toprule
-
 \textbf{ID} & \textbf{Role} & \textbf{Industrial Park / SEZ} & \textbf{Device Used} & \textbf{SUS Score} \\
-
 \midrule
-
 P1 & IPDC Management Staff & Headquarters          & Laptop (Chrome)       & 77.5 \\
-
 P2 & IPDC Management Staff & Bole Lemi SEZ         & Desktop (Chrome)      & 72.5 \\
-
 P3 & IPDC Management Staff & Hawassa SEZ           & Laptop (Opera)        & 75.0 \\
-
 P4 & Tenant Representative & Hawassa SEZ           & Smartphone (Chrome)   & 70.0 \\
-
 P5 & Tenant Representative & Adama SEZ             & Smartphone (Opera)    & 75.0 \\
-
 P6 & Tenant Representative & Bole Lemi SEZ         & Laptop (Chrome)       & 77.5 \\
-
 P7 & Operations Staff      & Bole Lemi SEZ         & Smartphone (Chrome)   & 72.5 \\
-
 P8 & Operations Staff      & Hawassa SEZ           & Smartphone (Opera)    & 72.5 \\
-
 P9 & Operations Staff      & Adama SEZ             & Smartphone (Chrome)   & 77.5 \\
-
 \midrule
-
 \multicolumn{4}{r}{\textbf{Mean SUS Score}} & \textbf{74.5} \\
-
 \bottomrule
-
 \end{tabular}
-
 \end{table}
 
 \subsubsection{Task Scenarios}
@@ -979,7 +615,6 @@ The System Usability Scale consists of ten Likert-scale items alternating betwee
 \[
 \bar{S} = \frac{77.5 + 72.5 + 75.0 + 70.0 + 75.0 + 77.5 + 72.5 + 72.5 + 77.5}{9} = \frac{670.5}{9} \approx \mathbf{74.5}
 \]
-
 
 On \citet{Bangor2009}'s adjective scale, 74.5 lands in the \textbf{``Good''} band --- nine points clear of the 68 that the field generally treats as an average-system benchmark. This indicates that stakeholders perceive the platform as genuinely usable despite the inherent complexity of a multi-role, offline-capable system.
 
@@ -1018,41 +653,23 @@ These findings track closely with what the 49-respondent questionnaire revealed 
 Table~\ref{tab:dsr-compliance} evaluates the research against Hevner's seven DSR guidelines.
 
 \begin{table}[H]
-
 \centering
-
 \caption{DSR Guidelines Compliance Assessment}
-
 \label{tab:dsr-compliance}
-
 \small
-
 \begin{tabular}{lp{3.5cm}lp{6cm}}
-
 \toprule
-
 \textbf{\#} & \textbf{Guideline} & \textbf{Status} & \textbf{Evidence} \\
-
 \midrule
-
 1 & Design as Artifact & Satisfied & Functional PWA with 41 components, 15 pages, 18 services \\
-
 2 & Problem Relevance & Satisfied & Addresses documented IPDC service delivery gaps \\
-
 3 & Design Evaluation & Satisfied & Technical tests (Table~\ref{tab:offline-tests}); usability evaluation SUS score of 74.5 (Table~\ref{tab:sus-participants}) \\
-
 4 & Research Contributions & Satisfied & Adaptation framework, architecture, design principles \\
-
 5 & Research Rigor & Satisfied & DSRM process, systematic development, documented evaluation \\
-
 6 & Design as Search & Satisfied & Multiple iterations with progressive refinement \\
-
 7 & Communication & Satisfied & This thesis document \\
-
 \bottomrule
-
 \end{tabular}
-
 \end{table}
 
 The technical tests confirm the offline-first architecture works as designed. The SUS results show that real IPDC stakeholders across all three roles found the system usable. Chapter~\ref{ch:conclusions} draws out what those two findings mean together.
