@@ -122,9 +122,10 @@ ipdc-platform/
 
 ### Installation
 
-1. **Clone/Download the project**
+1. **Clone the project**
 ```bash
-   cd ipdc-platform
+   git clone https://github.com/yeti2014/IPDC-OSS-platform.git
+   cd IPDC-OSS-platform
 ```
 
 2. **Install dependencies**
@@ -183,7 +184,7 @@ import { StatusBar } from '@/components/common/StatusBar';
 <StatusBar title="IPDC Platform" />
 ```
 
-See `STATUS_INDICATORS_GUIDE.md` for complete documentation.
+See [`docs/STATUS_INDICATORS_GUIDE.md`](docs/STATUS_INDICATORS_GUIDE.md) for complete documentation.
 
 ---
 
@@ -231,7 +232,7 @@ See `STATUS_INDICATORS_GUIDE.md` for complete documentation.
 
 ## 🤝 Contributing
 
-This is a thesis project. Contributions are welcome after initial submission.
+This is a thesis project made publicly visible for academic review only. Please see the [LICENSE](LICENSE) for usage terms.
 
 ---
 
@@ -262,10 +263,9 @@ See the [LICENSE](LICENSE) file for full details.
 - ✅ Digital token system
 - ✅ Lightweight offline-first frontend
 
-- NOTE: To Enhance the Platform ## AI Models & Recommendation System
+## 🤖 AI Models & Recommendation System
 
-This project includes 3 trained models for tenant service classification,Asset maintenance Prediction and intelligent park recommendation
-(located in `/ai-models/`).
+This project includes 3 trained models for tenant service classification, asset maintenance prediction, and intelligent park recommendation (located in `/ai-models/`).
 
 ### Running the Models Locally
 1. Install backend dependencies (Python required):
