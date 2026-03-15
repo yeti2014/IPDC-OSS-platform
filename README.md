@@ -28,6 +28,58 @@ An offline-first Progressive Web Application for managing tenant services, admin
 
 ---
 
+## 📸 Screenshots
+
+### Authentication
+<img src="screenshots/fig_sign_in.png" alt="Sign In Page" title="Sign In" width="700"/>
+<img src="screenshots/fig_sign_up.png" alt="Sign Up Page" title="Sign Up" width="700"/>
+
+### Dashboards
+<img src="screenshots/fig_tenant_dashboard.jpeg" alt="Tenant Dashboard" title="Tenant Dashboard — service requests, token balance, announcements" width="700"/>
+<img src="screenshots/fig_admin_dashboard.png" alt="Admin Dashboard" title="Admin Dashboard — manage tenants, requests, and park operations" width="700"/>
+<img src="screenshots/fig_operators_dashboard.png" alt="Operators Dashboard" title="Operators Dashboard — maintenance and facility management" width="700"/>
+
+### Service Requests & Tokens
+<img src="screenshots/fig_create_request.png" alt="Create Service Request" title="Submit service requests — works fully offline" width="700"/>
+<img src="screenshots/fig_token_dashboard.png" alt="Digital Token System" title="Token-based credit system for park services" width="700"/>
+
+### Offline-First & PWA
+<img src="screenshots/fig_offline_status.jpg" alt="Offline Status Indicator" title="Offline mode — requests queued for sync" width="700"/>
+<img src="screenshots/fig_online_status.jpg" alt="Online Status Indicator" title="Back online — automatic sync of queued requests" width="700"/>
+<img src="screenshots/fig_offline_submission_evidence.jpg" alt="Offline Submission Evidence" title="Service request submitted while offline" width="700"/>
+<img src="screenshots/fig_pwa_install_dialog.png" alt="PWA Install Dialog" title="Install as a native app on any device" width="700"/>
+<img src="screenshots/fig_pwa_standalone.png" alt="PWA Standalone Mode" title="Running as standalone PWA — no browser chrome" width="700"/>
+
+### Responsive Design
+<img src="screenshots/fig_desktop_view.png" alt="Desktop View" title="Desktop layout" width="700"/>
+<img src="screenshots/fig_mobile_view.jpg" alt="Mobile View" title="Mobile layout — fully responsive" width="400"/>
+
+### Maps & Announcements
+<img src="screenshots/fig_parks_map.png" alt="Ethiopian Industrial Parks Map" title="Interactive map of all 13 Ethiopian SEZs" width="700"/>
+<img src="screenshots/fig_announcements.png" alt="Announcements" title="Park-wide announcements for tenants" width="700"/>
+<img src="screenshots/fig_complaint_management.png" alt="Complaint Management" title="Admin complaint tracking and resolution" width="700"/>
+
+### AI Features
+<img src="screenshots/fig_park_recommendation.jpeg" alt="Intelligent Park Recommendation" title="AI-powered SEZ recommendation based on business profile" width="700"/>
+<img src="screenshots/fig_service_classifier.jpeg" alt="AI Service Classifier" title="Automatic service request classification" width="700"/>
+<img src="screenshots/fig_predictive_maintenance_1.png" alt="Predictive Maintenance" title="Asset maintenance prediction — Model 1" width="700"/>
+<img src="screenshots/fig_predictive_maintenance_2.png" alt="Predictive Maintenance 2" title="Asset maintenance prediction — Model 2" width="700"/>
+
+### AI Model Performance
+<img src="screenshots/model1_confusion_matrix_category.png" alt="Model 1 Confusion Matrix" title="Service classifier — confusion matrix by category" width="700"/>
+<img src="screenshots/model1_time_prediction_scatter.png" alt="Model 1 Time Prediction" title="Service classifier — time prediction scatter" width="700"/>
+<img src="screenshots/model2_confusion_matrix_failure.png" alt="Model 2 Failure Matrix" title="Maintenance predictor — failure classification" width="700"/>
+<img src="screenshots/model2_confusion_matrix_risk.png" alt="Model 2 Risk Matrix" title="Maintenance predictor — risk classification" width="700"/>
+<img src="screenshots/model2_days_prediction_scatter.png" alt="Model 2 Days Prediction" title="Maintenance predictor — days to failure" width="700"/>
+<img src="screenshots/model2_feature_importance.png" alt="Model 2 Feature Importance" title="Maintenance predictor — feature importance" width="700"/>
+<img src="screenshots/model3_feature_importance.png" alt="Model 3 Feature Importance" title="Park recommendation — feature importance" width="700"/>
+
+### Performance (Lighthouse)
+<img src="screenshots/fig_lighthouse_scores.png" alt="Lighthouse Scores" title="PWA Lighthouse audit scores" width="700"/>
+<img src="screenshots/fig_lighthouse_meta.png" alt="Lighthouse Meta" title="Lighthouse audit metadata" width="700"/>
+
+---
+
 ## ✨ Features
 
 ### Core Capabilities
@@ -174,29 +226,29 @@ See `STATUS_INDICATORS_GUIDE.md` for complete documentation.
 
 ## 🗓️ Development Timeline
 
-### Week 1-2: Foundation (Current)
+### Week 1-2: Foundation
 - ✅ Project setup
 - ✅ Theme and design system
 - ✅ Status indicators
-- 🔄 Firebase configuration
+- ✅ Firebase configuration
 
 ### Week 3: Authentication
-- Token management system
-- User authentication
+- ✅ Token management system
+- ✅ User authentication
 
 ### Week 4: Service Requests
-- Request submission
-- Offline queue
+- ✅ Request submission
+- ✅ Offline queue
 
 ### Week 5: Admin & Matcher
-- Admin dashboard
-- SEZ recommendation matcher
+- ✅ Admin dashboard
+- ✅ SEZ recommendation matcher
 
 ### Week 6-10: Advanced Features
-- Operations module
-- Announcements
-- Sync optimization
-- Testing & evaluation
+- ✅ Operations module
+- ✅ Announcements
+- ✅ Sync optimization
+- ✅ Testing & evaluation
 
 ---
 
@@ -222,7 +274,11 @@ This is a thesis project. Contributions are welcome after initial submission.
 
 ## 📄 License
 
-Academic project - Nankai University MSc Software Engineering
+Copyright (c) 2026 Yeti. All Rights Reserved.
+
+This project is made publicly visible for academic review and portfolio purposes only.
+Unauthorized copying, redistribution, or commercial use is strictly prohibited.
+See the [LICENSE](LICENSE) file for full details.
 
 ---
 
@@ -249,9 +305,10 @@ This project includes 3 trained models for tenant service classification,Asset m
 (located in `/ai-models/`).
 
 ### Running the Models Locally
-1. Install backend dependencies (, e.g., Python):
+1. Install backend dependencies (Python required):
    ```bash
-   pip install -r requirements.txt  
+   pip install -r requirements.txt
+   ```
 
 ---
 
