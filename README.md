@@ -79,8 +79,10 @@ An offline-first Progressive Web Application for managing tenant services, admin
 - **Dexie.js** - IndexedDB wrapper for offline storage
 
 ### PWA & Offline
-- **Workbox** - Service worker management
-- **vite-plugin-pwa** - PWA generation
+- **Service Worker** - Background sync, offline caching, push notifications
+- **Workbox** - Service worker management and caching strategies
+- **vite-plugin-pwa** - PWA generation and manifest
+- **IndexedDB (Dexie.js)** - Local offline data storage and sync queue
 
 ---
 
