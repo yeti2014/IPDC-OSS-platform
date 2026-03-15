@@ -61,5 +61,13 @@ dev-dist/
 # Developer utility (not part of the project)
 generate-icons.html
 
+# Duplicate root-level files (real versions are in src/)
+App.tsx
+DeviceModeIndicator.tsx
+OnlineStatusIndicator.tsx
+StatusBar.tsx
+useDeviceDetection.ts
+useOnlineStatus.ts
+
 # Thesis LaTeX source (private)
 thesis_latex/
