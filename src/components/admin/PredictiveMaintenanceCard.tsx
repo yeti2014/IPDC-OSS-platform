@@ -62,17 +62,22 @@ export const PredictiveMaintenanceCard: React.FC<PredictiveMaintenanceCardProps>
     setError(null);
 
     try {
+      // Helper to safely convert Firestore Timestamps, strings, or Dates to JS Date
+      const toDate = (value: any): Date => {
+        if (!value) return new Date();
+        if (value instanceof Date) return value;
+        if (typeof value?.toDate === 'function') return value.toDate(); // Firestore Timestamp
+        const d = new Date(value);
+        return isNaN(d.getTime()) ? new Date() : d;
+      };
+
       // Calculate asset age
-      const purchaseDate = asset.purchaseDate instanceof Date
-        ? asset.purchaseDate
-        : new Date(asset.purchaseDate);
+      const purchaseDate = toDate(asset.purchaseDate);
       const age_days = differenceInDays(new Date(), purchaseDate);
 
       // Get last maintenance date
       const lastMaintenanceDate = asset.maintenanceHistory?.[0]?.completedDate
-        ? (asset.maintenanceHistory[0].completedDate instanceof Date
-          ? asset.maintenanceHistory[0].completedDate
-          : new Date(asset.maintenanceHistory[0].completedDate))
+        ? toDate(asset.maintenanceHistory[0].completedDate)
         : purchaseDate;
 
       // Calculate current value with depreciation
