@@ -29,7 +29,7 @@ export const CreateAnnouncementDialog: React.FC<CreateAnnouncementDialogProps> =
     message: '',
     priority: 'medium' as 'low' | 'medium' | 'high' | 'urgent',
     targetAudience: 'all' as 'all' | 'tenants' | 'operations' | 'admin',
-    expiresInDays: 7,
+    expiresInDays: 365,
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -55,7 +55,7 @@ export const CreateAnnouncementDialog: React.FC<CreateAnnouncementDialogProps> =
         message: '',
         priority: 'medium',
         targetAudience: 'all',
-        expiresInDays: 7,
+        expiresInDays: 365,
       });
       onClose();
     } catch (err: any) {
