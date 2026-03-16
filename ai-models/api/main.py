@@ -88,6 +88,15 @@ async def root():
     }
 
 
+@app.get("/api/ping", tags=["Health"])
+async def ping():
+    """
+    Lightweight keep-alive endpoint for cron job.
+    Responds instantly without loading models.
+    """
+    return {"status": "ok", "timestamp": datetime.now().isoformat()}
+
+
 @app.get("/api/health", response_model=HealthCheckResponse, tags=["Health"])
 async def health_check():
     """
