@@ -44,7 +44,7 @@ export const AnnouncementBanner: React.FC = () => {
           announcement.targetAudience === userData.role ||
           (userData.role === 'tenant' && announcement.targetAudience === 'tenants') ||
           (userData.role === 'admin' && announcement.targetAudience === 'admins') ||
-          (userData.role === 'operations' && announcement.targetAudience === 'operation');
+          (userData.role === 'operations' && announcement.targetAudience === 'operations');
 
         if (isForThisUser) {
           announcementData.push(announcement);
