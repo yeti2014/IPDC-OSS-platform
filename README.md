@@ -1,246 +1,258 @@
-# 🏭 IPDC Digital Platform
+# IPDC Digital One-Stop Service Platform
 
-**Ethiopian Industrial Parks One-Stop Service Platform**
+**Bridging the Digital Divide: An Offline-First Digital One-Stop Service Localized from China's Smart Park Model for Ethiopia's Industrial Parks**
 
-An offline-first Progressive Web Application for managing tenant services, administrative operations, and park management in Ethiopian Industrial Parks.
-
----
-
-## 📋 Project Information
-
-**Title:** Offline-First Digital One-Stop-Shop for Ethiopian Industrial Parks Development Corporation (IPDC)
-
-**Subtitle:** Localizing China Smart Park Model for Connectivity-Constrained Environments
-
-**Author:** Yeti  
-**Program:** MSc Software Engineering, Nankai University  
-**Timeline:** 10 weeks implementation
+An offline-first Progressive Web Application (PWA) for the Ethiopian Industrial Parks Development Corporation (IPDC), enabling reliable digital service delivery across connectivity-constrained industrial parks.
 
 ---
 
-## 🎯 Research Questions
+## Project Information
 
-1. **RQ1:** How can Chinese smart industrial park digital service models be adapted for offline-first operation in Ethiopian connectivity-constrained environments?
-
-2. **RQ2:** What architectural patterns and technical strategies enable reliable offline-first functionality while maintaining data consistency in multi-user industrial park management systems?
-
-3. **RQ3:** How does offline-first architecture affect user experience, system performance, and operational efficiency compared to traditional online-dependent systems in industrial park contexts?
+| | |
+|---|---|
+| **Thesis Title** | Bridging the Digital Divide: An Offline-First Digital One-Stop Service Localized from China's Smart Park Model for Ethiopia's Industrial Parks |
+| **Author** | Kebede Yetnayet Berhanu |
+| **Student ID** | 2120246030 |
+| **Program** | MSc Software Engineering, Nankai University |
+| **Supervisor** | Prof. Zhang Haining (张海宁) |
+| **Submission** | December 2025 |
 
 ---
 
-## 📸 Screenshots
+## Abstract
+
+IPDC — Ethiopia's Industrial Parks Development Corporation — runs several parks where service requests still travel on paper. Tenants visit offices in person, fees are collected manually, and stalled requests offer no way to track progress. Chinese smart park platforms like WeChat Work and DingTalk have addressed this problem effectively, but those platforms assume reliable broadband. Ethiopian parks lose internet for three to five hours on a typical day, meaning a direct import of the Chinese solution would trade one failure mode for another.
+
+This thesis designed, built, and evaluated an offline-first digital one-stop service for IPDC, delivered as a Progressive Web Application, using Design Science Research. The resulting prototype supports offline service request submission with automatic synchronization on reconnection, serves three stakeholder roles (management, tenants, operations staff), and integrates three proof-of-concept machine learning models for service classification, predictive maintenance, and park recommendation.
+
+**Keywords:** Offline-First Architecture, Progressive Web Application, Digital One-Stop Service, Smart Industrial Park, Design Science Research, Technology Adaptation, Ethiopian Industrial Parks
+
+---
+
+## Research Questions
+
+**RQ1:** What systematic adaptation methodology enables the transfer of Chinese Smart Park digital governance models to connectivity-constrained African industrial parks?
+
+**RQ2:** How should offline-first PWA architecture be designed to maintain functional parity with online systems for complex industrial park service workflows?
+
+**RQ3:** What design principles should guide feature prioritization for offline availability in multi-stakeholder industrial platforms?
+
+---
+
+## Live Deployment
+
+| Service | URL |
+|---------|-----|
+| **Frontend (PWA)** | https://ipdc-oss-platform.vercel.app/ |
+| **AI Backend API** | https://ipdc-oss-platform.onrender.com/api/docs |
+
+---
+
+## Evaluation Results
+
+| Metric | Result |
+|--------|--------|
+| **SUS Score** | 86.5 / 100 |
+| **Usability Grade** | Excellent (above 85.5 threshold) |
+| **Participants** | 12 IPDC stakeholders |
+| **Min. Individual Score** | 80.0 |
+| **Offline Scenarios Passed** | 9 / 9 |
+| **First Load Time** | < 3 seconds |
+| **Cached Load Time** | < 1.5 seconds |
+| **Offline Response Time** | < 500 ms |
+
+---
+
+## Screenshots
 
 <img src="screenshots/fig_sign_in.png" alt="Sign In" width="700"/>
 <img src="screenshots/fig_tenant_dashboard.jpeg" alt="Tenant Dashboard — service requests, token balance, announcements" width="700"/>
 <img src="screenshots/fig_admin_dashboard.png" alt="Admin Dashboard — manage tenants, requests, and park operations" width="700"/>
+<img src="screenshots/fig_operators_dashboard.png" alt="Operations Dashboard — maintenance tasks and work orders" width="700"/>
 <img src="screenshots/fig_offline_submission_evidence.jpg" alt="Offline Submission — service request submitted while offline, queued for sync" width="700"/>
 <img src="screenshots/fig_parks_map.png" alt="Interactive map of all 13 Ethiopian SEZs" width="700"/>
 <img src="screenshots/fig_park_recommendation.jpeg" alt="AI-powered SEZ recommendation based on business profile" width="700"/>
 <img src="screenshots/fig_mobile_view.jpg" alt="Mobile layout — fully responsive" width="400"/>
 <img src="screenshots/fig_lighthouse_scores.png" alt="PWA Lighthouse audit scores" width="700"/>
 
-> See [screenshots/](screenshots/) for the full gallery including all dashboards, AI model performance charts, PWA installation, and offline evidence.
+> See [screenshots/](screenshots/) for the full gallery including all dashboards, AI model performance charts, PWA installation evidence, and offline testing screenshots.
 
 ---
 
-## ✨ Features
+## Features
 
-### Core Capabilities
-- ✅ **Offline-First Architecture** - Basic features Works without internet connection
-- ✅ **Progressive Web App (PWA)** - adjusted for different screen sizes
-- ✅ **Multi-Role Support** - Tenant, Admin, Operations
-- ✅ **Service Request Management** - Submit requests offline and track will be synched when online 
-- ✅ **Token-Based Credit System** - Digital token management to proof the concept
-- ✅ **Real-time Status Indicators** - Online/Offline detection
-- ✅ **Device-Responsive Design** - Mobile, tablet, desktop
-- ✅ **Automatic Sync** - Queue actions and sync when online
+### Core Platform
+- **Offline-First Architecture** — core workflows function without internet; data syncs automatically on reconnection
+- **Progressive Web App (PWA)** — installable on desktop and mobile from a single codebase
+- **Multi-Role Support** — separate interfaces for Tenants, Administrators, and Operations staff
+- **Service Request Management** — submit, track, and process requests offline with background sync
+- **Digital Token System** — internal credit system for service fee tracking with full audit trail
+- **Complaint Management** — structured complaint submission and resolution workflow
+- **Announcements** — park-wide and targeted announcements with offline delivery
+- **Interactive Park Map** — visualize all 13 Ethiopian SEZs with park profiles
 
-### Status Indicators
-- 📡 Online/Offline status badges
-- 📱 Device type detection (mobile/tablet/desktop)
-- 🔄 Sync queue monitoring
-- 🎨 Beautiful Material-UI components
+### Offline Capabilities
+- Authentication with offline fallback (cached credentials after first online sign-in)
+- Service request submission queued locally in IndexedDB, replayed on reconnect
+- Full dashboard access served from Firestore's persistent local cache
+- Service worker caches the full application shell for zero-connectivity browsing
+- Real-time online/offline status indicators with sync queue monitoring
+
+### AI Models
+- **Service Classifier** — automatically categorizes incoming service requests
+- **Predictive Maintenance** — predicts asset failure risk and days-to-failure
+- **Park Recommendation** — recommends the most suitable SEZ based on business profile
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
-- **React 19** - UI framework
-- **TypeScript** - Type safety
-- **Material-UI (MUI)** - Component library
-- **Vite** - Build tool
-- **React Router** - Navigation
+| Technology | Purpose |
+|-----------|---------|
+| React 19 | UI framework |
+| TypeScript | Type safety |
+| Material-UI (MUI) | Component library |
+| Vite | Build tool with manual chunk splitting |
+| React Router | Client-side navigation |
 
 ### Backend & Database
-- **Firebase** - Backend as a Service
-- **Firestore** - Cloud database
-- **Firebase Auth** - Authentication
-- **Dexie.js** - IndexedDB wrapper for offline storage
+| Technology | Purpose |
+|-----------|---------|
+| Firebase Firestore | Cloud database with built-in offline persistence |
+| Firebase Auth | Authentication with offline credential caching |
+| Firebase Hosting / Vercel | Frontend deployment |
+| Dexie.js (IndexedDB) | Explicit offline write queue and local storage |
 
 ### PWA & Offline
-- **Service Worker** - Background sync, offline caching, push notifications
-- **Workbox** - Service worker management and caching strategies
-- **vite-plugin-pwa** - PWA generation and manifest
-- **IndexedDB (Dexie.js)** - Local offline data storage and sync queue
+| Technology | Purpose |
+|-----------|---------|
+| Service Worker | Request interception, asset caching, background sync |
+| Workbox | CacheFirst / NetworkFirst / StaleWhileRevalidate strategies |
+| vite-plugin-pwa | Automatic service worker and manifest generation |
+| IndexedDB (Dexie.js) | Local offline data store and sync queue |
+
+### AI Backend
+| Technology | Purpose |
+|-----------|---------|
+| Python / FastAPI | REST API server for ML model inference |
+| scikit-learn | Model training (Random Forest, etc.) |
+| Render | Cloud deployment of AI backend |
 
 ---
 
-## 📁 Project Structure
+## Project Structure
+
 ```
 ipdc-platform/
-├── public/               # Static assets
 ├── src/
-│   ├── components/       # React components
-│   │   ├── common/       # Shared components (StatusBar, etc.)
-│   │   ├── auth/         # Authentication components
-│   │   ├── tenant/       # Tenant-specific components
-│   │   ├── admin/        # Admin components
-│   │   └── operations/   # Operations components
-│   ├── pages/            # Page components
-│   ├── hooks/            # Custom React hooks
-│   ├── contexts/         # React contexts
-│   ├── services/         # Business logic
-│   ├── db/               # Database setup
-│   ├── types/            # TypeScript types
-│   ├── utils/            # Utility functions
-│   ├── config/           # Configuration (theme, etc.)
-│   ├── App.tsx           # Main app component
-│   └── main.tsx          # Entry point
-├── .env.example          # Environment variables template
-├── vite.config.ts        # Vite configuration
-├── tsconfig.json         # TypeScript configuration
-└── package.json          # Dependencies
+│   ├── components/
+│   │   ├── admin/          # Admin UI components (6 files)
+│   │   ├── common/         # Shared components — StatusBar, FileUpload, etc. (12 files)
+│   │   ├── layout/         # Navigation and layout scaffolding (3 files)
+│   │   ├── map/            # Interactive park map (3 files)
+│   │   ├── operations/     # Operations module components (4 files)
+│   │   └── tenant/         # Tenant-specific components (13 files)
+│   ├── pages/              # Page-level route components (15 files)
+│   ├── services/           # Business logic and API services (18 files)
+│   │   └── offline/        # Offline storage and sync services (3 files)
+│   ├── contexts/           # React context providers (AuthContext)
+│   ├── hooks/              # Custom React hooks (4 files)
+│   ├── db/                 # Dexie.js schema definition
+│   ├── types/              # TypeScript type definitions (8 files)
+│   └── config/             # Firebase and theme configuration
+├── ai-models/              # Three ML models + FastAPI backend (12 files)
+│   └── data/raw/           # Synthetic training datasets (CSV)
+├── data/research/          # SUS evaluation workbook and questionnaire responses
+├── screenshots/            # 31 thesis figures and platform screenshots
+├── public/                 # Static assets and PWA manifest
+├── .env.example            # Environment variables template
+├── vite.config.ts          # Vite + PWA configuration
+└── package.json            # Dependencies
 ```
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Node.js 20+ and npm 10+
 - Git
-- Firebase account
+- Firebase account (for backend)
+- Python 3.11+ (for AI backend only)
 
-### Installation
+### Frontend Setup
 
-1. **Clone the project**
+1. **Clone the repository**
 ```bash
-   git clone https://github.com/yeti2014/IPDC-OSS-platform.git
-   cd IPDC-OSS-platform
+git clone https://github.com/yeti2014/IPDC-OSS-platform.git
+cd IPDC-OSS-platform
 ```
 
 2. **Install dependencies**
 ```bash
-   npm install
+npm install
 ```
 
 3. **Configure Firebase**
-   - Copy `.env.example` to `.env`
-   - Add your Firebase credentials
 ```bash
-   cp .env.example .env
+cp .env.example .env
+# Edit .env with your Firebase project credentials
 ```
 
 4. **Run development server**
 ```bash
-   npm run dev
+npm run dev
+# Open http://localhost:5173
 ```
 
-5. **Open in browser**
+5. **Build for production**
+```bash
+npm run build
 ```
-   http://localhost:5173
+
+### AI Backend Setup (optional)
+
+```bash
+cd ai-models
+pip install -r requirements.txt
+python main.py
+# API available at http://localhost:8000/api/docs
 ```
+
+### Available Scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start development server with HMR |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build locally |
+| `npm run lint` | Run ESLint |
 
 ---
 
-## 📜 Available Scripts
+## Research Outputs
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
+This thesis produced four principal outputs:
 
----
-
-## 🎨 Status Indicators Usage
-
-### Online/Offline Detection
-```typescript
-import { useOnlineStatus } from '@/hooks/useOnlineStatus';
-
-const { isOnline, wasOffline, offlineDuration } = useOnlineStatus();
-```
-
-### Device Detection
-```typescript
-import { useDeviceDetection } from '@/hooks/useDeviceDetection';
-
-const { isMobile, isTablet, isDesktop } = useDeviceDetection();
-```
-
-### Status Bar Component
-```typescript
-import { StatusBar } from '@/components/common/StatusBar';
-
-<StatusBar title="IPDC Platform" />
-```
-
-See [`docs/STATUS_INDICATORS_GUIDE.md`](docs/STATUS_INDICATORS_GUIDE.md) for complete documentation.
+1. **China-to-Ethiopia Technology Adaptation Framework** — a four-dimension (infrastructure, functional, cultural, operational) framework for adapting smart park governance models across connectivity contexts
+2. **Offline-First Architecture for Industrial PWAs** — dual-layer storage combining Firestore transparent persistence with an explicit Dexie.js write queue
+3. **Seven Design Principles for Offline-First Computing** — empirically derived principles for feature prioritization and architecture decisions under variable connectivity
+4. **IPDC Digital One-Stop Service Platform** — a working PWA prototype demonstrating reliable service delivery for Ethiopian industrial parks
 
 ---
 
-## 🗓️ Development Timeline
+## Evaluation Data
 
-### Week 1-2: Foundation
-- ✅ Project setup
-- ✅ Theme and design system
-- ✅ Status indicators
-- ✅ Firebase configuration
-
-### Week 3: Authentication
-- ✅ Token management system
-- ✅ User authentication
-
-### Week 4: Service Requests
-- ✅ Request submission
-- ✅ Offline queue
-
-### Week 5: Admin & Matcher
-- ✅ Admin dashboard
-- ✅ SEZ recommendation matcher
-
-### Week 6-10: Advanced Features
-- ✅ Operations module
-- ✅ Announcements
-- ✅ Sync optimization
-- ✅ Testing & evaluation
+The `data/research/` directory contains:
+- `SUS_Evaluation_IPDC_OSS.xlsx` — SUS questionnaire responses from 12 IPDC stakeholders (March 2026), including raw scores, per-item analysis, and charts
+- `IPDC_OSS_Questionnaire_Responses.xlsx` — requirements-gathering questionnaire responses from representatives across 11 IPDC parks and SEZs
 
 ---
 
-## 📊 Testing
+## License
 
-### Test Online/Offline
-1. Open DevTools (F12)
-2. Network tab → Select "Offline"
-3. Watch status indicators change
-
-### Test Device Modes
-1. Resize browser window
-2. Or: DevTools → Device Toolbar (Ctrl+Shift+M)
-3. Watch indicators update
-
----
-
-## 🤝 Contributing
-
-This is a thesis project made publicly visible for academic review only. Please see the [LICENSE](LICENSE) for usage terms.
-
----
-
-## 📄 License
-
-Copyright (c) 2026 Yeti. All Rights Reserved.
+Copyright (c) 2026 Kebede Yetnayet Berhanu. All Rights Reserved.
 
 This project is made publicly visible for academic review and portfolio purposes only.
 Unauthorized copying, redistribution, or commercial use is strictly prohibited.
@@ -248,33 +260,9 @@ See the [LICENSE](LICENSE) file for full details.
 
 ---
 
-## 📧 Contact
+## Contact
 
-**Author:** Yeti  
-**Institution:** Nankai University  
-**Program:** MSc Software Engineering  
-
----
-
-## 🎓 Thesis Information
-
-**Advisor Approved Approach:**
-- ✅ Intelligent SEZ matcher 
-- ✅ 13 Ethiopian SEZs for data collection
-- ✅ Bole Lemi & Hawassa for pilot testing
-- ✅ Digital token system
-- ✅ Lightweight offline-first frontend
-
-## 🤖 AI Models & Recommendation System
-
-This project includes 3 trained models for tenant service classification, asset maintenance prediction, and intelligent park recommendation (located in `/ai-models/`).
-
-### Running the Models Locally
-1. Install backend dependencies (Python required):
-   ```bash
-   pip install -r requirements.txt
-   ```
-
----
-
-**Built with ❤️ for Ethiopian Industrial Parks (IPDC)**
+**Author:** Kebede Yetnayet Berhanu
+**Institution:** Nankai University, College of Software
+**Program:** MSc Software Engineering
+**Supervisor:** Prof. Zhang Haining (张海宁)
