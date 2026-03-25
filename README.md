@@ -12,7 +12,7 @@ An offline-first Progressive Web Application (PWA) for the Ethiopian Industrial 
 |---|---|
 | **Thesis Title** | Bridging the Digital Divide: An Offline-First Digital One-Stop Service Localized from China's Smart Park Model for Ethiopia's Industrial Parks |
 | **Author** | Kebede Yetnayet Berhanu |
-| **Program** | MSc Software Engineering, Nankai University |
+| **Program** | MSc Software Engineering, Nankai University, China |
 
 ---
 
@@ -276,5 +276,5 @@ See the [LICENSE](LICENSE) file for full details.
 ## Contact
 
 **Author:** Kebede Yetnayet Berhanu
-**Institution:** Nankai University, College of Software
+**Institution:** Nankai University, College of Software, China
 **Program:** MSc Software Engineering
