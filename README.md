@@ -14,8 +14,6 @@ An offline-first Progressive Web Application (PWA) for the Ethiopian Industrial 
 | **Author** | Kebede Yetnayet Berhanu |
 | **Student ID** | 2120246030 |
 | **Program** | MSc Software Engineering, Nankai University |
-| **Supervisor** | Prof. Zhang Haining (张海宁) |
-| **Submission** | December 2025 |
 
 ---
 
@@ -52,8 +50,7 @@ This thesis designed, built, and evaluated an offline-first digital one-stop ser
 
 | Metric | Result |
 |--------|--------|
-| **SUS Score** | 86.5 / 100 |
-| **Usability Grade** | Excellent (above 85.5 threshold) |
+| **SUS Score** | 86.5 / 100 (above 68 baseline) |
 | **Participants** | 12 IPDC stakeholders |
 | **Min. Individual Score** | 80.0 |
 | **Offline Scenarios Passed** | 9 / 9 |
@@ -65,15 +62,32 @@ This thesis designed, built, and evaluated an offline-first digital one-stop ser
 
 ## Screenshots
 
-<img src="screenshots/fig_sign_in.png" alt="Sign In" width="700"/>
-<img src="screenshots/fig_tenant_dashboard.jpeg" alt="Tenant Dashboard — service requests, token balance, announcements" width="700"/>
-<img src="screenshots/fig_admin_dashboard.png" alt="Admin Dashboard — manage tenants, requests, and park operations" width="700"/>
-<img src="screenshots/fig_operators_dashboard.png" alt="Operations Dashboard — maintenance tasks and work orders" width="700"/>
-<img src="screenshots/fig_offline_submission_evidence.jpg" alt="Offline Submission — service request submitted while offline, queued for sync" width="700"/>
-<img src="screenshots/fig_parks_map.png" alt="Interactive map of all 13 Ethiopian SEZs" width="700"/>
-<img src="screenshots/fig_park_recommendation.jpeg" alt="AI-powered SEZ recommendation based on business profile" width="700"/>
-<img src="screenshots/fig_mobile_view.jpg" alt="Mobile layout — fully responsive" width="400"/>
-<img src="screenshots/fig_lighthouse_scores.png" alt="PWA Lighthouse audit scores" width="700"/>
+**Sign-In Page**
+<img src="screenshots/fig_sign_in.png" alt="Sign-In Page" width="700"/>
+
+**Tenant Dashboard — service requests, token balance, and announcements**
+<img src="screenshots/fig_tenant_dashboard.jpeg" alt="Tenant Dashboard" width="700"/>
+
+**Admin Dashboard — tenant management, request processing, and park operations**
+<img src="screenshots/fig_admin_dashboard.png" alt="Admin Dashboard" width="700"/>
+
+**Operations Dashboard — maintenance tasks and work orders**
+<img src="screenshots/fig_operators_dashboard.png" alt="Operations Dashboard" width="700"/>
+
+**Offline Submission — service request submitted while offline, queued for synchronization**
+<img src="screenshots/fig_offline_submission_evidence.jpg" alt="Offline Submission Evidence" width="700"/>
+
+**Interactive Map — all 13 Ethiopian Special Economic Zones**
+<img src="screenshots/fig_parks_map.png" alt="Interactive Park Map" width="700"/>
+
+**AI Park Recommendation — ranked SEZ suggestions based on business profile**
+<img src="screenshots/fig_park_recommendation.jpeg" alt="AI Park Recommendation" width="700"/>
+
+**Mobile View — responsive layout on a mobile device**
+<img src="screenshots/fig_mobile_view.jpg" alt="Mobile View" width="400"/>
+
+**PWA Lighthouse Audit Scores**
+<img src="screenshots/fig_lighthouse_scores.png" alt="PWA Lighthouse Audit Scores" width="700"/>
 
 > See [screenshots/](screenshots/) for the full gallery including all dashboards, AI model performance charts, PWA installation evidence, and offline testing screenshots.
 
@@ -86,7 +100,7 @@ This thesis designed, built, and evaluated an offline-first digital one-stop ser
 - **Progressive Web App (PWA)** — installable on desktop and mobile from a single codebase
 - **Multi-Role Support** — separate interfaces for Tenants, Administrators, and Operations staff
 - **Service Request Management** — submit, track, and process requests offline with background sync
-- **Digital Token System** — internal credit system for service fee tracking with full audit trail
+- **Digital Token System** — internal credit system for service fee tracking and transaction history
 - **Complaint Management** — structured complaint submission and resolution workflow
 - **Announcements** — park-wide and targeted announcements with offline delivery
 - **Interactive Park Map** — visualize all 13 Ethiopian SEZs with park profiles
@@ -95,8 +109,8 @@ This thesis designed, built, and evaluated an offline-first digital one-stop ser
 - Authentication with offline fallback (cached credentials after first online sign-in)
 - Service request submission queued locally in IndexedDB, replayed on reconnect
 - Full dashboard access served from Firestore's persistent local cache
-- Service worker caches the full application shell for zero-connectivity browsing
-- Real-time online/offline status indicators with sync queue monitoring
+- Service worker caches the application shell for offline browsing
+- Online/offline status indicators with sync queue monitoring
 
 ### AI Models
 - **Service Classifier** — automatically categorizes incoming service requests
@@ -265,4 +279,3 @@ See the [LICENSE](LICENSE) file for full details.
 **Author:** Kebede Yetnayet Berhanu
 **Institution:** Nankai University, College of Software
 **Program:** MSc Software Engineering
-**Supervisor:** Prof. Zhang Haining (张海宁)
