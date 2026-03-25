@@ -12,7 +12,6 @@ An offline-first Progressive Web Application (PWA) for the Ethiopian Industrial 
 |---|---|
 | **Thesis Title** | Bridging the Digital Divide: An Offline-First Digital One-Stop Service Localized from China's Smart Park Model for Ethiopia's Industrial Parks |
 | **Author** | Kebede Yetnayet Berhanu |
-| **Student ID** | 2120246030 |
 | **Program** | MSc Software Engineering, Nankai University |
 
 ---
@@ -53,7 +52,7 @@ This thesis designed, built, and evaluated an offline-first digital one-stop ser
 | **SUS Score** | 86.5 / 100 (above 68 baseline) |
 | **Participants** | 12 IPDC stakeholders |
 | **Min. Individual Score** | 80.0 |
-| **Offline Scenarios Passed** | 9 / 9 |
+| **Offline scenarios tested** | 9 (under simulated conditions) |
 | **First Load Time** | < 3 seconds |
 | **Cached Load Time** | < 1.5 seconds |
 | **Offline Response Time** | < 500 ms |
@@ -108,7 +107,7 @@ This thesis designed, built, and evaluated an offline-first digital one-stop ser
 ### Offline Capabilities
 - Authentication with offline fallback (cached credentials after first online sign-in)
 - Service request submission queued locally in IndexedDB, replayed on reconnect
-- Full dashboard access served from Firestore's persistent local cache
+- Dashboard access served from Firestore's persistent local cache
 - Service worker caches the application shell for offline browsing
 - Online/offline status indicators with sync queue monitoring
 
@@ -252,7 +251,7 @@ This thesis produced four principal outputs:
 1. **China-to-Ethiopia Technology Adaptation Framework** — a four-dimension (infrastructure, functional, cultural, operational) framework for adapting smart park governance models across connectivity contexts
 2. **Offline-First Architecture for Industrial PWAs** — dual-layer storage combining Firestore transparent persistence with an explicit Dexie.js write queue
 3. **Seven Design Principles for Offline-First Computing** — empirically derived principles for feature prioritization and architecture decisions under variable connectivity
-4. **IPDC Digital One-Stop Service Platform** — a working PWA prototype demonstrating reliable service delivery for Ethiopian industrial parks
+4. **IPDC Digital One-Stop Service Platform** — a PWA prototype addressing offline-first digital service delivery for Ethiopian industrial parks
 
 ---
 
