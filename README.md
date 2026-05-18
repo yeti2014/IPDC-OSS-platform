@@ -49,9 +49,9 @@ This thesis designed, built, and evaluated an offline-first digital one-stop ser
 
 | Metric | Result |
 |--------|--------|
-| **SUS Score** | 86.5 / 100 (above 68 baseline) |
-| **Participants** | 12 IPDC stakeholders |
-| **Min. Individual Score** | 80.0 |
+| **SUS Score** | 87.25 / 100 (above 68 baseline) |
+| **Participants** | 30 IPDC stakeholders across 9 SEZs |
+| **Min. Individual Score** | 60.0 |
 | **Offline scenarios tested** | 9 (under simulated conditions) |
 | **First Load Time** | < 3 seconds |
 | **Cached Load Time** | < 1.5 seconds |
@@ -258,7 +258,7 @@ This thesis produced four principal outputs:
 ## Evaluation Data
 
 The `data/research/` directory contains:
-- `SUS_Evaluation_IPDC_OSS.xlsx` — SUS questionnaire responses from 12 IPDC stakeholders (March 2026), including raw scores, per-item analysis, and charts
+- `SUS_Evaluation_IPDC_OSS.xlsx` — SUS questionnaire responses from 30 IPDC stakeholders across nine SEZs (March–May 2026), including raw scores, per-item analysis, and charts
 - `IPDC_OSS_Questionnaire_Responses.xlsx` — requirements-gathering questionnaire responses from representatives across 11 IPDC parks and SEZs
 
 ---
